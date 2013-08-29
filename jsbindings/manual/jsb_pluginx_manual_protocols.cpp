@@ -119,7 +119,7 @@ void js_register_pluginx_protocols_PluginParam(JSContext *cx, JSObject *global) 
 	jsb_PluginParam_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_PluginParam_class->name = "PluginParam";
 	jsb_PluginParam_class->addProperty = JS_PropertyStub;
-	jsb_PluginParam_class->delProperty = JS_PropertyStub;
+	jsb_PluginParam_class->delProperty = JS_DeletePropertyStub;
 	jsb_PluginParam_class->getProperty = JS_PropertyStub;
 	jsb_PluginParam_class->setProperty = JS_StrictPropertyStub;
 	jsb_PluginParam_class->enumerate = JS_EnumerateStub;

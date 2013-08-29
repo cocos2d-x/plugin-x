@@ -127,7 +127,7 @@ void js_register_pluginx_protocols_PluginProtocol(JSContext *cx, JSObject *globa
 	jsb_PluginProtocol_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_PluginProtocol_class->name = "PluginProtocol";
 	jsb_PluginProtocol_class->addProperty = JS_PropertyStub;
-	jsb_PluginProtocol_class->delProperty = JS_PropertyStub;
+	jsb_PluginProtocol_class->delProperty = JS_DeletePropertyStub;
 	jsb_PluginProtocol_class->getProperty = JS_PropertyStub;
 	jsb_PluginProtocol_class->setProperty = JS_StrictPropertyStub;
 	jsb_PluginProtocol_class->enumerate = JS_EnumerateStub;
@@ -285,7 +285,7 @@ void js_register_pluginx_protocols_PluginManager(JSContext *cx, JSObject *global
 	jsb_PluginManager_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_PluginManager_class->name = "PluginManager";
 	jsb_PluginManager_class->addProperty = JS_PropertyStub;
-	jsb_PluginManager_class->delProperty = JS_PropertyStub;
+	jsb_PluginManager_class->delProperty = JS_DeletePropertyStub;
 	jsb_PluginManager_class->getProperty = JS_PropertyStub;
 	jsb_PluginManager_class->setProperty = JS_StrictPropertyStub;
 	jsb_PluginManager_class->enumerate = JS_EnumerateStub;
@@ -537,7 +537,7 @@ void js_register_pluginx_protocols_ProtocolAnalytics(JSContext *cx, JSObject *gl
 	jsb_ProtocolAnalytics_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolAnalytics_class->name = "ProtocolAnalytics";
 	jsb_ProtocolAnalytics_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolAnalytics_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolAnalytics_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolAnalytics_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolAnalytics_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolAnalytics_class->enumerate = JS_EnumerateStub;
@@ -680,7 +680,7 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) 
 	jsb_ProtocolIAP_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolIAP_class->name = "ProtocolIAP";
 	jsb_ProtocolIAP_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolIAP_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolIAP_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolIAP_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolIAP_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolIAP_class->enumerate = JS_EnumerateStub;
@@ -887,7 +887,7 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 	jsb_ProtocolAds_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolAds_class->name = "ProtocolAds";
 	jsb_ProtocolAds_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolAds_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolAds_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolAds_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolAds_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolAds_class->enumerate = JS_EnumerateStub;
@@ -1030,7 +1030,7 @@ void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global
 	jsb_ProtocolShare_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolShare_class->name = "ProtocolShare";
 	jsb_ProtocolShare_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolShare_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolShare_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolShare_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolShare_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolShare_class->enumerate = JS_EnumerateStub;
@@ -1205,7 +1205,7 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 	jsb_ProtocolSocial_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolSocial_class->name = "ProtocolSocial";
 	jsb_ProtocolSocial_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolSocial_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolSocial_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolSocial_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolSocial_class->enumerate = JS_EnumerateStub;
@@ -1369,7 +1369,7 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global)
 	jsb_ProtocolUser_class = (JSClass *)calloc(1, sizeof(JSClass));
 	jsb_ProtocolUser_class->name = "ProtocolUser";
 	jsb_ProtocolUser_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolUser_class->delProperty = JS_PropertyStub;
+	jsb_ProtocolUser_class->delProperty = JS_DeletePropertyStub;
 	jsb_ProtocolUser_class->getProperty = JS_PropertyStub;
 	jsb_ProtocolUser_class->setProperty = JS_StrictPropertyStub;
 	jsb_ProtocolUser_class->enumerate = JS_EnumerateStub;

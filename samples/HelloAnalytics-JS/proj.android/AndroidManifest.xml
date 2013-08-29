@@ -10,17 +10,22 @@
         android:debuggable="true"
         android:icon="@drawable/icon">
 
-        <activity android:name="org.cocos2dx.helloanalyticsjs.HelloAnalytics"
+        <activity android:name="android.app.NativeActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:configChanges="orientation">
+                  android:configChanges="orientation|screenSize|smallestScreenSize">
+
+            <!-- Tell NativeActivity the name of our .so -->
+            <meta-data android:name="android.app.lib_name"
+                       android:value="game" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <!-- Caution! Do not change this app key. It is only for demo usage.  -->
 		<meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
 

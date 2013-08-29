@@ -5,10 +5,11 @@
 #include "ScriptingCore.h"
 #include "generated/jsb_cocos2dx_auto.hpp"
 #include "generated/jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_registration.h"
-#include "js_bindings_system_registration.h"
 #include "js_bindings_ccbreader.h"
+#include "js_bindings_system_registration.h"
+#include "js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
 
 #include "jsb_pluginx_protocols_auto.hpp"
@@ -29,33 +30,35 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    Director *pDirector = Director::getInstance();
+    auto pDirector = Director::getInstance();
     pDirector->setOpenGLView(EGLView::getInstance());
+    pDirector->setProjection(Director::Projection::_2D);
+
+    auto designSize = Size(960, 640);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
     
     // turn on display FPS
     pDirector->setDisplayStats(true);
     
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-    
+
     ScriptingCore* sc = ScriptingCore::getInstance();
-        
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
-    
+
     sc->addRegisterCallback(register_all_pluginx_protocols);
     sc->addRegisterCallback(register_pluginx_js_extensions);
-
     sc->start();
-    
+
     ScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     ScriptingCore::getInstance()->runScript("main.js");
-       
+
     return true;
 }
 
@@ -63,14 +66,28 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->pauseAllEffects();
+    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    SimpleAudioEngine::getInstance()->pauseAllEffects();
+
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    jsval nsval;
+    JS_GetProperty(sc->getGlobalContext(), sc->getGlobalObject(), "plugin", &nsval);
+    if (nsval != JSVAL_VOID) {
+        sc->executeFunctionWithOwner(nsval, "onApplicationDidEnterBackground");
+    }
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-    SimpleAudioEngine::sharedEngine()->resumeAllEffects();
+    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    SimpleAudioEngine::getInstance()->resumeAllEffects();
+
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    jsval nsval;
+    JS_GetProperty(sc->getGlobalContext(), sc->getGlobalObject(), "plugin", &nsval);
+    if (nsval != JSVAL_VOID) {
+        sc->executeFunctionWithOwner(nsval, "onApplicationWillEnterForeground");
+    }
 }
