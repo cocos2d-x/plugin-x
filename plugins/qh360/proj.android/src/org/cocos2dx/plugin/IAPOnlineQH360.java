@@ -193,14 +193,6 @@ public class IAPOnlineQH360 implements InterfaceIAP {
             bundle.putString(ProtocolKeys.APP_ORDER_ID, appOrderId);
         }
 
-        String[] payTypes = {
-            ProtocolKeys.PayType.ALIPAY,
-            ProtocolKeys.PayType.JCARD,
-            ProtocolKeys.PayType.QIHOO_CARD,
-            ProtocolKeys.PayType.MOBILE_CARD
-        };
-        bundle.putStringArray(ProtocolKeys.PAY_TYPE, payTypes);
-
         bundle.putInt(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_PAY); 
         Intent intent = new Intent(mContext, ContainerActivity.class); intent.putExtras(bundle);
         return intent;
