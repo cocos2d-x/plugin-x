@@ -44,8 +44,8 @@ jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval long_to_jsval(JSContext* cx, long v);
-jsval std_string_to_jsval(JSContext* cx, std::string& v);
-jsval c_string_to_jsval(JSContext* cx, const char* v);
+jsval std_string_to_jsval(JSContext* cx, const std::string& v);
+jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret);
 jsval LogEventParamMap_to_jsval(JSContext *cx, LogEventParamMap*& ret);
 
