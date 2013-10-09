@@ -58,7 +58,7 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
  *
  * Return value: the newly created utf8 string.
  * */
-unsigned short* cc_utf8_to_utf16(const char* str_old);
+unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = 0);
 
 /**
  * cc_utf16_to_utf8:
