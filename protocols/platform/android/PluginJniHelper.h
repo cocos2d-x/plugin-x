@@ -54,9 +54,6 @@ public:
 
 private:
     static JavaVM *_psJavaVM;
-    static JNIEnv* env;
-
-    static bool cacheEnv(JavaVM* jvm);
     static bool getMethodInfo_DefaultClassLoader(PluginJniMethodInfo &methodinfo,
                                                  const char *className,
                                                  const char *methodName,
