@@ -38,6 +38,29 @@ using namespace std;
 
 extern "C"
 {
+    static bool _getEnv(JNIEnv **env)
+    {
+
+        bool bRet = false;
+
+        do 
+        {
+            if (JAVAVM->GetEnv((void**)env, JNI_VERSION_1_4) != JNI_OK)
+            {
+                LOGD("Failed to get the environment using GetEnv()");
+                break;
+            }
+
+            if (JAVAVM->AttachCurrentThread(env, 0) < 0)
+            {
+                LOGD("Failed to get the environment using AttachCurrentThread()");
+                break;
+            }
+            bRet = true;
+        } while (0);
+
+        return bRet;
+    }
 
     //////////////////////////////////////////////////////////////////////////
     // java vm helper function
@@ -104,7 +127,6 @@ namespace cocos2d {
 JavaVM* PluginJniHelper::_psJavaVM = NULL;
 jmethodID PluginJniHelper::loadclassMethod_methodID = NULL;
 jobject PluginJniHelper::classloader = NULL;
-JNIEnv* PluginJniHelper::env = NULL;
 
 JavaVM* PluginJniHelper::getJavaVM()
 {
@@ -114,12 +136,17 @@ JavaVM* PluginJniHelper::getJavaVM()
 void PluginJniHelper::setJavaVM(JavaVM *javaVM)
 {
     _psJavaVM = javaVM;
-    PluginJniHelper::cacheEnv(javaVM);
 }
 
 JNIEnv* PluginJniHelper::getEnv()
 {
-    return env;
+    JNIEnv* ret = NULL;
+    bool bRet = _getEnv(&ret);
+
+    if (! bRet)
+        ret = NULL;
+
+    return ret;
 }
 
 bool PluginJniHelper::getStaticMethodInfo(PluginJniMethodInfo &methodinfo, const char *className, const char *methodName, const char *paramCode)
@@ -201,13 +228,13 @@ string PluginJniHelper::jstring2string(jstring jstr)
     }
 
     JNIEnv *pEnv = PluginJniHelper::getEnv();
-    if (!env) {
+    if (! pEnv) {
         return NULL;
     }
 
-    const char* chars = env->GetStringUTFChars(jstr, NULL);
+    const char* chars = pEnv->GetStringUTFChars(jstr, NULL);
     std::string ret(chars);
-    env->ReleaseStringUTFChars(jstr, chars);
+    pEnv->ReleaseStringUTFChars(jstr, chars);
 
     return ret;
 }
@@ -240,47 +267,6 @@ bool PluginJniHelper::setClassLoaderFrom(jobject nativeactivityinstance) {
     PluginJniHelper::loadclassMethod_methodID = _m.methodID;
 
     return true;
-}
-
-bool PluginJniHelper::cacheEnv(JavaVM* jvm)
-{
-    JNIEnv* _env = NULL;
-    // get jni environment
-    jint ret = jvm->GetEnv((void**)&_env, JNI_VERSION_1_4);
-
-    switch (ret) {
-    case JNI_OK :
-        // Success!
-        PluginJniHelper::env = _env;
-        return true;
-
-    case JNI_EDETACHED :
-        // Thread not attached
-
-        // TODO : If calling AttachCurrentThread() on a native thread
-        // must call DetachCurrentThread() in future.
-        // see: http://developer.android.com/guide/practices/design/jni.html
-
-        if (jvm->AttachCurrentThread(&_env, NULL) < 0)
-            {
-                LOGD("Failed to get the environment using AttachCurrentThread()");
-
-                PluginJniHelper::env = NULL;
-                return false;
-            } else {
-            // Success : Attached and obtained JNIEnv!
-            PluginJniHelper::env = _env;
-            return true;
-        }
-
-    case JNI_EVERSION :
-        // Cannot recover from this error
-        LOGD("JNI interface version 1.4 not supported");
-    default :
-        LOGD("Failed to get the environment using GetEnv()");
-        PluginJniHelper::env = NULL;
-        return false;
-    }
 }
 
 bool PluginJniHelper::getMethodInfo_DefaultClassLoader(PluginJniMethodInfo &methodinfo,
