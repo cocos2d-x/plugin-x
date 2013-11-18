@@ -3,14 +3,13 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "ScriptingCore.h"
-#include "generated/jsb_cocos2dx_auto.hpp"
-#include "generated/jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_extension_manual.h"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
+#include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_ccbreader.h"
-#include "js_bindings_system_registration.h"
-#include "js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "localstorage/js_bindings_system_registration.h"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
 
 #include "jsb_pluginx_protocols_auto.hpp"
 #include "jsb_pluginx_extension_registration.h"
@@ -48,6 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
 
@@ -62,19 +62,33 @@ bool AppDelegate::applicationDidFinishLaunching()
     return true;
 }
 
+
+void handle_signal(int signal) {
+    static int internal_state = 0;
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    // should start everything back
+    auto director = Director::getInstance();
+    if (director->getRunningScene()) {
+        director->popToRootScene();
+    } else {
+        PoolManager::sharedPoolManager()->finalize();
+        if (internal_state == 0) {
+            //sc->dumpRoot(NULL, 0, NULL);
+            sc->start();
+            internal_state = 1;
+        } else {
+            sc->runScript("hello.js");
+            internal_state = 0;
+        }
+    }
+}
+
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();
-
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    jsval nsval;
-    JS_GetProperty(sc->getGlobalContext(), sc->getGlobalObject(), "plugin", &nsval);
-    if (nsval != JSVAL_VOID) {
-        sc->executeFunctionWithOwner(nsval, "onApplicationDidEnterBackground");
-    }
 }
 
 // this function will be called when the app is active again
@@ -83,11 +97,4 @@ void AppDelegate::applicationWillEnterForeground()
     Director::getInstance()->startAnimation();
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
-
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    jsval nsval;
-    JS_GetProperty(sc->getGlobalContext(), sc->getGlobalObject(), "plugin", &nsval);
-    if (nsval != JSVAL_VOID) {
-        sc->executeFunctionWithOwner(nsval, "onApplicationWillEnterForeground");
-    }
 }

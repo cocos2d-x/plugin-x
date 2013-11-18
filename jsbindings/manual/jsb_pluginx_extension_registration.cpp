@@ -20,13 +20,13 @@ extern JSObject *jsb_ProtocolUser_prototype;
 void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 {
     // first, try to get the ns
-    jsval nsval;
+    JS::RootedValue nsval(cx);
     JSObject *ns;
     JS_GetProperty(cx, global, "plugin", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "plugin", &nsval);
+        JS_SetProperty(cx, global, "plugin", nsval);
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }

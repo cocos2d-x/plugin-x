@@ -23,7 +23,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal[3];
         dataVal[0] = INT_TO_JSVAL(ret);
         std::string strMsgInfo = msg;
@@ -88,7 +88,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = INT_TO_JSVAL(code);
         std::string strMsgInfo = msg;
@@ -115,7 +115,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
 
         js_proxy_t * p;
         JS_GET_PROXY(p, pAdsPlugin);
@@ -182,7 +182,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = INT_TO_JSVAL(ret);
         std::string strMsgInfo = msg;
@@ -245,7 +245,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = INT_TO_JSVAL(ret);
         std::string strMsgInfo = msg;
@@ -308,7 +308,7 @@ public:
 
         JSBool hasAction;
         jsval retval;
-        jsval temp_retval;
+        JS::RootedValue temp_retval(cx);
 
         js_proxy_t * p;
         JS_GET_PROXY(p, userPlugin);

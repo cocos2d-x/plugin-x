@@ -9,7 +9,7 @@ from optparse import OptionParser
 
 CPP_SAMPLES = ["HelloPlugins"]
 JSB_SAMPLES = ["HelloIAP-JS", "HelloAnalytics-JS"]
-All_SAMPLES = CPP_SAMPLES + JSB_SAMPLES
+ALL_SAMPLES = CPP_SAMPLES + JSB_SAMPLES
 
 def usage():
     targets = ""
@@ -118,6 +118,8 @@ def copy_resources(target, app_android_root, plugin_root):
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
     if target in JSB_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
+        copy_files(resources_dir, assets_dir)
+        resources_dir = os.path.join(plugin_root, "jsbindings/js")
         copy_files(resources_dir, assets_dir)
 
     # copy plugin resources to the assets

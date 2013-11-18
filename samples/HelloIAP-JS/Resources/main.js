@@ -27,6 +27,7 @@
 // Not needed by cocos2d-html5
 
 require("jsb.js");
+require("jsb_pluginx.js");
 
 var appFiles = [
     'src/resource.js',

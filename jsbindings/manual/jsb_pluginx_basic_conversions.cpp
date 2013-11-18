@@ -181,7 +181,7 @@ JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
             break; // end of iteration
         if (! JSVAL_IS_STRING(key))
             continue; // ignore integer properties
-        jsval value;
+        JS::RootedValue value(cx);
         JS_GetPropertyById(cx, tmp, idp, &value);
         if (! JSVAL_IS_STRING(value))
             continue; // ignore integer properties
