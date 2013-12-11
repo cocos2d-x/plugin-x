@@ -40,12 +40,12 @@ public:
         this->cx = cx;
         string = str;
         // Not suppored in SpiderMonkey v19
-        buffer = JS_EncodeString(cx, string);
+        //buffer = JS_EncodeString(cx, string);
         
-        // const jschar *chars = JS_GetStringCharsZ(cx, string);
-        // size_t l = JS_GetStringLength(string);
-        // char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
-        // buffer = pUTF8Str;
+        const jschar *chars = JS_GetStringCharsZ(cx, string);
+        size_t l = JS_GetStringLength(string);
+        char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
+        buffer = pUTF8Str;
     }
 
     std::string get() {
