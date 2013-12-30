@@ -11,18 +11,6 @@ CPP_SAMPLES = ["HelloPlugins"]
 JSB_SAMPLES = ["HelloIAP-JS", "HelloAnalytics-JS"]
 ALL_SAMPLES = CPP_SAMPLES + JSB_SAMPLES
 
-def usage():
-    targets = ""
-    for target in SAMPLES:
-        if not targets.strip():
-            targets += target;
-        else:
-            targets += ("|" + target)
-
-    print "%%prog [-n ndk-build-parameter] target \n\
-    valid target are [%s]" % targets
-
-
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
     '''
@@ -57,12 +45,17 @@ def select_toolchain_version():
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
     'cpp' for short of all cpp samples
-    'lua' for short of all lua smpleas
     'jsb' for short of all javascript samples
     '''
 
     if 'all' in args:
         return ALL_SAMPLES
+
+    if 'jsb' in args:
+        return JSB_SAMPLES
+
+    if 'cpp' in args:
+        return CPP_SAMPLES
 
     targets = []
     targets += args
@@ -160,12 +153,19 @@ def build_samples(target,ndk_build_param):
 # -------------- main --------------
 if __name__ == '__main__':
 
+    usage = """usage: %prog [options] target
+    
+    Valid targets are: [HelloPlugins|HelloIAP-JS|HelloAnalytics-JS]
+
+    You can use [all|cpp|jsb], to build all, or all the C++, or all the JavaScript samples respectevely."""
+
     #parse the params
-    parser = OptionParser()
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", 
+    help='parameter for ndk-build')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
-        usage()
+        parser.print_help()
     else:
         build_samples(args, opts.ndk_build_param)
