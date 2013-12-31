@@ -27,7 +27,7 @@ conversions:
     # jsval has to be a TypedArray, a UInt32Array with 2 elements
     "long long": "ok &= jsval_to_long_long(cx, ${in_value}, &${out_value})"
     "std::string": "ok &= jsval_to_std_string(cx, ${in_value}, &${out_value})"
-    "const char*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = ${out_value}_tmp.c_str()"
+    "char*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = ${out_value}_tmp.c_str()"
     object: |
       do {
       ${($level + 1) * '\t'}js_proxy_t *proxy;
@@ -61,7 +61,7 @@ conversions:
     "unsigned char": "${out_value} = uint32_to_jsval(cx, ${in_value})"
     "long long": "${out_value} = long_long_to_jsval(cx, ${in_value})"
     "std::string": "${out_value} = std_string_to_jsval(cx, ${in_value})"
-    "const char*": "${out_value} = c_string_to_jsval(cx, ${in_value})"
+    "char*": "${out_value} = c_string_to_jsval(cx, ${in_value})"
     bool: "${out_value} = BOOLEAN_TO_JSVAL(${in_value})"
     float: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
     double: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"

@@ -128,7 +128,7 @@ bool TestAds::init()
 	int caseLen = sizeof(s_aTestCases) / sizeof(std::string);
 	for (int i = 1; i < caseLen; ++i)
 	{
-		_caseItem->getSubItems()->addObject( MenuItemFont::create( s_aTestCases[i].c_str() ) );
+		_caseItem->getSubItems().pushBack(MenuItemFont::create( s_aTestCases[i].c_str() ) );
 	}
 	_caseItem->setPosition(posMid + Point(-200, 120));
 	pMenu->addChild(_caseItem);
@@ -140,7 +140,7 @@ bool TestAds::init()
 	int posLen = sizeof(s_aTestPoses) / sizeof(std::string);
 	for (int i = 1; i < posLen; ++i)
 	{
-		_posItem->getSubItems()->addObject( MenuItemFont::create( s_aTestPoses[i].c_str() ) );
+		_posItem->getSubItems().pushBack( MenuItemFont::create( s_aTestPoses[i].c_str() ) );
 	}
 	_posItem->setPosition(posMid + Point(200, 120));
 	pMenu->addChild(_posItem);

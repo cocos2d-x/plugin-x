@@ -8,9 +8,14 @@
 
 #include "jsapi.h"
 #include "uthash.h"
+#include <unordered_map>
 
 #ifdef ANDROID
 #include <android/log.h>
+#endif
+
+#ifndef CCASSERT
+#define CCASSERT(a,b) assert(a)
 #endif
 
 #define PLUGINX_JSB_DEBUG 0
@@ -62,14 +67,12 @@ extern js_proxy_t *_native_js_global_ht;
 extern js_proxy_t *_js_native_global_ht;
 
 typedef struct js_type_class {
-	uint32_t type;
 	JSClass *jsclass;
 	JSObject *proto;
 	JSObject *parentProto;
-	UT_hash_handle hh;
 } js_type_class_t;
 
-extern js_type_class_t *_js_global_type_ht;
+extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 unsigned int getHashCodeByString(const char *key);
 
@@ -155,14 +158,23 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
  */
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
-    js_type_class_t *typeProxy;
-    long typeId = getHashCodeByString(typeid(*native_obj).name());
-    HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
-    if (!typeProxy) {
-        typeId = getHashCodeByString(typeid(T).name());
-        HASH_FIND_INT(_js_global_type_ht, &typeId, typeProxy);
+    bool found = false;
+    std::string typeName = typeid(*native_obj).name();
+    auto typeProxyIter = _js_global_type_map.find(typeName);
+    if (typeProxyIter == _js_global_type_map.end())
+    {
+        typeName = typeid(T).name();
+        typeProxyIter = _js_global_type_map.find(typeName);
+        if (typeProxyIter != _js_global_type_map.end())
+        {
+            found = true;
+        }
     }
-    return typeProxy;
+    else
+    {
+        found = true;
+    }
+    return found ? typeProxyIter->second : nullptr;
 }
 
 /**

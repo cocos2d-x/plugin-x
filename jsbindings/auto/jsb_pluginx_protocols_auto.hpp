@@ -5,8 +5,8 @@
 #include "jsfriendapi.h"
 
 
-extern JSClass  *jsb_PluginProtocol_class;
-extern JSObject *jsb_PluginProtocol_prototype;
+extern JSClass  *jsb_cocos2d_plugin_PluginProtocol_class;
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
 JSBool js_pluginx_protocols_PluginProtocol_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_PluginProtocol_finalize(JSContext *cx, JSObject *obj);
@@ -17,8 +17,8 @@ JSBool js_pluginx_protocols_PluginProtocol_getPluginVersion(JSContext *cx, uint3
 JSBool js_pluginx_protocols_PluginProtocol_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_PluginProtocol_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_PluginManager_class;
-extern JSObject *jsb_PluginManager_prototype;
+extern JSClass  *jsb_cocos2d_plugin_PluginManager_class;
+extern JSObject *jsb_cocos2d_plugin_PluginManager_prototype;
 
 JSBool js_pluginx_protocols_PluginManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_PluginManager_finalize(JSContext *cx, JSObject *obj);
@@ -29,8 +29,8 @@ JSBool js_pluginx_protocols_PluginManager_loadPlugin(JSContext *cx, uint32_t arg
 JSBool js_pluginx_protocols_PluginManager_end(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_PluginManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolAnalytics_class;
-extern JSObject *jsb_ProtocolAnalytics_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolAnalytics_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolAnalytics_prototype;
 
 JSBool js_pluginx_protocols_ProtocolAnalytics_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolAnalytics_finalize(JSContext *cx, JSObject *obj);
@@ -45,8 +45,8 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_startSession(JSContext *cx, uint32
 JSBool js_pluginx_protocols_ProtocolAnalytics_stopSession(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolIAP_class;
-extern JSObject *jsb_ProtocolIAP_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolIAP_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolIAP_prototype;
 
 JSBool js_pluginx_protocols_ProtocolIAP_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
@@ -56,8 +56,8 @@ JSBool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t ar
 JSBool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolAds_class;
-extern JSObject *jsb_ProtocolAds_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolAds_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolAds_prototype;
 
 JSBool js_pluginx_protocols_ProtocolAds_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolAds_finalize(JSContext *cx, JSObject *obj);
@@ -70,8 +70,8 @@ JSBool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc
 JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolShare_class;
-extern JSObject *jsb_ProtocolShare_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolShare_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
 
 JSBool js_pluginx_protocols_ProtocolShare_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolShare_finalize(JSContext *cx, JSObject *obj);
@@ -81,8 +81,8 @@ JSBool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t 
 JSBool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolSocial_class;
-extern JSObject *jsb_ProtocolSocial_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolSocial_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolSocial_prototype;
 
 JSBool js_pluginx_protocols_ProtocolSocial_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolSocial_finalize(JSContext *cx, JSObject *obj);
@@ -94,8 +94,8 @@ JSBool js_pluginx_protocols_ProtocolSocial_submitScore(JSContext *cx, uint32_t a
 JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_ProtocolUser_class;
-extern JSObject *jsb_ProtocolUser_prototype;
+extern JSClass  *jsb_cocos2d_plugin_ProtocolUser_class;
+extern JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
 
 JSBool js_pluginx_protocols_ProtocolUser_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_ProtocolUser_finalize(JSContext *cx, JSObject *obj);

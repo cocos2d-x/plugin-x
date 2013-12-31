@@ -12,26 +12,35 @@ using namespace pluginx;
 
 template<class T>
 static JSBool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-	TypeTest<T> t;
-	T* cobj = new T();
-	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	assert(p);
-	JSObject *_tmp = JS_NewObject(cx, p->jsclass, p->proto, p->parentProto);
-	js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
+    JS::RootedValue initializing(cx);
+    JSBool isNewValid = JS_TRUE;
+	if (isNewValid)
+	{
+		TypeTest<T> t;
+		js_type_class_t *typeClass = nullptr;
+		std::string typeName = t.s_name();
+		auto typeMapIter = _js_global_type_map.find(typeName);
+		CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+		typeClass = typeMapIter->second;
+		CCASSERT(typeClass, "The value is null.");
 
-	return JS_TRUE;
+		JSObject *_tmp = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+		T* cobj = new T();
+		js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
+		JS_AddObjectRoot(cx, &pp->obj);
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(_tmp));
+		return JS_TRUE;
+	}
+
+    return JS_FALSE;
 }
 
 static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_FALSE;
 }
 
-
-JSClass  *jsb_PluginProtocol_class;
-JSObject *jsb_PluginProtocol_prototype;
+JSClass  *jsb_cocos2d_plugin_PluginProtocol_class;
+JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
 JSBool js_pluginx_protocols_PluginProtocol_getPluginName(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -106,8 +115,7 @@ JSBool js_pluginx_protocols_PluginProtocol_setDebugMode(JSContext *cx, uint32_t 
 }
 
 
-
-void js_pluginx_protocols_PluginProtocol_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_PluginProtocol_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginProtocol)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -124,17 +132,17 @@ void js_pluginx_protocols_PluginProtocol_finalize(JSFreeOp *fop, JSObject *obj) 
 }
 
 void js_register_pluginx_protocols_PluginProtocol(JSContext *cx, JSObject *global) {
-	jsb_PluginProtocol_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_PluginProtocol_class->name = "PluginProtocol";
-	jsb_PluginProtocol_class->addProperty = JS_PropertyStub;
-	jsb_PluginProtocol_class->delProperty = JS_DeletePropertyStub;
-	jsb_PluginProtocol_class->getProperty = JS_PropertyStub;
-	jsb_PluginProtocol_class->setProperty = JS_StrictPropertyStub;
-	jsb_PluginProtocol_class->enumerate = JS_EnumerateStub;
-	jsb_PluginProtocol_class->resolve = JS_ResolveStub;
-	jsb_PluginProtocol_class->convert = JS_ConvertStub;
-	jsb_PluginProtocol_class->finalize = js_pluginx_protocols_PluginProtocol_finalize;
-	jsb_PluginProtocol_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_PluginProtocol_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_PluginProtocol_class->name = "PluginProtocol";
+	jsb_cocos2d_plugin_PluginProtocol_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_PluginProtocol_class->finalize = js_cocos2d_plugin_PluginProtocol_finalize;
+	jsb_cocos2d_plugin_PluginProtocol_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -150,10 +158,10 @@ void js_register_pluginx_protocols_PluginProtocol(JSContext *cx, JSObject *globa
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_PluginProtocol_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_PluginProtocol_prototype = JS_InitClass(
 		cx, global,
 		NULL, // parent proto
-		jsb_PluginProtocol_class,
+		jsb_cocos2d_plugin_PluginProtocol_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -166,21 +174,19 @@ void js_register_pluginx_protocols_PluginProtocol(JSContext *cx, JSObject *globa
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::PluginProtocol> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_PluginProtocol_class;
-		p->proto = jsb_PluginProtocol_prototype;
+		p->jsclass = jsb_cocos2d_plugin_PluginProtocol_class;
+		p->proto = jsb_cocos2d_plugin_PluginProtocol_prototype;
 		p->parentProto = NULL;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_PluginManager_class;
-JSObject *jsb_PluginManager_prototype;
+JSClass  *jsb_cocos2d_plugin_PluginManager_class;
+JSObject *jsb_cocos2d_plugin_PluginManager_prototype;
 
 JSBool js_pluginx_protocols_PluginManager_unloadPlugin(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -264,8 +270,7 @@ JSBool js_pluginx_protocols_PluginManager_getInstance(JSContext *cx, uint32_t ar
 
 
 
-
-void js_pluginx_protocols_PluginManager_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_PluginManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginManager)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -282,17 +287,17 @@ void js_pluginx_protocols_PluginManager_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
 void js_register_pluginx_protocols_PluginManager(JSContext *cx, JSObject *global) {
-	jsb_PluginManager_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_PluginManager_class->name = "PluginManager";
-	jsb_PluginManager_class->addProperty = JS_PropertyStub;
-	jsb_PluginManager_class->delProperty = JS_DeletePropertyStub;
-	jsb_PluginManager_class->getProperty = JS_PropertyStub;
-	jsb_PluginManager_class->setProperty = JS_StrictPropertyStub;
-	jsb_PluginManager_class->enumerate = JS_EnumerateStub;
-	jsb_PluginManager_class->resolve = JS_ResolveStub;
-	jsb_PluginManager_class->convert = JS_ConvertStub;
-	jsb_PluginManager_class->finalize = js_pluginx_protocols_PluginManager_finalize;
-	jsb_PluginManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_PluginManager_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_PluginManager_class->name = "PluginManager";
+	jsb_cocos2d_plugin_PluginManager_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_PluginManager_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_PluginManager_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_PluginManager_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_PluginManager_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_PluginManager_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_PluginManager_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_PluginManager_class->finalize = js_cocos2d_plugin_PluginManager_finalize;
+	jsb_cocos2d_plugin_PluginManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -310,10 +315,10 @@ void js_register_pluginx_protocols_PluginManager(JSContext *cx, JSObject *global
 		JS_FS_END
 	};
 
-	jsb_PluginManager_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_PluginManager_prototype = JS_InitClass(
 		cx, global,
 		NULL, // parent proto
-		jsb_PluginManager_class,
+		jsb_cocos2d_plugin_PluginManager_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -326,21 +331,19 @@ void js_register_pluginx_protocols_PluginManager(JSContext *cx, JSObject *global
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::PluginManager> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_PluginManager_class;
-		p->proto = jsb_PluginManager_prototype;
+		p->jsclass = jsb_cocos2d_plugin_PluginManager_class;
+		p->proto = jsb_cocos2d_plugin_PluginManager_prototype;
 		p->parentProto = NULL;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolAnalytics_class;
-JSObject *jsb_ProtocolAnalytics_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolAnalytics_class;
+JSObject *jsb_cocos2d_plugin_ProtocolAnalytics_prototype;
 
 JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventBegin(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -442,7 +445,7 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logEvent(JSContext *cx, uint32_t a
 	}
 	if (argc == 2) {
 		const char* arg0;
-		LogEventParamMap* arg1;
+		cocos2d::plugin::LogEventParamMap* arg1;
 		std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
 		LogEventParamMap arg1_tmp;
 		do {
@@ -514,10 +517,9 @@ JSBool js_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd(JSContext *cx, ui
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolAnalytics_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolAnalytics_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAnalytics)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -534,17 +536,17 @@ void js_pluginx_protocols_ProtocolAnalytics_finalize(JSFreeOp *fop, JSObject *ob
 }
 
 void js_register_pluginx_protocols_ProtocolAnalytics(JSContext *cx, JSObject *global) {
-	jsb_ProtocolAnalytics_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolAnalytics_class->name = "ProtocolAnalytics";
-	jsb_ProtocolAnalytics_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolAnalytics_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolAnalytics_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolAnalytics_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolAnalytics_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolAnalytics_class->resolve = JS_ResolveStub;
-	jsb_ProtocolAnalytics_class->convert = JS_ConvertStub;
-	jsb_ProtocolAnalytics_class->finalize = js_pluginx_protocols_ProtocolAnalytics_finalize;
-	jsb_ProtocolAnalytics_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolAnalytics_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->name = "ProtocolAnalytics";
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->finalize = js_cocos2d_plugin_ProtocolAnalytics_finalize;
+	jsb_cocos2d_plugin_ProtocolAnalytics_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	JSPropertySpec *properties = NULL;
 
@@ -562,10 +564,10 @@ void js_register_pluginx_protocols_ProtocolAnalytics(JSContext *cx, JSObject *gl
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolAnalytics_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolAnalytics_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolAnalytics_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolAnalytics_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -578,21 +580,19 @@ void js_register_pluginx_protocols_ProtocolAnalytics(JSContext *cx, JSObject *gl
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolAnalytics> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolAnalytics_class;
-		p->proto = jsb_ProtocolAnalytics_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolAnalytics_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolAnalytics_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolIAP_class;
-JSObject *jsb_ProtocolIAP_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolIAP_class;
+JSObject *jsb_cocos2d_plugin_ProtocolIAP_prototype;
 
 JSBool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -603,7 +603,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t ar
 	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolIAP_payForProduct : Invalid Native Object");
 	if (argc == 1) {
-		TProductInfo arg0;
+		cocos2d::plugin::TProductInfo arg0;
 		ok &= jsval_to_TProductInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolIAP_payForProduct : Error processing arguments");
 		cobj->payForProduct(arg0);
@@ -645,7 +645,7 @@ JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint3
 	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolIAP_configDeveloperInfo : Invalid Native Object");
 	if (argc == 1) {
-		TIAPDeveloperInfo arg0;
+		cocos2d::plugin::TIAPDeveloperInfo arg0;
 		ok &= jsval_to_TIAPDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolIAP_configDeveloperInfo : Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
@@ -657,10 +657,9 @@ JSBool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint3
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolIAP_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolIAP_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolIAP)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -677,17 +676,17 @@ void js_pluginx_protocols_ProtocolIAP_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) {
-	jsb_ProtocolIAP_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolIAP_class->name = "ProtocolIAP";
-	jsb_ProtocolIAP_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolIAP_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolIAP_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolIAP_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolIAP_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolIAP_class->resolve = JS_ResolveStub;
-	jsb_ProtocolIAP_class->convert = JS_ConvertStub;
-	jsb_ProtocolIAP_class->finalize = js_pluginx_protocols_ProtocolIAP_finalize;
-	jsb_ProtocolIAP_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolIAP_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolIAP_class->name = "ProtocolIAP";
+	jsb_cocos2d_plugin_ProtocolIAP_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolIAP_class->finalize = js_cocos2d_plugin_ProtocolIAP_finalize;
+	jsb_cocos2d_plugin_ProtocolIAP_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -702,10 +701,10 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) 
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolIAP_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolIAP_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolIAP_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolIAP_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -718,21 +717,19 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) 
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolIAP> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolIAP_class;
-		p->proto = jsb_ProtocolIAP_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolIAP_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolIAP_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolAds_class;
-JSObject *jsb_ProtocolAds_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolAds_class;
+JSObject *jsb_cocos2d_plugin_ProtocolAds_prototype;
 
 JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -743,7 +740,7 @@ JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, js
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_showAds : Invalid Native Object");
 	if (argc == 1) {
-		TAdsInfo arg0;
+		cocos2d::plugin::TAdsInfo arg0;
 		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_showAds : Error processing arguments");
 		cobj->showAds(arg0);
@@ -751,7 +748,7 @@ JSBool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, js
 		return JS_TRUE;
 	}
 	if (argc == 2) {
-		TAdsInfo arg0;
+		cocos2d::plugin::TAdsInfo arg0;
 		cocos2d::plugin::ProtocolAds::AdsPos arg1;
 		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
 		ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
@@ -773,7 +770,7 @@ JSBool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, js
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_hideAds : Invalid Native Object");
 	if (argc == 1) {
-		TAdsInfo arg0;
+		cocos2d::plugin::TAdsInfo arg0;
 		ok &= jsval_to_TAdsInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_hideAds : Error processing arguments");
 		cobj->hideAds(arg0);
@@ -828,7 +825,7 @@ JSBool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint3
 	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_configDeveloperInfo : Invalid Native Object");
 	if (argc == 1) {
-		TAdsDeveloperInfo arg0;
+		cocos2d::plugin::TAdsDeveloperInfo arg0;
 		ok &= jsval_to_TAdsDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolAds_configDeveloperInfo : Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
@@ -864,10 +861,9 @@ JSBool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t a
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolAds_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolAds_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolAds)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -884,17 +880,17 @@ void js_pluginx_protocols_ProtocolAds_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
 void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) {
-	jsb_ProtocolAds_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolAds_class->name = "ProtocolAds";
-	jsb_ProtocolAds_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolAds_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolAds_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolAds_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolAds_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolAds_class->resolve = JS_ResolveStub;
-	jsb_ProtocolAds_class->convert = JS_ConvertStub;
-	jsb_ProtocolAds_class->finalize = js_pluginx_protocols_ProtocolAds_finalize;
-	jsb_ProtocolAds_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolAds_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolAds_class->name = "ProtocolAds";
+	jsb_cocos2d_plugin_ProtocolAds_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolAds_class->finalize = js_cocos2d_plugin_ProtocolAds_finalize;
+	jsb_cocos2d_plugin_ProtocolAds_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -912,10 +908,10 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolAds_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolAds_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolAds_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolAds_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -928,21 +924,19 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolAds> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolAds_class;
-		p->proto = jsb_ProtocolAds_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolAds_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolAds_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolShare_class;
-JSObject *jsb_ProtocolShare_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolShare_class;
+JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
 
 JSBool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -975,7 +969,7 @@ JSBool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, js
 	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolShare_share : Invalid Native Object");
 	if (argc == 1) {
-		TShareInfo arg0;
+		cocos2d::plugin::TShareInfo arg0;
 		ok &= jsval_to_TShareInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
 		cobj->share(arg0);
@@ -995,7 +989,7 @@ JSBool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uin
 	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolShare_configDeveloperInfo : Invalid Native Object");
 	if (argc == 1) {
-		TShareDeveloperInfo arg0;
+		cocos2d::plugin::TShareDeveloperInfo arg0;
 		ok &= jsval_to_TShareDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolShare_configDeveloperInfo : Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
@@ -1007,10 +1001,9 @@ JSBool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uin
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolShare_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolShare_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolShare)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -1027,17 +1020,17 @@ void js_pluginx_protocols_ProtocolShare_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
 void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global) {
-	jsb_ProtocolShare_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolShare_class->name = "ProtocolShare";
-	jsb_ProtocolShare_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolShare_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolShare_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolShare_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolShare_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolShare_class->resolve = JS_ResolveStub;
-	jsb_ProtocolShare_class->convert = JS_ConvertStub;
-	jsb_ProtocolShare_class->finalize = js_pluginx_protocols_ProtocolShare_finalize;
-	jsb_ProtocolShare_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolShare_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolShare_class->name = "ProtocolShare";
+	jsb_cocos2d_plugin_ProtocolShare_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolShare_class->finalize = js_cocos2d_plugin_ProtocolShare_finalize;
+	jsb_cocos2d_plugin_ProtocolShare_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -1052,10 +1045,10 @@ void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolShare_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolShare_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolShare_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolShare_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -1068,21 +1061,19 @@ void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolShare> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolShare_class;
-		p->proto = jsb_ProtocolShare_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolShare_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolShare_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolSocial_class;
-JSObject *jsb_ProtocolSocial_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolSocial_class;
+JSObject *jsb_cocos2d_plugin_ProtocolSocial_prototype;
 
 JSBool js_pluginx_protocols_ProtocolSocial_showLeaderboard(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1150,7 +1141,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, ui
 	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolSocial_configDeveloperInfo : Invalid Native Object");
 	if (argc == 1) {
-		TSocialDeveloperInfo arg0;
+		cocos2d::plugin::TSocialDeveloperInfo arg0;
 		ok &= jsval_to_TSocialDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolSocial_configDeveloperInfo : Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
@@ -1170,7 +1161,7 @@ JSBool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint
 	cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Invalid Native Object");
 	if (argc == 1) {
-		TAchievementInfo arg0;
+		cocos2d::plugin::TAchievementInfo arg0;
 		ok &= jsval_to_TAchievementInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Error processing arguments");
 		cobj->unlockAchievement(arg0);
@@ -1182,10 +1173,9 @@ JSBool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolSocial)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -1202,17 +1192,17 @@ void js_pluginx_protocols_ProtocolSocial_finalize(JSFreeOp *fop, JSObject *obj) 
 }
 
 void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *global) {
-	jsb_ProtocolSocial_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolSocial_class->name = "ProtocolSocial";
-	jsb_ProtocolSocial_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolSocial_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolSocial_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolSocial_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolSocial_class->resolve = JS_ResolveStub;
-	jsb_ProtocolSocial_class->convert = JS_ConvertStub;
-	jsb_ProtocolSocial_class->finalize = js_pluginx_protocols_ProtocolSocial_finalize;
-	jsb_ProtocolSocial_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolSocial_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolSocial_class->name = "ProtocolSocial";
+	jsb_cocos2d_plugin_ProtocolSocial_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolSocial_class->finalize = js_cocos2d_plugin_ProtocolSocial_finalize;
+	jsb_cocos2d_plugin_ProtocolSocial_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -1229,10 +1219,10 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolSocial_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolSocial_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolSocial_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolSocial_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -1245,21 +1235,19 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolSocial> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolSocial_class;
-		p->proto = jsb_ProtocolSocial_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolSocial_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolSocial_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
-
-JSClass  *jsb_ProtocolUser_class;
-JSObject *jsb_ProtocolUser_prototype;
+JSClass  *jsb_cocos2d_plugin_ProtocolUser_class;
+JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
 
 JSBool js_pluginx_protocols_ProtocolUser_isLogined(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1268,7 +1256,7 @@ JSBool js_pluginx_protocols_ProtocolUser_isLogined(JSContext *cx, uint32_t argc,
 	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolUser_isLogined : Invalid Native Object");
 	if (argc == 0) {
-		bool ret = cobj->isLogined();
+		JSBool ret = cobj->isLogined();
 		jsval jsret;
 		jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
@@ -1302,7 +1290,7 @@ JSBool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint
 	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Invalid Native Object");
 	if (argc == 1) {
-		TUserDeveloperInfo arg0;
+		cocos2d::plugin::TUserDeveloperInfo arg0;
 		ok &= jsval_to_TUserDeveloperInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Error processing arguments");
 		cobj->configDeveloperInfo(arg0);
@@ -1346,10 +1334,9 @@ JSBool js_pluginx_protocols_ProtocolUser_getSessionID(JSContext *cx, uint32_t ar
 	return JS_FALSE;
 }
 
+extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
-extern JSObject *jsb_PluginProtocol_prototype;
-
-void js_pluginx_protocols_ProtocolUser_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_cocos2d_plugin_ProtocolUser_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProtocolUser)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
@@ -1366,17 +1353,17 @@ void js_pluginx_protocols_ProtocolUser_finalize(JSFreeOp *fop, JSObject *obj) {
 }
 
 void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global) {
-	jsb_ProtocolUser_class = (JSClass *)calloc(1, sizeof(JSClass));
-	jsb_ProtocolUser_class->name = "ProtocolUser";
-	jsb_ProtocolUser_class->addProperty = JS_PropertyStub;
-	jsb_ProtocolUser_class->delProperty = JS_DeletePropertyStub;
-	jsb_ProtocolUser_class->getProperty = JS_PropertyStub;
-	jsb_ProtocolUser_class->setProperty = JS_StrictPropertyStub;
-	jsb_ProtocolUser_class->enumerate = JS_EnumerateStub;
-	jsb_ProtocolUser_class->resolve = JS_ResolveStub;
-	jsb_ProtocolUser_class->convert = JS_ConvertStub;
-	jsb_ProtocolUser_class->finalize = js_pluginx_protocols_ProtocolUser_finalize;
-	jsb_ProtocolUser_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	jsb_cocos2d_plugin_ProtocolUser_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_ProtocolUser_class->name = "ProtocolUser";
+	jsb_cocos2d_plugin_ProtocolUser_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_ProtocolUser_class->finalize = js_cocos2d_plugin_ProtocolUser_finalize;
+	jsb_cocos2d_plugin_ProtocolUser_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
@@ -1393,10 +1380,10 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global)
 
 	JSFunctionSpec *st_funcs = NULL;
 
-	jsb_ProtocolUser_prototype = JS_InitClass(
+	jsb_cocos2d_plugin_ProtocolUser_prototype = JS_InitClass(
 		cx, global,
-		jsb_PluginProtocol_prototype,
-		jsb_ProtocolUser_class,
+		jsb_cocos2d_plugin_PluginProtocol_prototype,
+		jsb_cocos2d_plugin_ProtocolUser_class,
 		empty_constructor, 0,
 		properties,
 		funcs,
@@ -1409,15 +1396,14 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global)
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::ProtocolUser> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
-		p->jsclass = jsb_ProtocolUser_class;
-		p->proto = jsb_ProtocolUser_prototype;
-		p->parentProto = jsb_PluginProtocol_prototype;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+		p->jsclass = jsb_cocos2d_plugin_ProtocolUser_class;
+		p->proto = jsb_cocos2d_plugin_ProtocolUser_prototype;
+		p->parentProto = jsb_cocos2d_plugin_PluginProtocol_prototype;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 

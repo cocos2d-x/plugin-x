@@ -98,7 +98,7 @@ setSessionContinueMillis : function () {},
 /**
  * @method logEvent
  * @param {const char*}
- * @param {LogEventParamMap*}
+ * @param {cocos2d::plugin::LogEventParamMap*}
  */
 logEvent : function () {},
 
@@ -128,7 +128,7 @@ plugin.ProtocolIAP = {
 
 /**
  * @method payForProduct
- * @param {TProductInfo}
+ * @param {cocos2d::plugin::TProductInfo}
  */
 payForProduct : function () {},
 
@@ -141,7 +141,7 @@ onPayResult : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TIAPDeveloperInfo}
+ * @param {cocos2d::plugin::TIAPDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
@@ -154,14 +154,14 @@ plugin.ProtocolAds = {
 
 /**
  * @method showAds
- * @param {TAdsInfo}
+ * @param {cocos2d::plugin::TAdsInfo}
  * @param {cocos2d::plugin::ProtocolAds::AdsPos}
  */
 showAds : function () {},
 
 /**
  * @method hideAds
- * @param {TAdsInfo}
+ * @param {cocos2d::plugin::TAdsInfo}
  */
 hideAds : function () {},
 
@@ -178,7 +178,7 @@ spendPoints : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TAdsDeveloperInfo}
+ * @param {cocos2d::plugin::TAdsDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
@@ -204,13 +204,13 @@ onShareResult : function () {},
 
 /**
  * @method share
- * @param {TShareInfo}
+ * @param {cocos2d::plugin::TShareInfo}
  */
 share : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TShareDeveloperInfo}
+ * @param {cocos2d::plugin::TShareDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
@@ -241,13 +241,13 @@ submitScore : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TSocialDeveloperInfo}
+ * @param {cocos2d::plugin::TSocialDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
 /**
  * @method unlockAchievement
- * @param {TAchievementInfo}
+ * @param {cocos2d::plugin::TAchievementInfo}
  */
 unlockAchievement : function () {},
 
@@ -271,7 +271,7 @@ logout : function () {},
 
 /**
  * @method configDeveloperInfo
- * @param {TUserDeveloperInfo}
+ * @param {cocos2d::plugin::TUserDeveloperInfo}
  */
 configDeveloperInfo : function () {},
 
