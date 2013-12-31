@@ -71,8 +71,10 @@ JSBool js_pluginx_protocols_PluginParam_constructor(JSContext *cx, uint32_t argc
 
             TypeTest<cocos2d::plugin::PluginParam> t;
 			js_type_class_t *typeClass;
-			uint32_t typeId = t.s_id();
-			HASH_FIND_INT(_js_global_type_ht, &typeId, typeClass);
+			std::string typeName = t.s_name();
+			auto typeMapIter = _js_global_type_map.find(typeName);
+			assert(typeMapIter != _js_global_type_map.end());
+            typeClass = typeMapIter->second;
 			assert(typeClass);
 			obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
 			js_proxy_t *proxy;
@@ -152,15 +154,15 @@ void js_register_pluginx_protocols_PluginParam(JSContext *cx, JSObject *global) 
 	// add the proto and JSClass to the type->js info hash table
 	TypeTest<cocos2d::plugin::PluginParam> t;
 	js_type_class_t *p;
-	uint32_t typeId = t.s_id();
-	HASH_FIND_INT(_js_global_type_ht, &typeId, p);
-	if (!p) {
+	std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    if (typeMapIter == _js_global_type_map.end())
+    {
 		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-		p->type = typeId;
 		p->jsclass = jsb_PluginParam_class;
 		p->proto = jsb_PluginParam_prototype;
 		p->parentProto = NULL;
-		HASH_ADD_INT(_js_global_type_ht, type, p);
+        _js_global_type_map.insert(std::make_pair(typeName, p));
 	}
 }
 
