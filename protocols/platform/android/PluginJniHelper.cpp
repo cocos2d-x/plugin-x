@@ -45,6 +45,12 @@ extern "C"
 
         do 
         {
+            if(!JAVAVM)
+            {
+                LOGD("JavaVM is NULL");
+                break;
+            }
+
             if (JAVAVM->GetEnv((void**)env, JNI_VERSION_1_4) != JNI_OK)
             {
                 LOGD("Failed to get the environment using GetEnv()");
