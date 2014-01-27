@@ -35,10 +35,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto designSize = Size(640, 960);
     EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-    
+
     // turn on display FPS
     pDirector->setDisplayStats(true);
-    
+
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
@@ -60,27 +60,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->runScript("main.js");
 
     return true;
-}
-
-
-void handle_signal(int signal) {
-    static int internal_state = 0;
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    // should start everything back
-    auto director = Director::getInstance();
-    if (director->getRunningScene()) {
-        director->popToRootScene();
-    } else {
-        PoolManager::sharedPoolManager()->finalize();
-        if (internal_state == 0) {
-            //sc->dumpRoot(NULL, 0, NULL);
-            sc->start();
-            internal_state = 1;
-        } else {
-            sc->runScript("hello.js");
-            internal_state = 0;
-        }
-    }
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
