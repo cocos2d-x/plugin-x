@@ -76,7 +76,7 @@ bool TestIAP::init()
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
-    EGLView* pEGLView = EGLView::getInstance();
+    auto pEGLView = Director::getInstance()->getOpenGLView();
     Point posBR = Point(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
     Point posTL = Point(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
 

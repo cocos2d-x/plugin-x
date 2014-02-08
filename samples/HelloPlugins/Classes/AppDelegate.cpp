@@ -20,9 +20,11 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
-    auto glView = EGLView::getInstance();
-
-    director->setOpenGLView(glView);
+    auto glView = director->getOpenGLView();
+    if(!glView) {
+        glView = GLView::create("Test Cpp");
+        director->setOpenGLView(glView);
+    }
     
     auto size = director->getWinSize();
 

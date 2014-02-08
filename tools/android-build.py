@@ -8,8 +8,7 @@ import shutil
 from optparse import OptionParser
 
 CPP_SAMPLES = ["HelloPlugins"]
-JSB_SAMPLES = ["HelloIAP-JS", "HelloAnalytics-JS"]
-ALL_SAMPLES = CPP_SAMPLES + JSB_SAMPLES
+ALL_SAMPLES = CPP_SAMPLES
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -109,11 +108,11 @@ def copy_resources(target, app_android_root, plugin_root):
         copy_files(resources_dir, assets_dir)
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
-        copy_files(resources_dir, assets_dir)
-        resources_dir = os.path.join(plugin_root, "jsbindings/js")
-        copy_files(resources_dir, assets_dir)
+    # if target in JSB_SAMPLES:
+    #     resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
+    #     copy_files(resources_dir, assets_dir)
+    #     resources_dir = os.path.join(plugin_root, "jsbindings/js")
+    #     copy_files(resources_dir, assets_dir)
 
     # copy plugin resources to the assets
     plugins_dir = os.path.join(plugin_root, "publish" + os.path.sep + "plugins")
@@ -153,11 +152,7 @@ def build_samples(target,ndk_build_param):
 # -------------- main --------------
 if __name__ == '__main__':
 
-    usage = """usage: %prog [options] target
-    
-    Valid targets are: [HelloPlugins|HelloIAP-JS|HelloAnalytics-JS]
-
-    You can use [all|cpp|jsb], to build all, or all the C++, or all the JavaScript samples respectevely."""
+    usage = "usage: %prog all"
 
     #parse the params
     parser = OptionParser(usage=usage)
