@@ -123,6 +123,7 @@ bool TestAnalytics::init()
 void TestAnalytics::onExit()
 {
     unloadPlugins();
+    Layer::onExit();
 }
 
 void TestAnalytics::eventMenuCallback(Ref* pSender)
