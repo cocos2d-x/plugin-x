@@ -307,6 +307,7 @@ bool PluginJniHelper::getMethodInfo_DefaultClassLoader(PluginJniMethodInfo &meth
     methodinfo.env = pEnv;
     methodinfo.methodID = methodID;
 
+    pEnv->DeleteLocalRef(classID);
     return true;
 }
 
