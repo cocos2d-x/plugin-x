@@ -61,67 +61,67 @@ public:
 };
 
 
-JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
+bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {
-    JSBool ok = JS_TRUE;
+    bool ok = true;
     double dp;
-    ok &= JS_ValueToNumber(cx, vp, &dp);
+    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
     if (!ok) {
         LOGD("jsval_to_int32: the argument is not a number");
-        return JS_FALSE;
+        return false;
     }
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     *outval = (int32_t)dp;
 
     return ok;
 }
 
-JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
+bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
 {
-    JSBool ok = JS_TRUE;
+    bool ok = true;
     double dp;
-    ok &= JS_ValueToNumber(cx, vp, &dp);
+    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
     if (!ok) {
         LOGD("jsval_to_uint32: the argument is not a number");
-        return JS_FALSE;
+        return false;
     }
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     *outval = (uint32_t)dp;
 
     return ok;
 }
 
-JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
+bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
 {
-    JSBool ok = JS_TRUE;
+    bool ok = true;
     double dp;
-    ok &= JS_ValueToNumber(cx, vp, &dp);
+    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
     if (!ok) {
         LOGD("jsval_to_uint16: the argument is not a number");
-        return JS_FALSE;
+        return false;
     }
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     *outval = (uint16_t)dp;
 
     return ok;
 }
 
-JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
-    JSObject *tmp_arg;
-    JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+bool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+    JS::RootedObject tmp_arg(cx);
+    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
     if (!ok) {
         LOGD("jsval_to_long_long: Error converting value to object");
-        return JS_FALSE;
+        return false;
     }
 
-    JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, JS_FALSE, "Not a TypedArray object");
-    JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, JS_FALSE, "Invalid Typed Array length");
+    JSB_PRECONDITION2( tmp_arg && JS_IsTypedArrayObject( tmp_arg ), cx, false, "Not a TypedArray object");
+    JSB_PRECONDITION2( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), cx, false, "Invalid Typed Array length");
     
     uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
     long long ret =  arg_array[0];
@@ -129,44 +129,44 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
     ret |= arg_array[1];
     
     *r = ret;
-    return JS_TRUE;
+    return true;
 }
 
-JSBool jsval_to_long(JSContext *cx, jsval vp, long* ret)
+bool jsval_to_long(JSContext *cx, jsval vp, long* ret)
 {
-    JSBool ok = JS_TRUE;
+    bool ok = true;
     double dp;
-    ok &= JS_ValueToNumber(cx, vp, &dp);
+    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
     if (!ok) {
         LOGD("jsval_to_long: the argument is not a number");
-        return JS_FALSE;
+        return false;
     }
     ok &= !isnan(dp);
-    JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
     *ret = (long)dp;
 
     return ok;
 }
 
-JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
+bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
     JSString *tmp = JS_ValueToString(cx, v);
     if (!tmp) {
         LOGD("jsval_to_std_string: the jsval is not a string.");
-        return JS_FALSE;
+        return false;
     }
 
     JSStringWrapper str(tmp, cx);
     *ret = str.get();
-    return JS_TRUE;
+    return true;
 }
 
-JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
+bool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
 {
     JSObject* tmp = JSVAL_TO_OBJECT(v);
     if (!tmp) {
         LOGD("jsval_to_TProductInfo: the jsval is not an object.");
-        return JS_FALSE;
+        return false;
     }
 
     JSObject* it = JS_NewPropertyIterator(cx, tmp);
@@ -176,7 +176,7 @@ JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
         jsid idp;
         jsval key;
         if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key))
-            return JS_FALSE; // error
+            return false; // error
         if (key == JSVAL_VOID)
             break; // end of iteration
         if (! JSVAL_IS_STRING(key))
@@ -193,57 +193,57 @@ JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
         LOGD("iterate object: key = %s, value = %s", strWrapper.get().c_str(), strWrapper2.get().c_str());
     }
 
-    return JS_TRUE;
+    return true;
 }
 
-JSBool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret)
+bool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret)
+bool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret)
+bool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret)
+bool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret)
+bool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
+bool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+bool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret)
+bool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret)
+bool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
+bool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
 {
-    JSBool jsret = JS_FALSE;
+    bool jsret = false;
     if (v.isObject())
     {
         LogEventParamMap* tmp = new LogEventParamMap();
@@ -256,7 +256,7 @@ JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
     return jsret;
 }
 
-JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
+bool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
@@ -286,7 +286,7 @@ jsval long_to_jsval(JSContext* cx, long v)
 }
 
 jsval std_string_to_jsval(JSContext* cx, const std::string& v) {
-    return c_string_to_jsval(cx, v.c_str());
+    return c_string_to_jsval(cx, v.data());
 }
 
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) {

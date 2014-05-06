@@ -4,7 +4,7 @@
 
 static jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string) {
     jsval out;
-    if (JS_EvaluateScript(cx, thisObj, string, strlen(string), "(string)", 1, &out) == JS_TRUE) {
+    if (JS_EvaluateScript(cx, thisObj, string, strlen(string), "(string)", 1, &out) == true) {
         return out;
     }
     return JSVAL_VOID;
@@ -21,7 +21,7 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 {
     // first, try to get the ns
     JS::RootedValue nsval(cx);
-    JSObject *ns;
+    JS::RootedObject ns(cx);
     JS_GetProperty(cx, global, "plugin", &nsval);
     if (nsval == JSVAL_VOID) {
         ns = JS_NewObject(cx, NULL, NULL, NULL);

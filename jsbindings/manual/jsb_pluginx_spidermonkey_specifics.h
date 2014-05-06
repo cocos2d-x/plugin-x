@@ -1,6 +1,7 @@
 #ifndef __JS_PLUGINX_SPIDERMONKEY_SPECIFICS_H__
 #define __JS_PLUGINX_SPIDERMONKEY_SPECIFICS_H__
 
+#include "cocos2d.h"
 #include <typeinfo>
 #include <ctype.h>
 #include <string.h>
@@ -41,7 +42,7 @@ namespace pluginx {
 		if( ! JS_IsExceptionPending( globalContext ) ) {						\
 			JS_ReportError( globalContext, __VA_ARGS__ );							\
 		}																		\
-		return JS_FALSE;														\
+		return false;														\
 	}																			\
 } while(0)
 
@@ -144,66 +145,71 @@ do { \
 #define JS_TEST_NATIVE_OBJECT(cx, native_obj) \
 if (!native_obj) { \
 	JS_ReportError(cx, "Invalid Native Object"); \
-	return JS_FALSE; \
+	return false; \
 }
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
-
-/**
- * You don't need to manage the returned pointer. They live for the whole life of
- * the app.
- */
-template <class T>
-inline js_type_class_t *js_get_type_from_native(T* native_obj) {
-    bool found = false;
-    std::string typeName = typeid(*native_obj).name();
-    auto typeProxyIter = _js_global_type_map.find(typeName);
-    if (typeProxyIter == _js_global_type_map.end())
-    {
-        typeName = typeid(T).name();
-        typeProxyIter = _js_global_type_map.find(typeName);
-        if (typeProxyIter != _js_global_type_map.end())
+    
+    /**
+     * You don't need to manage the returned pointer. They live for the whole life of
+     * the app.
+     */
+    template <class T>
+    inline js_type_class_t *js_get_type_from_native(T* native_obj) {
+        bool found = false;
+        std::string typeName = typeid(*native_obj).name();
+        auto typeProxyIter = _js_global_type_map.find(typeName);
+        if (typeProxyIter == _js_global_type_map.end())
+        {
+            typeName = typeid(T).name();
+            typeProxyIter = _js_global_type_map.find(typeName);
+            if (typeProxyIter != _js_global_type_map.end())
+            {
+                found = true;
+            }
+        }
+        else
         {
             found = true;
         }
+        return found ? typeProxyIter->second : nullptr;
     }
-    else
-    {
-        found = true;
+    
+    /**
+     * The returned pointer should be deleted using jsb_remove_proxy. Most of the
+     * time you do that in the C++ destructor.
+     */
+    template<class T>
+    inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
+        js_proxy_t *proxy;
+        HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
+        if (!proxy) {
+            js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
+            // Return NULL if can't find its type rather than making an assert.
+            //        assert(typeProxy);
+            if (!typeProxy) {
+                CCLOGINFO("Could not find the type of native object.");
+                return NULL;
+            }
+            
+            //JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            
+            JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
+            proxy = jsb_new_proxy(native_obj, js_obj);
+#ifdef DEBUG
+            JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
+#else
+            JS_AddObjectRoot(cx, &proxy->obj);
+#endif
+            return proxy;
+        } else {
+            return proxy;
+        }
+        return NULL;
     }
-    return found ? typeProxyIter->second : nullptr;
-}
-
-/**
- * The returned pointer should be deleted using JS_REMOVE_PROXY. Most of the
- * time you do that in the C++ destructor.
- */
-template<class T>
-inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
-    js_proxy_t *proxy;
-    HASH_FIND_PTR(_native_js_global_ht, &native_obj, proxy);
-    if (!proxy) {
-        js_type_class_t *typeProxy = js_get_type_from_native<T>(native_obj);
-        assert(typeProxy);
-        JSObject* js_obj = JS_NewObject(cx, typeProxy->jsclass, typeProxy->proto, typeProxy->parentProto);
-        JS_NEW_PROXY(proxy, native_obj, js_obj);
-//#ifdef COCOS2D_JAVASCRIPT
-// #ifdef DEBUG
-//         JS_AddNamedObjectRoot(cx, &proxy->obj, typeid(*native_obj).name());
-// #else
-//         JS_AddObjectRoot(cx, &proxy->obj);
-// #endif
-//#endif
-        return proxy;
-    } else {
-        return proxy;
-    }
-    return NULL;
-}
-
 
 } // namespace pluginx {
 

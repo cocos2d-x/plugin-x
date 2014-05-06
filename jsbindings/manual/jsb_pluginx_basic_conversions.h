@@ -20,24 +20,24 @@ using namespace cocos2d::plugin;
 namespace pluginx {
 
 // to native
-JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
-JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
-JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
-JSBool jsval_to_long(JSContext *cx, jsval v, long* ret);
-JSBool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
-JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
-JSBool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret);
-JSBool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret);
-JSBool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret);
-JSBool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret);
-JSBool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret);
-JSBool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret);
-JSBool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret);
-JSBool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret);
-JSBool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret);
-JSBool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret);
-JSBool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret);
-JSBool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret);
+bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
+bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
+bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
+bool jsval_to_long(JSContext *cx, jsval v, long* ret);
+bool jsval_to_long_long(JSContext *cx, jsval v, long long* ret);
+bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret);
+bool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret);
+bool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret);
+bool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret);
+bool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret);
+bool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret);
+bool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret);
+bool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret);
+bool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret);
+bool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret);
+bool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret);
+bool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret);
+bool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
