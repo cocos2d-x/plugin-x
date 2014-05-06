@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # ... use paths relative to current directory
 PLUGIN_ROOT="$DIR/../.."
-CXX_GENERATOR_ROOT="$DIR/../../../tools/bindings-generator"
+CXX_GENERATOR_ROOT="$DIR/../../../../../../tools/bindings-generator"
 # Delete the output directory
 if [ -d $PLUGIN_ROOT/jsbindings/auto ]; then
     echo "Delete the output directory."
@@ -26,7 +26,7 @@ check_return_value()
     fi
 }
 
-./genbindings.sh "protocols"
-check_return_value "protocols"
+./genbindings.sh "cocos2dx_pluginx" $PLUGIN_ROOT $CXX_GENERATOR_ROOT 
+check_return_value "cocos2dx_pluginx"
 
 echo "--- Generating all jsbindings glue codes for pluginx succeed. :) --- "

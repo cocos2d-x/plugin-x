@@ -5,10 +5,11 @@ if [ -z $1 ]; then
     exit 1
 fi
 
-SUB_DIR="$2"
 PLUGIN_NAME="$1"
-INI_NAME="jsb_$PLUGIN_NAME.ini"
-OUTPUT_FILENAME="jsb_pluginx_"$PLUGIN_NAME"_auto"
+PLUGIN_ROOT="$2"
+CXX_GENERATOR_ROOT="$3"
+INI_NAME="$PLUGIN_NAME.ini"
+OUTPUT_FILENAME="jsb_"$PLUGIN_NAME"_auto"
 
 echo "--------------"
 echo "plugin name: $PLUGIN_NAME"
@@ -36,8 +37,8 @@ if [ -z "${NDK_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${CLANG_ROOT+aaa}" ]; then
-# ... if CLANG_ROOT is not set, use "$HOME/bin/clang+llvm-3.1"
-    CLANG_ROOT="$HOME/bin/clang+llvm-3.1"
+# ... if CLANG_ROOT is not set, use "$NDK_ROOT/toolchains/llvm-3.3/prebuilt/darwin-x86_64"
+    CLANG_ROOT="$NDK_ROOT/toolchains/llvm-3.3/prebuilt/darwin-x86_64"
 fi
 
 if [ -z "${PYTHON_BIN+aaa}" ]; then
@@ -55,11 +56,11 @@ if [ -z "${PLUGINX_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
-    CXX_GENERATOR_ROOT="$PLUGINX_ROOT/../tools/bindings-generator"
+    CXX_GENERATOR_ROOT="$DIR/../../../tools/bindings-generator"
 fi
 
 if [ -z "${TOJS_ROOT+aaa}" ]; then
-    TO_JS_ROOT="$PLUGINX_ROOT/tools/tojs"
+    TO_JS_ROOT="$DIR/tojs"
 fi
 
 echo "Paths"
@@ -97,8 +98,8 @@ set -x
 mv $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml.backup
 cp conversions.yaml $CXX_GENERATOR_ROOT/targets/spidermonkey
 
-LD_LIBRARY_PATH=${CLANG_ROOT}/lib \
-$PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py -t spidermonkey ${PLUGINX_ROOT}/${SUB_DIR}$PLUGIN_NAME/$INI_NAME -s $PLUGIN_NAME -o $PLUGINX_ROOT/jsbindings/auto -n $OUTPUT_FILENAME
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang \
+$PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py -t spidermonkey ${TO_JS_ROOT}/$INI_NAME -s $PLUGIN_NAME -o $PLUGINX_ROOT/jsbindings/auto -n $OUTPUT_FILENAME
 
 mv $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml.backup $CXX_GENERATOR_ROOT/targets/spidermonkey/conversions.yaml
 
