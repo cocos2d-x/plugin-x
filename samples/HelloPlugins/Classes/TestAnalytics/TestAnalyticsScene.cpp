@@ -123,9 +123,10 @@ bool TestAnalytics::init()
 void TestAnalytics::onExit()
 {
     unloadPlugins();
+    Layer::onExit();
 }
 
-void TestAnalytics::eventMenuCallback(Object* pSender)
+void TestAnalytics::eventMenuCallback(Ref* pSender)
 {
     MenuItemLabel* pMenuItem = (MenuItemLabel*)pSender;
 
@@ -291,7 +292,7 @@ void TestAnalytics::unloadPlugins()
     }
 }
 
-void TestAnalytics::menuBackCallback(Object* pSender)
+void TestAnalytics::menuBackCallback(Ref* pSender)
 {
     Scene* newScene = HelloWorld::scene();
     Director::getInstance()->replaceScene(newScene);

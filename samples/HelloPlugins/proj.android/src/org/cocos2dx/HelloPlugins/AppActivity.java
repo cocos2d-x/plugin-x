@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2012-2013 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -21,26 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __TEST_SHARE_SCENE_H__
-#define __TEST_SHARE_SCENE_H__
+package org.cocos2dx.HelloPlugins;
 
-#include "cocos2d.h"
+import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.plugin.PluginWrapper;
 
-class TestShare : public cocos2d::Layer
-{
-public:
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    virtual bool init();  
-
-    // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-    static cocos2d::Scene* scene();
+public class AppActivity extends Cocos2dxActivity {
     
-    // a selector callback
-    void menuBackCallback(Ref* pSender);
-    void eventMenuCallback(Ref* pSender);
-
-    // implement the "static node()" method manually
-    CREATE_FUNC(TestShare);
-};
-
-#endif // __TEST_SHARE_SCENE_H__
+    public Cocos2dxGLSurfaceView onCreateView() {
+        Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+        // TestCpp should create stencil buffer
+        glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
+        
+        PluginWrapper.init(this);
+        PluginWrapper.setGLSurfaceView(glSurfaceView);
+        return glSurfaceView;
+    }
+}
