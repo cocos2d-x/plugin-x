@@ -45,9 +45,8 @@ bool js_pluginx_protocols_PluginParam_constructor(JSContext *cx, uint32_t argc, 
                 break;
             case cocos2d::plugin::PluginParam::kParamTypeBool:
                 {
-                    bool arg1;
-        			ok &= JS_ValueToBoolean(cx, argv[1], &arg1);
-        			if (ok) { cobj = new cocos2d::plugin::PluginParam(arg1); }
+                    bool arg1 = JS::ToBoolean(JS::RootedValue(cx, argv[1]));
+        			cobj = new cocos2d::plugin::PluginParam(arg1);
                 }
                 break;
             case cocos2d::plugin::PluginParam::kParamTypeString:
