@@ -150,7 +150,7 @@ bool jsval_to_long(JSContext *cx, jsval vp, long* ret)
 }
 
 bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = JS_ValueToString(cx, v);
+    JSString *tmp = JS::ToString(cx, JS::RootedValue(cx, v));
     if (!tmp) {
         LOGD("jsval_to_std_string: the jsval is not a string.");
         return false;
