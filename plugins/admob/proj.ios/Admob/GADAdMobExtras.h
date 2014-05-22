@@ -4,15 +4,15 @@
 //
 //  Copyright (c) 2012 Google Inc. All rights reserved.
 //
-//  The additional parameters publishers may send to the AdMob network.
-//
 
 #import <Foundation/Foundation.h>
 
 #import "GADAdNetworkExtras.h"
+#import "GADModules.h"
 
-@interface GADAdMobExtras : NSObject <GADAdNetworkExtras>
+@interface GADAdMobExtras : NSObject<GADAdNetworkExtras>
 
-@property (nonatomic, retain) NSDictionary *additionalParameters;
+/// The additional parameters publishers may send to the AdMob network.
+@property(nonatomic, copy) NSDictionary *additionalParameters;
 
 @end
