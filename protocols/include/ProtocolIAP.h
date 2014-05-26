@@ -32,7 +32,7 @@ namespace cocos2d { namespace plugin {
 
 typedef std::map<std::string, std::string> TIAPDeveloperInfo;
 typedef std::map<std::string, std::string> TProductInfo;
-
+typedef std::vector<TProductInfo> TProductList;
 typedef enum 
 {
     kPaySuccess = 0,
@@ -45,6 +45,7 @@ class PayResultListener
 {
 public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info) = 0;
+    virtual void onRequestProductsResult(PayResultCode ret, TProductList info) = 0;
 };
 
 class ProtocolIAP : public PluginProtocol
@@ -84,6 +85,7 @@ public:
     @brief pay result callback
     */
     void onPayResult(PayResultCode ret, const char* msg);
+    void onRequestProductsResult(PayResultCode ret, TProductList msg);
 
 protected:
     static bool _paying;

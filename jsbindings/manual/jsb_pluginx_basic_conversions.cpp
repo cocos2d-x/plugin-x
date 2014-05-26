@@ -319,7 +319,16 @@ jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret)
 
     return OBJECT_TO_JSVAL(tmp);
 }
-
+jsval TProductList_to_jsval(JSContext *cx,TProductList list){
+    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    if(!tmp) return JSVAL_NULL;
+    jsval dataList[list.size()];
+    for(TProductList::iterator it = list.begin();it!=list.end();++it){
+        dataList[it-list.begin()] = TProductInfo_to_jsval(cx, *it);
+    }
+    JS_DefineProperty(cx, tmp,"productList", *dataList, NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    return OBJECT_TO_JSVAL(tmp);
+}
 jsval LogEventParamMap_to_jsval(JSContext *cx, LogEventParamMap*& ret)
 {// TODO:
     return JSVAL_NULL;

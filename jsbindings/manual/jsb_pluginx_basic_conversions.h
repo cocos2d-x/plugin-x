@@ -47,6 +47,7 @@ jsval long_to_jsval(JSContext* cx, long v);
 jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret);
+jsval TProductList_to_jsval(JSContext *cx, TProductList ret);
 jsval LogEventParamMap_to_jsval(JSContext *cx, LogEventParamMap*& ret);
 
 } // namespace pluginx {
