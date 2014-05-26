@@ -82,7 +82,6 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 			PluginUtilsIOS::outputLog("Unable to load class '%s'. Did you add the -ObjC linker flag?", name);
 			break;
 		}
-		id obj = [[theClass alloc] init];
 
         id obj = [[NSClassFromString(className) alloc] init];
         if (obj == nil) break;
