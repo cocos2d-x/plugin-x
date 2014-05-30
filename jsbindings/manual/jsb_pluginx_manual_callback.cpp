@@ -75,7 +75,7 @@ public:
             }
             
             JS_CallFunctionName(cx, obj, "onRequestProductResult",
-                                3, dataVal, &retval);
+                                2, dataVal, &retval);
         }
 
     }

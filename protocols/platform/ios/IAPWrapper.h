@@ -29,14 +29,13 @@ typedef enum {
     PaymentTransactionStatePurchased = 0,
     PaymentTransactionStateFailed,
     PaymentTransactionStateRestored,
-    GetProductList,
+    PaymentTransactionStateTimeout,
+    PaymentTransactionStateVerifyFromServer,
 } IAPResult;
 typedef enum {
-    RequestSuccees = 0,
-    RequestFail,
-    RequestCancel,
-    RequestTimeout,
-    RequestSending = 1,
+    RequestSuccees = 1,
+    RequestFail=0,
+    RequestSending = 2,
 } IAPProductRequest;
 
 @interface IAPWrapper : NSObject

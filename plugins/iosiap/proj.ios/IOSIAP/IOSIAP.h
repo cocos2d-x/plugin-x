@@ -38,12 +38,14 @@
 @property BOOL debug;
 /* ---------iap functions-------*/
 -(void) requestProducts:(NSString*) paralist;
--(void) setServerPath:(NSString *) path;
+-(void) setServerMode;
+// when complete payment whether success or fail call this function
+- (void)finishTransaction:(NSString *)productId;
 
 //SKProductsRequestDelegate needed
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response;
 
 //SKPaymentTransactionObserver needed
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions;
-
+@property (nonatomic,assign) BOOL _isServerMode;
 @end

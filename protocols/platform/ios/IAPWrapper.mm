@@ -57,7 +57,7 @@ using namespace cocos2d::plugin;
                 info.insert(std::make_pair("productId", std::string([product.productIdentifier UTF8String])));
                 info.insert(std::make_pair("productName", std::string([product.localizedTitle UTF8String])));
                 info.insert(std::make_pair("productPrice", std::string([[product.price stringValue] UTF8String])));
-                info.insert(std::make_pair("productDesc", std::string([product.description UTF8String])));
+                info.insert(std::make_pair("productDesc", std::string([product.localizedDescription UTF8String])));
                 pdlist.push_back(info);
             }
         }

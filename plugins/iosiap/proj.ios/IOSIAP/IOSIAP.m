@@ -26,24 +26,22 @@
 #define OUTPUT_LOG(...)     if (self.debug) NSLog(__VA_ARGS__);
 
 @implementation IOSIAP
-@synthesize debug;
-NSString * _serverPath = @"";
+@synthesize debug,_isServerMode;
 NSSet * _productIdentifiers;
 NSArray *_productArray;
 bool _isAddObserver = false;
-
 //productsRequest;
 SKProductsRequest * _productsRequest;
+//productTransation
+NSArray * _transactionArray;
 
 -(void) configDeveloperInfo: (NSMutableDictionary*) cpInfo{
 }
 - (void) payForProduct: (NSMutableDictionary*) cpInfo{
-    NSString * pid = [cpInfo objectForKey:@"pid"];
-    NSString * quantity = [cpInfo objectForKey:@"quantity"];
+    NSString * pid = [cpInfo objectForKey:@"productId"];
     SKProduct *skProduct = [self getProductById:pid];
     if(skProduct){
         SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:skProduct];
-        payment.quantity = [quantity intValue];
         [[SKPaymentQueue defaultQueue] addPayment:payment];
         OUTPUT_LOG(@"add PaymentQueue");
     }
@@ -60,12 +58,20 @@ SKProductsRequest * _productsRequest;
 }
 
 /*------------------------IAP functions-------------------------------*/
--(void)setServerPath:(NSString *)path{
-    _serverPath = path;
+-(void)setServerMode{
+    _isServerMode = true;
 }
 -(void)requestProducts:(NSString*) paramMap{
     [self setDebug:true];
     if(!_isAddObserver){
+        
+        
+        
+        //just for test
+        [self setServerMode];
+        
+        
+        
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         _isAddObserver = true;
     }
@@ -114,6 +120,7 @@ SKProductsRequest * _productsRequest;
 
 //SKPaymentTransactionObserver needed
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
+    _transactionArray = transactions;
     for (SKPaymentTransaction * transaction in transactions) {
         switch (transaction.transactionState)
         {
@@ -130,17 +137,36 @@ SKProductsRequest * _productsRequest;
         }
     };
 }
+
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
-    if([_serverPath isEqualToString:@""]){
-        [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@"aaa"];
+    NSString *receipt = nil;
+    if(_isServerMode){
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            // iOS 6.1 or earlier.
+            // Use SKPaymentTransaction's transactionReceipt.
+            receipt = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
+
+        } else {
+            // iOS 7 or later.
+            NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+            NSData *recData = [[NSData dataWithContentsOfURL:receiptURL] base64EncodedDataWithOptions:0];
+            receipt = [[NSString alloc] initWithData:recData encoding:NSUTF8StringEncoding];
+            if (!receipt) {
+                receipt = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
+            }
+        }
+        [IAPWrapper onPayResult:self withRet:PaymentTransactionStateVerifyFromServer withMsg:receipt];
+    }else{
+        [self finishTransaction: transaction.payment.productIdentifier];
+        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@"payment complete"];
     }
-    OUTPUT_LOG(@"completeTransaction...");
     
 }
+
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     OUTPUT_LOG(@"restoreTransaction...");
-    [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    [self finishTransaction:transaction.payment.productIdentifier];
+    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateRestored withMsg:@"payment restore"];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
@@ -151,14 +177,28 @@ SKProductsRequest * _productsRequest;
         [[[UIAlertView alloc] initWithTitle:@"支付结果" message:transaction.error.localizedDescription delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil] show];
     }
     
-    [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    [self finishTransaction:transaction.payment.productIdentifier];
+    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateFailed withMsg:@"payment fail"];
 }
 
 - (void)restoreCompletedTransactions {
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 
-
+-(void) finishTransaction:(NSString *)productId{
+    SKPaymentTransaction *transaction = [self getTranscationByProductId:productId];
+    if(transaction){
+        [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    }
+}
+-(SKPaymentTransaction *) getTranscationByProductId:(NSString *)productId{
+    for(SKPaymentTransaction *tran in _transactionArray){
+        if([tran.payment.productIdentifier isEqualToString:productId]){
+            return tran;
+        }
+    }
+    return NULL;
+}
 - (NSString *)encode:(const uint8_t *)input length:(NSInteger)length {
     static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     
