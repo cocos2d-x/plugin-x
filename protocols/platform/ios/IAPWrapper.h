@@ -33,9 +33,9 @@ typedef enum {
     PaymentTransactionStateVerifyFromServer,
 } IAPResult;
 typedef enum {
-    RequestSuccees = 1,
-    RequestFail=0,
-    RequestSending = 2,
+    RequestSuccees=0,
+    RequestFail,
+    RequestSending,
 } IAPProductRequest;
 
 @interface IAPWrapper : NSObject

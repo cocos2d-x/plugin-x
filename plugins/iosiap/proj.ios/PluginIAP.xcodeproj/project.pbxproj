@@ -34,9 +34,6 @@
 		05A9358819260E2E00F08DC0 /* IOSIAP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOSIAP.m; sourceTree = "<group>"; };
 		05A9358F19260E2F00F08DC0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		05A9359219260E2F00F08DC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		05A9359919260E2F00F08DC0 /* PluginIAPTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PluginIAPTests-Info.plist"; sourceTree = "<group>"; };
-		05A9359B19260E2F00F08DC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		05A9359D19260E2F00F08DC0 /* IOSIAPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOSIAPTests.m; sourceTree = "<group>"; };
 		05A935B019260FF000F08DC0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -57,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				05A9358319260E2E00F08DC0 /* IOSIAP */,
-				05A9359719260E2F00F08DC0 /* IOSIAPTests */,
 				05A9358019260E2E00F08DC0 /* Frameworks */,
 				05A9357F19260E2E00F08DC0 /* Products */,
 			);
@@ -96,24 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				05A9358519260E2E00F08DC0 /* PluginIAP-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		05A9359719260E2F00F08DC0 /* IOSIAPTests */ = {
-			isa = PBXGroup;
-			children = (
-				05A9359D19260E2F00F08DC0 /* IOSIAPTests.m */,
-				05A9359819260E2F00F08DC0 /* Supporting Files */,
-			);
-			path = IOSIAPTests;
-			sourceTree = "<group>";
-		};
-		05A9359819260E2F00F08DC0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				05A9359919260E2F00F08DC0 /* PluginIAPTests-Info.plist */,
-				05A9359A19260E2F00F08DC0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -174,17 +152,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		05A9359A19260E2F00F08DC0 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				05A9359B19260E2F00F08DC0 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		05A9359F19260E2F00F08DC0 /* Debug */ = {
