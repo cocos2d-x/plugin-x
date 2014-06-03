@@ -64,14 +64,6 @@ NSArray * _transactionArray;
 -(void)requestProducts:(NSString*) paramMap{
     [self setDebug:true];
     if(!_isAddObserver){
-        
-        
-        
-        //just for test
-        [self setServerMode];
-        
-        
-        
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
         _isAddObserver = true;
     }
@@ -158,7 +150,6 @@ NSArray * _transactionArray;
         [IAPWrapper onPayResult:self withRet:PaymentTransactionStateVerifyFromServer withMsg:receipt];
     }else{
         [self finishTransaction: transaction.payment.productIdentifier];
-        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@"payment complete"];
     }
     
 }
@@ -189,6 +180,7 @@ NSArray * _transactionArray;
     SKPaymentTransaction *transaction = [self getTranscationByProductId:productId];
     if(transaction){
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@"payment complete"];
     }
 }
 -(SKPaymentTransaction *) getTranscationByProductId:(NSString *)productId{
