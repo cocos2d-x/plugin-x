@@ -53,6 +53,7 @@ public:
     ProtocolUser();
     virtual ~ProtocolUser();
 
+    typedef std::function<void(ProtocolUser* pPlugin, UserActionResultCode code, const char* msg)> ProtocolUserCallback;
     /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
@@ -83,19 +84,43 @@ public:
              else return value is empty string.
      */
     std::string getSessionID();
-
-    inline void setActionListener(UserActionListener* listener)
+    
+    /*
+        deprecated
+        Please use addEventlistener instead.
+    */
+    CC_DEPRECATED_ATTRIBUTE inline void setActionListener(UserActionListener* listener)
     {
         _listener = listener;
     }
-
-    inline UserActionListener* getActionListener()
+    /*
+        deprecated
+        Please use getEventListener instead.
+    */
+    CC_DEPRECATED_ATTRIBUTE inline UserActionListener* getActionListener()
     {
         return _listener;
     }
 
+    /**
+     @brief set login callback function
+     */
+    inline void addEventListener(cont ProtocolUserCallback &cb)
+    {
+        _callback = cb;
+    }
+
+    /**
+     @brief get login callback function
+     */
+    inline ProtocolUserCallback& getEventListener()
+    {
+        return _callback;
+    }
+
 protected:
     UserActionListener* _listener;
+    ProtocolUserCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {
