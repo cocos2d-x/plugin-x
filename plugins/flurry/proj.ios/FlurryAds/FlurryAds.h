@@ -2,7 +2,7 @@
 //  FlurryAds.h
 //  Flurry iOS Analytics Agent
 //
-//  Copyright 2009-2012 Flurry, Inc. All rights reserved.
+//  Copyright 2009-2013 Flurry, Inc. All rights reserved.
 //	
 //	Methods in this header file are for use by Flurry Publishers
 
@@ -26,8 +26,8 @@ typedef enum {
  *  For information on how to use Flurry's Ads SDK to
  *  attract high-quality users and monetize your user base see <a href="http://support.flurry.com/index.php?title=Publishers">Support Center - Publishers</a>.
  *  
- *  @author 2009 - 2012 Flurry, Inc. All Rights Reserved.
- *  @version 4.2.0
+ *  @author 2009 - 2013 Flurry, Inc. All Rights Reserved.
+ *  @version 4.3.0
  * 
  */
 @interface FlurryAds : NSObject {
@@ -71,7 +71,7 @@ typedef enum {
  * 
  *  @param space The placement of an ad in your app, where placement may
  *  be splash screen for SPLASH_AD.
- *  @param frame The frame of the view that will be used for the ad container. Note: for fullscreen ads, this value is not used (you can pass in bounds of window).
+ *  @param frame The frame of the view that will be used for the ad container.
  *  @param size The default size of an ad space. This can be overriden on the server. See @c FlurryAdSize in the FlurryAds.h file for allowable values.
  */
 +(void) fetchAdForSpace:(NSString*)space frame:(CGRect)frame size:(FlurryAdSize)size;
@@ -146,7 +146,7 @@ typedef enum {
 
 /*!
  *  @brief Display an ad for the given interstitial @c space.
- *  @since 4.1.0
+ *  @since 4.2.2
  * 
  *  This method will display an interstitial ad if one is ready for display on the device for specified UIViewController instance
  * 
@@ -195,13 +195,13 @@ typedef enum {
  * 
  *  @param space The placement of an ad in your app, where placement may
  *  be splash screen for SPLASH_AD.
- *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container.
+ *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container, but the size of the view may still be used for determining what types of ads will fit in this space.
  *  @param size The default size of an ad space. This can be overriden on the server. See @c FlurryAdSize in the FlurryAds.h file for allowable values.
  *  @param timeout The maximum amount of time to wait for the server to return a result. Set this to 0 to check the cache and return immediately.
  *
  *  @return YES/NO to indicate if an ad is available.
  */
-+(BOOL) isAdAvailableForSpace:(NSString*)space view:(UIView *)view size:(FlurryAdSize)size timeout:(int64_t)timeout;
++(BOOL) isAdAvailableForSpace:(NSString*)space view:(UIView *)view size:(FlurryAdSize)size timeout:(int64_t)timeout __attribute__ ((deprecated));
 
 /*!
  *  @brief [Deprecated] Display an ad for the given @c space.
@@ -217,13 +217,13 @@ typedef enum {
  * 
  *  @param space The placement of an ad in your app, where placement may
  *  be splash screen for SPLASH_AD.
- *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container.
+ *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container, but the size of the view may still be used for determining what types of ads will fit in this space.
  *  @param size The default size of an ad space. This can be overriden on the server. See @c FlurryAdSize in the FlurryAds.h file for allowable values.
  *  @param timeout The maximum amount of time to wait for the server to return a valid ad. Set this to 0 to display an ad in the background (e.g. - for showing banners).
  *
  *  @return YES/NO to indicate if an ad is available.
  */
-+ (BOOL)showAdForSpace:(NSString*)space view:(UIView *)viewContainer size:(FlurryAdSize)size timeout:(int64_t)timeout;
++ (BOOL)showAdForSpace:(NSString*)space view:(UIView *)viewContainer size:(FlurryAdSize)size timeout:(int64_t)timeout __attribute__ ((deprecated));
 
 /*!
  *  @brief Fetch and Display an ad for the given @c space.
@@ -264,7 +264,7 @@ typedef enum {
  *
  *  @param space The placement of an ad in your app, where placement may
  *  be splash screen for SPLASH_AD.
- *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container.
+ *  @param view The UIView in your app that the ad will be placed as a subview. Note: for fullscreen ads, this view is not used as a container, but the size of the view may still be used for determining what types of ads will fit in this space.
  *  @param size The default size of an ad space. This can be overriden on the server. See @c FlurryAdSize in the FlurryAds.h file for allowable values.
  */
 + (void)fetchAndDisplayAdForSpace:(NSString*)space view:(UIView *)viewContainer size:(FlurryAdSize)size;

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <map>
 #include <string>
+#include <functional>
 
 namespace cocos2d { namespace plugin {
 
@@ -53,7 +54,7 @@ public:
     ProtocolUser();
     virtual ~ProtocolUser();
 
-    typedef std::function<void(ProtocolUser* pPlugin, UserActionResultCode code, const char* msg)> ProtocolUserCallback;
+    typedef std::function<void(ProtocolUser*, UserActionResultCode, const char*)> ProtocolUserCallback;
     /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
@@ -105,7 +106,7 @@ public:
     /**
      @brief set login callback function
      */
-    inline void addEventListener(cont ProtocolUserCallback &cb)
+    inline void addEventListener(const ProtocolUserCallback &cb)
     {
         _callback = cb;
     }

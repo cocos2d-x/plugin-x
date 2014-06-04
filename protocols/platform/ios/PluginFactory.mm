@@ -75,7 +75,14 @@ PluginProtocol* PluginFactory::createPlugin(const char* name)
 	{
 		if (name == NULL || strlen(name) == 0) break;
 
-        NSString* className = [NSString stringWithUTF8String:name];
+		NSString* className = [NSString stringWithUTF8String:name];
+		Class theClass = NSClassFromString(className);
+		if (theClass == nil)
+		{
+			PluginUtilsIOS::outputLog("Unable to load class '%s'. Did you add the -ObjC linker flag?", name);
+			break;
+		}
+
         id obj = [[NSClassFromString(className) alloc] init];
         if (obj == nil) break;
 

@@ -25,6 +25,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05F48C0F192C9162008FB408 /* GADInAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchase.h; sourceTree = "<group>"; };
+		05F48C10192C9162008FB408 /* GADInAppPurchaseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInAppPurchaseDelegate.h; sourceTree = "<group>"; };
+		05F48C11192C9162008FB408 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
 		FADC44A7176EA82000B2D5ED /* libPluginAdmob.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginAdmob.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FADC44AA176EA82000B2D5ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FADC44B9176EA84500B2D5ED /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -86,6 +89,9 @@
 		FADC44B8176EA84500B2D5ED /* Admob */ = {
 			isa = PBXGroup;
 			children = (
+				05F48C0F192C9162008FB408 /* GADInAppPurchase.h */,
+				05F48C10192C9162008FB408 /* GADInAppPurchaseDelegate.h */,
+				05F48C11192C9162008FB408 /* GADModules.h */,
 				FADC44B9176EA84500B2D5ED /* GADAdMobExtras.h */,
 				FADC44BA176EA84500B2D5ED /* GADAdNetworkExtras.h */,
 				FADC44BB176EA84500B2D5ED /* GADAdSize.h */,
