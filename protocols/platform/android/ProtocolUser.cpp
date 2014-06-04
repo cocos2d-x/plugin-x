@@ -117,15 +117,5 @@ std::string ProtocolUser::getSessionID()
     return PluginUtils::callJavaStringFuncWithName(this, "getSessionID");
 }
 
-void ProtocolUser::addEventListener(const ProtocolUserCallback &cb)
-{
-    _callback = cb;
-}
-
-ProtocolUserCallback& getEventListener()
-{
-    return _callback;
-}
-
 }} // namespace cocos2d { namespace plugin {
 
