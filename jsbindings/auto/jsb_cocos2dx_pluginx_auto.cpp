@@ -1331,30 +1331,22 @@ bool js_pluginx_protocols_ProtocolUser_addEventListener(JSContext *cx, uint32_t 
 	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_addEventListener : Invalid Native Object");
 	if (argc == 1) {
-		std::function<void (cocos2d::plugin::ProtocolUser *, int, const char *)> arg0;
+		std::function<void (int, std::basic_string<char> &)> arg0;
 		do {
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-			auto lambda = [=](cocos2d::plugin::ProtocolUser* larg0, int larg1, const char* larg2) -> void {
-				jsval largv[3];
+			auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+				jsval largv[2];
+				largv[0] = int32_to_jsval(cx, larg0);
 				do {
-					if (larg0) {
-						js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::plugin::ProtocolUser>(cx, (cocos2d::plugin::ProtocolUser*)larg0);
-						largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
+					if (larg1) {
+						js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+						largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
 					} else {
-						largv[0] = JSVAL_NULL;
-					}
-				} while (0);
-				largv[1] = int32_to_jsval(cx, larg1);
-				do {
-					if (larg2) {
-						js_proxy_t *jsProxy = js_get_or_create_proxy<char>(cx, (char*)larg2);
-						largv[2] = OBJECT_TO_JSVAL(jsProxy->obj);
-					} else {
-						largv[2] = JSVAL_NULL;
+						largv[1] = JSVAL_NULL;
 					}
 				} while (0);
 				jsval rval;
-				bool ok = func->invoke(3, &largv[0], rval);
+				bool ok = func->invoke(2, &largv[0], rval);
 				if (!ok && JS_IsExceptionPending(cx)) {
 					JS_ReportPendingException(cx);
 				}
@@ -1410,7 +1402,7 @@ bool js_pluginx_protocols_ProtocolUser_getEventListener(JSContext *cx, uint32_t 
 	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_getEventListener : Invalid Native Object");
 	if (argc == 0) {
-		std::function<void (cocos2d::plugin::ProtocolUser *, int, const char *)>& ret = cobj->getEventListener();
+		std::function<void (int, std::basic_string<char> &)>& ret = cobj->getEventListener();
 		jsval jsret = JSVAL_NULL;
 		#pragma warning NO CONVERSION FROM NATIVE FOR std::function;
 		JS_SET_RVAL(cx, vp, jsret);
