@@ -60,6 +60,28 @@ public:
     }
 };
 
+// JSFunctionWrapper
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+: _cx(cx)
+, _jsthis(jsthis)
+, _fval(fval)
+{
+    JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+    JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+}
+
+JSFunctionWrapper::~JSFunctionWrapper()
+{
+    JS_RemoveValueRoot(this->_cx, &this->_fval);
+    JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+}
+
+bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, jsval &rval)
+{
+    //JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+}
 
 bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {

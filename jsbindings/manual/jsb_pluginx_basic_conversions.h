@@ -49,6 +49,24 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
 jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret);
 jsval LogEventParamMap_to_jsval(JSContext *cx, LogEventParamMap*& ret);
 
+
+// wraps a function and "this" object
+class JSFunctionWrapper
+{
+public:
+    JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval);
+    ~JSFunctionWrapper();
+
+    bool invoke(unsigned int argc, jsval *argv, jsval &rval);
+private:
+    JSContext *_cx;
+    JSObject *_jsthis;
+    jsval _fval;
+private:
+    JSFunctionWrapper(const JSFunctionWrapper &);
+    JSFunctionWrapper& operator=(const JSFunctionWrapper &);
+};
+
 } // namespace pluginx {
 
 #endif /* __JS_BASIC_CONVERSIONS_H__ */
