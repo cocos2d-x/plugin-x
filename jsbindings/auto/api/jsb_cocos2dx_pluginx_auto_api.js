@@ -456,7 +456,7 @@ getSessionID : function (
 getEventListener : function (
 )
 {
-    return std::function<void (cocos2d::plugin::ProtocolUser , cocos2d::plugin::UserActionResultCode, char )>;
+    return std::function<void (cocos2d::plugin::ProtocolUser , int, char )>;
 },
 
 };
