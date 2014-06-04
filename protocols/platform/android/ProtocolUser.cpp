@@ -43,10 +43,15 @@ extern "C" {
 			if (pUser != NULL)
 			{
 			    UserActionListener* listener = pUser->getActionListener();
+                ProtocolUserCallback callback = pUser->getEventListener();
 			    if (NULL != listener)
 			    {
 			        listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
 			    }
+                else if(callback)
+                {
+                    callback(pUser, (UserActionResultCode) ret, strMsg.c_str());
+                }
 			    else
 			    {
 			        PluginUtils::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
@@ -113,3 +118,13 @@ std::string ProtocolUser::getSessionID()
 }
 
 }} // namespace cocos2d { namespace plugin {
+
+void ProtocolUser::addEventListener(const ProtocolUserCallback &cb)
+{
+    _callback = cb;
+}
+
+ProtocolUserCallback& getEventListener()
+{
+    return _callback;
+}
