@@ -55,6 +55,7 @@ public:
     virtual ~ProtocolUser();
 
     typedef std::function<void(int, std::string&)> ProtocolUserCallback;
+
     /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
