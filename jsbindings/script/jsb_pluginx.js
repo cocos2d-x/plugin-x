@@ -1,4 +1,4 @@
-plugin = plugin || {};
+var plugin = plugin || {PluginParam: {}, ProtocolAds: {}, ProtocolIAP: {}, ProtocolShare: {}, ProtocolSocial: {}, ProtocolUser: {}};
 
 plugin.PluginParam.ParamType = {};
 plugin.PluginParam.ParamType.TypeInt = 1;
