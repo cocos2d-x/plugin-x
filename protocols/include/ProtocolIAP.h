@@ -41,11 +41,11 @@ typedef enum
     kPayTimeOut,
 } PayResultCode;
     
-    typedef enum {
-        RequestSuccees=0,
-        RequestFail,
-        RequestTimeout,
-    } IAPProductRequest;
+typedef enum {
+    RequestSuccees=0,
+    RequestFail,
+    RequestTimeout,
+} IAPProductRequest;
 
 class PayResultListener
 {
