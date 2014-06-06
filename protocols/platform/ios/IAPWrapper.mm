@@ -25,7 +25,7 @@ THE SOFTWARE.
 #import "IAPWrapper.h"
 #include "PluginUtilsIOS.h"
 #include "ProtocolIAP.h"
-
+#import <StoreKit/StoreKit.h>
 
 using namespace cocos2d::plugin;
 
@@ -43,5 +43,25 @@ using namespace cocos2d::plugin;
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }
 }
++(void) onRequestProduct:(id)obj withRet:(ProductRequest) ret withProducts:(NSArray *)products{
+    PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
+    ProtocolIAP* iapPlugin = dynamic_cast<ProtocolIAP*>(plugin);
+    if (iapPlugin) {
+        TProductList pdlist;
+        if (products) {
+            for(SKProduct *product in products){
+                TProductInfo info;
+                info.insert(std::make_pair("productId", std::string([product.productIdentifier UTF8String])));
+                info.insert(std::make_pair("productName", std::string([product.localizedTitle UTF8String])));
+                info.insert(std::make_pair("productPrice", std::string([[product.price stringValue] UTF8String])));
+                info.insert(std::make_pair("productDesc", std::string([product.localizedDescription UTF8String])));
+                pdlist.push_back(info);
+            }
+        }
+        iapPlugin->getResultListener()->onRequestProductsResult((IAPProductRequest )ret,pdlist);
+    } else {
+        PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
+    }
 
+}
 @end

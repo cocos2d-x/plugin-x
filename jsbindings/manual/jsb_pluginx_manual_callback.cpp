@@ -20,7 +20,10 @@ public:
         LOGD(goodInfo);
         
         JSContext* cx = s_cx;
-
+        
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
+        
         bool hasAction;
         jsval retval;
         JS::RootedValue temp_retval(cx);
@@ -30,7 +33,6 @@ public:
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         dataVal[2] = TProductInfo_to_jsval(cx, info);
         
-        JSObject* obj = _JSDelegate;
         
         if (JS_HasProperty(cx, obj, "onPayResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onPayResult", &temp_retval)) {
@@ -39,7 +41,7 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
+
             JS_CallFunctionName(cx, obj, "onPayResult",
                                 3, dataVal, &retval);
         }
@@ -49,7 +51,34 @@ public:
     {
         _JSDelegate = pJSDelegate;
     }
+    virtual void onRequestProductsResult(cocos2d::plugin::IAPProductRequest ret, cocos2d::plugin::TProductList info){
+        JSContext* cx = s_cx;
+        
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
+        
+        bool hasAction;
+        jsval retval;
+        JS::RootedValue temp_retval(cx);
+        jsval dataVal[2];
+        dataVal[0] = INT_TO_JSVAL(ret);
+        if(info.size() > 0){
+            dataVal[1] = TProductList_to_jsval(cx, info);
+        }
+        
+        if (JS_HasProperty(cx, obj, "onRequestProductResult", &hasAction) && hasAction) {
+            if(!JS_GetProperty(cx, obj, "onRequestProductResult", &temp_retval)) {
+                return;
+            }
+            if(temp_retval == JSVAL_VOID) {
+                return;
+            }
+            
+            JS_CallFunctionName(cx, obj, "onRequestProductResult",
+                                2, dataVal, &retval);
+        }
 
+    }
 private:
     JSObject* _JSDelegate;
 };

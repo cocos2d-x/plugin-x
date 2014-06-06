@@ -320,6 +320,19 @@ jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret)
     return OBJECT_TO_JSVAL(tmp);
 }
 
+    jsval TProductList_to_jsval(JSContext *cx,TProductList list){
+        JSObject *tmp = JS_NewArrayObject(cx, 0, NULL);
+        int i = 0;
+        for(TProductList::iterator it = list.begin();it!=list.end();++it){
+            JS::RootedValue arrElement(cx);
+            
+            arrElement = TProductInfo_to_jsval(cx, *it);
+            JS_SetElement(cx, tmp, i, &arrElement);
+            ++i;
+        }
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    
 jsval LogEventParamMap_to_jsval(JSContext *cx, LogEventParamMap*& ret)
 {// TODO:
     return JSVAL_NULL;
