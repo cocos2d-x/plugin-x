@@ -49,9 +49,6 @@ using namespace cocos2d::plugin;
     if (iapPlugin) {
         TProductList pdlist;
         if (products) {
-//            nfo.find("productName")->second.c_str(),
-//            info.find("productPrice")->second.c_str(),
-//            info.find("productDesc")->second.c_str());
             for(SKProduct *product in products){
                 TProductInfo info;
                 info.insert(std::make_pair("productId", std::string([product.productIdentifier UTF8String])));
@@ -61,10 +58,7 @@ using namespace cocos2d::plugin;
                 pdlist.push_back(info);
             }
         }
-        iapPlugin->onRequestProductsResult((PayResultCode )ret, pdlist);
-//        const char* chMsg = [products UTF8String];
-//        PayResultCode cRet = (PayResultCode) ret;
-//        iapPlugin->onPayResult(cRet, chMsg);
+        iapPlugin->getResultListener()->onRequestProductsResult((PayResultCode )ret,pdlist);
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }

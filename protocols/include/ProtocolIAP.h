@@ -46,7 +46,7 @@ class PayResultListener
 {
 public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info) = 0;
-    virtual void onRequestProductsResult(PayResultCode ret, TProductList info) = 0;
+    virtual void onRequestProductsResult(PayResultCode ret, TProductList info){}；
 };
 
 class ProtocolIAP : public PluginProtocol
@@ -81,13 +81,15 @@ public:
     @wraning Must invoke this interface before payForProduct.
     */
     void setResultListener(PayResultListener* pListener);
-
+    inline PayResultListener* getResultListener()
+    {
+        return _listener;
+    }
+    
     /**
     @brief pay result callback
     */
     void onPayResult(PayResultCode ret, const char* msg);
-    void onRequestProductsResult(PayResultCode ret, TProductList msg);
-
 protected:
     static bool _paying;
 

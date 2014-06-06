@@ -98,7 +98,6 @@ void ProtocolIAP::setResultListener(PayResultListener* pListener)
 {
     _listener = pListener;
 }
-
 void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 {
     _paying = false;
@@ -113,21 +112,6 @@ void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
 
 //    _curInfo.clear();
     PluginUtilsIOS::outputLog("Pay result of %s is : %d(%s)", this->getPluginName(), (int) ret, msg);
-}
-void ProtocolIAP::onRequestProductsResult(PayResultCode ret, TProductList plist) 
-{
-    _paying = false;
-    if (_listener)
-    {
-        _listener->onRequestProductsResult(ret, plist);
-    }
-    else
-    {
-        PluginUtilsIOS::outputLog("Pay result listener of %s is null!", this->getPluginName());
-    }
-    
-    _curInfo.clear();
-    PluginUtilsIOS::outputLog("requestProducts result of %s is : %d", this->getPluginName(), (int) ret);
 }
 
 }} //namespace cocos2d { namespace plugin {
