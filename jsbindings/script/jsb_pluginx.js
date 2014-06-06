@@ -35,8 +35,7 @@ plugin.ProtocolIAP.PayResultCode.VierfyFromServer = 4;
 plugin.ProtocolIAP.RequestProductCode = {};
 plugin.ProtocolIAP.RequestProductCode.RequestSuccess = 0;
 plugin.ProtocolIAP.RequestProductCode.RequestFail = 1;
-plugin.ProtocolIAP.RequestProductCode.RequestSending = 2;
-
+plugin.ProtocolIAP.RequestProductCode.Requestimeout = 2;
 
 plugin.ProtocolShare.ShareResultCode = {};
 plugin.ProtocolShare.ShareResultCode.ShareSuccess = 0;

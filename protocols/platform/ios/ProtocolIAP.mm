@@ -110,7 +110,7 @@ void ProtocolIAP::onPayResult(PayResultCode ret, const char* msg)
         PluginUtilsIOS::outputLog("Pay result listener of %s is null!", this->getPluginName());
     }
 
-//    _curInfo.clear();
+    _curInfo.clear();
     PluginUtilsIOS::outputLog("Pay result of %s is : %d(%s)", this->getPluginName(), (int) ret, msg);
 }
 

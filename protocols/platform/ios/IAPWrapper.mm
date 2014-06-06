@@ -43,7 +43,7 @@ using namespace cocos2d::plugin;
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }
 }
-+(void) onRequestProduct:(id)obj withRet:(IAPProductRequest) ret withProducts:(NSArray *)products{
++(void) onRequestProduct:(id)obj withRet:(ProductRequest) ret withProducts:(NSArray *)products{
     PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
     ProtocolIAP* iapPlugin = dynamic_cast<ProtocolIAP*>(plugin);
     if (iapPlugin) {
@@ -58,7 +58,7 @@ using namespace cocos2d::plugin;
                 pdlist.push_back(info);
             }
         }
-        iapPlugin->getResultListener()->onRequestProductsResult((PayResultCode )ret,pdlist);
+        iapPlugin->getResultListener()->onRequestProductsResult((IAPProductRequest )ret,pdlist);
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }

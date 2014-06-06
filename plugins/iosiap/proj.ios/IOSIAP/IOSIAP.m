@@ -73,7 +73,6 @@ NSArray * _transactionArray;
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
     [_productsRequest start];
-    [IAPWrapper onRequestProduct:self withRet:RequestSending withProducts:nil];
 
 }
 -(NSString *)parseProductToString:(NSArray *) products{
@@ -104,10 +103,6 @@ NSArray * _transactionArray;
               skProduct.price.floatValue);
     }
     [IAPWrapper onRequestProduct:self withRet:RequestSuccees withProducts:skProducts];
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"001",@"pid",@"1",@"quantity", nil];
-//    [self payForProduct:dic];
-    //    dic
-//    self pay
 }
 
 //SKPaymentTransactionObserver needed
@@ -147,9 +142,10 @@ NSArray * _transactionArray;
                 receipt = [self encode:(uint8_t *)transaction.transactionReceipt.bytes length:transaction.transactionReceipt.length];
             }
         }
-        [IAPWrapper onPayResult:self withRet:PaymentTransactionStateVerifyFromServer withMsg:receipt];
+        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:receipt];
     }else{
         [self finishTransaction: transaction.payment.productIdentifier];
+        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@""];
     }
     
 }
@@ -157,7 +153,7 @@ NSArray * _transactionArray;
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
     OUTPUT_LOG(@"restoreTransaction...");
     [self finishTransaction:transaction.payment.productIdentifier];
-    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateRestored withMsg:@"payment restore"];
+    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateRestored withMsg:@""];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
@@ -169,7 +165,7 @@ NSArray * _transactionArray;
     }
     
     [self finishTransaction:transaction.payment.productIdentifier];
-    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateFailed withMsg:@"payment fail"];
+    [IAPWrapper onPayResult:self withRet:PaymentTransactionStateFailed withMsg:@""];
 }
 
 - (void)restoreCompletedTransactions {
@@ -180,7 +176,6 @@ NSArray * _transactionArray;
     SKPaymentTransaction *transaction = [self getTranscationByProductId:productId];
     if(transaction){
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-        [IAPWrapper onPayResult:self withRet:PaymentTransactionStatePurchased withMsg:@"payment complete"];
     }
 }
 -(SKPaymentTransaction *) getTranscationByProductId:(NSString *)productId{

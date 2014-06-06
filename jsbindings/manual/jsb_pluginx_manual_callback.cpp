@@ -51,7 +51,7 @@ public:
     {
         _JSDelegate = pJSDelegate;
     }
-    virtual void onRequestProductsResult(cocos2d::plugin::PayResultCode ret, cocos2d::plugin::TProductList info){
+    virtual void onRequestProductsResult(cocos2d::plugin::IAPProductRequest ret, cocos2d::plugin::TProductList info){
         JSContext* cx = s_cx;
         
         JSObject* obj = _JSDelegate;

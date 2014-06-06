@@ -39,14 +39,19 @@ typedef enum
     kPayFail,
     kPayCancel,
     kPayTimeOut,
-    kPayVerifyFromServer
 } PayResultCode;
+    
+    typedef enum {
+        RequestSuccees=0,
+        RequestFail,
+        RequestTimeout,
+    } IAPProductRequest;
 
 class PayResultListener
 {
 public:
     virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info) = 0;
-    virtual void onRequestProductsResult(PayResultCode ret, TProductList info){}；
+    virtual void onRequestProductsResult(IAPProductRequest ret, TProductList info){}
 };
 
 class ProtocolIAP : public PluginProtocol
