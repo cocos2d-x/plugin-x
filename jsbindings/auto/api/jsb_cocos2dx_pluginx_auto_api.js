@@ -147,7 +147,7 @@ long
 /**
  * @method logEvent
  * @param {char} arg0
- * @param {MapObject} arg1
+ * @param {map_object} arg1
  */
 logEvent : function (
 char, 
@@ -193,7 +193,7 @@ plugin.ProtocolIAP = {
 
 /**
  * @method payForProduct
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 payForProduct : function (
 map 
@@ -215,7 +215,7 @@ char
 
 /**
  * @method configDeveloperInfo
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 configDeveloperInfo : function (
 map 
@@ -232,7 +232,7 @@ plugin.ProtocolAds = {
 
 /**
  * @method showAds
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  * @param {cc.plugin::ProtocolAds::AdsPos} arg1
  */
 showAds : function (
@@ -244,7 +244,7 @@ adspos
 
 /**
  * @method hideAds
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 hideAds : function (
 map 
@@ -272,7 +272,7 @@ int
 
 /**
  * @method configDeveloperInfo
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 configDeveloperInfo : function (
 map 
@@ -311,7 +311,7 @@ char
 
 /**
  * @method share
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 share : function (
 map 
@@ -321,7 +321,7 @@ map
 
 /**
  * @method configDeveloperInfo
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 configDeveloperInfo : function (
 map 
@@ -368,7 +368,7 @@ long
 
 /**
  * @method configDeveloperInfo
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 configDeveloperInfo : function (
 map 
@@ -378,7 +378,7 @@ map
 
 /**
  * @method unlockAchievement
- * @param {MapObject} arg0
+ * @param {map_object} arg0
  */
 unlockAchievement : function (
 map 
@@ -392,6 +392,16 @@ map
  * @class ProtocolUser
  */
 plugin.ProtocolUser = {
+
+/**
+ * @method configDeveloperInfo
+ * @param {map_object} arg0
+ */
+configDeveloperInfo : function (
+map 
+)
+{
+},
 
 /**
  * @method isLogined
@@ -412,11 +422,11 @@ logout : function (
 },
 
 /**
- * @method configDeveloperInfo
- * @param {MapObject} arg0
+ * @method addEventListener
+ * @param {function} arg0
  */
-configDeveloperInfo : function (
-map 
+addEventListener : function (
+func 
 )
 {
 },
@@ -437,6 +447,16 @@ getSessionID : function (
 )
 {
     return ;
+},
+
+/**
+ * @method getEventListener
+ * @return {function}
+ */
+getEventListener : function (
+)
+{
+    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 };

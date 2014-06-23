@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <map>
 #include <string>
+#include <functional>
 
 namespace cocos2d { namespace plugin {
 
@@ -52,6 +53,8 @@ class ProtocolUser : public PluginProtocol
 public:
     ProtocolUser();
     virtual ~ProtocolUser();
+
+    typedef std::function<void(int, std::string&)> ProtocolUserCallback;
 
     /**
     @brief config the application info
@@ -83,19 +86,43 @@ public:
              else return value is empty string.
      */
     std::string getSessionID();
-
-    inline void setActionListener(UserActionListener* listener)
+    
+    /*
+        deprecated
+        Please use addEventlistener instead.
+    */
+    CC_DEPRECATED_ATTRIBUTE inline void setActionListener(UserActionListener* listener)
     {
         _listener = listener;
     }
-
-    inline UserActionListener* getActionListener()
+    /*
+        deprecated
+        Please use getEventListener instead.
+    */
+    CC_DEPRECATED_ATTRIBUTE inline UserActionListener* getActionListener()
     {
         return _listener;
     }
 
+    /**
+     @brief set login callback function
+     */
+    inline void addEventListener(const ProtocolUserCallback &cb)
+    {
+        _callback = cb;
+    }
+
+    /**
+     @brief get login callback function
+     */
+    inline ProtocolUserCallback& getEventListener()
+    {
+        return _callback;
+    }
+
 protected:
     UserActionListener* _listener;
+    ProtocolUserCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {

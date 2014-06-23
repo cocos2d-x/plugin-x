@@ -1270,6 +1270,26 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 JSClass  *jsb_cocos2d_plugin_ProtocolUser_class;
 JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
 
+bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::plugin::TUserDeveloperInfo arg0;
+		ok &= pluginx::jsval_to_TUserDeveloperInfo(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Error processing arguments");
+		cobj->configDeveloperInfo(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_pluginx_protocols_ProtocolUser_isLogined(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1302,24 +1322,45 @@ bool js_pluginx_protocols_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsva
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_logout : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_pluginx_protocols_ProtocolUser_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
 	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Invalid Native Object");
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_addEventListener : Invalid Native Object");
 	if (argc == 1) {
-		cocos2d::plugin::TUserDeveloperInfo arg0;
-		ok &= pluginx::jsval_to_TUserDeveloperInfo(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : Error processing arguments");
-		cobj->configDeveloperInfo(arg0);
+		std::function<void (int, std::basic_string<char> &)> arg0;
+		do {
+			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+			auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+				jsval largv[2];
+				largv[0] = int32_to_jsval(cx, larg0);
+				do {
+					if (larg1) {
+						js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+						largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+					} else {
+						largv[1] = JSVAL_NULL;
+					}
+				} while (0);
+				jsval rval;
+				bool ok = func->invoke(2, &largv[0], rval);
+				if (!ok && JS_IsExceptionPending(cx)) {
+					JS_ReportPendingException(cx);
+				}
+			};
+			arg0 = lambda;
+		} while(0)
+		;
+		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolUser_addEventListener : Error processing arguments");
+		cobj->addEventListener(arg0);
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
 
-	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_configDeveloperInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
+	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_addEventListener : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1352,6 +1393,23 @@ bool js_pluginx_protocols_ProtocolUser_getSessionID(JSContext *cx, uint32_t argc
 	}
 
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_getSessionID : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+bool js_pluginx_protocols_ProtocolUser_getEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_getEventListener : Invalid Native Object");
+	if (argc == 0) {
+		std::function<void (int, std::basic_string<char> &)>& ret = cobj->getEventListener();
+		jsval jsret = JSVAL_NULL;
+		#pragma warning NO CONVERSION FROM NATIVE FOR std::function;
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_getEventListener : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 
@@ -1392,11 +1450,13 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global)
 	};
 
 	static JSFunctionSpec funcs[] = {
+		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolUser_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isLogined", js_pluginx_protocols_ProtocolUser_isLogined, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logout", js_pluginx_protocols_ProtocolUser_logout, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolUser_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("addEventListener", js_pluginx_protocols_ProtocolUser_addEventListener, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("login", js_pluginx_protocols_ProtocolUser_login, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSessionID", js_pluginx_protocols_ProtocolUser_getSessionID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getEventListener", js_pluginx_protocols_ProtocolUser_getEventListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
