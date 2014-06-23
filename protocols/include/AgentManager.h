@@ -62,11 +62,40 @@ public:
 	void logTimedEventEnd(const char* eventId);
 	void setCaptureUncaughtException(bool enabled);
 
+	inline ProtocolUser* getUserPlugin()
+	{
+		return pUser;
+	}
+
+	inline ProtocolShare* getSharePlugin()
+	{
+		return pShare;
+	}
+
+	inline ProtocolSocial* getSocialPlugin()
+	{
+		return pSocial;
+	}
+
+	inline ProtocolAds* getAdsPlugin()
+	{
+		return pAds;
+	}
+
+	inline ProtocolAnalytics* getAnalyticsPlugin()
+	{
+		return pAnalytics;
+	}
+
+	inline ProtocolIAP* getIAPPlugin()
+	{
+		return pIAP;
+	}
+	
 protected:
 	AgentManager();
 	std::map<std::string, std::string> getPluginConfigure();
 
-public:
 	ProtocolUser *pUser;
 	ProtocolShare *pShare;
 	ProtocolSocial *pSocial;
