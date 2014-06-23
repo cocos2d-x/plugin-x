@@ -4,6 +4,7 @@
 #include <Functional>
 #include <string>
 #include <map>
+
 #include "ProtocolShare.h"
 #include "ProtocolSocial.h"
 #include "ProtocolIAP.h"
@@ -91,7 +92,7 @@ public:
 	{
 		return pIAP;
 	}
-	
+
 protected:
 	AgentManager();
 	std::map<std::string, std::string> getPluginConfigure();

@@ -20,7 +20,7 @@ AgentManager::~AgentManager()
 	this->purge();
 }
 
-AgentManager::purge()
+void AgentManager::purge()
 {
 	delete pUser;
 	delete pShare;
