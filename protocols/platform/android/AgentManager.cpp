@@ -17,6 +17,11 @@ AgentManager::AgentManager():pUser(nullptr), pShare(nullptr), pSocial(nullptr), 
 
 AgentManager::~AgentManager()
 {
+	this->purge();
+}
+
+AgentManager::purge()
+{
 	delete pUser;
 	delete pShare;
 	delete pSocial;

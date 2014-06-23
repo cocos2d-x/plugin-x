@@ -20,6 +20,7 @@ public:
 	virtual ~AgentManager();
 	static AgentManager* getInstance();
 	virtual bool init();
+	virtual void purge();
 	void setDebugMode(bool);
 	void configDeveloperInfo(std::map<std::string, std::string &> &devInfo);
 	//void getSDKVersion();
