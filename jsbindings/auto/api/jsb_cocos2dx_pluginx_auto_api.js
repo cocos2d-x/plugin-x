@@ -202,6 +202,16 @@ map
 },
 
 /**
+ * @method getResultListener
+ * @return {cc.plugin::PayResultListener}
+ */
+getResultListener : function (
+)
+{
+    return cc.plugin::PayResultListener;
+},
+
+/**
  * @method onPayResult
  * @param {cc.plugin::PayResultCode} arg0
  * @param {char} arg1
@@ -457,6 +467,347 @@ getEventListener : function (
 )
 {
     return std::function<void (int, std::basic_string<char> &)>;
+},
+
+};
+
+/**
+ * @class AgentManager
+ */
+plugin.AgentManager = {
+
+/**
+ * @method showAds
+ * @param {map_object} arg0
+ */
+showAds : function (
+map 
+)
+{
+},
+
+/**
+ * @method getSocialPlugin
+ * @return {cc.plugin::ProtocolSocial}
+ */
+getSocialPlugin : function (
+)
+{
+    return cc.plugin::ProtocolSocial;
+},
+
+/**
+ * @method share
+* @param {map_object|map_object} map
+* @param {function} func
+*/
+share : function(
+map,
+func 
+)
+{
+},
+
+/**
+ * @method setSessionContinueMillis
+ * @param {long} arg0
+ */
+setSessionContinueMillis : function (
+long 
+)
+{
+},
+
+/**
+ * @method getAnalyticsPlugin
+ * @return {cc.plugin::ProtocolAnalytics}
+ */
+getAnalyticsPlugin : function (
+)
+{
+    return cc.plugin::ProtocolAnalytics;
+},
+
+/**
+ * @method startSession
+ * @param {char} arg0
+ */
+startSession : function (
+char 
+)
+{
+},
+
+/**
+ * @method stopSession
+ */
+stopSession : function (
+)
+{
+},
+
+/**
+ * @method getSharePlugin
+ * @return {cc.plugin::ProtocolShare}
+ */
+getSharePlugin : function (
+)
+{
+    return cc.plugin::ProtocolShare;
+},
+
+/**
+ * @method getSessionID
+ * @return {String}
+ */
+getSessionID : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method logTimedEventBegin
+ * @param {char} arg0
+ */
+logTimedEventBegin : function (
+char 
+)
+{
+},
+
+/**
+ * @method logError
+ * @param {char} arg0
+ * @param {char} arg1
+ */
+logError : function (
+char, 
+char 
+)
+{
+},
+
+/**
+ * @method showLeaderboard
+ * @param {String} arg0
+ */
+showLeaderboard : function (
+str 
+)
+{
+},
+
+/**
+ * @method getPluginVersion
+ */
+getPluginVersion : function (
+)
+{
+},
+
+/**
+ * @method getIAPPlugin
+ * @return {cc.plugin::ProtocolIAP}
+ */
+getIAPPlugin : function (
+)
+{
+    return cc.plugin::ProtocolIAP;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method unlockAchievement
+ * @param {map_object} arg0
+ */
+unlockAchievement : function (
+map 
+)
+{
+},
+
+/**
+ * @method queryPoints
+ */
+queryPoints : function (
+)
+{
+},
+
+/**
+ * @method setCaptureUncaughtException
+ * @param {bool} arg0
+ */
+setCaptureUncaughtException : function (
+bool 
+)
+{
+},
+
+/**
+ * @method payForProduct
+ * @param {map_object} arg0
+ */
+payForProduct : function (
+map 
+)
+{
+},
+
+/**
+ * @method showAchievements
+ */
+showAchievements : function (
+)
+{
+},
+
+/**
+ * @method logEvent
+ * @param {char} arg0
+ */
+logEvent : function (
+char 
+)
+{
+},
+
+/**
+ * @method logout
+ */
+logout : function (
+)
+{
+},
+
+/**
+ * @method submitScore
+ * @param {String} arg0
+ * @param {long} arg1
+ */
+submitScore : function (
+str, 
+long 
+)
+{
+},
+
+/**
+ * @method spendPoints
+ * @param {int} arg0
+ */
+spendPoints : function (
+int 
+)
+{
+},
+
+/**
+ * @method configDeveloperInfo
+ * @param {map_object} arg0
+ */
+configDeveloperInfo : function (
+map 
+)
+{
+},
+
+/**
+ * @method hideAds
+ * @param {map_object} arg0
+ */
+hideAds : function (
+map 
+)
+{
+},
+
+/**
+ * @method logTimedEventEnd
+ * @param {char} arg0
+ */
+logTimedEventEnd : function (
+char 
+)
+{
+},
+
+/**
+ * @method isLogined
+ * @return {bool}
+ */
+isLogined : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getAdsPlugin
+ * @return {cc.plugin::ProtocolAds}
+ */
+getAdsPlugin : function (
+)
+{
+    return cc.plugin::ProtocolAds;
+},
+
+/**
+ * @method purge
+ */
+purge : function (
+)
+{
+},
+
+/**
+ * @method getUserPlugin
+ * @return {cc.plugin::ProtocolUser}
+ */
+getUserPlugin : function (
+)
+{
+    return cc.plugin::ProtocolUser;
+},
+
+/**
+ * @method login
+* @param {function} func
+*/
+login : function(
+func 
+)
+{
+},
+
+/**
+ * @method setDebugMode
+ * @param {bool} arg0
+ */
+setDebugMode : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.plugin::AgentManager}
+ */
+getInstance : function (
+)
+{
+    return cc.plugin::AgentManager;
 },
 
 };

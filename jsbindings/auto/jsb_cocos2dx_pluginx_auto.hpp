@@ -53,6 +53,7 @@ void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
 bool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_ProtocolIAP_getResultListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -108,5 +109,47 @@ bool js_pluginx_protocols_ProtocolUser_addEventListener(JSContext *cx, uint32_t 
 bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getSessionID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getEventListener(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_plugin_AgentManager_class;
+extern JSObject *jsb_cocos2d_plugin_AgentManager_prototype;
+
+bool js_pluginx_protocols_AgentManager_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_pluginx_protocols_AgentManager_finalize(JSContext *cx, JSObject *obj);
+void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global);
+void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
+bool js_pluginx_protocols_AgentManager_showAds(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getSocialPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_setSessionContinueMillis(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getAnalyticsPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_startSession(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_stopSession(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getSharePlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getSessionID(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_logTimedEventBegin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_logError(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_showLeaderboard(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getIAPPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_unlockAchievement(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_queryPoints(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_setCaptureUncaughtException(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_payForProduct(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_showAchievements(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_logEvent(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_logout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_submitScore(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_hideAds(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_logTimedEventEnd(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_isLogined(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getAdsPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_purge(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getUserPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
