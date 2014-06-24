@@ -42,6 +42,7 @@
 /* Begin PBXFileReference section */
 		051FF7BA192CE3CC00C43A06 /* IAPWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPWrapper.h; sourceTree = "<group>"; };
 		051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAPWrapper.mm; sourceTree = "<group>"; };
+		BA1BF7FE195962C400B47F4E /* AgentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentManager.h; sourceTree = "<group>"; };
 		FA09A321168ADBC2008C1C7B /* libPluginProtocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginProtocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA09A324168ADBC2008C1C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA09A337168ADC05008C1C7B /* PluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginManager.h; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 		FA09A336168ADC05008C1C7B /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BA1BF7FE195962C400B47F4E /* AgentManager.h */,
 				FADBF896179E504B00F59B1D /* ProtocolSocial.h */,
 				FAD55522177D213F00968F54 /* ProtocolUser.h */,
 				FAC2A7F41777F88700035D22 /* ProtocolShare.h */,
