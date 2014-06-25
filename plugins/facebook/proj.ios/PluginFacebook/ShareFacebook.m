@@ -39,20 +39,7 @@
 
 - (void) share: (NSMutableDictionary*) shareInfo
 {
-    self.mShareInfo = shareInfo;
-    if ([[FHSTwitterEngine sharedEngine] isAuthorized])
-    {
-        [self doShare];
-    } else {
-        UIViewController* controller = [self getCurrentRootViewController];
-        [[FHSTwitterEngine sharedEngine]showOAuthLoginControllerFromViewController:controller withCompletion:^(BOOL success) {
-            if (success) {
-                [self doShare];
-            } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Login Failed"];
-            }
-        }];
-    }
+    
 }
 
 - (void) setDebugMode: (BOOL) debug
@@ -72,32 +59,7 @@
 
 - (void) doShare
 {
-    if (nil == mShareInfo) {
-        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Shared info error"];
-        return;
-    }
     
-    NSString* strText = [mShareInfo objectForKey:@"SharedText"];
-    NSString* strImagePath = [mShareInfo objectForKey:@"SharedImagePath"];
-    
-    BOOL oldConfig = [UIApplication sharedApplication].networkActivityIndicatorVisible;
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSError* returnCode = nil;
-    if (nil != strImagePath) {
-        NSData* data = [NSData dataWithContentsOfFile:strImagePath];
-        returnCode = [[FHSTwitterEngine sharedEngine] postTweet:strText withImageData:data];
-    } else {
-        returnCode = [[FHSTwitterEngine sharedEngine]postTweet:strText];
-    }
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = oldConfig;
-    
-    if (returnCode) {
-        NSString* strErrorCode = [NSString stringWithFormat:@"ErrorCode %d", returnCode.code];
-        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:strErrorCode];
-    } else {
-        [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Succeed"];
-    }
 }
 
 - (UIViewController *)getCurrentRootViewController {

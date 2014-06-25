@@ -432,16 +432,6 @@ logout : function (
 },
 
 /**
- * @method addEventListener
- * @param {function} arg0
- */
-addEventListener : function (
-func 
-)
-{
-},
-
-/**
  * @method login
  */
 login : function (
@@ -494,18 +484,6 @@ getSocialPlugin : function (
 )
 {
     return cc.plugin::ProtocolSocial;
-},
-
-/**
- * @method share
-* @param {map_object|map_object} map
-* @param {function} func
-*/
-share : function(
-map,
-func 
-)
-{
 },
 
 /**
@@ -594,14 +572,6 @@ char
  */
 showLeaderboard : function (
 str 
-)
-{
-},
-
-/**
- * @method getPluginVersion
- */
-getPluginVersion : function (
 )
 {
 },
@@ -713,16 +683,6 @@ int
 },
 
 /**
- * @method configDeveloperInfo
- * @param {map_object} arg0
- */
-configDeveloperInfo : function (
-map 
-)
-{
-},
-
-/**
  * @method hideAds
  * @param {map_object} arg0
  */
@@ -778,26 +738,6 @@ getUserPlugin : function (
 )
 {
     return cc.plugin::ProtocolUser;
-},
-
-/**
- * @method login
-* @param {function} func
-*/
-login : function(
-func 
-)
-{
-},
-
-/**
- * @method setDebugMode
- * @param {bool} arg0
- */
-setDebugMode : function (
-bool 
-)
-{
 },
 
 /**

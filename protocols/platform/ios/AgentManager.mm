@@ -28,7 +28,7 @@
 #include "PluginManager.h"
 #include "ProtocolUser.h"
 #include "ProtocolAnalytics.h"
-#include "PluginUtils.h"
+#include "PluginUtilsIOS.h"
 
 namespace cocos2d{ namespace plugin{
 
@@ -231,7 +231,8 @@ std::map<std::string, std::string> AgentManager::getPluginConfigure()
     
     for(std::vector<std::string>::iterator iter = s_plugins.begin(); iter != s_plugins.end(); ++iter)
     {
-        NSString *pluginName = [[NSBundle mainBundle] objectForInfoDictionaryKey:iter->c_str()];
+        NSString *key = [NSString stringWithUTF8String:iter->c_str()];
+        NSString *pluginName = [[NSBundle mainBundle] objectForInfoDictionaryKey:key];
         std::string name([pluginName UTF8String]);
         configure.emplace(*iter, name);
     }

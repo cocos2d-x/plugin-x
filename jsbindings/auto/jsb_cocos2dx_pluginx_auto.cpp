@@ -1348,47 +1348,6 @@ bool js_pluginx_protocols_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsva
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_logout : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_pluginx_protocols_ProtocolUser_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_addEventListener : Invalid Native Object");
-	if (argc == 1) {
-		std::function<void (int, std::basic_string<char> &)> arg0;
-		do {
-			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-			auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
-				jsval largv[2];
-				largv[0] = int32_to_jsval(cx, larg0);
-				do {
-					if (larg1) {
-						js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
-						largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-					} else {
-						largv[1] = JSVAL_NULL;
-					}
-				} while (0);
-				jsval rval;
-				bool ok = func->invoke(2, &largv[0], rval);
-				if (!ok && JS_IsExceptionPending(cx)) {
-					JS_ReportPendingException(cx);
-				}
-			};
-			arg0 = lambda;
-		} while(0)
-		;
-		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolUser_addEventListener : Error processing arguments");
-		cobj->addEventListener(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_addEventListener : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -1479,7 +1438,6 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global)
 		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolUser_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isLogined", js_pluginx_protocols_ProtocolUser_isLogined, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logout", js_pluginx_protocols_ProtocolUser_logout, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("addEventListener", js_pluginx_protocols_ProtocolUser_addEventListener, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("login", js_pluginx_protocols_ProtocolUser_login, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSessionID", js_pluginx_protocols_ProtocolUser_getSessionID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getEventListener", js_pluginx_protocols_ProtocolUser_getEventListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1561,66 +1519,6 @@ bool js_pluginx_protocols_AgentManager_getSocialPlugin(JSContext *cx, uint32_t a
 	}
 
 	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_getSocialPlugin : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
-bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-
-	JSObject *obj = NULL;
-	cocos2d::plugin::AgentManager* cobj = NULL;
-	obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_share : Invalid Native Object");
-	do {
-		if (argc == 2) {
-			cocos2d::plugin::TShareInfo arg0;
-			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
-			std::function<void (int, std::basic_string<char> &)> arg1;
-			do {
-				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-				auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
-					jsval largv[2];
-					largv[0] = int32_to_jsval(cx, larg0);
-					do {
-						if (larg1) {
-							js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
-							largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-						} else {
-							largv[1] = JSVAL_NULL;
-						}
-					} while (0);
-					jsval rval;
-					bool ok = func->invoke(2, &largv[0], rval);
-					if (!ok && JS_IsExceptionPending(cx)) {
-						JS_ReportPendingException(cx);
-					}
-				};
-				arg1 = lambda;
-			} while(0)
-			;
-			if (!ok) { ok = true; break; }
-			cobj->share(arg0, arg1);
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return true;
-		}
-	} while(0);
-
-	do {
-		if (argc == 1) {
-			cocos2d::plugin::TShareInfo arg0;
-			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
-			if (!ok) { ok = true; break; }
-			cobj->share(arg0);
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return true;
-		}
-	} while(0);
-
-	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_share : wrong number of arguments");
 	return false;
 }
 bool js_pluginx_protocols_AgentManager_setSessionContinueMillis(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1803,21 +1701,6 @@ bool js_pluginx_protocols_AgentManager_showLeaderboard(JSContext *cx, uint32_t a
 	}
 
 	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_showLeaderboard : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
-bool js_pluginx_protocols_AgentManager_getPluginVersion(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::AgentManager* cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_getPluginVersion : Invalid Native Object");
-	if (argc == 0) {
-		cobj->getPluginVersion();
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_getPluginVersion : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
 bool js_pluginx_protocols_AgentManager_getIAPPlugin(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2028,33 +1911,6 @@ bool js_pluginx_protocols_AgentManager_spendPoints(JSContext *cx, uint32_t argc,
 	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_spendPoints : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_pluginx_protocols_AgentManager_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::AgentManager* cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_configDeveloperInfo : Invalid Native Object");
-	if (argc == 1) {
-		std::map<std::basic_string<char>, std::basic_string<char> &, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> &> > > arg0;
-		do {
-			if (!argv[0].isObject()) { ok = false; break; }
-			js_proxy_t *jsProxy;
-			JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
-			jsProxy = jsb_get_js_proxy(tmpObj);
-			arg0 = (std::map<std::basic_string<char>, std::basic_string<char> &, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> &> > >&)(jsProxy ? jsProxy->ptr : NULL);
-			JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-		} while (0);
-		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_AgentManager_configDeveloperInfo : Error processing arguments");
-		cobj->configDeveloperInfo(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_configDeveloperInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_pluginx_protocols_AgentManager_hideAds(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -2175,80 +2031,6 @@ bool js_pluginx_protocols_AgentManager_getUserPlugin(JSContext *cx, uint32_t arg
 	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_getUserPlugin : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
 }
-bool js_pluginx_protocols_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-
-	JSObject *obj = NULL;
-	cocos2d::plugin::AgentManager* cobj = NULL;
-	obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_login : Invalid Native Object");
-	do {
-		if (argc == 1) {
-			std::function<void (int, std::basic_string<char> &)> arg0;
-			do {
-				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-				auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
-					jsval largv[2];
-					largv[0] = int32_to_jsval(cx, larg0);
-					do {
-						if (larg1) {
-							js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
-							largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-						} else {
-							largv[1] = JSVAL_NULL;
-						}
-					} while (0);
-					jsval rval;
-					bool ok = func->invoke(2, &largv[0], rval);
-					if (!ok && JS_IsExceptionPending(cx)) {
-						JS_ReportPendingException(cx);
-					}
-				};
-				arg0 = lambda;
-			} while(0)
-			;
-			if (!ok) { ok = true; break; }
-			cobj->login(arg0);
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return true;
-		}
-	} while(0);
-
-	do {
-		if (argc == 0) {
-			cobj->login();
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return true;
-		}
-	} while(0);
-
-	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_login : wrong number of arguments");
-	return false;
-}
-bool js_pluginx_protocols_AgentManager_setDebugMode(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::AgentManager* cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_setDebugMode : Invalid Native Object");
-	if (argc == 1) {
-		bool arg0;
-		arg0 = JS::ToBoolean(JS::RootedValue(cx, argv[0]));
-		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_AgentManager_setDebugMode : Error processing arguments");
-		cobj->setDebugMode(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_setDebugMode : wrong number of arguments: %d, was expecting %d", argc, 1);
-	return false;
-}
 bool js_pluginx_protocols_AgentManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc == 0) {
@@ -2308,7 +2090,6 @@ void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global)
 	static JSFunctionSpec funcs[] = {
 		JS_FN("showAds", js_pluginx_protocols_AgentManager_showAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSocialPlugin", js_pluginx_protocols_AgentManager_getSocialPlugin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("share", js_pluginx_protocols_AgentManager_share, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("setSessionContinueMillis", js_pluginx_protocols_AgentManager_setSessionContinueMillis, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAnalyticsPlugin", js_pluginx_protocols_AgentManager_getAnalyticsPlugin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("startSession", js_pluginx_protocols_AgentManager_startSession, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2318,7 +2099,6 @@ void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global)
 		JS_FN("logTimedEventBegin", js_pluginx_protocols_AgentManager_logTimedEventBegin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logError", js_pluginx_protocols_AgentManager_logError, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("showLeaderboard", js_pluginx_protocols_AgentManager_showLeaderboard, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getPluginVersion", js_pluginx_protocols_AgentManager_getPluginVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getIAPPlugin", js_pluginx_protocols_AgentManager_getIAPPlugin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("init", js_pluginx_protocols_AgentManager_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("unlockAchievement", js_pluginx_protocols_AgentManager_unlockAchievement, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2330,15 +2110,12 @@ void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global)
 		JS_FN("logout", js_pluginx_protocols_AgentManager_logout, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("submitScore", js_pluginx_protocols_AgentManager_submitScore, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("spendPoints", js_pluginx_protocols_AgentManager_spendPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("configDeveloperInfo", js_pluginx_protocols_AgentManager_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("hideAds", js_pluginx_protocols_AgentManager_hideAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logTimedEventEnd", js_pluginx_protocols_AgentManager_logTimedEventEnd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("isLogined", js_pluginx_protocols_AgentManager_isLogined, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAdsPlugin", js_pluginx_protocols_AgentManager_getAdsPlugin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("purge", js_pluginx_protocols_AgentManager_purge, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getUserPlugin", js_pluginx_protocols_AgentManager_getUserPlugin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("login", js_pluginx_protocols_AgentManager_login, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("setDebugMode", js_pluginx_protocols_AgentManager_setDebugMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
