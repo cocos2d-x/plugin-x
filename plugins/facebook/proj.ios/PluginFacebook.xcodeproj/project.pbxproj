@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA1BF82C195A6AF300B47F4E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */; };
 		BA1BF838195A6D0200B47F4E /* ShareFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1BF836195A6D0200B47F4E /* ShareFacebook.h */; };
 		BA1BF839195A6D0200B47F4E /* ShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF837195A6D0200B47F4E /* ShareFacebook.m */; };
 		BA1BF83C195A6D1900B47F4E /* UserFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1BF83A195A6D1900B47F4E /* UserFacebook.h */; };
 		BA1BF83D195A6D1900B47F4E /* UserFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF83B195A6D1900B47F4E /* UserFacebook.m */; };
+		BA1BF848195A7FF300B47F4E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1BF847195A7FF300B47F4E /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BA1BF80A195A6A7300B47F4E /* libPluginFacebook.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPluginFacebook.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../../../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		BA1BF836195A6D0200B47F4E /* ShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFacebook.h; sourceTree = "<group>"; };
 		BA1BF837195A6D0200B47F4E /* ShareFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFacebook.m; sourceTree = "<group>"; };
 		BA1BF83A195A6D1900B47F4E /* UserFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFacebook.h; sourceTree = "<group>"; };
 		BA1BF83B195A6D1900B47F4E /* UserFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFacebook.m; sourceTree = "<group>"; };
+		BA1BF847195A7FF300B47F4E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA1BF82C195A6AF300B47F4E /* FacebookSDK.framework in Frameworks */,
+				BA1BF848195A7FF300B47F4E /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +58,7 @@
 		BA1BF82A195A6AE200B47F4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */,
+				BA1BF847195A7FF300B47F4E /* FacebookSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -211,6 +211,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/panda/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/sdk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -223,6 +224,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/panda/Documents/FacebookSDK,
+					"$(PROJECT_DIR)/sdk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
