@@ -22,8 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "ShareFacebook.h"
+#import <Foundation/Foundation.h>
 
-@implementation ShareFacebook
+@interface ShareFacebook : NSObject <InterfaceShare>
+{
+    
+}
+
+@property BOOL debug;
+@property (copy, nonatomic) NSMutableDictionary* mShareInfo;
+
+/**
+ * @brief interfaces of protocol : InterfaceShare
+ */
+- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
+- (void) share: (NSMutableDictionary*) shareInfo;
+- (void) setDebugMode: (BOOL) debug;
+- (NSString*) getSDKVersion;
+- (NSString*) getPluginVersion;
 
 @end

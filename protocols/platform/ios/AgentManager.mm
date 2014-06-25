@@ -228,37 +228,14 @@ static std::vector<std::string> s_plugins = {"PluginUser", "PluginShare", "Plugi
 std::map<std::string, std::string> AgentManager::getPluginConfigure()
 {
 	std::map<std::string, std::string> configure;
+    
+    for(std::vector<std::string>::iterator iter = s_plugins.begin(); iter != s_plugins.end(); ++iter)
+    {
+        NSString *pluginName = [[NSBundle mainBundle] objectForInfoDictionaryKey:iter->c_str()];
+        std::string name([pluginName UTF8String]);
+        configure.emplace(*iter, name);
+    }
 
-	PluginJniMethodInfo t;
-	JNIEnv* env = PluginUtils::getEnv();
-
-	if(PluginJniHelper::getStaticMethodInfo(t, "org/cocos2dx/plugin/PluginWrapper", "getPluginConfigure", "()Ljava/util/Hashtable;"))
-	{
-		jobject jhashtable = t.env->CallStaticObjectMethod(t.classID, t.methodID);
-		PluginJniMethodInfo tGetMethod;
-		if(PluginJniHelper::getMethodInfo(tGetMethod, "java/util/Hashtable", "get", "(Ljava/lang/Object;)Ljava/lang/Object;"))
-		{
-			jstring jKey;
-			jstring jValue;
-			std::string stdValue;
-
-			for(std::vector<std::string>::iterator iter = s_plugins.begin(); iter != s_plugins.end(); ++iter)
-			{
-				jKey = env->NewStringUTF((*iter).c_str());
-				jValue = (jstring) (env->CallObjectMethod(jhashtable,tGetMethod.methodID,jKey));
-				stdValue = PluginJniHelper::jstring2string(jValue);
-				if(!stdValue.empty())
-					configure.insert(std::make_pair(*iter, stdValue));
-			}
-
-			tGetMethod.env->DeleteLocalRef(jKey);
-			tGetMethod.env->DeleteLocalRef(jValue);
-
-		}
-		env->DeleteLocalRef(jhashtable);
-		env->DeleteLocalRef(tGetMethod.classID);
-	}
-	env->DeleteLocalRef(t.classID);
 	return configure;
 }
 
