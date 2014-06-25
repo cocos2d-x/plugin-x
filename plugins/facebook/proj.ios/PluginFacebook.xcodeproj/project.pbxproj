@@ -10,7 +10,6 @@
 		BA34A761195AA8C7002D0ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A760195AA8C7002D0ECD /* Foundation.framework */; };
 		BA34A76F195AA8C7002D0ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A76E195AA8C7002D0ECD /* XCTest.framework */; };
 		BA34A770195AA8C7002D0ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A760195AA8C7002D0ECD /* Foundation.framework */; };
-		BA34A772195AA8C7002D0ECD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A771195AA8C7002D0ECD /* UIKit.framework */; };
 		BA34A775195AA8C7002D0ECD /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */; };
 		BA34A77B195AA8C7002D0ECD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA34A779195AA8C7002D0ECD /* InfoPlist.strings */; };
 		BA34A77D195AA8C7002D0ECD /* PluginFacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34A77C195AA8C7002D0ECD /* PluginFacebookTests.m */; };
@@ -47,7 +46,6 @@
 		BA34A764195AA8C7002D0ECD /* PluginFacebook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PluginFacebook-Prefix.pch"; sourceTree = "<group>"; };
 		BA34A76D195AA8C7002D0ECD /* PluginFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PluginFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA34A76E195AA8C7002D0ECD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		BA34A771195AA8C7002D0ECD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		BA34A778195AA8C7002D0ECD /* PluginFacebookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PluginFacebookTests-Info.plist"; sourceTree = "<group>"; };
 		BA34A77A195AA8C7002D0ECD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA34A77C195AA8C7002D0ECD /* PluginFacebookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginFacebookTests.m; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA34A76F195AA8C7002D0ECD /* XCTest.framework in Frameworks */,
-				BA34A772195AA8C7002D0ECD /* UIKit.framework in Frameworks */,
 				BA34A775195AA8C7002D0ECD /* libPluginFacebook.a in Frameworks */,
 				BA34A770195AA8C7002D0ECD /* Foundation.framework in Frameworks */,
 			);
@@ -107,7 +104,6 @@
 				BA34A798195AA8ED002D0ECD /* FacebookSDK.framework */,
 				BA34A760195AA8C7002D0ECD /* Foundation.framework */,
 				BA34A76E195AA8C7002D0ECD /* XCTest.framework */,
-				BA34A771195AA8C7002D0ECD /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

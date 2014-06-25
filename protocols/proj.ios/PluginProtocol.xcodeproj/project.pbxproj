@@ -156,8 +156,8 @@
 			children = (
 				BA1BF841195A6FC100B47F4E /* AgentManager.mm */,
 				051FF7BA192CE3CC00C43A06 /* IAPWrapper.h */,
-				051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */,
 				FADBF897179E509500F59B1D /* InterfaceSocial.h */,
+				051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */,
 				FADBF898179E509500F59B1D /* ProtocolSocial.mm */,
 				FADBF899179E509500F59B1D /* SocialWrapper.h */,
 				FADBF89A179E509500F59B1D /* SocialWrapper.mm */,
