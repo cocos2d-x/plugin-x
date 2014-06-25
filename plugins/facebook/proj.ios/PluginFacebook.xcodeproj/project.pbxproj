@@ -1,0 +1,255 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA1BF82C195A6AF300B47F4E /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */; };
+		BA1BF838195A6D0200B47F4E /* ShareFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1BF836195A6D0200B47F4E /* ShareFacebook.h */; };
+		BA1BF839195A6D0200B47F4E /* ShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF837195A6D0200B47F4E /* ShareFacebook.m */; };
+		BA1BF83C195A6D1900B47F4E /* UserFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1BF83A195A6D1900B47F4E /* UserFacebook.h */; };
+		BA1BF83D195A6D1900B47F4E /* UserFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF83B195A6D1900B47F4E /* UserFacebook.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BA1BF80A195A6A7300B47F4E /* libPluginFacebook.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libPluginFacebook.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../../../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		BA1BF836195A6D0200B47F4E /* ShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFacebook.h; sourceTree = "<group>"; };
+		BA1BF837195A6D0200B47F4E /* ShareFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFacebook.m; sourceTree = "<group>"; };
+		BA1BF83A195A6D1900B47F4E /* UserFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFacebook.h; sourceTree = "<group>"; };
+		BA1BF83B195A6D1900B47F4E /* UserFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFacebook.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA1BF807195A6A7300B47F4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA1BF82C195A6AF300B47F4E /* FacebookSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA1BF801195A6A7300B47F4E = {
+			isa = PBXGroup;
+			children = (
+				BA1BF83A195A6D1900B47F4E /* UserFacebook.h */,
+				BA1BF83B195A6D1900B47F4E /* UserFacebook.m */,
+				BA1BF836195A6D0200B47F4E /* ShareFacebook.h */,
+				BA1BF837195A6D0200B47F4E /* ShareFacebook.m */,
+				BA1BF82A195A6AE200B47F4E /* Frameworks */,
+				BA1BF80B195A6A7300B47F4E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA1BF80B195A6A7300B47F4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA1BF80A195A6A7300B47F4E /* libPluginFacebook.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA1BF82A195A6AE200B47F4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA1BF82B195A6AF300B47F4E /* FacebookSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		BA1BF808195A6A7300B47F4E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA1BF838195A6D0200B47F4E /* ShareFacebook.h in Headers */,
+				BA1BF83C195A6D1900B47F4E /* UserFacebook.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BA1BF809195A6A7300B47F4E /* PluginFacebook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA1BF80E195A6A7300B47F4E /* Build configuration list for PBXNativeTarget "PluginFacebook" */;
+			buildPhases = (
+				BA1BF806195A6A7300B47F4E /* Sources */,
+				BA1BF807195A6A7300B47F4E /* Frameworks */,
+				BA1BF808195A6A7300B47F4E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PluginFacebook;
+			productName = PluginFacebook;
+			productReference = BA1BF80A195A6A7300B47F4E /* libPluginFacebook.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA1BF802195A6A7300B47F4E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Cocos2d-x";
+			};
+			buildConfigurationList = BA1BF805195A6A7300B47F4E /* Build configuration list for PBXProject "PluginFacebook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA1BF801195A6A7300B47F4E;
+			productRefGroup = BA1BF80B195A6A7300B47F4E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA1BF809195A6A7300B47F4E /* PluginFacebook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA1BF806195A6A7300B47F4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA1BF83D195A6D1900B47F4E /* UserFacebook.m in Sources */,
+				BA1BF839195A6D0200B47F4E /* ShareFacebook.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BA1BF80C195A6A7300B47F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BA1BF80D195A6A7300B47F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BA1BF80F195A6A7300B47F4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/panda/Documents/FacebookSDK,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BA1BF810195A6A7300B47F4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/panda/Documents/FacebookSDK,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA1BF805195A6A7300B47F4E /* Build configuration list for PBXProject "PluginFacebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA1BF80C195A6A7300B47F4E /* Debug */,
+				BA1BF80D195A6A7300B47F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA1BF80E195A6A7300B47F4E /* Build configuration list for PBXNativeTarget "PluginFacebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA1BF80F195A6A7300B47F4E /* Debug */,
+				BA1BF810195A6A7300B47F4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA1BF802195A6A7300B47F4E /* Project object */;
+}
