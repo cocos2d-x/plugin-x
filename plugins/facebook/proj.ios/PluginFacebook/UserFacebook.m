@@ -39,17 +39,16 @@ NSString *_accessToken = @"";
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo{
 }
 - (void) login{
-    if (FBSession.activeSession.state == FBSessionStateOpen
-        || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        
-        // Close the session and remove the access token from the cache
-        // The session state handler (in the app delegate) will be called automatically
-        [FBSession.activeSession closeAndClearTokenInformation];
-        
-        // If the session state is not any of the two "open" states when the button is clicked
+    if (FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+                                           allowLoginUI:NO
+                                      completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             [self sessionStateChanged:session state:state error:error];
+             // Retrieve the app delegate
+         }];
+
     } else {
-        // Open a session showing the user the login UI
-        // You must ALWAYS ask for public_profile permissions when opening a session
         [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
                                            allowLoginUI:YES
                                       completionHandler:
@@ -105,47 +104,34 @@ NSString *_accessToken = @"";
                 [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Success"];
             } else {
                 [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:@"login Fail"];
-                // An error occurred, we need to handle the error
-                // See: https://developers.facebook.com/docs/ios/errors
             }
         }];
-        // Show the user the logged-in UI
+
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-        // If the session is closed
         _isLogin = false;
         OUTPUT_LOG(@"Session closed");
-        // Show the user the logged-out UI
     }
     
     // Handle errors
     if (error){
         _isLogin = false;
         NSString *errorText = @"";
-        // If the error requires people using an app to make an action outside of the app in order to recover
         if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
             errorText = [FBErrorUtility userMessageForError:error];
         } else {
-            // If the user cancelled login, do nothing
             if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
                 OUTPUT_LOG(@"User cancelled login");
-                // Handle session closures that happen outside of the app
             } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
                 errorText = @"Your current session is no longer valid. Please log in again.";
-                // For simplicity, here we just show a generic message for all other errors
-                // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
             } else {
-                //Get more error information from the error
                 NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
-                
-                // Show the user an error message
                 errorText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
             }
         }
+        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:errorText];
         OUTPUT_LOG(errorText);
-        // Clear this token
         [FBSession.activeSession closeAndClearTokenInformation];
-        // Show the user the logged-out UI
     }
 }
 @end
