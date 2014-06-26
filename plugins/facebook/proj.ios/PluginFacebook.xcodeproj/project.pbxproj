@@ -8,25 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		BA34A761195AA8C7002D0ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A760195AA8C7002D0ECD /* Foundation.framework */; };
-		BA34A76F195AA8C7002D0ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A76E195AA8C7002D0ECD /* XCTest.framework */; };
-		BA34A770195AA8C7002D0ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A760195AA8C7002D0ECD /* Foundation.framework */; };
-		BA34A775195AA8C7002D0ECD /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */; };
-		BA34A77B195AA8C7002D0ECD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BA34A779195AA8C7002D0ECD /* InfoPlist.strings */; };
-		BA34A77D195AA8C7002D0ECD /* PluginFacebookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34A77C195AA8C7002D0ECD /* PluginFacebookTests.m */; };
 		BA34A799195AA8ED002D0ECD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A798195AA8ED002D0ECD /* FacebookSDK.framework */; };
 		BA34A79E195AA939002D0ECD /* ShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34A79B195AA939002D0ECD /* ShareFacebook.m */; };
 		BA34A79F195AA939002D0ECD /* UserFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34A79D195AA939002D0ECD /* UserFacebook.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		BA34A773195AA8C7002D0ECD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA34A755195AA8C7002D0ECD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BA34A75C195AA8C7002D0ECD;
-			remoteInfo = PluginFacebook;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		BA34A75B195AA8C7002D0ECD /* CopyFiles */ = {
@@ -44,11 +29,6 @@
 		BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA34A760195AA8C7002D0ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA34A764195AA8C7002D0ECD /* PluginFacebook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PluginFacebook-Prefix.pch"; sourceTree = "<group>"; };
-		BA34A76D195AA8C7002D0ECD /* PluginFacebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PluginFacebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA34A76E195AA8C7002D0ECD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		BA34A778195AA8C7002D0ECD /* PluginFacebookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PluginFacebookTests-Info.plist"; sourceTree = "<group>"; };
-		BA34A77A195AA8C7002D0ECD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BA34A77C195AA8C7002D0ECD /* PluginFacebookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PluginFacebookTests.m; sourceTree = "<group>"; };
 		BA34A798195AA8ED002D0ECD /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 		BA34A79A195AA939002D0ECD /* ShareFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFacebook.h; sourceTree = "<group>"; };
 		BA34A79B195AA939002D0ECD /* ShareFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFacebook.m; sourceTree = "<group>"; };
@@ -66,16 +46,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA34A76A195AA8C7002D0ECD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA34A76F195AA8C7002D0ECD /* XCTest.framework in Frameworks */,
-				BA34A775195AA8C7002D0ECD /* libPluginFacebook.a in Frameworks */,
-				BA34A770195AA8C7002D0ECD /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -83,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				BA34A762195AA8C7002D0ECD /* PluginFacebook */,
-				BA34A776195AA8C7002D0ECD /* PluginFacebookTests */,
 				BA34A75F195AA8C7002D0ECD /* Frameworks */,
 				BA34A75E195AA8C7002D0ECD /* Products */,
 			);
@@ -93,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */,
-				BA34A76D195AA8C7002D0ECD /* PluginFacebookTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,7 +71,6 @@
 			children = (
 				BA34A798195AA8ED002D0ECD /* FacebookSDK.framework */,
 				BA34A760195AA8C7002D0ECD /* Foundation.framework */,
-				BA34A76E195AA8C7002D0ECD /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,24 +95,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BA34A776195AA8C7002D0ECD /* PluginFacebookTests */ = {
-			isa = PBXGroup;
-			children = (
-				BA34A77C195AA8C7002D0ECD /* PluginFacebookTests.m */,
-				BA34A777195AA8C7002D0ECD /* Supporting Files */,
-			);
-			path = PluginFacebookTests;
-			sourceTree = "<group>";
-		};
-		BA34A777195AA8C7002D0ECD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BA34A778195AA8C7002D0ECD /* PluginFacebookTests-Info.plist */,
-				BA34A779195AA8C7002D0ECD /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -165,24 +114,6 @@
 			productName = PluginFacebook;
 			productReference = BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		BA34A76C195AA8C7002D0ECD /* PluginFacebookTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BA34A783195AA8C7002D0ECD /* Build configuration list for PBXNativeTarget "PluginFacebookTests" */;
-			buildPhases = (
-				BA34A769195AA8C7002D0ECD /* Sources */,
-				BA34A76A195AA8C7002D0ECD /* Frameworks */,
-				BA34A76B195AA8C7002D0ECD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BA34A774195AA8C7002D0ECD /* PBXTargetDependency */,
-			);
-			name = PluginFacebookTests;
-			productName = PluginFacebookTests;
-			productReference = BA34A76D195AA8C7002D0ECD /* PluginFacebookTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -206,21 +137,9 @@
 			projectRoot = "";
 			targets = (
 				BA34A75C195AA8C7002D0ECD /* PluginFacebook */,
-				BA34A76C195AA8C7002D0ECD /* PluginFacebookTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		BA34A76B195AA8C7002D0ECD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA34A77B195AA8C7002D0ECD /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BA34A759195AA8C7002D0ECD /* Sources */ = {
@@ -232,34 +151,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA34A769195AA8C7002D0ECD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BA34A77D195AA8C7002D0ECD /* PluginFacebookTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		BA34A774195AA8C7002D0ECD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BA34A75C195AA8C7002D0ECD /* PluginFacebook */;
-			targetProxy = BA34A773195AA8C7002D0ECD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BA34A779195AA8C7002D0ECD /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BA34A77A195AA8C7002D0ECD /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BA34A77E195AA8C7002D0ECD /* Debug */ = {
@@ -364,42 +256,6 @@
 			};
 			name = Release;
 		};
-		BA34A784195AA8C7002D0ECD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PluginFacebook/PluginFacebook-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "PluginFacebookTests/PluginFacebookTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		BA34A785195AA8C7002D0ECD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PluginFacebook/PluginFacebook-Prefix.pch";
-				INFOPLIST_FILE = "PluginFacebookTests/PluginFacebookTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -417,15 +273,6 @@
 			buildConfigurations = (
 				BA34A781195AA8C7002D0ECD /* Debug */,
 				BA34A782195AA8C7002D0ECD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BA34A783195AA8C7002D0ECD /* Build configuration list for PBXNativeTarget "PluginFacebookTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BA34A784195AA8C7002D0ECD /* Debug */,
-				BA34A785195AA8C7002D0ECD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
