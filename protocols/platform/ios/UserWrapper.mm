@@ -36,12 +36,15 @@ using namespace cocos2d::plugin;
     ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
     if (pUser) {
         UserActionListener* listener = pUser->getActionListener();
+        ProtocolUser::ProtocolUserCallback callback = pUser->getEventListener();
+        const char* chMsg = [msg UTF8String];
         if (NULL != listener)
         {
-            const char* chMsg = [msg UTF8String];
             listener->onActionResult(pUser, (UserActionResultCode) ret, chMsg);
-        }
-        else
+        }else if(callback){
+            std::string stdmsg(chMsg);
+            callback(ret, stdmsg);
+        }else
         {
             PluginUtilsIOS::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
         }
