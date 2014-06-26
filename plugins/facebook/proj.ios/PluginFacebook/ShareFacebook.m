@@ -48,6 +48,23 @@
     return params;
 }
 
+/**
+ * shareInfo parameters support both AnySDK style and facebook style
+ *  1. AnySDK style
+ *      - title
+ *      - site
+ *      - siteUrl
+ *      - text
+ *      - imageUrl
+ *      - imagePath
+ *
+ *  2. Facebook style
+ *      - caption
+ *      - name
+ *      - link
+ *      - description
+ *      - picture
+ */
 - (void)convertParamsToFBParams:(NSMutableDictionary*) shareInfo {
     // Link type share info
     NSString *link = [shareInfo objectForKey:@"siteUrl"];
@@ -265,7 +282,7 @@
             not_supported = true;
         }
     }
-    else if ([dialog_type isEqualToString:@"request"]) {
+    else if ([dialog_type isEqualToString:@"apprequests"]) {
         [self requestDialogWeb:shareInfo];
     }
     else {
