@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		051FF7BC192CE3CC00C43A06 /* IAPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */; };
-		BA1BF840195A6E9500B47F4E /* PluginWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF83E195A6E9500B47F4E /* PluginWrapper.mm */; };
 		BA1BF842195A6FC100B47F4E /* AgentManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF841195A6FC100B47F4E /* AgentManager.mm */; };
 		FA09A325168ADBC2008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A324168ADBC2008C1C7B /* Foundation.framework */; };
 		FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */; };
@@ -45,8 +44,6 @@
 		051FF7BA192CE3CC00C43A06 /* IAPWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPWrapper.h; sourceTree = "<group>"; };
 		051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAPWrapper.mm; sourceTree = "<group>"; };
 		BA1BF7FE195962C400B47F4E /* AgentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentManager.h; sourceTree = "<group>"; };
-		BA1BF83E195A6E9500B47F4E /* PluginWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PluginWrapper.mm; sourceTree = "<group>"; };
-		BA1BF83F195A6E9500B47F4E /* PluginWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginWrapper.h; sourceTree = "<group>"; };
 		BA1BF841195A6FC100B47F4E /* AgentManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AgentManager.mm; sourceTree = "<group>"; };
 		FA09A321168ADBC2008C1C7B /* libPluginProtocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginProtocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA09A324168ADBC2008C1C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -182,8 +179,6 @@
 				FA8CC207173894F000464206 /* ProtocolIAP.mm */,
 				FA8CC1E4173754CF00464206 /* PluginUtilsIOS.h */,
 				FA8CC1E5173754CF00464206 /* PluginUtilsIOS.mm */,
-				BA1BF83F195A6E9500B47F4E /* PluginWrapper.h */,
-				BA1BF83E195A6E9500B47F4E /* PluginWrapper.mm */,
 			);
 			name = ios;
 			path = ../platform/ios;
@@ -243,7 +238,6 @@
 				051FF7BC192CE3CC00C43A06 /* IAPWrapper.mm in Sources */,
 				FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */,
 				FA8CC1E6173754CF00464206 /* PluginUtilsIOS.mm in Sources */,
-				BA1BF840195A6E9500B47F4E /* PluginWrapper.mm in Sources */,
 				FA8CC208173894F000464206 /* ProtocolAds.mm in Sources */,
 				FA8CC209173894F000464206 /* ProtocolAnalytics.mm in Sources */,
 				FA8CC20A173894F000464206 /* ProtocolIAP.mm in Sources */,
