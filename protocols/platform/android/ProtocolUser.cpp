@@ -43,7 +43,7 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
         if (pUser != NULL)
         {
             UserActionListener* listener = pUser->getActionListener();
-            ProtocolUser::ProtocolUserCallback callback = pUser->getEventListener();
+            ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
             if (NULL != listener)
             {
                 listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
