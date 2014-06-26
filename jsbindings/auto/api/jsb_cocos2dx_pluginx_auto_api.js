@@ -404,16 +404,6 @@ map
 plugin.ProtocolUser = {
 
 /**
- * @method configDeveloperInfo
- * @param {map_object} arg0
- */
-configDeveloperInfo : function (
-map 
-)
-{
-},
-
-/**
  * @method isLogined
  * @return {bool}
  */
@@ -427,6 +417,16 @@ isLogined : function (
  * @method logout
  */
 logout : function (
+)
+{
+},
+
+/**
+ * @method configDeveloperInfo
+ * @param {map_object} arg0
+ */
+configDeveloperInfo : function (
+map 
 )
 {
 },
@@ -447,16 +447,6 @@ getSessionID : function (
 )
 {
     return ;
-},
-
-/**
- * @method getEventListener
- * @return {function}
- */
-getEventListener : function (
-)
-{
-    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 };

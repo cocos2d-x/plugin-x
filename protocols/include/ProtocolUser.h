@@ -88,18 +88,16 @@ public:
     std::string getSessionID();
     
     /*
-        deprecated
-        Please use addEventlistener instead.
-    */
-    CC_DEPRECATED_ATTRIBUTE inline void setActionListener(UserActionListener* listener)
+     @brief set login callback function
+     */
+    inline void setActionListener(UserActionListener* listener)
     {
         _listener = listener;
     }
     /*
-        deprecated
-        Please use getEventListener instead.
-    */
-    CC_DEPRECATED_ATTRIBUTE inline UserActionListener* getActionListener()
+     @brief get login callback function
+     */
+    inline UserActionListener* getActionListener()
     {
         return _listener;
     }
@@ -107,7 +105,7 @@ public:
     /**
      @brief set login callback function
      */
-    inline void addEventListener(const ProtocolUserCallback &cb)
+    inline void setListener(const ProtocolUserCallback &cb)
     {
         _callback = cb;
     }
@@ -115,7 +113,7 @@ public:
     /**
      @brief get login callback function
      */
-    inline ProtocolUserCallback& getEventListener()
+    inline ProtocolUserCallback& getListener()
     {
         return _callback;
     }

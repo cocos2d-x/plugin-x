@@ -102,12 +102,11 @@ bool js_pluginx_protocols_ProtocolUser_constructor(JSContext *cx, uint32_t argc,
 void js_pluginx_protocols_ProtocolUser_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_isLogined(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getSessionID(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolUser_getEventListener(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_plugin_AgentManager_class;
 extern JSObject *jsb_cocos2d_plugin_AgentManager_prototype;

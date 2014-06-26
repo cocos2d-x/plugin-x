@@ -36,7 +36,7 @@ using namespace cocos2d::plugin;
     ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
     if (pUser) {
         UserActionListener* listener = pUser->getActionListener();
-        ProtocolUser::ProtocolUserCallback callback = pUser->getEventListener();
+        ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
         const char* chMsg = [msg UTF8String];
         if (NULL != listener)
         {

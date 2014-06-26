@@ -109,7 +109,7 @@ void AgentManager::login()
 
 void AgentManager::login(std::function<void(int resultCode, std::string &msg)> &callback)
 {
-	pUser->addEventListener(callback);
+	pUser->setListener(callback);
 	pUser->login();
 }
 
