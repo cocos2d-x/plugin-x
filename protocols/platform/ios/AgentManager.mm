@@ -233,8 +233,10 @@ std::map<std::string, std::string> AgentManager::getPluginConfigure()
     {
         NSString *key = [NSString stringWithUTF8String:iter->c_str()];
         NSString *pluginName = [[NSBundle mainBundle] objectForInfoDictionaryKey:key];
-        std::string name([pluginName UTF8String]);
-        configure.emplace(*iter, name);
+        if (pluginName) {
+            std::string name = [pluginName UTF8String];
+            configure.emplace(*iter, name);
+        }
     }
 
 	return configure;

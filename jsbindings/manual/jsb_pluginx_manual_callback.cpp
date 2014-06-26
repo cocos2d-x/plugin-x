@@ -2,6 +2,7 @@
 #include "jsb_pluginx_basic_conversions.h"
 #include "jsb_pluginx_spidermonkey_specifics.h"
 #include "ProtocolAds.h"
+#include "AgentManager.h"
 
 using namespace pluginx;
 
@@ -398,3 +399,57 @@ bool js_pluginx_ProtocolUser_setActionListener(JSContext *cx, uint32_t argc, jsv
     return false;
 }
 
+
+bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+    
+	JSObject *obj = NULL;
+	cocos2d::plugin::AgentManager* cobj = NULL;
+	obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_share : Invalid Native Object");
+	do {
+		if (argc == 2) {
+			cocos2d::plugin::TShareInfo arg0;
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			std::function<void (int, std::basic_string<char> &)> arg1;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+                    largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg1 = lambda;
+			} while(0)
+                ;
+			if (!ok) { ok = true; break; }
+			cobj->share(arg0, arg1);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+    
+	do {
+		if (argc == 1) {
+			cocos2d::plugin::TShareInfo arg0;
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			cobj->share(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+    
+	JS_ReportError(cx, "js_pluginx_protocols_AgentManager_share : wrong number of arguments");
+	return false;
+}
