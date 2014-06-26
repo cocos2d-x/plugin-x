@@ -18,5 +18,6 @@ bool js_pluginx_PluginProtocol_callStringFuncWithParam(JSContext *cx, uint32_t a
 bool js_pluginx_PluginProtocol_callIntFuncWithParam(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_PluginProtocol_callFloatFuncWithParam(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_PluginProtocol_callBoolFuncWithParam(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif /* __JS_MANUAL_PROTOCOLS_H__ */

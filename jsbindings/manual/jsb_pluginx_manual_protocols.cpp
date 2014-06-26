@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "PluginProtocol.h"
+#include "AgentManager.h"
 
 using namespace pluginx;
 
@@ -337,4 +338,42 @@ bool js_pluginx_PluginProtocol_callBoolFuncWithParam(JSContext *cx, uint32_t arg
 	}
     JS_ReportError(cx, "wrong number of arguments");
 	return false;
+}
+
+bool js_pluginx_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::AgentManager* cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_login : Invalid Native Object");
+
+    if (argc == 0) {
+        cobj->login();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    else if(argc == 1)
+    {
+        jsval *argv = JS_ARGV(cx, vp);
+        std::function<void(int, std::string&)> arg0;
+        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+        auto lambda = [=](int larg0, std::string& larg1)->void{
+            jsval largv[2];
+            largv[0] = int32_to_jsval(cx, larg0);
+            largv[1] = std_string_to_jsval(cx, larg1);
+
+            jsval rval;
+            bool ok = func->invoke(2, &largv[0], rval);
+            if (!ok && JS_IsExceptionPending(cx)) {
+                JS_ReportPendingException(cx);
+            }
+        };
+        arg0 = lambda;
+
+        cobj->login(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    JS_ReportError(cx, "js_pluginx_protocols_AgentManager_logout : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
 }
