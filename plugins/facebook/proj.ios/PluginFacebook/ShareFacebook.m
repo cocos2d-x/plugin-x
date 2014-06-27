@@ -148,9 +148,10 @@
         }
     }
     else if (photo) {
-        NSString *photo = [shareInfo objectForKey:@"photo"];
-        NSArray *photos = [NSArray arrayWithObjects:[NSURL URLWithString:photo], nil];
-        FBPhotoParams *params = [[FBPhotoParams alloc] initWithPhotos:photos];
+        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
+        UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+        FBPhotoParams *params = [[FBPhotoParams alloc] init];
+        params.photos = @[img];
         
         // If the Facebook app is installed and we can present the share dialog
         if ([FBDialogs canPresentShareDialogWithPhotos]) {
@@ -260,9 +261,10 @@
         }
     }
     else if ([dialog_type hasSuffix:@"photo"]) {
-        NSString *photo = [shareInfo objectForKey:@"photo"];
-        NSArray *photos = [NSArray arrayWithObjects:[NSURL URLWithString:photo], nil];
-        FBPhotoParams *params = [[FBPhotoParams alloc] initWithPhotos:photos];
+        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
+        UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+        FBPhotoParams *params = [[FBPhotoParams alloc] init];
+        params.photos = @[img];
         
         if ([dialog_type isEqualToString:@"share_photo"]) {
             if ([FBDialogs canPresentShareDialogWithPhotos]) {
@@ -305,7 +307,7 @@
                                             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                         } else {
-                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Succeed"];
+                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
                                         }
                                     }];
 }
@@ -320,7 +322,7 @@
              NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Succeed"];
+             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
          }
      }];
 }
@@ -335,7 +337,7 @@
                                                  NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                                  [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                              } else {
-                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Succeed"];
+                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
                                              }
                                          }];
 }
