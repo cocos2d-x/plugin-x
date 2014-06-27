@@ -417,6 +417,7 @@ bool js_pluginx_protocols_AgentManager_login(JSContext *cx, uint32_t argc, jsval
 			do {
 				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
 				auto lambda = [=](int larg0, std::string& larg1) -> void {
+                    JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
                     largv[1] = std_string_to_jsval(cx, larg1);
@@ -468,6 +469,7 @@ bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval
 			do {
 				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 				auto lambda = [=](int larg0, std::string& larg1) -> void {
+                    JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
                     largv[1] = std_string_to_jsval(cx, larg1);
