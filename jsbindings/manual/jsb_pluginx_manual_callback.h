@@ -10,5 +10,6 @@ bool js_pluginx_ProtocolShare_setResultListener(JSContext *cx, uint32_t argc, js
 bool js_pluginx_ProtocolSocial_setListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_ProtocolUser_setActionListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif /* __JS_MANUAL_CALLBACK_H__ */
