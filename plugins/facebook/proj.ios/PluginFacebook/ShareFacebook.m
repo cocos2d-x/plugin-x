@@ -307,7 +307,8 @@
                                             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                         } else {
-                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
+                                            NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
+                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                         }
                                     }];
 }
@@ -337,7 +338,8 @@
                                                  NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                                  [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                              } else {
-                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
+                                                 NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
+                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                              }
                                          }];
 }
@@ -352,7 +354,8 @@
                                               NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                               [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                           } else {
-                                              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Message sent"];
+                                              NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+                                              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                           }
                                       }];
 }
@@ -367,7 +370,8 @@
              NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Message sent"];
+             NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
          }
      }];
 }
@@ -382,7 +386,8 @@
                                                    NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                                    [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                                } else {
-                                                   [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Message sent"];
+                                                   NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+                                                   [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                                }
                                            }];
 }
