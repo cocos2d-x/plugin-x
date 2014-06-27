@@ -1,7 +1,7 @@
 #ifndef __AGENTMANAGER_H__
 #define __AGENTMANAGER_H__
 
-#include <Functional>
+#include <functional>
 #include <string>
 #include <map>
 
