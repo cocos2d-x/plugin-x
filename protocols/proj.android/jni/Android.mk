@@ -23,7 +23,7 @@ $(addprefix ../../platform/android/, \
 ../../PluginManager.cpp \
 ../../PluginParam.cpp
 
-LOCAL_CFLAGS := -Wno-psabi
+LOCAL_CFLAGS := -std=c++11 -Wno-psabi
 LOCAL_EXPORT_CFLAGS := -Wno-psabi
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../include $(LOCAL_PATH)/../../platform/android
