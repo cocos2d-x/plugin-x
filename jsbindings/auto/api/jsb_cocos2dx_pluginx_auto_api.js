@@ -202,16 +202,6 @@ map
 },
 
 /**
- * @method getResultListener
- * @return {cc.plugin::PayResultListener}
- */
-getResultListener : function (
-)
-{
-    return cc.plugin::PayResultListener;
-},
-
-/**
  * @method onPayResult
  * @param {cc.plugin::PayResultCode} arg0
  * @param {char} arg1
@@ -290,22 +280,22 @@ map
 {
 },
 
-/**
- * @method getAdsListener
- * @return {cc.plugin::AdsListener}
- */
-getAdsListener : function (
-)
-{
-    return cc.plugin::AdsListener;
-},
-
 };
 
 /**
  * @class ProtocolShare
  */
 plugin.ProtocolShare = {
+
+/**
+ * @method share
+ * @param {map_object} arg0
+ */
+share : function (
+map 
+)
+{
+},
 
 /**
  * @method onShareResult
@@ -315,16 +305,6 @@ plugin.ProtocolShare = {
 onShareResult : function (
 shareresultcode, 
 char 
-)
-{
-},
-
-/**
- * @method share
- * @param {map_object} arg0
- */
-share : function (
-map 
 )
 {
 },

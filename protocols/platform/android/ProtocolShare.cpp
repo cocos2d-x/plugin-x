@@ -120,6 +120,11 @@ void ProtocolShare::setResultListener(ShareResultListener* pListener)
 	_listener = pListener;
 }
 
+ShareResultListener* ProtocolShare::getResultListener()
+{
+    return _listener;
+}
+
 void ProtocolShare::onShareResult(ShareResultCode ret, const char* msg)
 {
     if (_listener)

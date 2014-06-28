@@ -78,6 +78,13 @@ public:
     @wraning Must invoke this interface before share
     */
     void setResultListener(ShareResultListener* pListener);
+    
+    /**
+     @breif get the result listener
+     @return The callback object for share result
+     @wraning Must invoke this interface before share
+     */
+    ShareResultListener* getResultListener();
 
     /**
     @brief share result callback
