@@ -53,7 +53,6 @@ void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
 bool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolIAP_getResultListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -69,7 +68,6 @@ bool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsva
 bool js_pluginx_protocols_ProtocolAds_queryPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_plugin_ProtocolShare_class;
 extern JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
@@ -78,8 +76,8 @@ bool js_pluginx_protocols_ProtocolShare_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_ProtocolShare_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_plugin_ProtocolSocial_class;

@@ -628,30 +628,6 @@ bool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolIAP_payForProduct : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_pluginx_protocols_ProtocolIAP_getResultListener(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolIAP_getResultListener : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::plugin::PayResultListener* ret = cobj->getResultListener();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::plugin::PayResultListener>(cx, (cocos2d::plugin::PayResultListener*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_ProtocolIAP_getResultListener : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -733,7 +709,6 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global) 
 
 	static JSFunctionSpec funcs[] = {
 		JS_FN("payForProduct", js_pluginx_protocols_ProtocolIAP_payForProduct, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getResultListener", js_pluginx_protocols_ProtocolIAP_getResultListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("onPayResult", js_pluginx_protocols_ProtocolIAP_onPayResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolIAP_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -877,30 +852,6 @@ bool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolAds_configDeveloperInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
-bool js_pluginx_protocols_ProtocolAds_getAdsListener(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolAds_getAdsListener : Invalid Native Object");
-	if (argc == 0) {
-		cocos2d::plugin::AdsListener* ret = cobj->getAdsListener();
-		jsval jsret = JSVAL_NULL;
-		do {
-			if (ret) {
-				js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::plugin::AdsListener>(cx, (cocos2d::plugin::AdsListener*)ret);
-				jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-			} else {
-				jsret = JSVAL_NULL;
-			}
-		} while (0);
-		JS_SET_RVAL(cx, vp, jsret);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_ProtocolAds_getAdsListener : wrong number of arguments: %d, was expecting %d", argc, 0);
-	return false;
-}
 
 extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 
@@ -944,7 +895,6 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 		JS_FN("queryPoints", js_pluginx_protocols_ProtocolAds_queryPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("spendPoints", js_pluginx_protocols_ProtocolAds_spendPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolAds_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("getAdsListener", js_pluginx_protocols_ProtocolAds_getAdsListener, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
 
@@ -981,6 +931,26 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JSObject *global) 
 JSClass  *jsb_cocos2d_plugin_ProtocolShare_class;
 JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
 
+bool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolShare_share : Invalid Native Object");
+	if (argc == 1) {
+		cocos2d::plugin::TShareInfo arg0;
+		ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
+		cobj->share(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_ProtocolShare_share : wrong number of arguments: %d, was expecting %d", argc, 1);
+	return false;
+}
 bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	jsval *argv = JS_ARGV(cx, vp);
@@ -1001,26 +971,6 @@ bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t ar
 	}
 
 	JS_ReportError(cx, "js_pluginx_protocols_ProtocolShare_onShareResult : wrong number of arguments: %d, was expecting %d", argc, 2);
-	return false;
-}
-bool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
-	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolShare_share : Invalid Native Object");
-	if (argc == 1) {
-		cocos2d::plugin::TShareInfo arg0;
-		ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
-		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
-		cobj->share(arg0);
-		JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return true;
-	}
-
-	JS_ReportError(cx, "js_pluginx_protocols_ProtocolShare_share : wrong number of arguments: %d, was expecting %d", argc, 1);
 	return false;
 }
 bool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1081,8 +1031,8 @@ void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global
 	};
 
 	static JSFunctionSpec funcs[] = {
-		JS_FN("onShareResult", js_pluginx_protocols_ProtocolShare_onShareResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("share", js_pluginx_protocols_ProtocolShare_share, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("onShareResult", js_pluginx_protocols_ProtocolShare_onShareResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolShare_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
 	};
