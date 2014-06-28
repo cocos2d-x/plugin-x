@@ -131,11 +131,11 @@ public class UserFacebook implements InterfaceUser{
 		return "0.2.0";
 	}
 	
-	public static String getAccessToken(){
-		return session.getAccessToken();
+	public String getToken(){
+		return Session.getActiveSession().getAccessToken();
 	}
 	
-	public static String getUserId(){
+	public String getUserId(){
 		return userID;
 	}
 		
