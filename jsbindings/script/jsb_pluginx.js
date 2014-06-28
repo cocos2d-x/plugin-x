@@ -53,3 +53,11 @@ plugin.ProtocolUser.UserActionResultCode.LoginSucceed = 0;
 plugin.ProtocolUser.UserActionResultCode.LoginFailed = 1;
 plugin.ProtocolUser.UserActionResultCode.LogoutSucceed = 2;
 
+plugin.agentManager = plugin.AgentManager.getInstance();
+plugin.agentManager.dialog = function(shareInfo, callback) {
+	var sharePlugin = this.getSharePlugin();
+	if (sharePlugin) {
+		callback && sharePlugin.setListener(callback);
+		sharePlugin.callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, shareInfo));
+	}
+}
