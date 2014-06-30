@@ -145,6 +145,8 @@ public:
     virtual void onAdsResult(AdsResultCode code, const char* msg)
     {
         JSContext* cx = s_cx;
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
 
         bool hasAction;
         jsval retval;
@@ -154,7 +156,6 @@ public:
         std::string strMsgInfo = msg;
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = _JSDelegate;
         bool bRet = JS_HasProperty(cx, obj, "onAdsResult", &hasAction);
         if (bRet && hasAction) {
             if(!JS_GetProperty(cx, obj, "onAdsResult", &temp_retval)) {
@@ -163,7 +164,6 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, "onAdsResult",
                                 2, dataVal, &retval);
         }
@@ -172,6 +172,8 @@ public:
     virtual void onPlayerGetPoints(ProtocolAds* pAdsPlugin, int points)
     {
         JSContext* cx = s_cx;
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
 
         bool hasAction;
         jsval retval;
@@ -186,7 +188,6 @@ public:
         dataVal[0] = arg;
         dataVal[1] = INT_TO_JSVAL(points);
         
-        JSObject* obj = _JSDelegate;
         bool bRet = JS_HasProperty(cx, obj, "onPlayerGetPoints", &hasAction);
         if (bRet && hasAction) {
             if(!JS_GetProperty(cx, obj, "onPlayerGetPoints", &temp_retval)) {
@@ -195,7 +196,6 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, "onPlayerGetPoints",
                                 2, NULL, &retval);
         }
@@ -268,6 +268,8 @@ public:
     virtual void onShareResult(cocos2d::plugin::ShareResultCode ret, const char* msg)
     {
         JSContext* cx = s_cx;
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
 
         bool hasAction;
         jsval retval;
@@ -277,8 +279,6 @@ public:
         std::string strMsgInfo = msg;
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = _JSDelegate;
-        
         if (JS_HasProperty(cx, obj, "onShareResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onShareResult", &temp_retval)) {
                 return;
@@ -286,7 +286,6 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, "onShareResult",
                                 2, dataVal, &retval);
         }
@@ -361,6 +360,8 @@ public:
     virtual void onSocialResult(cocos2d::plugin::SocialRetCode ret, const char* msg)
     {
         JSContext* cx = s_cx;
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
 
         bool hasAction;
         jsval retval;
@@ -370,8 +371,6 @@ public:
         std::string strMsgInfo = msg;
         dataVal[1] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = _JSDelegate;
-        
         if (JS_HasProperty(cx, obj, "onSocialResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onSocialResult", &temp_retval)) {
                 return;
@@ -379,7 +378,6 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, "onSocialResult",
                                 2, dataVal, &retval);
         }
@@ -454,6 +452,8 @@ public:
     virtual void onActionResult(ProtocolUser* userPlugin, cocos2d::plugin::UserActionResultCode ret, const char* msg)
     {
         JSContext* cx = s_cx;
+        JSObject* obj = _JSDelegate;
+        JSAutoCompartment ac(cx, obj);
 
         bool hasAction;
         jsval retval;
@@ -470,8 +470,6 @@ public:
         std::string strMsgInfo = msg;
         dataVal[2] = std_string_to_jsval(cx, strMsgInfo);
         
-        JSObject* obj = _JSDelegate;
-        
         if (JS_HasProperty(cx, obj, "onActionResult", &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, "onActionResult", &temp_retval)) {
                 return;
@@ -479,7 +477,6 @@ public:
             if(temp_retval == JSVAL_VOID) {
                 return;
             }
-            JSAutoCompartment ac(cx, obj);
             JS_CallFunctionName(cx, obj, "onActionResult",
                                 3, dataVal, &retval);
         }
