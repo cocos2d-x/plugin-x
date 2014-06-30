@@ -110,7 +110,7 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 
-	public void Dialog(final JSONObject cpInfo){
+	public void dialog(final JSONObject cpInfo){
 		PluginWrapper.runOnMainThread(new Runnable(){
 
 			@Override
