@@ -52,6 +52,8 @@ class ProtocolShare : public PluginProtocol
 public:
 	ProtocolShare();
 	virtual ~ProtocolShare();
+    
+    typedef std::function<void(int, std::string&)> ProtocolShareCallback;
 
     /**
     @brief config the share developer info
@@ -85,6 +87,22 @@ public:
      @wraning Must invoke this interface before share
      */
     ShareResultListener* getResultListener();
+    
+    /**
+     @brief set login callback function
+     */
+    inline void setListener(const ProtocolShareCallback &cb)
+    {
+        _callback = cb;
+    }
+    
+    /**
+     @brief get login callback function
+     */
+    inline ProtocolShareCallback& getListener()
+    {
+        return _callback;
+    }
 
     /**
     @brief share result callback
@@ -93,6 +111,7 @@ public:
 
 protected:
     ShareResultListener* _listener;
+    ProtocolShareCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {
