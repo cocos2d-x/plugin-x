@@ -1,13 +1,8 @@
 package org.cocos2dx.plugin;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.Hashtable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
@@ -18,16 +13,8 @@ import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphObject;
-import com.facebook.model.OpenGraphAction;
-import com.facebook.widget.FacebookDialog;
-import com.facebook.widget.FacebookDialog.MessageDialogFeature;
-import com.facebook.widget.FacebookDialog.OpenGraphActionDialogFeature;
-import com.facebook.widget.FacebookDialog.OpenGraphMessageDialogFeature;
-import com.facebook.widget.FacebookDialog.ShareDialogFeature;
-import com.facebook.widget.WebDialog;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 
 public class UserFacebook implements InterfaceUser{
