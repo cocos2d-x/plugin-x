@@ -57,7 +57,9 @@ plugin.agentManager = plugin.AgentManager.getInstance();
 plugin.agentManager.dialog = function(shareInfo, callback) {
 	var sharePlugin = this.getSharePlugin();
 	if (sharePlugin) {
-		callback && sharePlugin.setListener(callback);
+		callback && sharePlugin.setListener({
+            onShareResult : callback
+        });
 		sharePlugin.callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, shareInfo));
 	}
 }

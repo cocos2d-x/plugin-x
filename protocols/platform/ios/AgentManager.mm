@@ -135,7 +135,8 @@ void AgentManager::share(TShareInfo &info)
 
 void AgentManager::share(TShareInfo &info, std::function<void(int resultcode, std::string &msg)> &callback)
 {
-
+    pShare->setListener(callback);
+    pShare->share(info);
 }
 
 void AgentManager::submitScore(std::string &leaderboardID, long score)

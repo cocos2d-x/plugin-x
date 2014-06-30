@@ -216,7 +216,7 @@
                 [self messageLinkDialogFB:params];
             }
             else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the link message dialog"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the link message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {
@@ -246,14 +246,14 @@
             if ([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
                 [self shareOpenGraphDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph sharing dialog"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph sharing dialog, Facebook app is needed on target device"];
             }
         }
         else if ([dialog_type isEqualToString:@"message_open_graph"]) {
             if ([FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params]) {
                 [self messageOpenGraphDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph message dialog"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {
@@ -270,14 +270,14 @@
             if ([FBDialogs canPresentShareDialogWithPhotos]) {
                 [self sharePhotoDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog, Facebook app is needed on target device"];
             }
         }
         else if ([dialog_type isEqualToString:@"message_photo"]) {
             if ([FBDialogs canPresentMessageDialogWithPhotos]) {
                 [self messagePhotoDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo message dialog"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {

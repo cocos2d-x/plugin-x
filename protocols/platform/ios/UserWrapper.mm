@@ -46,7 +46,7 @@ using namespace cocos2d::plugin;
             callback(ret, stdmsg);
         }else
         {
-            PluginUtilsIOS::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
+            PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
         }
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the User plugin");
