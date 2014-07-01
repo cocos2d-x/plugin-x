@@ -127,11 +127,15 @@ public class ShareFacebook implements InterfaceShare{
 					else if("share_open_graph".equals(dialogType)){
 						if(FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG)){
 							FBShareOpenGraphDialog(cpInfo);
+						}else{
+							LogD("need Facebook app");
 						}
 					}
 					else if("share_photo".equals(dialogType)){
 						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS)){
 							FBSharePhotoDialog(cpInfo);
+						}else{
+							LogD("need Facebook app to share photo");
 						}
 					}
 					else if("apprequests".equals(dialogType)){
@@ -161,37 +165,34 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void FBShareDialog(JSONObject info) throws JSONException{
-		String caption = info.getString("title");
-		String link = info.getString("siteUrl");
-		String description = info.getString("text");
-		String picture = info.getString("imageUrl");
-		String name = info.getString("site");
+		String caption = info.has("title")?info.getString("title"):info.getString("caption");
+		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
+		String description = info.has("text")?info.getString("text"):info.getString("description");
+		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("picture");
+		///String name = info.getString("site");
 		FacebookDialog dialog = new FacebookDialog.ShareDialogBuilder(mContext)
-										.setCaption("".equals(caption) ? info.getString("caption") : caption)
-										.setLink("".equals(link) ? info.getString("link") : link)
-										.setName("".equals(name) ? info.getString("name") : name)
-										.setDescription("".equals(description) ? info.getString("description") : description)
-										.setPicture("".equals(picture) ? info.getString("picture") : picture)
+										.setCaption(caption)
+										.setLink(link)
+										//.setName(name)
+										.setDescription(description)
+										.setPicture(picture)
 										.build();
 		dialog.present();
 	}
 	
 	private void FBShareOpenGraphDialog(JSONObject info) throws JSONException{
-		String action = info.getString("action_type");
-		String previewProperty = info.getString("preview_property");
+		String action = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
+		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
 		
-		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost();
-		OpenGraphObject ogobject = OpenGraphObject.Factory.createForPost(action);
-
-
+		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost(action);
+		
 		Iterator<String> iter = info.keys();
 		while(iter.hasNext())
 		{
 			String key = iter.next();
-			if(!"dialog".equals(key) && !"action_type".equals(key))
-				ogobject.setProperty(key, (String)info.get(key));
+			if(!"dialog".equals(key) && !"action_type".equals(key) && !"preview_property".equals(key))
+				ogaction.setProperty(key, (String)info.get(key));
 		}
-		ogaction.setData(ogobject);
 		
 		FacebookDialog dialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, ogaction, previewProperty)
 									.build();
@@ -200,13 +201,13 @@ public class ShareFacebook implements InterfaceShare{
 	
 	private void FBSharePhotoDialog(JSONObject info) throws JSONException{
 		String filepath = info.getString("photo");
+		System.out.println(filepath);
 		if("".equals(filepath)){
 			LogD("Must specify one photo");
 			return;
 		}
 		
 		File file = new File(filepath);
-		
 		//Bitmap image = BitmapFactory.decodeFile(cpInfo.getString("photos"));
 		FacebookDialog dialog = new FacebookDialog.PhotoShareDialogBuilder(mContext)
 									.addPhotoFiles(Arrays.asList(file))	
@@ -217,10 +218,9 @@ public class ShareFacebook implements InterfaceShare{
 	
 	private void WebRequestDialog(JSONObject info) throws JSONException{
 		WebDialog dialog = new WebDialog.RequestsDialogBuilder(mContext)
-									
 									.setMessage(info.getString("message"))
-									.setTitle(info.getString("title"))
-									.setTo(info.getString("to"))
+									.setTitle(info.has("title")?info.getString("title"):"")
+									//.setTo(info.getString("to"))
 									.setOnCompleteListener(new OnCompleteListener(){
 	
 										@Override
@@ -233,20 +233,17 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void WebFeedDialog(JSONObject info) throws JSONException{
-		
-		String caption = info.getString("title");
-		String link = info.getString("siteUrl");
-		String description = info.getString("text");
-		String picture = info.getString("imageUrl");
-		String name = info.getString("site");
+		String caption = info.has("title")?info.getString("title"):info.getString("caption");
+		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
+		String description = info.has("text")?info.getString("text"):info.getString("description");
+		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("picture");
 		
 		WebDialog dialog = new WebDialog.FeedDialogBuilder(mContext)
-								.setCaption("".equals(caption) ? info.getString("caption") : caption)
-								.setLink("".equals(link) ? info.getString("link") : link)
-								.setName("".equals(name) ? info.getString("name") : name)
-								.setDescription("".equals(description) ? info.getString("description") : description)
-								.setPicture("".equals(picture) ? info.getString("picture") : picture)
-								.setTo(info.getString("to"))
+								.setCaption(caption)
+								.setLink(link)
+								.setDescription(description)
+								.setPicture(picture)
+								//.setTo(info.getString("to"))
 								.setOnCompleteListener(new OnCompleteListener(){
 
 									@Override
@@ -260,38 +257,36 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void FBMessageDialog(JSONObject info) throws JSONException{
-		String caption = info.getString("title");
-		String link = info.getString("siteUrl");
-		String description = info.getString("text");
-		String picture = info.getString("imageUrl");
-		String name = info.getString("site");
+		String caption = info.has("title")?info.getString("title"):info.getString("caption");
+		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
+		String description = info.has("text")?info.getString("text"):info.getString("description");
+		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("picture");
+		
+		//String name = info.getString("site");
 		
 		FacebookDialog dialog = new FacebookDialog.MessageDialogBuilder(mContext)
-				.setCaption("".equals(caption) ? info.getString("caption") : caption)
-				.setLink("".equals(link) ? info.getString("link") : link)
-				.setName("".equals(name) ? info.getString("name") : name)
-				.setDescription("".equals(description) ? info.getString("description") : description)
-				.setPicture("".equals(picture) ? info.getString("picture") : picture)
+				.setCaption(caption)
+				.setLink(link)
+				//.setName(name)
+				.setDescription(description)
+				.setPicture(picture)
 		    	.build();
 		dialog.present();
 	}
 	
 	private void FBMessageOpenGraphDialog(JSONObject info) throws JSONException{
-		String action = info.getString("action_type");
-		String previewProperty = info.getString("preview_property");
+		String action = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
+		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
 		
-		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost();
-		OpenGraphObject ogobject = OpenGraphObject.Factory.createForPost(action);
-
+		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost(action);
 
 		Iterator<String> iter = info.keys();
 		while(iter.hasNext())
 		{
 			String key = iter.next();
 			if(!"dialog".equals(key) && !"action_type".equals(key) && !"preview_property".equals(key))
-				ogobject.setProperty(key, (String)info.get(key));
+				ogaction.setProperty(key, (String)info.get(key));
 		}
-		ogaction.setData(ogobject);
 		
 		FacebookDialog dialog = new FacebookDialog.OpenGraphMessageDialogBuilder(mContext, ogaction, previewProperty)
 				.build();

@@ -42,8 +42,20 @@ extern "C" {
 			ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
 			if (pShare != NULL)
 			{
-				pShare->onShareResult((ShareResultCode) ret, strMsg.c_str());
+                ShareResultListener* listener = pShare->getResultListener();
+                ProtocolShare::ProtocolShareCallback callback = pShare->getListener();
+                if (NULL != listener)
+                {
+                    ShareResultCode cRet = (ShareResultCode) ret;
+                    listener->onShareResult(cRet, strMsg.c_str());
+                }else if(callback){
+                    callback(ret, strMsg);
+                }else
+                {
+                    PluginUtils::outputLog("ProtocolShare", "Can't find the listener of plugin %s", pPlugin->getPluginName());
+                }
 			}
+
 		}
 	}
 }
