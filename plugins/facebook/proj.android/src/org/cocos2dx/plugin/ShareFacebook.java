@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import com.facebook.FacebookException;
 import com.facebook.Session;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphObject;
 import com.facebook.model.OpenGraphAction;
 import com.facebook.model.OpenGraphObject;
 import com.facebook.widget.FacebookDialog;
@@ -29,10 +31,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class ShareFacebook implements InterfaceShare{
-
+	//public static UiLifecycleHelper uiHelper = null;
 	private static Activity mContext = null;
-	private static InterfaceShare mAdapter = null;
-	private static boolean bDebug = false;
+	public static InterfaceShare mAdapter = null;
+	private static boolean bDebug = true;
 	private final static String LOG_TAG = "ShareFacebook";
 	private Session session = null;
 	protected static void LogE(String msg, Exception e) {
@@ -50,6 +52,7 @@ public class ShareFacebook implements InterfaceShare{
     	session = Session.getActiveSession();
 		mContext = (Activity)context;		
 		mAdapter = this;
+		//uiHelper = new UiLifecycleHelper(mContext, null);
 	}
     
 	@Override
@@ -66,8 +69,8 @@ public class ShareFacebook implements InterfaceShare{
 				@Override
 				public void run() {
 					String caption = cpInfo.get("title");
-					String url = cpInfo.get("siteUrl");
-					String text = cpInfo.get("text");
+					String url = cpInfo.get("link");
+					String text = cpInfo.get("description");
 					String picture = cpInfo.get("imageUrl");
 					FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(mContext)
 						.setCaption(caption)
@@ -75,6 +78,7 @@ public class ShareFacebook implements InterfaceShare{
 						.setLink(url)
 						.setDescription(text)
 				        .build();
+					
 					shareDialog.present();
 				}
 			});
@@ -181,22 +185,18 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void FBShareOpenGraphDialog(JSONObject info) throws JSONException{
-		String action = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
+		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
 		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
-		
-		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost(action);
-		
-		Iterator<String> iter = info.keys();
-		while(iter.hasNext())
-		{
-			String key = iter.next();
-			if(!"dialog".equals(key) && !"action_type".equals(key) && !"preview_property".equals(key))
-				ogaction.setProperty(key, (String)info.get(key));
-		}
-		
-		FacebookDialog dialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, ogaction, previewProperty)
-									.build();
-		dialog.present();
+	
+		OpenGraphObject obj = OpenGraphObject.Factory.createForPost(OpenGraphObject.class, type, info.getString("title"),
+                        info.getString("image"), info.getString("url"),
+                        info.getString("description"));
+        OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
+        action.setProperty(previewProperty, obj);
+        action.setType(type);
+        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, previewProperty)
+        									.build();
+    	shareDialog.present();
 	}
 	
 	private void FBSharePhotoDialog(JSONObject info) throws JSONException{
@@ -275,20 +275,17 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void FBMessageOpenGraphDialog(JSONObject info) throws JSONException{
-		String action = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
+		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
 		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
-		
-		OpenGraphAction ogaction = OpenGraphAction.Factory.createForPost(action);
-
-		Iterator<String> iter = info.keys();
-		while(iter.hasNext())
-		{
-			String key = iter.next();
-			if(!"dialog".equals(key) && !"action_type".equals(key) && !"preview_property".equals(key))
-				ogaction.setProperty(key, (String)info.get(key));
-		}
-		
-		FacebookDialog dialog = new FacebookDialog.OpenGraphMessageDialogBuilder(mContext, ogaction, previewProperty)
+	
+		OpenGraphObject obj = OpenGraphObject.Factory.createForPost(OpenGraphObject.class, type, info.getString("title"),
+                        info.getString("image"), info.getString("url"),
+                        info.getString("description"));
+        OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
+        action.setProperty(previewProperty, obj);
+        action.setType(type);
+        
+		FacebookDialog dialog = new FacebookDialog.OpenGraphMessageDialogBuilder(mContext, action, previewProperty)
 				.build();
 		dialog.present();
 	}
