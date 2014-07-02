@@ -17,8 +17,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		592A55791964AD7D008E4BC7 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 592A55781964AD7D008E4BC7 /* GameController.framework */; };
 		59EB3BE719649CFC0020118E /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA848852182B3AE400858BDD /* libcocos2dx iOS.a */; };
 		59EB3BE819649D0A0020118E /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA848854182B3AE400858BDD /* libcocos2dx-extensions iOS.a */; };
+		59EB3BEA1964A7DD0020118E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BE91964A7DD0020118E /* Security.framework */; };
+		59EB3BEC1964A86D0020118E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BEB1964A86D0020118E /* CoreTelephony.framework */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
@@ -167,6 +170,9 @@
 		1D6058910D05DD3D006BFB54 /* HelloPlugins.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloPlugins.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		592A55781964AD7D008E4BC7 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		59EB3BE91964A7DD0020118E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		59EB3BEB1964A86D0020118E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -233,28 +239,31 @@
 			files = (
 				59EB3BE819649D0A0020118E /* libcocos2dx-extensions iOS.a in Frameworks */,
 				59EB3BE719649CFC0020118E /* libcocos2dx iOS.a in Frameworks */,
-				FA848862182B3DEB00858BDD /* CoreMotion.framework in Frameworks */,
 				FAD55505177C170300968F54 /* AdSupport.framework in Frameworks */,
-				FAD55503177C16FA00968F54 /* StoreKit.framework in Frameworks */,
-				FAD55501177C16F100968F54 /* SystemConfiguration.framework in Frameworks */,
+				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
+				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				FA848862182B3DEB00858BDD /* CoreMotion.framework in Frameworks */,
+				59EB3BEC1964A86D0020118E /* CoreTelephony.framework in Frameworks */,
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				592A55791964AD7D008E4BC7 /* GameController.framework in Frameworks */,
+				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
+				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				FAD554FF177C16E700968F54 /* MediaPlayer.framework in Frameworks */,
 				FAD554FD177C16DF00968F54 /* MessageUI.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				59EB3BEA1964A7DD0020118E /* Security.framework in Frameworks */,
+				FAD55503177C16FA00968F54 /* StoreKit.framework in Frameworks */,
+				FAD55501177C16F100968F54 /* SystemConfiguration.framework in Frameworks */,
 				FAD554F3177C16A100968F54 /* libPluginAdmob.a in Frameworks */,
 				FAD554F4177C16A100968F54 /* libPluginFlurry.a in Frameworks */,
 				FAD554F5177C16A100968F54 /* libPluginProtocol.a in Frameworks */,
 				FAD554F6177C16A100968F54 /* libPluginTwitter.a in Frameworks */,
 				FAD554F7177C16A100968F54 /* libPluginUmeng.a in Frameworks */,
 				FAD554F8177C16A100968F54 /* libPluginWeibo.a in Frameworks */,
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
-				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
-				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
-				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
-				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +329,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				592A55781964AD7D008E4BC7 /* GameController.framework */,
+				59EB3BEB1964A86D0020118E /* CoreTelephony.framework */,
+				59EB3BE91964A7DD0020118E /* Security.framework */,
 				FA848861182B3DEB00858BDD /* CoreMotion.framework */,
 				FAD55504177C170200968F54 /* AdSupport.framework */,
 				FAD55502177C16FA00968F54 /* StoreKit.framework */,
@@ -660,6 +672,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -680,7 +693,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-O2";
 				OTHER_LDFLAGS = "-ObjC";
@@ -696,6 +709,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -714,7 +728,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
