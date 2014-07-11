@@ -132,7 +132,7 @@ THE SOFTWARE.
     OUTPUT_LOG(@"Umeng logEventWithDuration invoked(%@)", [params debugDescription]);
     NSString* eventId = (NSString*) [params objectForKey:@"Param1"];
     NSNumber* duration = (NSNumber*) [params objectForKey:@"Param2"];
-    long numDur = [duration longValue];
+    int numDur = [duration intValue];
     [MobClick event:eventId durations:numDur];
 }
 
@@ -142,7 +142,7 @@ THE SOFTWARE.
     NSString* eventId = (NSString*) [params objectForKey:@"Param1"];
     NSNumber* duration = (NSNumber*) [params objectForKey:@"Param2"];
     NSString* label = (NSString*) [params objectForKey:@"Param3"];
-    long numDur = [duration longValue];
+    int numDur = [duration intValue];
 
     if (! label) {
         [MobClick event:eventId durations:numDur];
@@ -157,7 +157,7 @@ THE SOFTWARE.
     NSString* eventId = (NSString*) [params objectForKey:@"Param1"];
     NSNumber* duration = (NSNumber*) [params objectForKey:@"Param2"];
     NSMutableDictionary* paramMap = (NSMutableDictionary*) [params objectForKey:@"Param3"];
-    long numDur = [duration longValue];
+    int numDur = [duration intValue];
 
     if (! paramMap) {
         [MobClick event:eventId durations:numDur];

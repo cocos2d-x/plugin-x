@@ -101,7 +101,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = oldConfig;
 
     if (returnCode) {
-        NSString* strErrorCode = [NSString stringWithFormat:@"ErrorCode %d", returnCode.code];
+        NSString* strErrorCode = [NSString stringWithFormat:@"ErrorCode %ld", (long)returnCode.code];
         [ShareWrapper onShareResult:self withRet:kShareFail withMsg:strErrorCode];
     } else {
         [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Succeed"];
