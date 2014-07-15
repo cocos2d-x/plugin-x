@@ -108,13 +108,13 @@ bool TestAds::init()
     Menu* pMenu = Menu::create(pBackItem, NULL);
     pMenu->setPosition( Point::ZERO );
 
-	LabelTTF* label1 = LabelTTF::create("ShowAds", "Arial", 24);
+	Label* label1 = Label::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));
 	pItemShow->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemShow, 0);
 	pItemShow->setPosition(posMid + Point(-100, -120));
 
-	LabelTTF* label2 = LabelTTF::create("HideAds", "Arial", 24);
+	Label* label2 = Label::create("HideAds", "Arial", 24);
 	MenuItemLabel* pItemHide = MenuItemLabel::create(label2, CC_CALLBACK_1(TestAds::testHide, this));
 	pItemHide->setAnchorPoint(Point(0.5f, 0));
 	pMenu->addChild(pItemHide, 0);
