@@ -80,14 +80,14 @@ public:
     @param pListener The callback object for share result
     @wraning Must invoke this interface before share
     */
-    void setResultListener(ShareResultListener* pListener);
+    CC_DEPRECATED_ATTRIBUTE void setResultListener(ShareResultListener* pListener);
     
     /**
      @breif get the result listener
      @return The callback object for share result
      @wraning Must invoke this interface before share
      */
-    ShareResultListener* getResultListener();
+    CC_DEPRECATED_ATTRIBUTE ShareResultListener* getResultListener();
     
     /**
      @brief set login callback function

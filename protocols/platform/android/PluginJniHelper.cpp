@@ -245,6 +245,40 @@ string PluginJniHelper::jstring2string(jstring jstr)
     return ret;
 }
 
+std::map<std::string, std::string> PluginJniHelper::Hashtable2Map(jobject jhashtable)
+{
+	std::map<std::string, std::string> stdmap;
+
+	JNIEnv* env = getEnv();
+
+	jclass c_Hashtable = env->FindClass("java/util/Hashtable");
+	jclass c_Enumeration = env->FindClass("java/util/Enumeration");
+
+	jmethodID m_keys = env->GetMethodID(c_Hashtable, "keys", "()Ljava/util/Enumeration;");
+	jmethodID m_hasMoreElements = env->GetMethodID(c_Enumeration, "hasMoreElements", "()Z");
+	jmethodID m_nextElement = env->GetMethodID(c_Enumeration, "nextElement", "()Ljava/lang/Object;");
+	jmethodID m_get = env->GetMethodID(c_Hashtable, "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
+
+	jstring jKeyString, jValueString;
+
+	jobject jKeys = env->CallObjectMethod(jhashtable, m_keys);
+	while(env->CallBooleanMethod(jKeys, m_hasMoreElements))
+	{
+		jKeyString = (jstring)(env->CallObjectMethod(jKeys, m_nextElement));
+		jValueString = (jstring)(env-> CallObjectMethod(jhashtable, m_get, jKeyString));
+
+		stdmap.insert(std::make_pair(jstring2string(jKeyString), jstring2string(jValueString)));
+	}
+
+	env->DeleteLocalRef(jKeys);
+	env->DeleteLocalRef(jKeyString);
+	env->DeleteLocalRef(jValueString);
+	env->DeleteLocalRef(c_Hashtable);
+	env->DeleteLocalRef(c_Enumeration);
+
+	return stdmap;
+}
+
 bool PluginJniHelper::setClassLoaderFrom(jobject nativeactivityinstance) {
     PluginJniMethodInfo _getclassloaderMethod;
     if (!PluginJniHelper::getMethodInfo_DefaultClassLoader(_getclassloaderMethod,

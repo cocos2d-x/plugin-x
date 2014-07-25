@@ -19,6 +19,7 @@ $(addprefix ../../platform/android/, \
     ProtocolUser.cpp \
     ProtocolSocial.cpp \
     AgentManager.cpp \
+    FacebookAgent.cpp \
 ) \
 ../../PluginManager.cpp \
 ../../PluginParam.cpp

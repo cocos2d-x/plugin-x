@@ -54,7 +54,8 @@ public:
     ProtocolUser();
     virtual ~ProtocolUser();
 
-    typedef std::function<void(int, std::string&)> ProtocolUserCallback;
+    typedef std::map<std::string, std::string> ReponseObject;
+    typedef std::function<void(int, std::string&, ReponseObject&)> ProtocolUserCallback;
 
     /**
     @brief config the application info
@@ -69,17 +70,20 @@ public:
      @brief User login
      */
     void login();
+    void login(ProtocolUserCallback &cb);
 
     /**
      @brief User logout
      */
     void logout();
+    void logout(ProtocolUserCallback &cb);
 
     /**
      @brief Check whether the user logined or not
      */
-    bool isLogined();
+    CC_DEPRECATED_ATTRIBUTE bool isLogined() {return isLogedIn()}
 
+    bool isLogedIn();
     /**
      @brief Get session ID
      @return If user logined, return value is session ID;
@@ -87,17 +91,22 @@ public:
      */
     std::string getSessionID();
     
+    /**
+     @brief get Access Token
+     */
+    std::string getAccessToken();
+
     /*
      @brief set login callback function
      */
-    inline void setActionListener(UserActionListener* listener)
+    CC_DEPRECATED_ATTRIBUTE inline void setActionListener(UserActionListener* listener)
     {
         _listener = listener;
     }
     /*
      @brief get login callback function
      */
-    inline UserActionListener* getActionListener()
+    CC_DEPRECATED_ATTRIBUTE inline UserActionListener* getActionListener()
     {
         return _listener;
     }

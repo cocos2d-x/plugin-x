@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
+JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
 {
     std::string strMsg = PluginJniHelper::jstring2string(msg);
     std::string strClassName = PluginJniHelper::jstring2string(className);
@@ -43,14 +43,9 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
         if (pUser != NULL)
         {
             UserActionListener* listener = pUser->getActionListener();
-            ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
             if (NULL != listener)
             {
                 listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
-            }
-            else if(callback)
-            {
-                callback(ret, strMsg);
             }
             else
             {
@@ -59,6 +54,33 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
         }
     }
 }
+
+JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2Ljava_util_Hashtable_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg, jobject response)
+{
+    std::string strMsg = PluginJniHelper::jstring2string(msg);
+    std::string strClassName = PluginJniHelper::jstring2string(className);
+    PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
+    PluginUtils::outputLog("ProtocolUser", "nativeOnActionResult(), Get plugin ptr : %p", pPlugin);
+    if (pPlugin != NULL)
+    {
+        PluginUtils::outputLog("ProtocolUser", "nativeOnActionResult(), Get plugin name : %s", pPlugin->getPluginName());
+        ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
+        if (pUser != NULL)
+        {
+            ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
+            if(callback)
+            {
+            	ProtocolUser::ReponseObject std_response = PluginJniHelper::Hashtable2Map(response);
+                callback(ret, strMsg, std_response);
+            }
+            else
+            {
+                PluginUtils::outputLog("Callback of plugin %s not set correctly", pPlugin->getPluginName());
+            }
+        }
+    }
+}
+
 }
 
 ProtocolUser::ProtocolUser()
@@ -102,12 +124,24 @@ void ProtocolUser::login()
     PluginUtils::callJavaFunctionWithName(this, "login");
 }
 
+void ProtocolUser::login(ProtocolUserCallback &cb)
+{
+	_callback = cb;
+	ProtocolUser::login();
+}
+
 void ProtocolUser::logout()
 {
     PluginUtils::callJavaFunctionWithName(this, "logout");
 }
 
-bool ProtocolUser::isLogined()
+void ProtocolUser::logout(ProtocolUserCallback &cb)
+{
+	_cabllback = cb;
+	ProtocolUser::logout();
+}
+
+bool ProtocolUser::isLogedIn()
 {
     return PluginUtils::callJavaBoolFuncWithName(this, "isLogined");
 }
@@ -115,6 +149,11 @@ bool ProtocolUser::isLogined()
 std::string ProtocolUser::getSessionID()
 {
     return PluginUtils::callJavaStringFuncWithName(this, "getSessionID");
+}
+
+std::string ProtocolUser::getAccessToken()
+{
+	return PluginUtils::callJavaStringFuncWithName(this, "getAccessToken");
 }
 
 }} // namespace cocos2d { namespace plugin {
