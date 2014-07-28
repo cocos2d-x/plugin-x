@@ -60,6 +60,9 @@ public:
 	ProtocolIAP();
 	virtual ~ProtocolIAP();
 
+	typedef std::map<std::string, std::string> ResponseObject;
+	typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolIAPCallback;
+
     /**
     @brief config the developer info
     @param devInfo This parameter is the info of developer,
@@ -85,8 +88,8 @@ public:
     @param pListener The callback object for pay result
     @wraning Must invoke this interface before payForProduct.
     */
-    void setResultListener(PayResultListener* pListener);
-    inline PayResultListener* getResultListener()
+    CC_DEPRECATED_ATTRIBUTE void setResultListener(PayResultListener* pListener);
+    CC_DEPRECATED_ATTRIBUTE inline PayResultListener* getResultListener()
     {
         return _listener;
     }
@@ -95,11 +98,22 @@ public:
     @brief pay result callback
     */
     void onPayResult(PayResultCode ret, const char* msg);
+
+    inline void setCallback(ProtocolIAPCallback &cb)
+    {
+    	_callback = cb;
+    }
+
+    inline ProtocolIAPCallback getCallback()
+    {
+    	return _callback;
+    }
 protected:
     static bool _paying;
 
     TProductInfo _curInfo;
     PayResultListener* _listener;
+    ProtocolIAPCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {

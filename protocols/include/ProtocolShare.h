@@ -54,7 +54,8 @@ public:
 	ProtocolShare();
 	virtual ~ProtocolShare();
     
-    typedef std::function<void(int, std::string&)> ProtocolShareCallback;
+	typedef std::map<std::string, std::string> ResponseObject;
+    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolShareCallback;
 
     /**
     @brief config the share developer info
@@ -74,6 +75,7 @@ public:
              Look at the manual of plugins.
     */
     void share(TShareInfo info);
+    void share(TShareInfo info, ProtocolShareCallback &cb);
 
     /**
     @breif set the result listener
@@ -92,7 +94,7 @@ public:
     /**
      @brief set login callback function
      */
-    inline void setListener(const ProtocolShareCallback &cb)
+    inline void setCallback(const ProtocolShareCallback &cb)
     {
         _callback = cb;
     }
@@ -100,7 +102,7 @@ public:
     /**
      @brief get login callback function
      */
-    inline ProtocolShareCallback& getListener()
+    inline ProtocolShareCallback getCallback()
     {
         return _callback;
     }
