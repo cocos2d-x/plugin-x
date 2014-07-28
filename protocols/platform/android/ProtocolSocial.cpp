@@ -64,7 +64,12 @@ extern "C" {
 			if (pSocial != NULL)
 			{
 				ProtocolSocial::ProtocolSocialCallback callback = pSocial->getCallback();
-				if (callback)
+				SocialListener* pListener = pSocial->getListener();
+				if (NULL != pListener)
+				{
+					pListener->onSocialResult((SocialRetCode) ret, strMsg.c_str());
+				}
+				else if (callback)
 				{
 					ProtocolSocial::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
 					callback(ret, strMsg, std_response);

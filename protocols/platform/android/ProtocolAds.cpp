@@ -62,7 +62,12 @@ extern "C" {
 			if (pAds != NULL)
 			{
 				ProtocolAds::ProtocolAdsCallback callback = pAds->getCallback();
-				if (callback)
+				AdsListener* listener = pAds->getAdsListener();
+				if (listener)
+				{
+					listener->onAdsResult((AdsResultCode) ret, strMsg.c_str());
+				}
+				else if (callback)
 				{
 					ProtocolAds::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
 					callback(ret, strMsg, std_response);
