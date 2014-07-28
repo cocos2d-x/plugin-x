@@ -57,6 +57,9 @@ public:
     ProtocolSocial();
     virtual ~ProtocolSocial();
 
+    typedef std::map<std::string, std::string> ReponseObject;
+	typedef std::function<void(int, std::string&, ReponseObject&)> ProtocolSocialCallback;
+
     /**
     @brief config the share developer info
     @param devInfo This parameter is the info of developer,
@@ -78,17 +81,18 @@ public:
     void unlockAchievement(TAchievementInfo achInfo);
     void showAchievements();
 
-    inline void setListener(SocialListener* listener) {
+    CC_DEPRECATED_ATTRIBUTE inline void setListener(SocialListener* listener) {
         _listener = listener;
     }
 
-    inline SocialListener* getListener()
+    CC_DEPRECATED_ATTRIBUTE inline SocialListener* getListener()
     {
         return _listener;
     }
 
 protected:
     SocialListener* _listener;
+    ProtocolSocialCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {
