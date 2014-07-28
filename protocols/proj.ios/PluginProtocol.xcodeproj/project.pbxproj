@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		051FF7BC192CE3CC00C43A06 /* IAPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */; };
+		057EA9DB1982608F00FE9750 /* GraphWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 057EA9DA1982608F00FE9750 /* GraphWrapper.mm */; };
 		BA1BF842195A6FC100B47F4E /* AgentManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA1BF841195A6FC100B47F4E /* AgentManager.mm */; };
 		FA09A325168ADBC2008C1C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA09A324168ADBC2008C1C7B /* Foundation.framework */; };
 		FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA09A33C168ADC1F008C1C7B /* PluginManager.cpp */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		051FF7BA192CE3CC00C43A06 /* IAPWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPWrapper.h; sourceTree = "<group>"; };
 		051FF7BB192CE3CC00C43A06 /* IAPWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAPWrapper.mm; sourceTree = "<group>"; };
+		057EA9D91982608F00FE9750 /* GraphWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphWrapper.h; sourceTree = "<group>"; };
+		057EA9DA1982608F00FE9750 /* GraphWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphWrapper.mm; sourceTree = "<group>"; };
 		BA1BF7FE195962C400B47F4E /* AgentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgentManager.h; sourceTree = "<group>"; };
 		BA1BF841195A6FC100B47F4E /* AgentManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AgentManager.mm; sourceTree = "<group>"; };
 		FA09A321168ADBC2008C1C7B /* libPluginProtocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginProtocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +182,8 @@
 				FA8CC207173894F000464206 /* ProtocolIAP.mm */,
 				FA8CC1E4173754CF00464206 /* PluginUtilsIOS.h */,
 				FA8CC1E5173754CF00464206 /* PluginUtilsIOS.mm */,
+				057EA9D91982608F00FE9750 /* GraphWrapper.h */,
+				057EA9DA1982608F00FE9750 /* GraphWrapper.mm */,
 			);
 			name = ios;
 			path = ../platform/ios;
@@ -235,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				057EA9DB1982608F00FE9750 /* GraphWrapper.mm in Sources */,
 				051FF7BC192CE3CC00C43A06 /* IAPWrapper.mm in Sources */,
 				FA09A33E168ADC1F008C1C7B /* PluginManager.cpp in Sources */,
 				FA8CC1E6173754CF00464206 /* PluginUtilsIOS.mm in Sources */,

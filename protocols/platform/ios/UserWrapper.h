@@ -29,12 +29,10 @@ typedef enum {
     kLoginFailed,
     kLogoutSucceed,
 } UserActionResult;
-
 @interface UserWrapper : NSObject
 {
     
 }
 
 + (void) onActionResult:(id) obj withRet:(UserActionResult) ret withMsg:(NSString*) msg;
-
 @end

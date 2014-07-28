@@ -52,5 +52,4 @@ using namespace cocos2d::plugin;
         PluginUtilsIOS::outputLog("Can't find the C++ object of the User plugin");
     }
 }
-
 @end

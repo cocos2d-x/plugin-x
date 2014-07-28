@@ -74,6 +74,16 @@ NSString *_accessToken = @"";
 }
 - (NSString *)getUserId{
     return _userId;
+    [FBRequestConnection startWithGraphPath:@"me/events?fields=cover,name,start_time"
+                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                              if (!error) {
+                                  // Sucess! Include your code to handle the results here
+                                  NSLog(@"user events: %@", result);
+                              } else {
+                                  // An error occurred, we need to handle the error
+                                  // See: https://developers.facebook.com/docs/ios/errors   
+                              }
+                          }];
     
 }
 -(NSString *)getAccessToken{
@@ -133,5 +143,21 @@ NSString *_accessToken = @"";
         OUTPUT_LOG(errorText);
         [FBSession.activeSession closeAndClearTokenInformation];
     }
+}
+-(void)requestPermissions:(NSString *)permision{
+    NSArray *permission = [permision componentsSeparatedByString:@","];
+    [FBSession.activeSession requestNewReadPermissions:permission
+                                     completionHandler:^(FBSession *session, NSError *error) {
+                                         if (!error) {
+                                             // Permission granted
+                                             OUTPUT_LOG(@"new permissions %@", [FBSession.activeSession permissions]);
+                                             
+                                             // We can request the user information
+                                         } else {
+                                             // An error occurred, we need to handle the error
+                                             // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                             OUTPUT_LOG(@"error %@", error.description);
+                                         }
+                                     }];
 }
 @end
