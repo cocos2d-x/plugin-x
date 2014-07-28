@@ -80,6 +80,9 @@ public:
         kPosBottomRight,
     } AdsPos;
 
+    typedef std::map<std::string, std::string> ResponseObject;
+    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolAdsCallback;
+
     /**
     @brief config the application info
     @param devInfo This parameter is the info of aplication,
@@ -118,18 +121,28 @@ public:
     /**
      @brief set the Ads listener
     */
-    inline void setAdsListener(AdsListener* listener)
+    CC_DEPRECATED_ATTRIBUTE inline void setAdsListener(AdsListener* listener)
     {
         _listener = listener;
     }
 
-    inline AdsListener* getAdsListener()
+    CC_DEPRECATED_ATTRIBUTE inline AdsListener* getAdsListener()
     {
         return _listener;
     }
 
+    inline void setCallback(ProtocolAdsCallback& cb)
+    {
+    	_callback = cb;
+    }
+
+    inline ProtocolAdsCallback getCallback()
+    {
+    	return _callback;
+    }
 protected:
     AdsListener* _listener;
+    ProtocolAdsCallback _callback;
 };
 
 }} // namespace cocos2d { namespace plugin {

@@ -57,8 +57,8 @@ public:
     ProtocolSocial();
     virtual ~ProtocolSocial();
 
-    typedef std::map<std::string, std::string> ReponseObject;
-	typedef std::function<void(int, std::string&, ReponseObject&)> ProtocolSocialCallback;
+    typedef std::map<std::string, std::string> ResponseObject;
+	typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolSocialCallback;
 
     /**
     @brief config the share developer info
@@ -88,6 +88,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE inline SocialListener* getListener()
     {
         return _listener;
+    }
+
+    inline void setCallback(ProtocolSocialCallback &cb)
+    {
+    	_callback = cb;
+    }
+
+    inline ProtocolSocialCallback& getCallback()
+    {
+    	return _callback;
     }
 
 protected:
