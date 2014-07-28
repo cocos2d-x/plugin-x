@@ -55,7 +55,7 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
     }
 }
 
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2Ljava_util_Hashtable_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg, jobject response)
+JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2Lorg_json_JSONObject_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg, jobject response)
 {
     std::string strMsg = PluginJniHelper::jstring2string(msg);
     std::string strClassName = PluginJniHelper::jstring2string(className);
@@ -67,10 +67,10 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
         ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
         if (pUser != NULL)
         {
-            ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
+            ProtocolUser::ProtocolUserCallback callback = pUser->getCallback();
             if(callback)
             {
-            	ProtocolUser::ReponseObject std_response = PluginJniHelper::Hashtable2Map(response);
+            	ProtocolUser::ReponseObject std_response = PluginJniHelper::JSONObject2Map(response);
                 callback(ret, strMsg, std_response);
             }
             else
@@ -137,7 +137,7 @@ void ProtocolUser::logout()
 
 void ProtocolUser::logout(ProtocolUserCallback &cb)
 {
-	_cabllback = cb;
+	_callback = cb;
 	ProtocolUser::logout();
 }
 

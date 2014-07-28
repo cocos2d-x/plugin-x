@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
-import java.util.Hashtable;
+import org.json.JSONObject;
 
 public class UserWrapper {
 	public static final int ACTION_RET_LOGIN_SUCCEED = 0;
@@ -45,10 +45,10 @@ public class UserWrapper {
 	
 	private static native void nativeOnActionResult(String className, int ret, String msg);
 	
-	public static void onActionResult(InterfaceUser obj, int ret, String msg, Hashtable<String, String> response) {
+	public static void onActionResult(InterfaceUser obj, int ret, String msg, JSONObject response) {
 		final int curRet = ret;
 		final String curMsg = msg;
-		final Hashtable<String, String> curResponse = response;
+		final JSONObject curResponse = response;
 		final InterfaceUser curAdapter = obj;
 		PluginWrapper.runOnGLThread(new Runnable() {
 			@Override
@@ -60,5 +60,5 @@ public class UserWrapper {
 		});
 	}
 	
-	private static native void nativeOnActionResult(String className, int ret, String msg, Hashtable<String, String> response);
+	private static native void nativeOnActionResult(String className, int ret, String msg, JSONObject response);
 }

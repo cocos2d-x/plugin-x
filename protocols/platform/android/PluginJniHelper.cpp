@@ -245,27 +245,27 @@ string PluginJniHelper::jstring2string(jstring jstr)
     return ret;
 }
 
-std::map<std::string, std::string> PluginJniHelper::Hashtable2Map(jobject jhashtable)
+std::map<std::string, std::string> PluginJniHelper::JSONObject2Map(jobject json)
 {
 	std::map<std::string, std::string> stdmap;
 
 	JNIEnv* env = getEnv();
 
-	jclass c_Hashtable = env->FindClass("java/util/Hashtable");
-	jclass c_Enumeration = env->FindClass("java/util/Enumeration");
+	jclass c_json = env->FindClass("org/json/JSONObject");
+	jclass c_iterator = env->FindClass("java/util/Iterator");
 
-	jmethodID m_keys = env->GetMethodID(c_Hashtable, "keys", "()Ljava/util/Enumeration;");
-	jmethodID m_hasMoreElements = env->GetMethodID(c_Enumeration, "hasMoreElements", "()Z");
-	jmethodID m_nextElement = env->GetMethodID(c_Enumeration, "nextElement", "()Ljava/lang/Object;");
-	jmethodID m_get = env->GetMethodID(c_Hashtable, "get", "(Ljava/lang/Object;)Ljava/lang/Object;");
+	jmethodID m_keys = env->GetMethodID(c_json, "keys", "()Ljava/util/Iterator;");
+	jmethodID m_hasNext = env->GetMethodID(c_iterator, "hasNext", "()Z");
+	jmethodID m_next = env->GetMethodID(c_iterator, "next", "()Ljava/lang/Object;");
+	jmethodID m_getString = env->GetMethodID(c_json, "getString", "(Ljava/lang/String;)Ljava/lang/String;");
 
 	jstring jKeyString, jValueString;
 
-	jobject jKeys = env->CallObjectMethod(jhashtable, m_keys);
-	while(env->CallBooleanMethod(jKeys, m_hasMoreElements))
+	jobject jKeys = env->CallObjectMethod(json, m_keys);
+	while(env->CallBooleanMethod(jKeys, m_hasNext))
 	{
-		jKeyString = (jstring)(env->CallObjectMethod(jKeys, m_nextElement));
-		jValueString = (jstring)(env-> CallObjectMethod(jhashtable, m_get, jKeyString));
+		jKeyString = (jstring)(env->CallObjectMethod(jKeys, m_next));
+		jValueString = (jstring)(env-> CallObjectMethod(json, m_getString, jKeyString));
 
 		stdmap.insert(std::make_pair(jstring2string(jKeyString), jstring2string(jValueString)));
 	}
@@ -273,8 +273,8 @@ std::map<std::string, std::string> PluginJniHelper::Hashtable2Map(jobject jhasht
 	env->DeleteLocalRef(jKeys);
 	env->DeleteLocalRef(jKeyString);
 	env->DeleteLocalRef(jValueString);
-	env->DeleteLocalRef(c_Hashtable);
-	env->DeleteLocalRef(c_Enumeration);
+	env->DeleteLocalRef(c_json);
+	env->DeleteLocalRef(c_iterator);
 
 	return stdmap;
 }

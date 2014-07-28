@@ -20,6 +20,7 @@ class AgentManager{
 public:
 	virtual ~AgentManager();
 	static AgentManager* getInstance();
+	static void destroyInstance();
 	virtual bool init();
 	virtual void purge();
 //	void setDebugMode(bool);

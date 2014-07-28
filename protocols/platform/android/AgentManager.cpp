@@ -40,6 +40,15 @@ AgentManager* AgentManager::getInstance()
 	return s_AgentManager;
 }
 
+void AgentManager::destroyInstance()
+{
+	if(s_AgentManager)
+	{
+		delete s_AgentManager;
+		s_AgentManager = nullptr;
+	}
+}
+
 bool AgentManager::init()
 {
 	std::map<std::string, std::string> conf = getPluginConfigure();

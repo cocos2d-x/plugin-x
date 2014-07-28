@@ -81,7 +81,7 @@ public:
     /**
      @brief Check whether the user logined or not
      */
-    CC_DEPRECATED_ATTRIBUTE bool isLogined() {return isLogedIn()}
+    CC_DEPRECATED_ATTRIBUTE bool isLogined() {return isLogedIn();}
 
     bool isLogedIn();
     /**
@@ -114,7 +114,7 @@ public:
     /**
      @brief set login callback function
      */
-    inline void setListener(const ProtocolUserCallback &cb)
+    inline void setCallback(const ProtocolUserCallback &cb)
     {
         _callback = cb;
     }
@@ -122,7 +122,7 @@ public:
     /**
      @brief get login callback function
      */
-    inline ProtocolUserCallback& getListener()
+    inline ProtocolUserCallback& getCallback()
     {
         return _callback;
     }

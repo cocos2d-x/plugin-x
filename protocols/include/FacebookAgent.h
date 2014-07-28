@@ -9,17 +9,25 @@ class FacebookAgent{
 
 public:
 
+	static FacebookAgent* getInstance();
+	static void destroyInstance();
+
 	typedef std::map<std::string, std::string> FBInfo;
 	typedef std::function<void(int, std::string&, FBInfo&)> FBCallback;
 
-	static void login(FBCallback &cb);
-	static void logout(FBCallback &cb);
-	static void getLoignStatus(FBCallback &cb);
-	static std::string getAccessToken();
-	static void share(FBInfo &info, FBCallback &cb);
-	static void dialog(FBInfo &info, FBCallback &cb);
-	static void request(FBInfo &info, FBCallback &cb);
+	void login(FBCallback cb);
+	void logout(FBCallback &cb);
+	void getLoignStatus(FBCallback &cb);
+	std::string getAccessToken();
+	void share(FBInfo &info, FBCallback &cb);
+	void dialog(FBInfo &info, FBCallback &cb);
+	void request(FBInfo &info, FBCallback &cb);
 
+private:
+	FacebookAgent();
+	~FacebookAgent();
+
+	AgentManager* agentManager;
 };
 
 }}
