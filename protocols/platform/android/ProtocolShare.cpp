@@ -69,7 +69,13 @@ extern "C" {
 			if (pShare != NULL)
 			{
 				ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
-				if(callback)
+				ShareResultListener* listener = pShare->getResultListener();
+				if (NULL != listener)
+				{
+					ShareResultCode cRet = (ShareResultCode) ret;
+					listener->onShareResult(cRet, strMsg.c_str());
+				}
+				else if(callback)
 				{
 					ProtocolShare::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
 					callback(ret, strMsg, std_response);
@@ -149,6 +155,12 @@ void ProtocolShare::share(TShareInfo info)
 			t.env->DeleteLocalRef(t.classID);
 		}
     }
+}
+
+void ProtocolShare::share(TShareInfo &info, ProtocolShareCallback &cb)
+{
+	setCallback(cb);
+	share(info);
 }
 
 void ProtocolShare::setResultListener(ShareResultListener* pListener)

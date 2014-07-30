@@ -259,7 +259,8 @@ std::map<std::string, std::string> PluginJniHelper::JSONObject2Map(jobject json)
 	jmethodID m_next = env->GetMethodID(c_iterator, "next", "()Ljava/lang/Object;");
 	jmethodID m_getString = env->GetMethodID(c_json, "getString", "(Ljava/lang/String;)Ljava/lang/String;");
 
-	jstring jKeyString, jValueString;
+	jstring jKeyString = NULL;
+	jstring jValueString = NULL;
 
 	jobject jKeys = env->CallObjectMethod(json, m_keys);
 	while(env->CallBooleanMethod(jKeys, m_hasNext))
@@ -271,8 +272,10 @@ std::map<std::string, std::string> PluginJniHelper::JSONObject2Map(jobject json)
 	}
 
 	env->DeleteLocalRef(jKeys);
-	env->DeleteLocalRef(jKeyString);
-	env->DeleteLocalRef(jValueString);
+	if(jKeyString)
+		env->DeleteLocalRef(jKeyString);
+	if(jValueString)
+		env->DeleteLocalRef(jValueString);
 	env->DeleteLocalRef(c_json);
 	env->DeleteLocalRef(c_iterator);
 

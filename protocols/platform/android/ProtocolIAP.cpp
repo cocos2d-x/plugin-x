@@ -60,7 +60,12 @@ extern "C" {
 			if (pIAP != NULL)
 			{
 				ProtocolIAP::ProtocolIAPCallback callback = pIAP->getCallback();
-				if(callback)
+				ProtocolIAP* pIAP = dynamic_cast<ProtocolIAP*>(pPlugin);
+				if (pIAP != NULL)
+				{
+					pIAP->onPayResult((PayResultCode) ret, strMsg.c_str());
+				}
+				else if(callback)
 				{
 					ProtocolIAP::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
 					callback(ret, strMsg, std_response);
