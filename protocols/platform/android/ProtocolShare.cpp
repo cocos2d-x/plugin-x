@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_ShareWrapper_nativeOnShareResult__Ljava_lang_String_2ILjava_lang_String_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
+    JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_ShareWrapper_nativeOnShareResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
     {
         std::string strMsg = PluginJniHelper::jstring2string(msg);
         std::string strClassName = PluginJniHelper::jstring2string(className);
@@ -49,45 +49,17 @@ extern "C" {
                     listener->onShareResult(cRet, strMsg.c_str());
                 }else
                 {
-                    PluginUtils::outputLog("ProtocolShare", "Can't find the listener of plugin %s", pPlugin->getPluginName());
+                	ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
+                	if(callback)
+                		callback(ret, strMsg);
+                	else
+                		PluginUtils::outputLog("ProtocolShare", "Can't find the listener of plugin %s", pPlugin->getPluginName());
                 }
             }
 
         }
     }
 
-    JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_ShareWrapper_nativeOnShareResult__Ljava_lang_String_2ILjava_lang_String_2Lorg_json_JSONObject_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg, jobject response)
-	{
-		std::string strMsg = PluginJniHelper::jstring2string(msg);
-		std::string strClassName = PluginJniHelper::jstring2string(className);
-		PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
-		PluginUtils::outputLog("ProtocolShare", "nativeOnShareResult(), Get plugin ptr : %p", pPlugin);
-		if (pPlugin != NULL)
-		{
-			PluginUtils::outputLog("ProtocolShare", "nativeOnShareResult(), Get plugin name : %s", pPlugin->getPluginName());
-			ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
-			if (pShare != NULL)
-			{
-				ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
-				ShareResultListener* listener = pShare->getResultListener();
-				if (NULL != listener)
-				{
-					ShareResultCode cRet = (ShareResultCode) ret;
-					listener->onShareResult(cRet, strMsg.c_str());
-				}
-				else if(callback)
-				{
-					ProtocolShare::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
-					callback(ret, strMsg, std_response);
-				}
-				else
-				{
-					PluginUtils::outputLog("ProtocolShare", "Can't find the callback of plugin %s", pPlugin->getPluginName());
-				}
-			}
-
-        }
-    }
 }
 
 ProtocolShare::ProtocolShare()

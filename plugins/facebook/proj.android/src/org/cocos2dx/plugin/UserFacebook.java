@@ -170,7 +170,7 @@ public class UserFacebook implements InterfaceUser{
                             GraphObject graphObject = response.getGraphObject();
                             JSONObject json = graphObject == null ? new JSONObject() : graphObject.getInnerJSONObject();
                             
-                            nativeRequestCallback(resultCode, "request completed", json, nativeCallback);
+                            nativeRequestCallback(resultCode, json.toString(), nativeCallback);
                         }
                     });
                     request.executeAsync();
@@ -197,7 +197,7 @@ public class UserFacebook implements InterfaceUser{
                         userID = (String) graphObject.getProperty("id");
                         JSONObject resobj = graphObject.getInnerJSONObject();
                         LogD(resobj.toString());
-                        UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "user " + graphObject.getProperty("name") + "logined", resobj);
+                        UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED,/* "user " + graphObject.getProperty("name") + "logined",*/ resobj.toString());
                     }
                 });
                 request.executeAsync();
@@ -206,5 +206,5 @@ public class UserFacebook implements InterfaceUser{
         }
     }
         
-    private native void nativeRequestCallback(int ret, String msg, JSONObject response, int cbIndex);
+    private native void nativeRequestCallback(int ret, String msg,int cbIndex);
 }

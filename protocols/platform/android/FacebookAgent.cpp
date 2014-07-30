@@ -5,12 +5,11 @@
 namespace cocos2d{namespace plugin{
 
 extern "C" {
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserFacebook_nativeRequestCallback(JNIEnv*  env, jobject thiz, jint ret, jstring msg, jobject response, jint cbIndex)
+JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserFacebook_nativeRequestCallback(JNIEnv*  env, jobject thiz, jint ret, jstring msg, jint cbIndex)
 {
 	std::string stdMsg = PluginJniHelper::jstring2string(msg);
-	FacebookAgent::FBInfo stdResponse = PluginJniHelper::JSONObject2Map(response);
 	FacebookAgent::FBCallback callback = FacebookAgent::getInstance()->getRequestCallback(cbIndex);
-	callback(ret, stdMsg, stdResponse);
+	callback(ret, stdMsg);
 }
 }
 

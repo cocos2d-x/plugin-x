@@ -30,7 +30,7 @@ THE SOFTWARE.
 namespace cocos2d { namespace plugin {
 
 extern "C" {
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
+JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg)
 {
     std::string strMsg = PluginJniHelper::jstring2string(msg);
     std::string strClassName = PluginJniHelper::jstring2string(className);
@@ -49,38 +49,15 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
             }
             else
             {
-                PluginUtils::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
-            }
-        }
-    }
-}
-
-JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult__Ljava_lang_String_2ILjava_lang_String_2Lorg_json_JSONObject_2(JNIEnv*  env, jobject thiz, jstring className, jint ret, jstring msg, jobject response)
-{
-    std::string strMsg = PluginJniHelper::jstring2string(msg);
-    std::string strClassName = PluginJniHelper::jstring2string(className);
-    PluginProtocol* pPlugin = PluginUtils::getPluginPtr(strClassName);
-    PluginUtils::outputLog("ProtocolUser", "nativeOnActionResult(), Get plugin ptr : %p", pPlugin);
-    if (pPlugin != NULL)
-    {
-        PluginUtils::outputLog("ProtocolUser", "nativeOnActionResult(), Get plugin name : %s", pPlugin->getPluginName());
-        ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
-        if (pUser != NULL)
-        {
-            ProtocolUser::ProtocolUserCallback callback = pUser->getCallback();
-            UserActionListener* listener = pUser->getActionListener();
-			if (NULL != listener)
-			{
-			   listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
-			}
-			else if(callback)
-            {
-            	ProtocolUser::ResponseObject std_response = PluginJniHelper::JSONObject2Map(response);
-                callback(ret, strMsg, std_response);
-            }
-            else
-            {
-                PluginUtils::outputLog("Callback of plugin %s not set correctly", pPlugin->getPluginName());
+            	ProtocolUser::ProtocolUserCallback callback = pUser->getCallback();
+            	if(callback)
+				{
+					callback(ret, strMsg);
+				}
+				else
+				{
+					PluginUtils::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
+				}
             }
         }
     }

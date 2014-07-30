@@ -13,6 +13,7 @@ class AgentManager;
 class FacebookAgent{
 
 public:
+	~FacebookAgent();
 
 	static FacebookAgent* getInstance();
 	static void destroyInstance();
@@ -36,8 +37,7 @@ public:
 	FBCallback getRequestCallback(int index);
 private:
 	FacebookAgent();
-	~FacebookAgent();
-
+	
 	AgentManager* agentManager;
 	std::vector<FBCallback> requestCallbacks;
 };

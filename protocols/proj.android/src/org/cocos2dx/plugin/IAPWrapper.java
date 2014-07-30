@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
-import org.json.JSONObject;
-
 public class IAPWrapper {
 	public static final int PAYRESULT_SUCCESS = 0;
 	public static final int PAYRESULT_FAIL    = 1;
@@ -45,20 +43,4 @@ public class IAPWrapper {
 		});
 	}
 	private static native void nativeOnPayResult(String className, int ret, String msg);
-	
-	public static void onPayResult(InterfaceIAP obj, int ret, String msg, JSONObject response) {
-		final int curRet = ret;
-		final String curMsg = msg;
-		final JSONObject curResponse = response;
-		final InterfaceIAP curObj = obj;
-		PluginWrapper.runOnGLThread(new Runnable() {
-			@Override
-			public void run() {
-				String name = curObj.getClass().getName();
-				name = name.replace('.', '/');
-				nativeOnPayResult(name, curRet, curMsg, curResponse);
-			}
-		});
-	}
-	private static native void nativeOnPayResult(String className, int ret, String msg, JSONObject response);
 }
