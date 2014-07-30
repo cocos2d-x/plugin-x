@@ -10,6 +10,7 @@ using namespace pluginx;
 #include "ProtocolSocial.h"
 #include "ProtocolUser.h"
 #include "AgentManager.h"
+#include "FacebookAgent.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1838,7 +1839,7 @@ void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global)
 
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("getInstance", js_pluginx_protocols_AgentManager_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("destroyInstance", js_pluginx_protocols_AgentManager_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("destroyInstance", js_pluginx_protocols_AgentManager_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -1870,6 +1871,355 @@ void js_register_pluginx_protocols_AgentManager(JSContext *cx, JSObject *global)
 	}
 }
 
+JSClass  *jsb_cocos2d_plugin_FacebookAgent_class;
+JSObject *jsb_cocos2d_plugin_FacebookAgent_prototype;
+
+bool js_pluginx_protocols_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_login : Invalid Native Object");
+
+	do {
+		if (argc == 1) {
+			std::function<void (int, std::string&)> arg0;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg0 = lambda;
+			} while(0);
+
+			if (!ok) { ok = true; break; }
+			cobj->login(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_login : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_logout : Invalid Native Object");
+
+	do {
+		if (argc == 1) {
+			std::function<void (int, std::string&)> arg0;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg0 = lambda;
+			} while(0);
+
+			if (!ok) { ok = true; break; }
+			cobj->logout(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_login : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_getAccessToken(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_getAccessToken : Invalid Native Object");
+
+	if(argc == 0)
+	{
+		std::string ret = cobj->getAccessToken();
+		jsval jsret = std_string_to_jsval(cx, ret);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getAccessToken : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_share(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_share : Invalid Native Object");
+
+	do {
+		if (argc == 2) {
+			cocos2d::plugin::TShareInfo arg0;
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_share : Error processing arguments");
+			if (!ok) { ok = true; break; }
+
+			std::function<void (int, std::string&)> arg1;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg1 = lambda;
+			} while(0);
+
+			if (!ok) { ok = true; break; }
+			cobj->share(arg0, arg1);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_share : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_dialog : Invalid Native Object");
+
+	do {
+		if (argc == 2) {
+			cocos2d::plugin::TShareInfo arg0;
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_dialog : Error processing arguments");
+			if (!ok) { ok = true; break; }
+
+			std::function<void (int, std::string&)> arg1;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg1 = lambda;
+			} while(0);
+
+			if (!ok) { ok = true; break; }
+			cobj->dialog(arg0, arg1);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_dialog : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_request(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_request : Invalid Native Object");
+
+	do {
+		if (argc == 4) {
+			std::string arg0;
+			ok &= jsval_to_std_string(cx, argv[0], &arg0);
+			if (!ok) { ok = true; break; }
+			int arg1;
+			ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
+			if (!ok) { ok = true; break; }
+			cocos2d::plugin::TShareInfo arg2;
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg2);
+			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_request : Error processing arguments");
+			if (!ok) { ok = true; break; }
+
+			std::function<void (int, std::string&)> arg3;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[3]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg3 = lambda;
+			} while(0);
+
+			if (!ok) { ok = true; break; }
+			cobj->request(arg0, arg1, arg2, arg3);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_request : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocos2d::plugin::FacebookAgent* ret = cocos2d::plugin::FacebookAgent::getInstance();
+		jsval jsret = JSVAL_NULL;
+		do {
+		if (ret) {
+			js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::plugin::FacebookAgent>(cx, (cocos2d::plugin::FacebookAgent*)ret);
+			jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+		} else {
+			jsret = JSVAL_NULL;
+		}
+	} while (0);
+		JS_SET_RVAL(cx, vp, jsret);
+		return true;
+	}
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getInstance : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 0) {
+		cocos2d::plugin::FacebookAgent::destroyInstance();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_destroyInstance : wrong number of arguments");
+	return false;
+}
+
+
+void js_pluginx_protocols_FacebookAgent_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (FacebookAgent)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        cocos2d::plugin::FacebookAgent *nobj = static_cast<cocos2d::plugin::FacebookAgent *>(nproxy->ptr);
+        if (nobj)
+            delete nobj;
+
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
+}
+
+void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global)
+{
+	jsb_cocos2d_plugin_FacebookAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
+	jsb_cocos2d_plugin_FacebookAgent_class->name = "FacebookAgent";
+	jsb_cocos2d_plugin_FacebookAgent_class->addProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->delProperty = JS_DeletePropertyStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->getProperty = JS_PropertyStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->setProperty = JS_StrictPropertyStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->enumerate = JS_EnumerateStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->resolve = JS_ResolveStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->convert = JS_ConvertStub;
+	jsb_cocos2d_plugin_FacebookAgent_class->finalize = js_pluginx_protocols_FacebookAgent_finalize;
+	jsb_cocos2d_plugin_FacebookAgent_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+	static JSPropertySpec properties[] = {
+		{"__nativeObj", 0, JSPROP_ENUMERATE | JSPROP_PERMANENT, JSOP_WRAPPER(js_is_native_obj), JSOP_NULLWRAPPER},
+		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+	};
+
+	static JSFunctionSpec funcs[] = {
+		JS_FN("login", js_pluginx_protocols_FacebookAgent_login, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("logout", js_pluginx_protocols_FacebookAgent_logout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("request", js_pluginx_protocols_FacebookAgent_request, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("getInstance", js_pluginx_protocols_FacebookAgent_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("destroyInstance", js_pluginx_protocols_FacebookAgent_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	jsb_cocos2d_plugin_FacebookAgent_prototype = JS_InitClass(
+		cx, global,
+		NULL, // parent proto
+		jsb_cocos2d_plugin_FacebookAgent_class,
+		empty_constructor, 0,
+		properties,
+		funcs,
+		NULL, // no static properties
+		st_funcs);
+	// make the class enumerable in the registered namespace
+//	bool found;
+//FIXME: Removed in Firefox v27
+//	JS_SetPropertyAttributes(cx, global, "FacebookAgent", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+	// add the proto and JSClass to the type->js info hash table
+	TypeTest<cocos2d::plugin::FacebookAgent> t;
+	js_type_class_t *p;
+	std::string typeName = t.s_name();
+	if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+	{
+		p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+		p->jsclass = jsb_cocos2d_plugin_FacebookAgent_class;
+		p->proto = jsb_cocos2d_plugin_FacebookAgent_prototype;
+		p->parentProto = NULL;
+		_js_global_type_map.insert(std::make_pair(typeName, p));
+	}
+}
+
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj) {
 	// first, try to get the ns
 	JS::RootedValue nsval(cx);
@@ -1893,5 +2243,6 @@ void register_all_pluginx_protocols(JSContext* cx, JSObject* obj) {
 	js_register_pluginx_protocols_ProtocolAnalytics(cx, obj);
 	js_register_pluginx_protocols_ProtocolAds(cx, obj);
 	js_register_pluginx_protocols_PluginManager(cx, obj);
+	js_register_pluginx_protocols_FacebookAgent(cx, obj);
 }
 
