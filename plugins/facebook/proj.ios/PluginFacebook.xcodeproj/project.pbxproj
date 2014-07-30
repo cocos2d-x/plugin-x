@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0558DA7219822917005269F5 /* GraphFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 0558DA7119822917005269F5 /* GraphFacebook.m */; };
 		BA34A761195AA8C7002D0ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A760195AA8C7002D0ECD /* Foundation.framework */; };
 		BA34A799195AA8ED002D0ECD /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA34A798195AA8ED002D0ECD /* FacebookSDK.framework */; };
 		BA34A79E195AA939002D0ECD /* ShareFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA34A79B195AA939002D0ECD /* ShareFacebook.m */; };
@@ -27,8 +26,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0558DA7019822917005269F5 /* GraphFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphFacebook.h; sourceTree = "<group>"; };
-		0558DA7119822917005269F5 /* GraphFacebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphFacebook.m; sourceTree = "<group>"; };
 		BA34A75D195AA8C7002D0ECD /* libPluginFacebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginFacebook.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA34A760195AA8C7002D0ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA34A764195AA8C7002D0ECD /* PluginFacebook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PluginFacebook-Prefix.pch"; sourceTree = "<group>"; };
@@ -86,8 +83,6 @@
 				BA34A79C195AA939002D0ECD /* UserFacebook.h */,
 				BA34A79D195AA939002D0ECD /* UserFacebook.m */,
 				BA34A763195AA8C7002D0ECD /* Supporting Files */,
-				0558DA7019822917005269F5 /* GraphFacebook.h */,
-				0558DA7119822917005269F5 /* GraphFacebook.m */,
 			);
 			path = PluginFacebook;
 			sourceTree = "<group>";
@@ -153,7 +148,6 @@
 			files = (
 				BA34A79F195AA939002D0ECD /* UserFacebook.m in Sources */,
 				BA34A79E195AA939002D0ECD /* ShareFacebook.m in Sources */,
-				0558DA7219822917005269F5 /* GraphFacebook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

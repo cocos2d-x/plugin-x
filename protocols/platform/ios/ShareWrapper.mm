@@ -36,17 +36,35 @@ using namespace cocos2d::plugin;
     ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
     if (pShare) {
         ShareResultListener* listener = pShare->getResultListener();
-        ProtocolShare::ProtocolShareCallback callback = pShare->getListener();
         const char* chMsg = [msg UTF8String];
         if (NULL != listener)
         {
             ShareResultCode cRet = (ShareResultCode) ret;
             listener->onShareResult(cRet, chMsg);
-        }else if(callback){
-            std::string stdmsg(chMsg);
-            callback(ret, stdmsg);
-        }else
+        }else{
+            PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Can't find the C++ object of the Share plugin");
+    }
+}
++ (void) onShareResult:(id) obj withRet:(ShareResult) ret withMsg:(NSString*) msg withResponse:(NSDictionary *)dictionary{
+    PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
+    ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
+    if (pShare) {
+        ShareResultListener* listener = pShare->getResultListener();
+        ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
+        const char* chMsg = [msg UTF8String];
+        if (NULL != listener)
         {
+            ShareResultCode cRet = (ShareResultCode) ret;
+            listener->onShareResult(cRet, chMsg);
+        }else if (callback)
+        {
+            std::map<std::string,std::string> map = PluginUtilsIOS::createMapFromDict(dictionary);
+            std::string stdmsg(chMsg);
+            callback((ShareResultCode) ret, stdmsg,map);
+        }else{
             PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
         }
     } else {

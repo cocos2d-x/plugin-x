@@ -69,7 +69,7 @@ NSString *_accessToken = @"";
         // If the session state is not any of the two "open" states when the button is clicked
     }
 }
-- (BOOL) isLogined{
+- (BOOL) islogedIn{
     return _isLogin;
 }
 - (NSString *)getUserId{
@@ -108,12 +108,16 @@ NSString *_accessToken = @"";
         _accessToken = session.accessTokenData.accessToken;
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             if (!error) {
-                NSDictionary *dic = (NSDictionary *)result;
+                NSMutableDictionary *dic = (NSMutableDictionary *)result;
+                FBGraphObject *graphobj = (FBGraphObject *)result;
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                [dict setObject:@"test" forKey:@"sdfsdfsdf"];
+                [dict setObject:@"test2" forKey:@"sdfsdfsdfdf"];
                 _userId = [dic objectForKey:@"id"];
                 _isLogin = true;
-                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Success"];
+                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Success" withResponse:dic];
             } else {
-                [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:@"login Fail"];
+                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Fail" withResponse:nil];
             }
         }];
 
@@ -139,7 +143,7 @@ NSString *_accessToken = @"";
                 errorText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
             }
         }
-        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:errorText];
+        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:errorText withResponse:nil];
         OUTPUT_LOG(errorText);
         [FBSession.activeSession closeAndClearTokenInformation];
     }
@@ -160,4 +164,40 @@ NSString *_accessToken = @"";
                                          }
                                      }];
 }
+
+-(void)request:(NSMutableDictionary *)params{
+    NSString *graphPath = [params objectForKey:@"path"];
+    NSString *method = [params objectForKey:@"method"] == nil?@"GET":[params objectForKey:@"method"];
+    NSString *sd = [params objectForKey:@"param"];
+    NSData *paramData = [sd dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dicParam;
+    if(paramData){
+        dicParam = [self toArrayOrNSDictionary:paramData];
+    }
+    [FBRequestConnection startWithGraphPath:graphPath
+                                 parameters:dicParam HTTPMethod:method
+                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                              if(!error){
+                                  OUTPUT_LOG(@"success");
+//                                  [GraphWrapper onGraphResult:self withRet:kGraphResultSuccess withMsg:@"Graph call Success"];
+                              }else{
+//                                  [GraphWrapper onGraphResult:self withRet:kGraphResultFail withMsg:@"Graph call Fail"];
+                                  OUTPUT_LOG(@"error %@", error.description);
+                              }
+                              
+                          }];
+}
+- (id)toArrayOrNSDictionary:(NSData *)jsonData{
+    NSError *error = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+    
+    if (jsonObject != nil && error == nil){
+        return jsonObject;
+    }else{
+        // 解析错误
+        return nil;
+    }
+    
+}
+
 @end

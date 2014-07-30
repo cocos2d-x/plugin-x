@@ -109,7 +109,7 @@ void AgentManager::login()
 
 void AgentManager::login(std::function<void(int resultCode, std::string &msg)> &callback)
 {
-	pUser->setListener(callback);
+//	pUser->setListener(callback);
 	pUser->login();
 }
 
@@ -135,7 +135,7 @@ void AgentManager::share(TShareInfo &info)
 
 void AgentManager::share(TShareInfo &info, std::function<void(int resultcode, std::string &msg)> &callback)
 {
-    pShare->setListener(callback);
+//    pShare->setListener(callback);
     pShare->share(info);
 }
 

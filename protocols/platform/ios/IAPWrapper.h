@@ -43,5 +43,6 @@ typedef enum {
 }
 
 + (void) onPayResult:(id) obj withRet:(IAPResult) ret withMsg:(NSString*) msg;
++ (void) onPayResult:(id) obj withRet:(IAPResult) ret withMsg:(NSString*) msg withResponse:(NSDictionary *)dictionary;
 +(void) onRequestProduct:(id)ojb withRet:(ProductRequest) ret withProducts:(NSArray *)products;
 @end

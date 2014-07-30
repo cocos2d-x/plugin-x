@@ -162,7 +162,29 @@ NSMutableDictionary* PluginUtilsIOS::createDictFromMap(std::map<std::string, std
     
     return dict;
 }
-
+std::map<std::string, std::string> PluginUtilsIOS::createMapFromDict(NSDictionary *dict){
+    std::map<std::string, std::string> map;
+    for(NSString *key in dict){
+        map.insert(std::map<std::string, std::string>::value_type([key UTF8String],PluginUtilsIOS::parseOCType([dict objectForKey:key])));
+    }
+    return map;
+}
+std::string PluginUtilsIOS::parseOCType(id oval){
+    std::string string;
+    if(oval == nil){
+        string = "";
+    }
+    if([oval isKindOfClass:[NSNumber class]]){
+        NSNumber *ocNumber = (NSNumber *)oval;
+         NSNumberFormatter *stringNum = [[NSNumberFormatter alloc] init];
+        string = [[stringNum stringFromNumber:ocNumber] UTF8String];
+    }else if([oval isKindOfClass:[NSString class]]){
+        string = [(NSString *)oval UTF8String];
+    }else if([oval isKindOfClass:[NSDictionary class]]){
+        
+    }
+    return string;
+}
 void PluginUtilsIOS::callOCFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
     return_if_fails(funcName != NULL && strlen(funcName) > 0);

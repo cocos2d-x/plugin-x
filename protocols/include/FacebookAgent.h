@@ -32,7 +32,6 @@ public:
 	void share(FBInfo &info, FBCallback cb);
 	void dialog(FBInfo &info, FBCallback cb);
 	void request(std::string &path, int method, FBInfo &params, FBCallback cb);
-
 	FBCallback getRequestCallback(int index);
 private:
 	FacebookAgent();

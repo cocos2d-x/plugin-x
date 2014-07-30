@@ -33,7 +33,7 @@
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) login;
 - (void) logout;
-- (BOOL) isLogined;
+- (BOOL) islogedIn;
 - (NSString*) getSessionID;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
@@ -41,4 +41,5 @@
 - (NSString *)getUserId;
 - (NSString *)getAccessToken;
 -(void)requestPermissions:(NSString *)permission;
+-(void)request:(NSDictionary *)params;
 @end
