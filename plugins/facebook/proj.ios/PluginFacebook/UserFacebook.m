@@ -25,6 +25,7 @@
 #import "UserFacebook.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "UserWrapper.h"
+#import "ParseUtils.h"
 #define OUTPUT_LOG(...)     if (self.debug) NSLog(__VA_ARGS__);
 
 @implementation UserFacebook
@@ -109,15 +110,12 @@ NSString *_accessToken = @"";
         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
             if (!error) {
                 NSMutableDictionary *dic = (NSMutableDictionary *)result;
-                FBGraphObject *graphobj = (FBGraphObject *)result;
-                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-                [dict setObject:@"test" forKey:@"sdfsdfsdf"];
-                [dict setObject:@"test2" forKey:@"sdfsdfsdfdf"];
                 _userId = [dic objectForKey:@"id"];
                 _isLogin = true;
-                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Success" withResponse:dic];
+                NSString *msg = [ParseUtils NSDictionaryToNSString:dic];
+                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
             } else {
-                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:@"login Fail" withResponse:nil];
+                [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:@"login Fail"];
             }
         }];
 
@@ -143,7 +141,7 @@ NSString *_accessToken = @"";
                 errorText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
             }
         }
-        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:errorText withResponse:nil];
+        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:errorText];
         OUTPUT_LOG(errorText);
         [FBSession.activeSession closeAndClearTokenInformation];
     }
@@ -172,7 +170,7 @@ NSString *_accessToken = @"";
     NSData *paramData = [sd dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dicParam;
     if(paramData){
-        dicParam = [self toArrayOrNSDictionary:paramData];
+        dicParam = [ParseUtils toArrayOrNSDictionary:paramData];
     }
     [FBRequestConnection startWithGraphPath:graphPath
                                  parameters:dicParam HTTPMethod:method
@@ -187,17 +185,4 @@ NSString *_accessToken = @"";
                               
                           }];
 }
-- (id)toArrayOrNSDictionary:(NSData *)jsonData{
-    NSError *error = nil;
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-    
-    if (jsonObject != nil && error == nil){
-        return jsonObject;
-    }else{
-        // 解析错误
-        return nil;
-    }
-    
-}
-
 @end

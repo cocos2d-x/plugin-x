@@ -38,31 +38,13 @@ using namespace cocos2d::plugin;
         const char* chMsg = [msg UTF8String];
         AdsResultCode cRet = (AdsResultCode) ret;
         AdsListener* listener = adsPlugin->getAdsListener();
-        if (listener)
-        {
-            listener->onAdsResult(cRet, chMsg);
-        }
-    } else {
-        PluginUtilsIOS::outputLog("Can't find the C++ object of the ads plugin");
-    }
-}
-
-+ (void) onAdsResult:(id) obj withRet:(AdsResult) ret withMsg:(NSString*) msg withResponse:(NSDictionary *)dictionary
-{
-    PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
-    ProtocolAds* adsPlugin = dynamic_cast<ProtocolAds*>(plugin);
-    ProtocolAds::ProtocolAdsCallback callback = adsPlugin->getCallback();
-    const char* chMsg = [msg UTF8String];
-    AdsResultCode cRet = (AdsResultCode) ret;
-    if (adsPlugin) {
-        AdsListener* listener = adsPlugin->getAdsListener();
+         ProtocolAds::ProtocolAdsCallback callback = adsPlugin->getCallback();
         if (listener)
         {
             listener->onAdsResult(cRet, chMsg);
         }else if(callback){
             std::string stdmsg(chMsg);
-            std::map<std::string,std::string> map = PluginUtilsIOS::createMapFromDict(dictionary);
-            callback(cRet,stdmsg,map);
+            callback(cRet,stdmsg);
         }
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the ads plugin");

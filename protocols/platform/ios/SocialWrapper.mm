@@ -36,23 +36,7 @@ using namespace cocos2d::plugin;
     ProtocolSocial* pSocial = dynamic_cast<ProtocolSocial*>(pPlugin);
     if (pSocial) {
         SocialListener* pListener = pSocial->getListener();
-        const char* chMsg = [msg UTF8String];
-        SocialRetCode cRet = (SocialRetCode) ret;
-        if (NULL != pListener)
-        {
-            pListener->onSocialResult(cRet, chMsg);
-        }
-    } else {
-        PluginUtilsIOS::outputLog("Can't find the C++ object of the Social plugin");
-    }
-}
-+ (void) onSocialResult:(id) obj withRet:(SocialResult) ret withMsg:(NSString*) msg withResponse:(NSDictionary *)dictionary
-{
-    PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
-    ProtocolSocial* pSocial = dynamic_cast<ProtocolSocial*>(pPlugin);
-    ProtocolSocial::ProtocolSocialCallback callback = pSocial->getCallback();
-    if (pSocial) {
-        SocialListener* pListener = pSocial->getListener();
+        ProtocolSocial::ProtocolSocialCallback callback = pSocial->getCallback();
         const char* chMsg = [msg UTF8String];
         SocialRetCode cRet = (SocialRetCode) ret;
         if (NULL != pListener)
@@ -60,12 +44,10 @@ using namespace cocos2d::plugin;
             pListener->onSocialResult(cRet, chMsg);
         }else if(callback){
             std::string stdmsg(chMsg);
-            std::map<std::string,std::string> map = PluginUtilsIOS::createMapFromDict(dictionary);
-            callback(cRet,stdmsg,map);
+            callback(cRet,stdmsg);
         }
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the Social plugin");
     }
 }
-
 @end

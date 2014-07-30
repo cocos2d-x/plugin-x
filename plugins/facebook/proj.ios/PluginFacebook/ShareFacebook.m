@@ -25,7 +25,7 @@
 #import "ShareFacebook.h"
 #import "ShareWrapper.h"
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "ParseUtils.h"
 #define OUTPUT_LOG(...)     if (self.debug) NSLog(__VA_ARGS__);
 
 @implementation ShareFacebook
@@ -157,11 +157,11 @@
         if ([FBDialogs canPresentShareDialogWithPhotos]) {
             [self sharePhotoDialogFB:params];
         } else {
-            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog" withResponse:nil];
+            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog"];
         }
     }
     else {
-        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, share target absent or not supported, please add 'siteUrl' or 'imageUrl' in parameters" withResponse:nil];
+        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, share target absent or not supported, please add 'siteUrl' or 'imageUrl' in parameters"];
     }
 }
 
@@ -216,7 +216,7 @@
                 [self messageLinkDialogFB:params];
             }
             else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the link message dialog, Facebook Messenger is needed on target device" withResponse:nil];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the link message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {
@@ -246,14 +246,14 @@
             if ([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
                 [self shareOpenGraphDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph sharing dialog, Facebook app is needed on target device" withResponse:nil];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph sharing dialog, Facebook app is needed on target device"];
             }
         }
         else if ([dialog_type isEqualToString:@"message_open_graph"]) {
             if ([FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params]) {
                 [self messageOpenGraphDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph message dialog, Facebook Messenger is needed on target device" withResponse:nil];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the open graph message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {
@@ -270,14 +270,14 @@
             if ([FBDialogs canPresentShareDialogWithPhotos]) {
                 [self sharePhotoDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog, Facebook app is needed on target device" withResponse:nil];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo sharing dialog, Facebook app is needed on target device"];
             }
         }
         else if ([dialog_type isEqualToString:@"message_photo"]) {
             if ([FBDialogs canPresentMessageDialogWithPhotos]) {
                 [self messagePhotoDialogFB:params];
             } else {
-                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo message dialog, Facebook Messenger is needed on target device" withResponse:nil];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, facebook sdk cannot present the photo message dialog, Facebook Messenger is needed on target device"];
             }
         }
         else {
@@ -293,7 +293,7 @@
     
     if (not_supported) {
         NSString *msg = [NSString stringWithFormat:@"Share failed, dialog not supported: %@", dialog_type];
-        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
     }
 }
 
@@ -305,10 +305,10 @@
                                     handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                         if(error) {
                                             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
-                                            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                                            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                         } else {
-                                            NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
-                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg withResponse:results];
+                                            NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                         }
                                     }];
 }
@@ -321,9 +321,10 @@
      handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
          if(error) {
              NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
-             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete" withResponse:results];
+             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
          }
      }];
 }
@@ -336,10 +337,10 @@
                                          handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                              if(error) {
                                                  NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
-                                                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                                                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                              } else {
-                                                 NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
-                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg withResponse:results];
+                                                 NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                              }
                                          }];
 }
@@ -352,10 +353,10 @@
                                       handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                           if(error) {
                                               NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
-                                              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                                              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                           } else {
-                                              NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
-                                              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg withResponse:results];
+                                              NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+                                              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                           }
                                       }];
 }
@@ -368,10 +369,10 @@
      handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
          if(error) {
              NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
-             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg withResponse:results];
+             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
          }
      }];
 }
@@ -384,10 +385,10 @@
                                            handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                                if(error) {
                                                    NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
-                                                   [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                                                   [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                                } else {
-                                                   NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
-                                                   [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg withResponse:results];
+                                                   NSString *msg = [ParseUtils NSDictionaryToNSString: results];
+                                                   [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                                }
                                            }];
 }
@@ -401,21 +402,21 @@
          if (error) {
              // Error launching the dialog or publishing a story.
              NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
-             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if (result == FBWebDialogResultDialogNotCompleted) {
                  // User clicked the "x" icon
-                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing" withResponse:nil];
+                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing"];
              } else {
                  // Handle the publish feed callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                  if (![urlParams valueForKey:@"post_id"]) {
                      // User clicked the Cancel button
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing" withResponse:nil];
+                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing"];
                  } else {
                      // User clicked the Share button
                      NSString *msg = [NSString stringWithFormat:@"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                  }
              }
          }
@@ -437,21 +438,21 @@
          if (error) {
              // Error launching the dialog or sending the request.
              NSString *msg = [NSString stringWithFormat:@"Sending request failed: %@", error.description];
-             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if (result == FBWebDialogResultDialogNotCompleted) {
                  // User clicked the "x" icon
-                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request" withResponse:nil];
+                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request"];
              } else {
                  // Handle the send request callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                  if (![urlParams valueForKey:@"request"]) {
                      // User clicked the Cancel button
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request" withResponse:nil];
+                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request"];
                  } else {
                      // User clicked the Send button
                      NSString *msg = [NSString stringWithFormat:@"Request sent, id: %@", [urlParams valueForKey:@"request"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg withResponse:nil];
+                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                  }
              }
          }
