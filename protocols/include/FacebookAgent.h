@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <functional>
 
 namespace cocos2d{namespace plugin{
 
