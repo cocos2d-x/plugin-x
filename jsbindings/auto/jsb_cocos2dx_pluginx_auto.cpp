@@ -630,17 +630,16 @@ bool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc
 		ok &= pluginx::jsval_to_TProductInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolIAP_payForProduct : Error processing arguments");
 
-		std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg1;
+		std::function<void (int, std::string&)> arg1;
 		do {
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-			auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+			auto lambda = [=](int larg0, std::string& larg1) -> void {
 				JSAutoCompartment ac(cx, obj);
-				jsval largv[3];
+				jsval largv[2];
 				largv[0] = int32_to_jsval(cx, larg0);
 				largv[1] = std_string_to_jsval(cx, larg1);
-				largv[2] = TProductInfo_to_jsval(cx, larg2);
 				jsval rval;
-				bool succeed = func->invoke(3, &largv[0], rval);
+				bool succeed = func->invoke(2, &largv[0], rval);
 				if (!succeed && JS_IsExceptionPending(cx)) {
 					JS_ReportPendingException(cx);
 				}
@@ -981,17 +980,16 @@ bool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsva
 		ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
 
-		std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg1;
+		std::function<void (int, std::string&)> arg1;
 		do {
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-			auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+			auto lambda = [=](int larg0, std::string& larg1) -> void {
 				JSAutoCompartment ac(cx, obj);
-				jsval largv[3];
+				jsval largv[2];
 				largv[0] = int32_to_jsval(cx, larg0);
 				largv[1] = std_string_to_jsval(cx, larg1);
-				largv[2] = TProductInfo_to_jsval(cx, larg2);
 				jsval rval;
-				bool succeed = func->invoke(3, &largv[0], rval);
+				bool succeed = func->invoke(2, &largv[0], rval);
 				if (!succeed && JS_IsExceptionPending(cx)) {
 					JS_ReportPendingException(cx);
 				}
@@ -1187,17 +1185,16 @@ bool js_pluginx_protocols_ProtocolSocial_submitScore(JSContext *cx, uint32_t arg
 		ok &= jsval_to_long(cx, argv[1], (long *)&arg1);
 		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_submitScore : Error processing arguments");
 
-		std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg2;
+		std::function<void (int, std::string&)> arg2;
 		do {
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[2]));
-			auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+			auto lambda = [=](int larg0, std::string& larg1) -> void {
 				JSAutoCompartment ac(cx, obj);
-				jsval largv[3];
+				jsval largv[2];
 				largv[0] = int32_to_jsval(cx, larg0);
 				largv[1] = std_string_to_jsval(cx, larg1);
-				largv[2] = TProductInfo_to_jsval(cx, larg2);
 				jsval rval;
-				bool succeed = func->invoke(3, &largv[0], rval);
+				bool succeed = func->invoke(2, &largv[0], rval);
 				if (!succeed && JS_IsExceptionPending(cx)) {
 					JS_ReportPendingException(cx);
 				}
@@ -1255,17 +1252,16 @@ bool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint32
 		ok &= pluginx::jsval_to_TAchievementInfo(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Error processing arguments");
 
-		std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg1;
+		std::function<void (int, std::string&)> arg1;
 		do {
 			std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
-			auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+			auto lambda = [=](int larg0, std::string& larg1) -> void {
 				JSAutoCompartment ac(cx, obj);
-				jsval largv[3];
+				jsval largv[2];
 				largv[0] = int32_to_jsval(cx, larg0);
 				largv[1] = std_string_to_jsval(cx, larg1);
-				largv[2] = TProductInfo_to_jsval(cx, larg2);
 				jsval rval;
-				bool succeed = func->invoke(3, &largv[0], rval);
+				bool succeed = func->invoke(2, &largv[0], rval);
 				if (!succeed && JS_IsExceptionPending(cx)) {
 					JS_ReportPendingException(cx);
 				}
@@ -1393,17 +1389,16 @@ bool js_pluginx_protocols_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsva
 
 	do {
 		if (argc == 1) {
-			std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg0;
+			std::function<void (int, std::string&)> arg0;
 			do {
 				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-				auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
 					JSAutoCompartment ac(cx, obj);
-					jsval largv[3];
+					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
 					largv[1] = std_string_to_jsval(cx, larg1);
-					largv[2] = TProductInfo_to_jsval(cx, larg2);
 					jsval rval;
-					bool succeed = func->invoke(3, &largv[0], rval);
+					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
 						JS_ReportPendingException(cx);
 					}
@@ -1459,17 +1454,16 @@ bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval
 
 	do {
 		if (argc == 1) {
-			std::function<void (int, std::string&, std::map<std::string, std::string>&)> arg0;
+			std::function<void (int, std::string&)> arg0;
 			do {
 				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
-				auto lambda = [=](int larg0, std::string& larg1, std::map<std::string, std::string> larg2) -> void {
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
 					JSAutoCompartment ac(cx, obj);
-					jsval largv[3];
+					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
 					largv[1] = std_string_to_jsval(cx, larg1);
-					largv[2] = TProductInfo_to_jsval(cx, larg2);
 					jsval rval;
-					bool succeed = func->invoke(3, &largv[0], rval);
+					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
 						JS_ReportPendingException(cx);
 					}

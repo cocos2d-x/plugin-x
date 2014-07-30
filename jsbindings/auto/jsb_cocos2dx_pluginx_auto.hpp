@@ -126,5 +126,10 @@ bool js_pluginx_protocols_AgentManager_destroyInstance(JSContext *cx, uint32_t a
 
 extern JSClass  *jsb_cocos2d_plugin_FacebookAgent_class;
 extern JSObject *jsb_cocos2d_plugin_FacebookAgent_prototype;
+
+bool js_pluginx_protocols_FacebookAgent_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_pluginx_protocols_FacebookAgent_finalize(JSContext *cx, JSObject *obj);
+bool js_pluginx_protocols_FacebookAgent_getSocialPlugin(JSContext *cx, uint32_t argc, jsval *vp);
+void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global);
 #endif
 

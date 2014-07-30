@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.plugin;
 
-import org.json.JSONObject;
-
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -97,22 +95,6 @@ public class AdsWrapper {
 	}
 	private native static void nativeOnAdsResult(String className, int code, String msg);
 	
-	public static void onAdsResult(InterfaceAds adapter, int code, String msg, JSONObject response) {
-		final int curCode = code;
-		final String curMsg = msg;
-		final JSONObject curResponse = response;
-		final InterfaceAds curObj = adapter;
-		PluginWrapper.runOnGLThread(new Runnable(){
-			@Override
-			public void run() {
-				String name = curObj.getClass().getName();
-				name = name.replace('.', '/');
-				AdsWrapper.nativeOnAdsResult(name, curCode, curMsg, curResponse);
-			}
-		});
-	}
-	private native static void nativeOnAdsResult(String className, int code, String msg, JSONObject response);
-
 	public static void onPlayerGetPoints(InterfaceAds adapter, int points) {
 		final int curPoints = points;
 		final InterfaceAds curAdapter = adapter;
