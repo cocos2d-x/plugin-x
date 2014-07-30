@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <functional>
 
 namespace cocos2d{namespace plugin{
 
@@ -23,7 +24,7 @@ public:
 	};
 
 	typedef std::map<std::string, std::string> FBInfo;
-	typedef std::function<void(int, std::string&, FBInfo&)> FBCallback;
+	typedef std::function<void(int, std::string&)> FBCallback;
 
 	void login(FBCallback cb);
 	void logout(FBCallback cb);

@@ -16,7 +16,6 @@ extern JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
 extern JSObject *jsb_cocos2d_plugin_PluginProtocol_prototype;
 extern JSObject *jsb_cocos2d_plugin_ProtocolSocial_prototype;
 extern JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
-extern JSObject *jsb_cocos2d_plugin_AgentManager_prototype;
 
 void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 {
@@ -47,8 +46,6 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callIntFuncWithParam", js_pluginx_PluginProtocol_callIntFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callFloatFuncWithParam", js_pluginx_PluginProtocol_callFloatFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callBoolFuncWithParam", js_pluginx_PluginProtocol_callBoolFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_plugin_AgentManager_prototype, "login", js_pluginx_protocols_AgentManager_login, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_cocos2d_plugin_AgentManager_prototype, "share", js_pluginx_protocols_AgentManager_share, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     global = ns;
     js_register_pluginx_protocols_PluginParam(cx, global);

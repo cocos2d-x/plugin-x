@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <map>
 #include <string>
+#include <functional>
 
 namespace cocos2d { namespace plugin {
 
@@ -80,8 +81,7 @@ public:
         kPosBottomRight,
     } AdsPos;
 
-    typedef std::map<std::string, std::string> ResponseObject;
-    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolAdsCallback;
+    typedef std::function<void(int, std::string&)> ProtocolAdsCallback;
 
     /**
     @brief config the application info

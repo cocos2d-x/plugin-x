@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "PluginProtocol.h"
 #include <map>
 #include <string>
+#include <functional>
 
 namespace cocos2d { namespace plugin {
 
@@ -60,8 +61,7 @@ public:
 	ProtocolIAP();
 	virtual ~ProtocolIAP();
 
-	typedef std::map<std::string, std::string> ResponseObject;
-	typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolIAPCallback;
+	typedef std::function<void(int, std::string&)> ProtocolIAPCallback;
 
     /**
     @brief config the developer info
@@ -82,6 +82,7 @@ public:
              Look at the manual of plugins.
     */
     void payForProduct(TProductInfo info);
+    void payForProduct(TProductInfo info, ProtocolIAPCallback cb);
 
     /**
     @breif set the result listener

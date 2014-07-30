@@ -54,8 +54,7 @@ public:
     ProtocolUser();
     virtual ~ProtocolUser();
 
-    typedef std::map<std::string, std::string> ResponseObject;
-    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolUserCallback;
+    typedef std::function<void(int, std::string&)> ProtocolUserCallback;
 
     /**
     @brief config the application info
