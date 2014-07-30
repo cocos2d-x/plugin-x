@@ -81,8 +81,7 @@ public:
         kPosBottomRight,
     } AdsPos;
 
-    typedef std::map<std::string, std::string> ResponseObject;
-    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolAdsCallback;
+    typedef std::function<void(int, std::string&)> ProtocolAdsCallback;
 
     /**
     @brief config the application info

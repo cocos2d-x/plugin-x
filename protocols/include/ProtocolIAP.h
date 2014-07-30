@@ -61,8 +61,7 @@ public:
 	ProtocolIAP();
 	virtual ~ProtocolIAP();
 
-	typedef std::map<std::string, std::string> ResponseObject;
-	typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolIAPCallback;
+	typedef std::function<void(int, std::string&)> ProtocolIAPCallback;
 
     /**
     @brief config the developer info

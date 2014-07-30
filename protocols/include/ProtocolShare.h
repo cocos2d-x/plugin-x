@@ -54,8 +54,7 @@ public:
 	ProtocolShare();
 	virtual ~ProtocolShare();
     
-	typedef std::map<std::string, std::string> ResponseObject;
-    typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolShareCallback;
+    typedef std::function<void(int, std::string&)> ProtocolShareCallback;
 
     /**
     @brief config the share developer info

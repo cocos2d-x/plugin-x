@@ -58,8 +58,7 @@ public:
     ProtocolSocial();
     virtual ~ProtocolSocial();
 
-    typedef std::map<std::string, std::string> ResponseObject;
-	typedef std::function<void(int, std::string&, ResponseObject&)> ProtocolSocialCallback;
+	typedef std::function<void(int, std::string&)> ProtocolSocialCallback;
 
     /**
     @brief config the share developer info
