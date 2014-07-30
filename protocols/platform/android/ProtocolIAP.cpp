@@ -157,6 +157,12 @@ void ProtocolIAP::payForProduct(TProductInfo info)
     }
 }
 
+void ProtocolIAP::payForProduct(TProductInfo info, ProtocolIAPCallback cb)
+{
+	_callback = cb;
+	payForProduct(info);
+}
+
 void ProtocolIAP::setResultListener(PayResultListener* pListener)
 {
 	_listener = pListener;

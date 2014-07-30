@@ -73,12 +73,14 @@ public:
      * @brief methods of leaderboard feature
      */
     void submitScore(const char* leadboardID, long score);
+    void submitScore(const char* leadboardID, long score, ProtocolSocialCallback cb);
     void showLeaderboard(const char* leaderboardID);
 
     /**
      * @brief methods of achievement feature
      */
     void unlockAchievement(TAchievementInfo achInfo);
+    void unlockAchievement(TAchievementInfo achInfo, ProtocolSocialCallback cb);
     void showAchievements();
 
     CC_DEPRECATED_ATTRIBUTE inline void setListener(SocialListener* listener) {

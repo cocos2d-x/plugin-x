@@ -41,6 +41,7 @@ FacebookAgent::FacebookAgent()
 
 FacebookAgent::~FacebookAgent()
 {
+    requestCallbacks.clear();
 	AgentManager::destroyInstance();
 }
 
