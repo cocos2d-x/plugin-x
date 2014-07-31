@@ -53,6 +53,11 @@ plugin.ProtocolUser.UserActionResultCode.LoginSucceed = 0;
 plugin.ProtocolUser.UserActionResultCode.LoginFailed = 1;
 plugin.ProtocolUser.UserActionResultCode.LogoutSucceed = 2;
 
+plugin.FacebookAgent.HttpMethod = {};
+plugin.FacebookAgent.HttpMethod.Get = 0;
+plugin.FacebookAgent.HttpMethod.Post = 1;
+plugin.FacebookAgent.HttpMethod.Delete = 2;
+
 plugin.agentManager = plugin.AgentManager.getInstance();
 plugin.agentManager.dialog = function(shareInfo, callback) {
 	var sharePlugin = this.getSharePlugin();
