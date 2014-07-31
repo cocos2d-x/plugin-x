@@ -3,6 +3,7 @@
 
 #include "jsb_pluginx_spidermonkey_specifics.h"
 #include "pluginxUTF8.h"
+#include <sstream>
 
 namespace pluginx {
 
