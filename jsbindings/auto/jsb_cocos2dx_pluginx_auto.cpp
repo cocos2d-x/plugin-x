@@ -1948,7 +1948,7 @@ bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsv
 		}
 	} while(0);
 
-	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_login : wrong number of arguments");
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logout : wrong number of arguments");
 	return false;
 }
 
@@ -2077,7 +2077,7 @@ bool js_pluginx_protocols_FacebookAgent_request(JSContext *cx, uint32_t argc, js
 			ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
 			if (!ok) { ok = true; break; }
 			cocos2d::plugin::TShareInfo arg2;
-			ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg2);
+			ok &= pluginx::jsval_to_TShareInfo(cx, argv[2], &arg2);
 			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_request : Error processing arguments");
 			if (!ok) { ok = true; break; }
 
