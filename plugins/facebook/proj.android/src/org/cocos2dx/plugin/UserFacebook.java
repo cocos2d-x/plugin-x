@@ -189,19 +189,7 @@ public class UserFacebook implements InterfaceUser{
             if(false == isLogined && com.facebook.SessionState.OPENED == state)
             {
                 isLogined = true;
-                Request request = new Request(session, "/me", null, HttpMethod.GET, new Request.Callback() {
-
-                    @Override
-                    public void onCompleted(Response response) {
-                        GraphObject graphObject = response.getGraphObject();
-                        userID = (String) graphObject.getProperty("id");
-                        JSONObject resobj = graphObject.getInnerJSONObject();
-                        LogD(resobj.toString());
-                        UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED,/* "user " + graphObject.getProperty("name") + "logined",*/ resobj.toString());
-                    }
-                });
-                request.executeAsync();
-                
+                UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");                
             }
         }
     }
