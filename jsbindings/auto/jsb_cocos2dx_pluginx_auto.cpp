@@ -1915,18 +1915,59 @@ bool js_pluginx_protocols_FacebookAgent_login(JSContext *cx, uint32_t argc, jsva
 
 bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	jsval *argv = JS_ARGV(cx, vp);
-	bool ok = true;
 	JSObject *obj = JS_THIS_OBJECT(cx, vp);
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_logout : Invalid Native Object");
 
+	if (argc == 0) {
+		cobj->logout();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logout : wrong number of arguments");
+	return false;
+}
+
+
+bool js_pluginx_protocols_FacebookAgent_isLogedIn(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_isLogedIn : Invalid Native Object");
+
+	if(argc == 0)
+	{
+		bool ret = cobj->isLogedIn();
+		jsval jsret = BOOLEAN_TO_JSVAL(ret);
+		JS_SET_RVAL(cx, vp, jsret);
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_isLogedIn : wrong number of arguments");
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_requestPermissions(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_requestPermissions : Invalid Native Object");
+
 	do {
-		if (argc == 1) {
-			std::function<void (int, std::string&)> arg0;
+		if (argc == 2) {
+			std::string arg0;
+			ok &= pluginx::jsval_array_to_string(cx, argv[0], &arg0);
+			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_requestPermissions : Error processing arguments");
+			if (!ok) { ok = true; break; }
+
+			std::function<void (int, std::string&)> arg1;
 			do {
-				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
 				auto lambda = [=](int larg0, std::string& larg1) -> void {
 					JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
@@ -1938,17 +1979,17 @@ bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsv
 						JS_ReportPendingException(cx);
 					}
 				};
-				arg0 = lambda;
+				arg1 = lambda;
 			} while(0);
 
 			if (!ok) { ok = true; break; }
-			cobj->logout(arg0);
+			cobj->requestPermissions(arg0, arg1);
 			JS_SET_RVAL(cx, vp, JSVAL_VOID);
 			return true;
 		}
 	} while(0);
 
-	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logout : wrong number of arguments");
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_requestPermissions : wrong number of arguments");
 	return false;
 }
 
@@ -2077,7 +2118,7 @@ bool js_pluginx_protocols_FacebookAgent_request(JSContext *cx, uint32_t argc, js
 			ok &= jsval_to_int32(cx, argv[1], (int32_t *)&arg1);
 			if (!ok) { ok = true; break; }
 			cocos2d::plugin::TShareInfo arg2;
-			ok &= pluginx::jsval_to_TShareInfo(cx, argv[2], &arg2);
+			ok &= pluginx::jsval_to_FBInfo(cx, argv[2], &arg2);
 			JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_request : Error processing arguments");
 			if (!ok) { ok = true; break; }
 
@@ -2179,6 +2220,8 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 	static JSFunctionSpec funcs[] = {
 		JS_FN("login", js_pluginx_protocols_FacebookAgent_login, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logout", js_pluginx_protocols_FacebookAgent_logout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("isLogedIn", js_pluginx_protocols_FacebookAgent_isLogedIn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("requestPermissions", js_pluginx_protocols_FacebookAgent_requestPermissions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
