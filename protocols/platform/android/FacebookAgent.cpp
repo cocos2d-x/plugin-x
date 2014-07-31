@@ -49,9 +49,22 @@ void FacebookAgent::login(FBCallback cb)
 	agentManager->getUserPlugin()->login(cb);
 }
 
-void FacebookAgent::logout(FBCallback cb)
+void FacebookAgent::logout()
 {
-	agentManager->getUserPlugin()->logout(cb);
+	agentManager->getUserPlugin()->logout();
+}
+
+bool FacebookAgent::isLogedIn()
+{
+	return agentManager->getUserPlugin()->isLogedIn();
+}
+
+void FacebookAgent::requestPermissions(std::string permissions, FBCallback cb)
+{
+	auto userPlugin = agentManager->getUserPlugin();
+	userPlugin->setCallback(cb);
+	PluginParam _permissions(permissions.c_str());
+	userPlugin->callFuncWithParam("requestPermissions", &_permissions, NULL);
 }
 
 std::string FacebookAgent::getAccessToken()

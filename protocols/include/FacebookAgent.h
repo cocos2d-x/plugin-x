@@ -28,8 +28,9 @@ public:
 	typedef std::function<void(int, std::string&)> FBCallback;
 
 	void login(FBCallback cb);
-	void logout(FBCallback cb);
-	void getLoignStatus(FBCallback cb);
+	void logout();
+	bool isLogedIn();
+	void requestPermissions(std::string permissions, FBCallback cb);
 	std::string getAccessToken();
 	void share(FBInfo &info, FBCallback cb);
 	void dialog(FBInfo &info, FBCallback cb);
