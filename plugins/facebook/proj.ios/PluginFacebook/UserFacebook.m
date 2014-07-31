@@ -70,6 +70,9 @@ NSString *_accessToken = @"";
         // If the session state is not any of the two "open" states when the button is clicked
     }
 }
+- (BOOL) islogIned{
+    return _isLogin;
+}
 - (BOOL) islogedIn{
     return _isLogin;
 }
@@ -105,23 +108,15 @@ NSString *_accessToken = @"";
 -(void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error{
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
-        OUTPUT_LOG(@"Session opened");
         _accessToken = session.accessTokenData.accessToken;
-        [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-            if (!error) {
-                NSMutableDictionary *dic = (NSMutableDictionary *)result;
-                _userId = [dic objectForKey:@"id"];
-                _isLogin = true;
-                NSString *msg = [ParseUtils NSDictionaryToNSString:dic];
-                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
-            } else {
-                [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:@"login Fail"];
-            }
-        }];
-
+        OUTPUT_LOG(@"Session opened");
+        NSString *msg = @"loginSuccess";
+        [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         _isLogin = false;
+        NSString *msg = @"loginFail Session closed";
+        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:msg];
         OUTPUT_LOG(@"Session closed");
     }
     
@@ -153,33 +148,45 @@ NSString *_accessToken = @"";
                                          if (!error) {
                                              // Permission granted
                                              OUTPUT_LOG(@"new permissions %@", [FBSession.activeSession permissions]);
-                                             
+                                             NSString *msg = [ParseUtils NSDictionaryToNSString:[FBSession.activeSession permissions]];
+                                             if(msg!=nil){
+                                                 [UserWrapper onPermissionsResult:self withRet:kPermissionSucceed withMsg:msg];
+                                             }else{
+                                                 msg = @"parse permission data fail";
+                                                 [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+                                             }
                                              // We can request the user information
                                          } else {
                                              // An error occurred, we need to handle the error
                                              // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                             OUTPUT_LOG(@"error %@", error.description);
+                                             NSString *msg = error.description;
+                                             [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+                                             OUTPUT_LOG(@"error %@", msg);
                                          }
                                      }];
 }
 
 -(void)request:(NSMutableDictionary *)params{
-    NSString *graphPath = [params objectForKey:@"path"];
-    NSString *method = [params objectForKey:@"method"] == nil?@"GET":[params objectForKey:@"method"];
-    NSString *sd = [params objectForKey:@"param"];
-    NSData *paramData = [sd dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dicParam;
-    if(paramData){
-        dicParam = [ParseUtils toArrayOrNSDictionary:paramData];
-    }
+    NSString *graphPath = [params objectForKey:@"Param1"];
+    int methodID = [[params objectForKey:@"Param2"] intValue];
+    NSString * method = methodID == 0? @"GET":methodID == 1?@"POST":@"DELETE";
+    NSDictionary *param = [params objectForKey:@"Param3"];
+    int cbId = [[params objectForKey:@"Param4"] intValue];
     [FBRequestConnection startWithGraphPath:graphPath
-                                 parameters:dicParam HTTPMethod:method
+                                 parameters:param HTTPMethod:method
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                               if(!error){
                                   OUTPUT_LOG(@"success");
-//                                  [GraphWrapper onGraphResult:self withRet:kGraphResultSuccess withMsg:@"Graph call Success"];
+                                  NSString *msg = [ParseUtils NSDictionaryToNSString:(NSDictionary *)result];
+                                  if(nil == msg){
+                                      msg = @"parse fail";
+                                      [UserWrapper onGraphResult:self withRet:kGraphResultFail withMsg:msg withCallback:cbId];
+                                  }else{
+                                      [UserWrapper onGraphResult:self withRet:kGraphResultSuccess withMsg:msg withCallback:cbId];
+                                  }
                               }else{
-//                                  [GraphWrapper onGraphResult:self withRet:kGraphResultFail withMsg:@"Graph call Fail"];
+                                  NSString *msg = error.description;
+                                  [UserWrapper onGraphResult:self withRet:kGraphResultFail withMsg:msg withCallback:cbId];
                                   OUTPUT_LOG(@"error %@", error.description);
                               }
                               

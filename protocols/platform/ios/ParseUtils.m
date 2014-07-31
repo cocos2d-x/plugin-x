@@ -9,9 +9,10 @@
 #import "ParseUtils.h"
 
 @implementation ParseUtils
-+ (id)toArrayOrNSDictionary:(NSData *)jsonData{
++ (id)toArrayOrNSDictionary:(NSString *)jsonData{
     NSError *error = nil;
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+    NSData *stringData = [jsonData dataUsingEncoding:NSUTF8StringEncoding];
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingAllowFragments error:&error];
     
     if (jsonObject != nil && error == nil){
         return jsonObject;
@@ -21,7 +22,7 @@
     }
     
 }
-+ (NSString *) NSDictionaryToNSString:(NSDictionary *)dic{
++ (NSString *) NSDictionaryToNSString:(id)dic{
     NSString *result = nil;
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic

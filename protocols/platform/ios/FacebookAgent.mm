@@ -29,7 +29,8 @@ namespace cocos2d{namespace plugin{
     
     FacebookAgent::~FacebookAgent()
     {
-        FacebookAgent::destroyInstance();
+        requestCallbacks.clear();
+        AgentManager::destroyInstance();
     }
     
     void FacebookAgent::login(FBCallback cb)
@@ -37,11 +38,22 @@ namespace cocos2d{namespace plugin{
         agentManager->getUserPlugin()->login(cb);
     }
     
-    void FacebookAgent::logout(FBCallback cb)
+    void FacebookAgent::logout()
     {
-        agentManager->getUserPlugin()->logout(cb);
+        agentManager->getUserPlugin()->logout();
+    }
+    bool FacebookAgent::isLogedIn()
+    {
+        return agentManager->getUserPlugin()->isLogedIn();
     }
     
+    void FacebookAgent::requestPermissions(std::string permissions, FBCallback cb)
+    {
+        auto userPlugin = agentManager->getUserPlugin();
+        userPlugin->setCallback(cb);
+        PluginParam _permissions(permissions.c_str());
+        userPlugin->callFuncWithParam("requestPermissions", &_permissions, NULL);
+    }
     std::string FacebookAgent::getAccessToken()
     {
         return agentManager->getUserPlugin()->callStringFuncWithParam("getAccessToken", NULL);

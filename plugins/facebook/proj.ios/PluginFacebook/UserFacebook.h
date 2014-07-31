@@ -34,6 +34,7 @@
 - (void) login;
 - (void) logout;
 - (BOOL) islogedIn;
+- (BOOL) islogIned;
 - (NSString*) getSessionID;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;

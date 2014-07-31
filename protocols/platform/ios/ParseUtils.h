@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface ParseUtils : NSObject
-+ (id)toArrayOrNSDictionary:(NSData *)jsonData;
-+ (NSString *) NSDictionaryToNSString:(NSDictionary *)dic;
++ (id)toArrayOrNSDictionary:(NSString *)jsonData;
++ (NSString *) NSDictionaryToNSString:(id)dic;
 @end

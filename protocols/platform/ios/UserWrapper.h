@@ -46,5 +46,6 @@ typedef enum {
 }
 
 + (void) onActionResult:(id) obj withRet:(UserActionResult) ret withMsg:(NSString*) msg;
++ (void) onPermissionsResult:(id)obj withRet:(UserPermissionResult)ret withMsg:(NSString *)msg;
 + (void) onGraphResult:(id) result withRet:(GraphResult)ret withMsg:(NSString *)msg withCallback:(int)cbid;
 @end
