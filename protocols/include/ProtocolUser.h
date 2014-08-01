@@ -80,9 +80,9 @@ public:
     /**
      @brief Check whether the user logined or not
      */
-    CC_DEPRECATED_ATTRIBUTE bool isLogined() {return isLogedIn();}
+    CC_DEPRECATED_ATTRIBUTE bool isLogined() {return isLoggedIn();}
 
-    bool isLogedIn();
+    bool isLoggedIn();
     /**
      @brief Get session ID
      @return If user logined, return value is session ID;

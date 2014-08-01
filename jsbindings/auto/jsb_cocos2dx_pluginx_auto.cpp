@@ -1940,7 +1940,7 @@ bool js_pluginx_protocols_FacebookAgent_isLogedIn(JSContext *cx, uint32_t argc, 
 
 	if(argc == 0)
 	{
-		bool ret = cobj->isLogedIn();
+		bool ret = cobj->isLoggedIn();
 		jsval jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return true;
