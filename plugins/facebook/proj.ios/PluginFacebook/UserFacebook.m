@@ -109,14 +109,17 @@ NSString *_accessToken = @"";
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
         _accessToken = session.accessTokenData.accessToken;
+        _isLogin = true;
         OUTPUT_LOG(@"Session opened");
         NSString *msg = @"loginSuccess";
         [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-        _isLogin = false;
         NSString *msg = @"loginFail Session closed";
-        [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:msg];
+        if(!_isLogin){
+            [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:msg];
+        }
+        _isLogin = false;
         OUTPUT_LOG(@"Session closed");
     }
     

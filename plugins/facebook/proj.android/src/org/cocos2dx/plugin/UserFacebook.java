@@ -1,7 +1,32 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+ 
 package org.cocos2dx.plugin;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import java.util.Hashtable;
 
@@ -14,6 +39,7 @@ import com.facebook.LoggingBehavior;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
@@ -32,7 +58,9 @@ public class UserFacebook implements InterfaceUser{
     private static boolean bDebug = true;
     private static boolean isLogined = false;
     private final static String LOG_TAG = "UserFacebook";
-    private static String userID = "";
+    private static final List<String> allPublishPermissions = Arrays.asList(
+            "publish_actions", "ads_management", "create_event", "rsvp_event",
+            "manage_friendlists", "manage_notifications", "manage_pages");
     
     protected static void LogE(String msg, Exception e) {
         Log.e(LOG_TAG, msg, e);
@@ -79,8 +107,8 @@ public class UserFacebook implements InterfaceUser{
                 if (!session.isOpened() && !session.isClosed()) {
                     OpenRequest request = new Session.OpenRequest(mContext);
                     request.setCallback(statusCallback);
-                    request.setPermissions(Arrays.asList("publish_actions"));
-                    session.openForPublish(request);
+                    //request.setPermissions(Arrays.asList("publish_actions"));
+                    session.openForRead(request);
                     //session.openForPublish(new Session.OpenRequest(mContext).setCallback(statusCallback));
                 } else {
                     Session.openActiveSession(mContext, true, statusCallback);
@@ -128,15 +156,30 @@ public class UserFacebook implements InterfaceUser{
         return Session.getActiveSession().getAccessToken();
     }
     
-    public String getUserId(){
-        return userID;
-    }
-    
-    public String getLoginStatus(){
-        return Session.getActiveSession().getState().name();
+    public void requestPermissions(String permissions){
+        
+        String[] permissonArray = permissions.split(",");
+        boolean publishPermission = false;
+        for (int i = 0; i < permissonArray.length; i++) {
+            if (allPublishPermissions.contains(permissonArray[i])) {
+                publishPermission = true;
+                break;
+            }
+        }
+        
+
+        NewPermissionsRequest newPermissionsRequest = new NewPermissionsRequest(mContext, Arrays.asList(permissonArray));
+        newPermissionsRequest.setCallback(statusCallback);
+        if(publishPermission){
+            session.requestNewPublishPermissions(newPermissionsRequest);    
+        }else{
+            session.requestNewReadPermissions(newPermissionsRequest);
+        }
+        
     }
     
     public void request(final JSONObject info /*String path, int method, JSONObject params, int nativeCallback*/ ){
+        System.out.println(info);
         PluginWrapper.runOnMainThread(new Runnable(){
 
             @Override
@@ -186,10 +229,15 @@ public class UserFacebook implements InterfaceUser{
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
+            
             if(false == isLogined && com.facebook.SessionState.OPENED == state)
             {
                 isLogined = true;
                 UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");                
+            }
+            else if(true == isLogined && com.facebook.SessionState.OPENED == state)
+            {
+                UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "request success");  
             }
         }
     }

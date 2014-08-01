@@ -1943,9 +1943,10 @@ bool js_pluginx_protocols_FacebookAgent_isLogedIn(JSContext *cx, uint32_t argc, 
 		bool ret = cobj->isLogedIn();
 		jsval jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
+		return true;
 	}
 
-	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_isLogedIn : wrong number of arguments");
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_isLogedIn : wrong number of arguments: %d", argc);
 	return false;
 }
 

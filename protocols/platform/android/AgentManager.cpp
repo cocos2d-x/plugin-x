@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+ 
 #include <vector>
 
 #include "AgentManager.h"
@@ -86,128 +110,6 @@ bool AgentManager::init()
 
 	return true;
 }
-//
-//void AgentManager::login()
-//{
-//	pUser->login();
-//}
-//
-//void AgentManager::login(std::function<void(int resultCode, std::string &msg)> &callback)
-//{
-//	pUser->setListener(callback);
-//	pUser->login();
-//}
-//
-//void AgentManager::logout()
-//{
-//	pUser->logout();
-//}
-//
-//bool AgentManager::isLogined()
-//{
-//	return pUser->isLogined();
-//}
-//
-//std::string AgentManager::getSessionID()
-//{
-//	return pUser->getSessionID();
-//}
-//
-//void AgentManager::share(TShareInfo &info)
-//{
-//	pShare->share(info);
-//}
-//
-//void AgentManager::share(TShareInfo &info, std::function<void(int resultcode, std::string &msg)> &callback)
-//{
-//	pShare->setListener(callback);
-//    pShare->share(info);
-//}
-//
-//void AgentManager::submitScore(std::string &leaderboardID, long score)
-//{
-//	pSocial->submitScore(leaderboardID.c_str(), score);
-//}
-//
-//void AgentManager::showLeaderboard(std::string &leaderboardID)
-//{
-//	pSocial->showLeaderboard(leaderboardID.c_str());
-//}
-//
-//void AgentManager::unlockAchievement(TAchievementInfo &achInfo)
-//{
-//	pSocial->unlockAchievement(achInfo);
-//}
-//
-//void AgentManager::showAchievements()
-//{
-//	pSocial->showAchievements();
-//}
-//
-//void AgentManager::showAds(TAdsInfo &info)
-//{
-//	pAds->showAds(info);
-//}
-//
-//void AgentManager::hideAds(TAdsInfo &info)
-//{
-//	pAds->hideAds(info);
-//}
-//
-//void AgentManager::queryPoints()
-//{
-//	pAds->queryPoints();
-//}
-//
-//void AgentManager::spendPoints(int points)
-//{
-//	pAds->spendPoints(points);
-//}
-//
-//void AgentManager::payForProduct(TProductInfo &info)
-//{
-//	pIAP->payForProduct(info);
-//}
-//
-//void AgentManager::startSession(const char* appKey)
-//{
-//	pAnalytics->startSession(appKey);
-//}
-//
-//void AgentManager::stopSession()
-//{
-//	pAnalytics->stopSession();
-//}
-//
-//void AgentManager::setSessionContinueMillis(long millis)
-//{
-//	pAnalytics->setSessionContinueMillis(millis);
-//}
-//
-//void AgentManager::logError(const char* errorId, const char* message)
-//{
-//	pAnalytics->logError(errorId, message);
-//}
-//
-//void AgentManager::logEvent(const char* eventId)
-//{
-//	pAnalytics->logEvent(eventId);
-//}
-//
-//void AgentManager::logTimedEventBegin(const char* eventId)
-//{
-//	pAnalytics->logTimedEventBegin(eventId);
-//}
-//
-//void AgentManager::logTimedEventEnd(const char* eventId)
-//{
-//	pAnalytics->logTimedEventEnd(eventId);
-//}
-//
-//void AgentManager::setCaptureUncaughtException(bool enabled)
-//{
-//	pAnalytics->setCaptureUncaughtException(enabled);
-//}
 
 static std::vector<std::string> s_plugins = {"PluginUser", "PluginShare", "PluginSocial", "PluginAds", "PluginAnalytics", "PluginIAP"};
 
