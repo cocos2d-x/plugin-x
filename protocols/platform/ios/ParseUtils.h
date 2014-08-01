@@ -22,25 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <Foundation/Foundation.h>
-#import "InterfaceUser.h"
-@interface UserFacebook : NSObject <InterfaceUser>{
-    
-}
-@property BOOL debug;
-@property (copy, nonatomic) NSMutableDictionary* mUserInfo;
 
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
-- (void) login;
-- (void) logout;
-- (BOOL) islogedIn;
-- (BOOL) isLogined;
-- (NSString*) getSessionID;
-- (void) setDebugMode: (BOOL) debug;
-- (NSString*) getSDKVersion;
-- (NSString*) getPluginVersion;
-- (NSString *)getUserId;
-- (NSString *)getAccessToken;
--(void)requestPermissions:(NSString *)permission;
--(void)request:(NSDictionary *)params;
+#import <Foundation/Foundation.h>
+
+@interface ParseUtils : NSObject
++ (id)NSStringToArrayOrNSDictionary:(NSString *)jsonData;
++ (NSString *) NSDictionaryToNSString:(id)dic;
 @end

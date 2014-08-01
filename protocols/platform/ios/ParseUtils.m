@@ -22,25 +22,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <Foundation/Foundation.h>
-#import "InterfaceUser.h"
-@interface UserFacebook : NSObject <InterfaceUser>{
+
+#import "ParseUtils.h"
+
+@implementation ParseUtils
++ (id)NSStringToArrayOrNSDictionary:(NSString *)jsonData{
+    NSError *error = nil;
+    NSData *stringData = [jsonData dataUsingEncoding:NSUTF8StringEncoding];
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingAllowFragments error:&error];
+    
+    if (jsonObject != nil && error == nil){
+        return jsonObject;
+    }else{
+        return nil;
+    }
     
 }
-@property BOOL debug;
-@property (copy, nonatomic) NSMutableDictionary* mUserInfo;
-
-- (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
-- (void) login;
-- (void) logout;
-- (BOOL) islogedIn;
-- (BOOL) isLogined;
-- (NSString*) getSessionID;
-- (void) setDebugMode: (BOOL) debug;
-- (NSString*) getSDKVersion;
-- (NSString*) getPluginVersion;
-- (NSString *)getUserId;
-- (NSString *)getAccessToken;
--(void)requestPermissions:(NSString *)permission;
--(void)request:(NSDictionary *)params;
++ (NSString *) NSDictionaryToNSString:(id)dic{
+    NSString *result = nil;
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                       options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        result = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return result;
+}
 @end

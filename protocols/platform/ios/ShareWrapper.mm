@@ -36,17 +36,17 @@ using namespace cocos2d::plugin;
     ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
     if (pShare) {
         ShareResultListener* listener = pShare->getResultListener();
-        ProtocolShare::ProtocolShareCallback callback = pShare->getListener();
+        ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
         const char* chMsg = [msg UTF8String];
         if (NULL != listener)
         {
             ShareResultCode cRet = (ShareResultCode) ret;
             listener->onShareResult(cRet, chMsg);
-        }else if(callback){
-            std::string stdmsg(chMsg);
-            callback(ret, stdmsg);
-        }else
+        }else if (callback)
         {
+            std::string stdmsg(chMsg);
+            callback((ShareResultCode) ret, stdmsg);
+        }else{
             PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
         }
     } else {

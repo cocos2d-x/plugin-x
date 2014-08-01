@@ -103,7 +103,6 @@ public:
      @param cb callback of request
      */
 	void request(std::string &path, int method, FBInfo &params, FBCallback cb);
-
 	FBCallback getRequestCallback(int index);
 private:
 	FacebookAgent();

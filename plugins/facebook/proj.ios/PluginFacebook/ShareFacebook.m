@@ -25,7 +25,7 @@
 #import "ShareFacebook.h"
 #import "ShareWrapper.h"
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "ParseUtils.h"
 #define OUTPUT_LOG(...)     if (self.debug) NSLog(__VA_ARGS__);
 
 @implementation ShareFacebook
@@ -261,8 +261,9 @@
         }
     }
     else if ([dialog_type hasSuffix:@"photo"]) {
-        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
-        UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+//        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
+//         UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
         FBPhotoParams *params = [[FBPhotoParams alloc] init];
         params.photos = @[img];
         
@@ -307,7 +308,7 @@
                                             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                             [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                         } else {
-                                            NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
+                                            NSString *msg = [ParseUtils NSDictionaryToNSString: results];
                                             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                         }
                                     }];
@@ -323,6 +324,7 @@
              NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
+             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
          }
      }];
@@ -338,7 +340,7 @@
                                                  NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
                                                  [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                              } else {
-                                                 NSString *msg = [NSString stringWithFormat:@"Share Complete: %@", results];
+                                                 NSString *msg = [ParseUtils NSDictionaryToNSString: results];
                                                  [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                              }
                                          }];
@@ -354,7 +356,7 @@
                                               NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                               [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                           } else {
-                                              NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+                                              NSString *msg = [ParseUtils NSDictionaryToNSString: results];
                                               [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                           }
                                       }];
@@ -370,7 +372,7 @@
              NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
          }
      }];
@@ -386,7 +388,7 @@
                                                    NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                                    [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                                } else {
-                                                   NSString *msg = [NSString stringWithFormat:@"Message send result: %@", results];
+                                                   NSString *msg = [ParseUtils NSDictionaryToNSString: results];
                                                    [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                                                }
                                            }];

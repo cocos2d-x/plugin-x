@@ -38,9 +38,13 @@ using namespace cocos2d::plugin;
         const char* chMsg = [msg UTF8String];
         AdsResultCode cRet = (AdsResultCode) ret;
         AdsListener* listener = adsPlugin->getAdsListener();
+         ProtocolAds::ProtocolAdsCallback callback = adsPlugin->getCallback();
         if (listener)
         {
             listener->onAdsResult(cRet, chMsg);
+        }else if(callback){
+            std::string stdmsg(chMsg);
+            callback(cRet,stdmsg);
         }
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the ads plugin");

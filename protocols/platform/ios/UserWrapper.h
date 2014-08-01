@@ -29,6 +29,16 @@ typedef enum {
     kLoginFailed,
     kLogoutSucceed,
 } UserActionResult;
+typedef enum {
+    kPermissionSucceed = 0,
+    kPermissionFailed,
+} UserPermissionResult;
+typedef enum {
+    kGraphResultSuccess = 0,
+    kGraphResultFail,
+    kGraphResultCancel,
+    kGraphResultTimeout,
+} GraphResult;
 
 @interface UserWrapper : NSObject
 {
@@ -36,5 +46,6 @@ typedef enum {
 }
 
 + (void) onActionResult:(id) obj withRet:(UserActionResult) ret withMsg:(NSString*) msg;
-
++ (void) onPermissionsResult:(id)obj withRet:(UserPermissionResult)ret withMsg:(NSString *)msg;
++ (void) onGraphResult:(id) result withRet:(GraphResult)ret withMsg:(NSString *)msg withCallback:(int)cbid;
 @end

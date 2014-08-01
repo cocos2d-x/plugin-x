@@ -35,10 +35,14 @@ using namespace cocos2d::plugin;
 {
     PluginProtocol* plugin = PluginUtilsIOS::getPluginPtr(obj);
     ProtocolIAP* iapPlugin = dynamic_cast<ProtocolIAP*>(plugin);
+    ProtocolIAP::ProtocolIAPCallback callback = iapPlugin->getCallback();
+    const char* chMsg = [msg UTF8String];
+    PayResultCode cRet = (PayResultCode) ret;
     if (iapPlugin) {
-        const char* chMsg = [msg UTF8String];
-        PayResultCode cRet = (PayResultCode) ret;
         iapPlugin->onPayResult(cRet, chMsg);
+    }else if(callback){
+        std::string stdmsg(chMsg);
+        callback(cRet,stdmsg);
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }
@@ -62,6 +66,5 @@ using namespace cocos2d::plugin;
     } else {
         PluginUtilsIOS::outputLog("Can't find the C++ object of the IAP plugin");
     }
-
 }
 @end
