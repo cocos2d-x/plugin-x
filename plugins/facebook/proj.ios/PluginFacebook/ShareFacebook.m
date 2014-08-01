@@ -265,7 +265,7 @@
 //         UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
         UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
         if(img !=nil){
-            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed,photo can't find"];
+            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"Share failed, photo can't be found"];
             return;
         }
         FBPhotoParams *params = [[FBPhotoParams alloc] init];
