@@ -84,8 +84,6 @@ public:
     static std::string callOCStringFunctionWithName(PluginProtocol* pPlugin, const char* funcName);
 
     static void outputLog(const char* pFormat, ...);
-    static std::map<std::string, std::string> createMapFromDict(NSDictionary *dict);
-    static std::string parseOCType(id type);
 private:
     static id callRetFunctionWithParam(PluginProtocol* pPlugin, const char* funcName, id param);
     static id callRetFunction(PluginProtocol* pPlugin, const char* funcName);

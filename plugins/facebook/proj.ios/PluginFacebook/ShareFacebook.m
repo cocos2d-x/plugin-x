@@ -261,8 +261,9 @@
         }
     }
     else if ([dialog_type hasSuffix:@"photo"]) {
-        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
-        UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+//        NSURL *photoUrl = [NSURL URLWithString:[shareInfo objectForKey:@"photo"]];
+//         UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoUrl]];
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
         FBPhotoParams *params = [[FBPhotoParams alloc] init];
         params.photos = @[img];
         

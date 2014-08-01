@@ -70,7 +70,7 @@ NSString *_accessToken = @"";
         // If the session state is not any of the two "open" states when the button is clicked
     }
 }
-- (BOOL) islogIned{
+- (BOOL) isLogined{
     return _isLogin;
 }
 - (BOOL) islogedIn{
