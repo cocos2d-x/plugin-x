@@ -43,22 +43,26 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserWrapper_nativeOnActionResult
         if (pUser != NULL)
         {
             UserActionListener* listener = pUser->getActionListener();
-            ProtocolUser::ProtocolUserCallback callback = pUser->getListener();
             if (NULL != listener)
             {
                 listener->onActionResult(pUser, (UserActionResultCode) ret, strMsg.c_str());
             }
-            else if(callback)
-            {
-                callback(ret, strMsg);
-            }
             else
             {
-                PluginUtils::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
+            	ProtocolUser::ProtocolUserCallback callback = pUser->getCallback();
+            	if(callback)
+				{
+					callback(ret, strMsg);
+				}
+				else
+				{
+					PluginUtils::outputLog("Listener of plugin %s not set correctly", pPlugin->getPluginName());
+				}
             }
         }
     }
 }
+
 }
 
 ProtocolUser::ProtocolUser()
@@ -102,12 +106,24 @@ void ProtocolUser::login()
     PluginUtils::callJavaFunctionWithName(this, "login");
 }
 
+void ProtocolUser::login(ProtocolUserCallback &cb)
+{
+	_callback = cb;
+	ProtocolUser::login();
+}
+
 void ProtocolUser::logout()
 {
     PluginUtils::callJavaFunctionWithName(this, "logout");
 }
 
-bool ProtocolUser::isLogined()
+void ProtocolUser::logout(ProtocolUserCallback &cb)
+{
+	_callback = cb;
+	ProtocolUser::logout();
+}
+
+bool ProtocolUser::isLogedIn()
 {
     return PluginUtils::callJavaBoolFuncWithName(this, "isLogined");
 }
@@ -115,6 +131,11 @@ bool ProtocolUser::isLogined()
 std::string ProtocolUser::getSessionID()
 {
     return PluginUtils::callJavaStringFuncWithName(this, "getSessionID");
+}
+
+std::string ProtocolUser::getAccessToken()
+{
+	return PluginUtils::callJavaStringFuncWithName(this, "getAccessToken");
 }
 
 }} // namespace cocos2d { namespace plugin {

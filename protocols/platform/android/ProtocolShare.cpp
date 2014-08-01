@@ -43,21 +43,23 @@ extern "C" {
             if (pShare != NULL)
             {
                 ShareResultListener* listener = pShare->getResultListener();
-                ProtocolShare::ProtocolShareCallback callback = pShare->getListener();
                 if (NULL != listener)
                 {
                     ShareResultCode cRet = (ShareResultCode) ret;
                     listener->onShareResult(cRet, strMsg.c_str());
-                }else if(callback){
-                    callback(ret, strMsg);
                 }else
                 {
-                    PluginUtils::outputLog("ProtocolShare", "Can't find the listener of plugin %s", pPlugin->getPluginName());
+                	ProtocolShare::ProtocolShareCallback callback = pShare->getCallback();
+                	if(callback)
+                		callback(ret, strMsg);
+                	else
+                		PluginUtils::outputLog("ProtocolShare", "Can't find the listener of plugin %s", pPlugin->getPluginName());
                 }
             }
 
         }
     }
+
 }
 
 ProtocolShare::ProtocolShare()
@@ -125,6 +127,12 @@ void ProtocolShare::share(TShareInfo info)
 			t.env->DeleteLocalRef(t.classID);
 		}
     }
+}
+
+void ProtocolShare::share(TShareInfo &info, ProtocolShareCallback &cb)
+{
+	setCallback(cb);
+	share(info);
 }
 
 void ProtocolShare::setResultListener(ShareResultListener* pListener)
