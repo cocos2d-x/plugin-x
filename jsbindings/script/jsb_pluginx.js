@@ -57,14 +57,3 @@ plugin.FacebookAgent.HttpMethod = {};
 plugin.FacebookAgent.HttpMethod.Get = 0;
 plugin.FacebookAgent.HttpMethod.Post = 1;
 plugin.FacebookAgent.HttpMethod.Delete = 2;
-
-// plugin.agentManager = plugin.AgentManager.getInstance();
-// plugin.agentManager.dialog = function(shareInfo, callback) {
-// 	var sharePlugin = this.getSharePlugin();
-// 	if (sharePlugin) {
-// 		callback && sharePlugin.setListener({
-//             onShareResult : callback
-//         });
-// 		sharePlugin.callFuncWithParam("dialog", new plugin.PluginParam(plugin.PluginParam.ParamType.TypeStringMap, shareInfo));
-// 	}
-// }

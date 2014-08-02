@@ -83,20 +83,34 @@ public:
     void unlockAchievement(TAchievementInfo achInfo, ProtocolSocialCallback cb);
     void showAchievements();
 
+    /*
+     @deprecated
+     @brief set listener
+     */
     CC_DEPRECATED_ATTRIBUTE inline void setListener(SocialListener* listener) {
         _listener = listener;
     }
 
+    /*
+     @deprecated
+     @brief get listener
+     */
     CC_DEPRECATED_ATTRIBUTE inline SocialListener* getListener()
     {
         return _listener;
     }
 
+    /*
+     @brief set callback function
+     */
     inline void setCallback(ProtocolSocialCallback &cb)
     {
     	_callback = cb;
     }
 
+    /*
+     @brief get callback function
+     */
     inline ProtocolSocialCallback& getCallback()
     {
     	return _callback;

@@ -77,6 +77,7 @@ public:
     void share(TShareInfo &info, ProtocolShareCallback &cb);
 
     /**
+    @deprecated
     @breif set the result listener
     @param pListener The callback object for share result
     @wraning Must invoke this interface before share
@@ -84,6 +85,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE void setResultListener(ShareResultListener* pListener);
     
     /**
+     @deprecated
      @breif get the result listener
      @return The callback object for share result
      @wraning Must invoke this interface before share

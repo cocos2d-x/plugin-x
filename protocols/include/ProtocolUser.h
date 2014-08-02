@@ -96,6 +96,7 @@ public:
     std::string getAccessToken();
 
     /*
+     @deprecated
      @brief set login callback function
      */
     CC_DEPRECATED_ATTRIBUTE inline void setActionListener(UserActionListener* listener)
@@ -103,6 +104,7 @@ public:
         _listener = listener;
     }
     /*
+     @deprecated
      @brief get login callback function
      */
     CC_DEPRECATED_ATTRIBUTE inline UserActionListener* getActionListener()
