@@ -233,7 +233,7 @@ public class UserFacebook implements InterfaceUser{
                 if(SessionState.OPENED == state){
                     isLogined = true;
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");  
-                }else if(SessionState.CLOSED_LOGIN_FAILED == state || SessionState.CLOSED == state){
+                }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "login failed");
                 }
                               
