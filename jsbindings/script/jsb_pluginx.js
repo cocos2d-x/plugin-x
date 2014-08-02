@@ -57,3 +57,22 @@ plugin.FacebookAgent.HttpMethod = {};
 plugin.FacebookAgent.HttpMethod.Get = 0;
 plugin.FacebookAgent.HttpMethod.Post = 1;
 plugin.FacebookAgent.HttpMethod.Delete = 2;
+
+
+plugin.FacebookAgent.prototype._logout = plugin.FacebookAgent.prototype.logout;
+plugin.FacebookAgent.prototype.logout = function(callback){
+    this._logout();
+    callback(2, "logout success");
+};
+
+plugin.FacebookAgent.prototype._isLoggedIn = plugin.FacebookAgent.prototype.isLoggedIn;
+plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
+    if(this._isLoggedIn())
+        callback(0, "logged in");
+    else
+        callback(1, "logged out")
+};
+
+plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
+    callback(0, this.getAccessToken());
+};
