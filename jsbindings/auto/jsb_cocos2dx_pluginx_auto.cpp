@@ -2221,7 +2221,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 	static JSFunctionSpec funcs[] = {
 		JS_FN("login", js_pluginx_protocols_FacebookAgent_login, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logout", js_pluginx_protocols_FacebookAgent_logout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("isLogedIn", js_pluginx_protocols_FacebookAgent_isLogedIn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("isLoggedIn", js_pluginx_protocols_FacebookAgent_isLogedIn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("requestPermissions", js_pluginx_protocols_FacebookAgent_requestPermissions, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
