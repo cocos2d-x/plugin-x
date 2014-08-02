@@ -130,7 +130,7 @@ void ProtocolSocial::unlockAchievement(TAchievementInfo achInfo)
         {
             PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
             assert(pData != NULL);
-            
+            setCallback(callback);
             id ocObj = pData->obj;
             if ([ocObj conformsToProtocol:@protocol(InterfaceSocial)]) {
                 NSObject<InterfaceSocial>* curObj = ocObj;

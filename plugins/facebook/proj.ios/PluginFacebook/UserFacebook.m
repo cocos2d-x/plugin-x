@@ -73,7 +73,7 @@ NSString *_accessToken = @"";
 - (BOOL) isLogined{
     return _isLogin;
 }
-- (BOOL) islogedIn{
+- (BOOL) isLoggedIn{
     return _isLogin;
 }
 - (NSString *)getUserId{
@@ -145,6 +145,11 @@ NSString *_accessToken = @"";
     }
 }
 -(void)requestPermissions:(NSString *)permision{
+    if(FBSession.activeSession.state != FBSessionStateOpen && FBSession.activeSession.state != FBSessionStateOpenTokenExtended){
+        NSString *msg = @"Session closed please login first";
+        [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+        return;
+    }
     NSArray *permission = [permision componentsSeparatedByString:@","];
     [FBSession.activeSession requestNewReadPermissions:permission
                                      completionHandler:^(FBSession *session, NSError *error) {

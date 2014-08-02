@@ -67,7 +67,7 @@ public:
 	/**
      @brief Check whether the user logined or not
      */
-	bool isLogedIn();
+	bool isLoggedIn();
 
 	/**
      @brief request new permissions

@@ -42,9 +42,9 @@ namespace cocos2d{namespace plugin{
     {
         agentManager->getUserPlugin()->logout();
     }
-    bool FacebookAgent::isLogedIn()
+    bool FacebookAgent::isLoggedIn()
     {
-        return agentManager->getUserPlugin()->isLogedIn();
+        return agentManager->getUserPlugin()->isLoggedIn();
     }
     
     void FacebookAgent::requestPermissions(std::string permissions, FBCallback cb)

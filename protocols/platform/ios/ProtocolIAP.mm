@@ -115,7 +115,7 @@ void ProtocolIAP::payForProduct(TProductInfo info)
         {
             _paying = true;
             _curInfo = info;
-            
+            setCallback(callback);
             PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
             assert(pData != NULL);
             
