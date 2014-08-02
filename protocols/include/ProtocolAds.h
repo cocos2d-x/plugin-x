@@ -119,6 +119,7 @@ public:
     void spendPoints(int points);
 
     /**
+     @deprecated
      @brief set the Ads listener
     */
     CC_DEPRECATED_ATTRIBUTE inline void setAdsListener(AdsListener* listener)
@@ -126,16 +127,26 @@ public:
         _listener = listener;
     }
 
+    /**
+     @deprecated
+     @brief set the Ads listener
+    */
     CC_DEPRECATED_ATTRIBUTE inline AdsListener* getAdsListener()
     {
         return _listener;
     }
 
+    /**
+     @brief set the Ads callback function
+    */
     inline void setCallback(ProtocolAdsCallback& cb)
     {
     	_callback = cb;
     }
 
+    /**
+     @brief get the Ads callback function
+    */
     inline ProtocolAdsCallback getCallback()
     {
     	return _callback;

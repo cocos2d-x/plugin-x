@@ -85,11 +85,17 @@ public:
     void payForProduct(TProductInfo info, ProtocolIAPCallback cb);
 
     /**
+    @deprecated
     @breif set the result listener
     @param pListener The callback object for pay result
     @wraning Must invoke this interface before payForProduct.
     */
     CC_DEPRECATED_ATTRIBUTE void setResultListener(PayResultListener* pListener);
+    
+    /**
+    @deprecated
+    @breif get the result listener
+    */
     CC_DEPRECATED_ATTRIBUTE inline PayResultListener* getResultListener()
     {
         return _listener;
@@ -100,11 +106,17 @@ public:
     */
     void onPayResult(PayResultCode ret, const char* msg);
 
+    /**
+    @brief set callback function
+    */
     inline void setCallback(ProtocolIAPCallback &cb)
     {
     	_callback = cb;
     }
 
+    /**
+    @brief get callback function
+    */
     inline ProtocolIAPCallback getCallback()
     {
     	return _callback;
