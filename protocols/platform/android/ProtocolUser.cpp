@@ -123,7 +123,7 @@ void ProtocolUser::logout(ProtocolUserCallback &cb)
 	ProtocolUser::logout();
 }
 
-bool ProtocolUser::isLogedIn()
+bool ProtocolUser::isLoggedIn()
 {
     return PluginUtils::callJavaBoolFuncWithName(this, "isLogined");
 }
