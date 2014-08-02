@@ -229,15 +229,23 @@ public class UserFacebook implements InterfaceUser{
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
-            
-            if(false == isLogined && com.facebook.SessionState.OPENED == state)
-            {
-                isLogined = true;
-                UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");                
+            if(false == isLogined){
+                if(SessionState.OPENED == state){
+                    isLogined = true;
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");  
+                }else if(SessionState.CLOSED_LOGIN_FAILED == state || SessionState.CLOSED == state){
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "login failed");
+                }
+                              
             }
-            else if(true == isLogined && com.facebook.SessionState.OPENED == state)
-            {
-                UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "request success");  
+            else{
+                if(SessionState.OPENED_TOKEN_UPDATED == state){
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "request success");
+                }                   
+                else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
+                    isLogined = false;
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "request failed");
+                }                   
             }
         }
     }
