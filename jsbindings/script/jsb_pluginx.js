@@ -58,6 +58,8 @@ plugin.FacebookAgent.HttpMethod.Get = 0;
 plugin.FacebookAgent.HttpMethod.Post = 1;
 plugin.FacebookAgent.HttpMethod.Delete = 2;
 
+plugin.FacebookAgent.CodeSucceed = 0;
+
 plugin.FacebookAgent.prototype.logout = function(callback){
     this._logout();
     callback(2, "FacebookAgent: User logout succeed");
@@ -71,5 +73,6 @@ plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
 };
 
 plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
-    callback(0, this.getAccessToken());
+    var at = this.getAccessToken();
+    callback( at ? plugin.FacebookAgent.CodeSucceed : -1, at);
 };
