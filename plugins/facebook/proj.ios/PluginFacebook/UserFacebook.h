@@ -33,7 +33,7 @@
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) login;
 - (void) logout;
-- (BOOL) isLoggedIn;
+- (NSNumber *) isLoggedIn;
 - (BOOL) isLogined;
 - (NSString*) getSessionID;
 - (void) setDebugMode: (BOOL) debug;

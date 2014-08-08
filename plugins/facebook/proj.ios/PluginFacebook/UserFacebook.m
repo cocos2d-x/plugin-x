@@ -73,8 +73,8 @@ NSString *_accessToken = @"";
 - (BOOL) isLogined{
     return _isLogin;
 }
-- (BOOL) isLoggedIn{
-    return _isLogin;
+- (NSNumber *) isLoggedIn{
+    return [NSNumber  numberWithBool:_isLogin];
 }
 - (NSString *)getUserId{
     return _userId;
