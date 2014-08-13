@@ -93,7 +93,6 @@ public class UserFacebook implements InterfaceUser{
 
     @Override
     public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
-        // TODO Auto-generated method stub
         LogD("not supported in Facebook pluign");
     }
 
@@ -192,7 +191,7 @@ public class UserFacebook implements InterfaceUser{
                     
                     JSONObject jsonParameters = info.getJSONObject("Param3");
                     Bundle parameter = new Bundle();
-                    Iterator it = jsonParameters.keys();
+                    Iterator<?> it = jsonParameters.keys();
                     while(it.hasNext()){
                         String key = it.next().toString();
                         String value = jsonParameters.getString(key);
