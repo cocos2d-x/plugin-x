@@ -27,19 +27,17 @@ package org.cocos2dx.plugin;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.Iterator;
 
 import org.cocos2dx.plugin.InterfaceShare;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.facebook.FacebookException;
-import com.facebook.Session;
-import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphObject;
 import com.facebook.model.OpenGraphAction;
 import com.facebook.model.OpenGraphObject;
 import com.facebook.widget.FacebookDialog;
+import com.facebook.widget.FacebookDialog.PendingCall;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.FacebookDialog.MessageDialogFeature;
 import com.facebook.widget.FacebookDialog.OpenGraphActionDialogFeature;
@@ -55,12 +53,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class ShareFacebook implements InterfaceShare{
-	//public static UiLifecycleHelper uiHelper = null;
+
 	private static Activity mContext = null;
-	public static InterfaceShare mAdapter = null;
+	private static InterfaceShare mAdapter = null;
 	private static boolean bDebug = true;
 	private final static String LOG_TAG = "ShareFacebook";
-	private Session session = null;
+	
 	protected static void LogE(String msg, Exception e) {
         Log.e(LOG_TAG, msg, e);
         e.printStackTrace();
@@ -73,15 +71,13 @@ public class ShareFacebook implements InterfaceShare{
     }
     
     public ShareFacebook(Context context) {
-    	session = Session.getActiveSession();
 		mContext = (Activity)context;		
 		mAdapter = this;
-		//uiHelper = new UiLifecycleHelper(mContext, null);
+		FacebookWrapper.setDialogCallback(new FacebookDialogCallback());
 	}
     
 	@Override
 	public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
-		// TODO Auto-generated method stub
 		LogD("not supported in Facebook pluign");
 	}
 
@@ -103,7 +99,7 @@ public class ShareFacebook implements InterfaceShare{
 						.setDescription(text)
 				        .build();
 					
-					shareDialog.present();
+					FacebookWrapper.track(shareDialog.present());
 				}
 			});
 		}		
@@ -205,7 +201,7 @@ public class ShareFacebook implements InterfaceShare{
 										.setDescription(description)
 										.setPicture(picture)
 										.build();
-		dialog.present();
+		FacebookWrapper.track(dialog.present());
 	}
 	
 	private void FBShareOpenGraphDialog(JSONObject info) throws JSONException{
@@ -217,10 +213,10 @@ public class ShareFacebook implements InterfaceShare{
                         info.getString("description"));
         OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
         action.setProperty(previewProperty, obj);
-        action.setType(type);
-        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, previewProperty)
+        //action.setType(type);
+        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, type, previewProperty)
         									.build();
-    	shareDialog.present();
+    	FacebookWrapper.track(shareDialog.present());
 	}
 	
 	private void FBSharePhotoDialog(JSONObject info) throws JSONException{
@@ -237,7 +233,7 @@ public class ShareFacebook implements InterfaceShare{
 									.addPhotoFiles(Arrays.asList(file))	
 									//.addPhotos(Arrays.asList(image))
 									.build();
-		dialog.present();
+		FacebookWrapper.track(dialog.present());
 	}
 	
 	private void WebRequestDialog(JSONObject info) throws JSONException{
@@ -295,9 +291,11 @@ public class ShareFacebook implements InterfaceShare{
 				.setDescription(description)
 				.setPicture(picture)
 		    	.build();
-		dialog.present();
+		FacebookWrapper.track(dialog.present());
 	}
 	
+	
+
 	private void FBMessageOpenGraphDialog(JSONObject info) throws JSONException{
 		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
 		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
@@ -306,12 +304,12 @@ public class ShareFacebook implements InterfaceShare{
                         info.getString("image"), info.getString("url"),
                         info.getString("description"));
         OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
-        action.setProperty(previewProperty, obj);
         action.setType(type);
+        action.setProperty(previewProperty, obj);
         
 		FacebookDialog dialog = new FacebookDialog.OpenGraphMessageDialogBuilder(mContext, action, previewProperty)
 				.build();
-		dialog.present();
+		FacebookWrapper.track(dialog.present());
 	}
 	
 	private void FBMessagePhotoDialog(JSONObject info) throws JSONException{
@@ -326,6 +324,20 @@ public class ShareFacebook implements InterfaceShare{
 		FacebookDialog dialog = new FacebookDialog.PhotoMessageDialogBuilder(mContext)
 									.addPhotoFiles(Arrays.asList(file))
 									.build();
-		dialog.present();
+		FacebookWrapper.track(dialog.present());
+	}
+	
+	private class FacebookDialogCallback implements FacebookDialog.Callback{
+
+		@Override
+		public void onComplete(PendingCall arg0, Bundle arg1) {
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");			
+		}
+
+		@Override
+		public void onError(PendingCall arg0, Exception arg1, Bundle arg2) {
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "share error:" + arg1.toString());			
+		}
+		
 	}
 }

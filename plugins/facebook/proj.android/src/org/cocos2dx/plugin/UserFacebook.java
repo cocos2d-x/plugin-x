@@ -93,7 +93,6 @@ public class UserFacebook implements InterfaceUser{
 
     @Override
     public void configDeveloperInfo(Hashtable<String, String> cpInfo) {
-        // TODO Auto-generated method stub
         LogD("not supported in Facebook pluign");
     }
 
@@ -171,9 +170,9 @@ public class UserFacebook implements InterfaceUser{
         NewPermissionsRequest newPermissionsRequest = new NewPermissionsRequest(mContext, Arrays.asList(permissonArray));
         newPermissionsRequest.setCallback(statusCallback);
         if(publishPermission){
-            session.requestNewPublishPermissions(newPermissionsRequest);    
+            Session.getActiveSession().requestNewPublishPermissions(newPermissionsRequest);    
         }else{
-            session.requestNewReadPermissions(newPermissionsRequest);
+            Session.getActiveSession().requestNewReadPermissions(newPermissionsRequest);
         }
         
     }
@@ -192,7 +191,7 @@ public class UserFacebook implements InterfaceUser{
                     
                     JSONObject jsonParameters = info.getJSONObject("Param3");
                     Bundle parameter = new Bundle();
-                    Iterator it = jsonParameters.keys();
+                    Iterator<?> it = jsonParameters.keys();
                     while(it.hasNext()){
                         String key = it.next().toString();
                         String value = jsonParameters.getString(key);
@@ -240,7 +239,7 @@ public class UserFacebook implements InterfaceUser{
             }
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "request success");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, session.getPermissions().toString());
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
                     isLogined = false;
