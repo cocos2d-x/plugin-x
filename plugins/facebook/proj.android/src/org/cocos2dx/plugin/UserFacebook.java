@@ -170,9 +170,9 @@ public class UserFacebook implements InterfaceUser{
         NewPermissionsRequest newPermissionsRequest = new NewPermissionsRequest(mContext, Arrays.asList(permissonArray));
         newPermissionsRequest.setCallback(statusCallback);
         if(publishPermission){
-            session.requestNewPublishPermissions(newPermissionsRequest);    
+            Session.getActiveSession().requestNewPublishPermissions(newPermissionsRequest);    
         }else{
-            session.requestNewReadPermissions(newPermissionsRequest);
+            Session.getActiveSession().requestNewReadPermissions(newPermissionsRequest);
         }
         
     }
@@ -239,7 +239,7 @@ public class UserFacebook implements InterfaceUser{
             }
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "request success");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, session.getPermissions().toString());
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
                     isLogined = false;

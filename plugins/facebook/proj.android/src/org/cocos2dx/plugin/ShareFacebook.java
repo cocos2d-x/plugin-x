@@ -213,8 +213,8 @@ public class ShareFacebook implements InterfaceShare{
                         info.getString("description"));
         OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
         action.setProperty(previewProperty, obj);
-        action.setType(type);
-        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, previewProperty)
+        //action.setType(type);
+        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, type, previewProperty)
         									.build();
     	FacebookWrapper.track(shareDialog.present());
 	}
@@ -294,6 +294,8 @@ public class ShareFacebook implements InterfaceShare{
 		FacebookWrapper.track(dialog.present());
 	}
 	
+	
+
 	private void FBMessageOpenGraphDialog(JSONObject info) throws JSONException{
 		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
 		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
@@ -302,8 +304,8 @@ public class ShareFacebook implements InterfaceShare{
                         info.getString("image"), info.getString("url"),
                         info.getString("description"));
         OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
-        action.setProperty(previewProperty, obj);
         action.setType(type);
+        action.setProperty(previewProperty, obj);
         
 		FacebookDialog dialog = new FacebookDialog.OpenGraphMessageDialogBuilder(mContext, action, previewProperty)
 				.build();
