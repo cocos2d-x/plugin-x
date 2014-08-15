@@ -419,7 +419,7 @@
                  } else {
                      // User clicked the Share button
                      NSString *msg = [NSString stringWithFormat:@"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                     [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                  }
              }
          }
@@ -455,7 +455,7 @@
                  } else {
                      // User clicked the Send button
                      NSString *msg = [NSString stringWithFormat:@"Request sent, id: %@", [urlParams valueForKey:@"request"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                     [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                  }
              }
          }
