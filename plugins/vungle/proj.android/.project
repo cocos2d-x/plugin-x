@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>HelloPlugins</name>
-	<comment />
+	<name>libPluginVungle</name>
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -30,16 +30,4 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>Classes</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
-		</link>
-		<link>
-			<name>plugin-x</name>
-			<type>2</type>
-			<locationURI>PARENT-3-PROJECT_LOC/publish</locationURI>
-		</link>
-	<link><name>plugin-x</name><type>2</type><locationURI>/Users/rolando/Documents/vungle/cocos2d-x/cocos2d-x-3.3beta0/plugin-x/publish</locationURI></link></linkedResources>
 </projectDescription>

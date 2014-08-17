@@ -38,7 +38,7 @@ using namespace cocos2d::plugin;
         const char* chMsg = [msg UTF8String];
         AdsResultCode cRet = (AdsResultCode) ret;
         AdsListener* listener = adsPlugin->getAdsListener();
-         ProtocolAds::ProtocolAdsCallback callback = adsPlugin->getCallback();
+		ProtocolAds::ProtocolAdsCallback callback = adsPlugin->getCallback();
         if (listener)
         {
             listener->onAdsResult(cRet, chMsg);
