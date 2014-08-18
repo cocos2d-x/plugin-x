@@ -53,3 +53,30 @@ plugin.ProtocolUser.UserActionResultCode.LoginSucceed = 0;
 plugin.ProtocolUser.UserActionResultCode.LoginFailed = 1;
 plugin.ProtocolUser.UserActionResultCode.LogoutSucceed = 2;
 
+plugin.FacebookAgent.HttpMethod = {};
+plugin.FacebookAgent.HttpMethod.Get = 0;
+plugin.FacebookAgent.HttpMethod.Post = 1;
+plugin.FacebookAgent.HttpMethod.Delete = 2;
+
+plugin.FacebookAgent.CodeSucceed = 0;
+
+plugin.FacebookAgent.prototype.logout = function(callback){
+    this._logout();
+    callback(2, "FacebookAgent: User logout succeed");
+};
+
+plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
+    if(this._isLoggedIn())
+        callback(0, "FacebookAgent: User logged in");
+    else
+        callback(1, "FacebookAgent: User logged out")
+};
+
+plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
+    var at = this.getAccessToken();
+    callback( at ? plugin.FacebookAgent.CodeSucceed : -1, at);
+};
+
+plugin.FacebookAgent.prototype.getSDKVersion = function(){
+    return "Facebook SDK for Cocos2d-JS 1.0 alpha";
+}
