@@ -59,7 +59,7 @@ AgentManager* AgentManager::getInstance()
 	if(nullptr == s_AgentManager)
 	{
 		s_AgentManager = new (std::nothrow) AgentManager();
-		s_AgentManager->init();
+		//s_AgentManager->init();
 	}
 	return s_AgentManager;
 }
@@ -73,9 +73,14 @@ void AgentManager::destroyInstance()
 	}
 }
 
-bool AgentManager::init()
+bool AgentManager::initWithConfigureFile()
 {
 	std::map<std::string, std::string> conf = getPluginConfigure();
+	return init(conf);
+}
+
+bool AgentManager::init(std::map<std::string, std::string>& conf)
+{
 	if(conf.empty())
 		return false;
 

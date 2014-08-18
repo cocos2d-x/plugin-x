@@ -1684,7 +1684,7 @@ bool js_pluginx_protocols_AgentManager_init(JSContext *cx, uint32_t argc, jsval 
 	cocos2d::plugin::AgentManager* cobj = (cocos2d::plugin::AgentManager *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_AgentManager_init : Invalid Native Object");
 	if (argc == 0) {
-		bool ret = cobj->init();
+		bool ret = cobj->initWithConfigureFile();
 		jsval jsret = JSVAL_NULL;
 		jsret = BOOLEAN_TO_JSVAL(ret);
 		JS_SET_RVAL(cx, vp, jsret);
