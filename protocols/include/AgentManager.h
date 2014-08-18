@@ -45,7 +45,8 @@ public:
 	virtual ~AgentManager();
 	static AgentManager* getInstance();
 	static void destroyInstance();
-	virtual bool init();
+	virtual bool initWithConfigureFile();
+	virtual bool init(std::map<std::string, std::string>& conf);
 	virtual void purge();
 
 	inline ProtocolUser* getUserPlugin()

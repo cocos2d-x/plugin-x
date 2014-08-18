@@ -25,6 +25,8 @@ namespace cocos2d{namespace plugin{
     FacebookAgent::FacebookAgent()
     {
         agentManager = AgentManager::getInstance();
+        std::map<std::string, std::string> facebook = {{"PluginUser", "UserFacebook"}, {"PluginShare", "ShareFacebook"}};
+        agentManager->init(facebook);
     }
     
     FacebookAgent::~FacebookAgent()
