@@ -42,7 +42,7 @@
     for (NSString *pair in pairs) {
         NSArray *kv = [pair componentsSeparatedByString:@"="];
         NSString *val =
-        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUnicodeStringEncoding];
         params[kv[0]] = val;
     }
     return params;

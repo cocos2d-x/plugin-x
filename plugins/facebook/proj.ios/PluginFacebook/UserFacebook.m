@@ -78,17 +78,17 @@ NSString *_accessToken = @"";
 }
 - (NSString *)getUserId{
     return _userId;
-    [FBRequestConnection startWithGraphPath:@"me/events?fields=cover,name,start_time"
-                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                              if (!error) {
-                                  // Sucess! Include your code to handle the results here
-                                  NSLog(@"user events: %@", result);
-                              } else {
-                                  // An error occurred, we need to handle the error
-                                  // See: https://developers.facebook.com/docs/ios/errors   
-                              }
-                          }];
-    
+}
+-(void) getPermissionList{
+    if(FBSession.activeSession.state != FBSessionStateOpen && FBSession.activeSession.state != FBSessionStateOpenTokenExtended){
+        NSArray *permissionList =  [FBSession.activeSession permissions];
+        NSString *dict = [ParseUtils NSDictionaryToNSString:[NSDictionary  dictionaryWithObject:permissionList forKey:@"permissions"]];
+        [UserWrapper onPermissionListResult:self withRet:kPermissionListSuccessd withMsg:dict];
+    }else{
+        NSString *errorMsg = @"session closed please login first";
+        NSString *error = [ParseUtils  NSDictionaryToNSString:[NSDictionary dictionaryWithObject:errorMsg forKey:@"error_message"]];
+        [UserWrapper onPermissionListResult:self withRet:kPermissionListFailed withMsg:error];
+    }
 }
 -(NSString *)getAccessToken{
     return _accessToken;
@@ -115,7 +115,7 @@ NSString *_accessToken = @"";
         [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-        NSString *msg = @"loginFail Session closed";
+        NSString *msg = @"{\"error_message\":\"loginFail Session closed\"}";
         if(!_isLogin){
             [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:msg];
         }
@@ -156,11 +156,17 @@ NSString *_accessToken = @"";
                                          if (!error) {
                                              // Permission granted
                                              OUTPUT_LOG(@"new permissions %@", [FBSession.activeSession permissions]);
-                                             NSString *msg = [ParseUtils NSDictionaryToNSString:[FBSession.activeSession permissions]];
-                                             if(msg!=nil){
-                                                 [UserWrapper onPermissionsResult:self withRet:kPermissionSucceed withMsg:msg];
+                                             NSDictionary *msgDic =[NSDictionary dictionaryWithObject:[FBSession.activeSession permissions] forKey:@"permissions"];
+                                             if(msgDic!=nil){
+                                                 NSString *msg =[ParseUtils NSDictionaryToNSString:msgDic];
+                                                 if(msg!=nil){
+                                                     [UserWrapper onPermissionsResult:self withRet:kPermissionSucceed withMsg:msg];
+                                                 }else{
+                                                     msg = [ParseUtils NSDictionaryToNSString:[NSDictionary dictionaryWithObject:@"parse permission data fail" forKey:@"error_message"]];
+                                                     [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+                                                 }
                                              }else{
-                                                 msg = @"parse permission data fail";
+                                                 NSString *msg = [ParseUtils NSDictionaryToNSString:[NSDictionary dictionaryWithObject:@"parse permission data fail" forKey:@"error_message"]];
                                                  [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
                                              }
                                              // We can request the user information
@@ -168,7 +174,7 @@ NSString *_accessToken = @"";
                                              // An error occurred, we need to handle the error
                                              // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
                                              NSString *msg = error.description;
-                                             [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+                                             [UserWrapper onPermissionsResult:self withRet:(int)error.code withMsg:msg];
                                              OUTPUT_LOG(@"error %@", msg);
                                          }
                                      }];
@@ -187,14 +193,14 @@ NSString *_accessToken = @"";
                                   OUTPUT_LOG(@"success");
                                   NSString *msg = [ParseUtils NSDictionaryToNSString:(NSDictionary *)result];
                                   if(nil == msg){
-                                      msg = @"parse fail";
+                                       NSString *msg = [ParseUtils NSDictionaryToNSString:[NSDictionary dictionaryWithObject:@"parse result failed" forKey:@"error_message"]];
                                       [UserWrapper onGraphResult:self withRet:kGraphResultFail withMsg:msg withCallback:cbId];
                                   }else{
                                       [UserWrapper onGraphResult:self withRet:kGraphResultSuccess withMsg:msg withCallback:cbId];
                                   }
                               }else{
                                   NSString *msg = error.description;
-                                  [UserWrapper onGraphResult:self withRet:kGraphResultFail withMsg:msg withCallback:cbId];
+                                  [UserWrapper onGraphResult:self withRet:(int)error.code withMsg:msg withCallback:cbId];
                                   OUTPUT_LOG(@"error %@", error.description);
                               }
                               
