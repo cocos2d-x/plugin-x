@@ -51,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.cocos2dx.lib.Cocos2dxHelper;
 import org.cocos2dx.plugin.util.IabHelper;
 import org.cocos2dx.plugin.util.IabResult;
 import org.cocos2dx.plugin.util.Inventory;
@@ -68,6 +69,9 @@ public class IAPGooglePlay implements InterfaceIAP, OnActivityResultListener {
     // The helper object
     IabHelper mHelper;
 
+    static boolean bDebug = false;
+    Context mContext;
+    static InterfaceIAP mAdapter;
 
     protected static void LogE(String msg, Exception e) {
         Log.e(TAG, msg, e);
@@ -183,7 +187,7 @@ public class IAPGooglePlay implements InterfaceIAP, OnActivityResultListener {
 
         //must add to the cocos listener que
         //look at usage.txt if this line fails
-        Cocos2dxActivity.addOnActivityResultListener(this);
+        Cocos2dxHelper.addOnActivityResultListener(this);
         
 
         // Start setup. This is asynchronous and the specified listener
@@ -218,7 +222,7 @@ public class IAPGooglePlay implements InterfaceIAP, OnActivityResultListener {
 
             // Is it a failure?
             if (result.isFailure()) {
-                complain("Failed to query inventory: " + result);
+                Log.e(TAG, "Failed to query inventory: " + result);
                 return;
             }
 
