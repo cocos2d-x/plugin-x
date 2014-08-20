@@ -25,6 +25,7 @@ package org.cocos2dx.plugin;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -81,8 +82,10 @@ public class PluginWrapper {
     }
     
     public static void onDestroy() {
-    	for (PluginListener listener : sListeners) {
-    		listener.onDestroy();
+    	Iterator<PluginListener> i = sListeners.iterator();
+    	while(i.hasNext()){
+    		PluginListener p = i.next();
+    		p.onDestroy();
     	}
     }
 
