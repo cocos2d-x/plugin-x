@@ -27,6 +27,8 @@ package org.cocos2dx.plugin;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.cocos2dx.plugin.InterfaceShare;
 import org.json.JSONException;
@@ -245,7 +247,31 @@ public class ShareFacebook implements InterfaceShare{
 	
 										@Override
 										public void onComplete(Bundle arg0,	FacebookException arg1) {
-											ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");
+											if(null != arg1){
+												StringBuffer buffer = new StringBuffer();
+												buffer.append("{\"error_message\":\"")
+													.append(arg1.getMessage())
+													.append("\"}");
+												
+												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, buffer.toString());
+											}else{
+												StringBuffer buffer = new StringBuffer();
+												buffer.append("{\"request\":");
+												buffer.append(arg0.get("request"));
+												buffer.append(", \"to\":[");
+												
+												Set<String> keys = arg0.keySet();
+												Iterator<String> it = keys.iterator();
+												while(it.hasNext()){
+													String key = it.next();
+													if(!"request".equals(key)){
+														buffer.append(arg0.getString(it.next()));
+														buffer.append(",");
+													}
+												}
+												buffer.append("]}");
+												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, buffer.toString());
+											}
 										}
 									})
 									.build();
@@ -331,12 +357,12 @@ public class ShareFacebook implements InterfaceShare{
 
 		@Override
 		public void onComplete(PendingCall arg0, Bundle arg1) {
-			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");			
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "{\"didComplete\":true}");			
 		}
 
 		@Override
 		public void onError(PendingCall arg0, Exception arg1, Bundle arg2) {
-			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "share error:" + arg1.toString());			
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "{ \"error_message\" : \"" + arg1.getMessage() + "\"}");			
 		}
 		
 	}

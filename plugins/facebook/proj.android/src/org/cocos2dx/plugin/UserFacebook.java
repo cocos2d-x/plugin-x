@@ -54,7 +54,7 @@ public class UserFacebook implements InterfaceUser{
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private static Activity mContext = null;
     private static InterfaceUser mAdapter = null;
-    public static Session session = null;
+    private static Session session = null;
     private static boolean bDebug = true;
     private static boolean isLogined = false;
     private final static String LOG_TAG = "UserFacebook";
@@ -155,6 +155,14 @@ public class UserFacebook implements InterfaceUser{
         return Session.getActiveSession().getAccessToken();
     }
     
+    public String getPermissionList(){
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("{\"permissions\":")
+		    	.append(Session.getActiveSession().getPermissions().toString())
+		    	.append("}");
+    	return buffer.toString();
+    }
+    
     public void requestPermissions(String permissions){
         
         String[] permissonArray = permissions.split(",");
@@ -231,22 +239,41 @@ public class UserFacebook implements InterfaceUser{
             if(false == isLogined){
                 if(SessionState.OPENED == state){
                     isLogined = true;
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");  
-                }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "login failed");
+                    
+                    StringBuffer successMessage = new StringBuffer();
+                    successMessage.append("{\"accessToken\":\"")
+				                    .append(session.getAccessToken())
+				                    .append("\"}");
+                    
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, successMessage.toString());  
+                }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){                 
+                	UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "login failed"));
                 }
                               
             }
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, session.getPermissions().toString());
+                	StringBuffer permissionBuffer = new StringBuffer();
+                	permissionBuffer.append("{\"permissions\":")
+				                	.append(session.getPermissions().toString())
+				                	.append("}");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, permissionBuffer.toString());
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
                     isLogined = false;
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "request failed");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "failed"));
                 }                   
             }
         }
+    }
+    
+    private String getErrorMessage(Exception exception, String message){
+    	StringBuffer errorMessage = new StringBuffer();
+    	errorMessage.append("{\"error_message\":\"")
+			    	.append(null == exception ? message : exception.getMessage())
+			    	.append("\"}");
+    	
+    	return errorMessage.toString();
     }
         
     private native void nativeRequestCallback(int ret, String msg,int cbIndex);
