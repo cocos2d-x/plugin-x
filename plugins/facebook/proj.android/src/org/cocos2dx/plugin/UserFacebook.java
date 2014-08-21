@@ -157,9 +157,18 @@ public class UserFacebook implements InterfaceUser{
     
     public String getPermissionList(){
     	StringBuffer buffer = new StringBuffer();
-    	buffer.append("{\"permissions\":")
-		    	.append(Session.getActiveSession().getPermissions().toString())
-		    	.append("}");
+    	buffer.append("{\"permissions\":[");
+		List<String> list = Session.getActiveSession().getPermissions();
+		for(int i = 0; i < list.size(); ++i){
+			buffer.append("\"")
+					.append(list.get(i))
+					.append("\"");
+			if(i != list.size() - 1)
+				buffer.append(",");
+		}
+    	//    	.append(Session.getActiveSession().getPermissions().toString())
+		buffer.append("]}");
+    	System.out.println(buffer.toString());
     	return buffer.toString();
     }
     
@@ -215,12 +224,12 @@ public class UserFacebook implements InterfaceUser{
                             LogD(response.toString());
                             
                             FacebookRequestError error = response.getError();
-                            int resultCode = error == null? 0 : error.getErrorCode();
                             
-                            GraphObject graphObject = response.getGraphObject();
-                            JSONObject json = graphObject == null ? new JSONObject() : graphObject.getInnerJSONObject();
-                            
-                            nativeRequestCallback(resultCode, json.toString(), nativeCallback);
+                            if(error == null){
+                            	nativeRequestCallback(0, response.getGraphObject().getInnerJSONObject().toString(), nativeCallback);
+                            }else{
+                            	nativeRequestCallback(error.getErrorCode(), "{\"error_message\":\""+error.getErrorMessage()+"\"}", nativeCallback);
+                            }
                         }
                     });
                     request.executeAsync();
@@ -254,9 +263,16 @@ public class UserFacebook implements InterfaceUser{
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
                 	StringBuffer permissionBuffer = new StringBuffer();
-                	permissionBuffer.append("{\"permissions\":")
-				                	.append(session.getPermissions().toString())
-				                	.append("}");
+                	permissionBuffer.append("{\"permissions\":[");
+                	List<String> list = session.getActiveSession().getPermissions();
+            		for(int i = 0; i < list.size(); ++i){
+            			permissionBuffer.append("\"")
+            					.append(list.get(i))
+            					.append("\"");
+            			if(i != list.size() - 1)
+            				permissionBuffer.append(",");
+            		}
+				    permissionBuffer.append("]}");
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, permissionBuffer.toString());
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){

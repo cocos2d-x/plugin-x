@@ -256,20 +256,25 @@ public class ShareFacebook implements InterfaceShare{
 												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, buffer.toString());
 											}else{
 												StringBuffer buffer = new StringBuffer();
-												buffer.append("{\"request\":");
-												buffer.append(arg0.get("request"));
-												buffer.append(", \"to\":[");
+												buffer.append("{\"request\":\"");
+												buffer.append(arg0.getString("request"));
+												buffer.append("\", \"to\":[");
 												
 												Set<String> keys = arg0.keySet();
 												Iterator<String> it = keys.iterator();
 												while(it.hasNext()){
 													String key = it.next();
 													if(!"request".equals(key)){
+														
+														buffer.append("\"");
 														buffer.append(arg0.getString(it.next()));
-														buffer.append(",");
+														buffer.append("\",");
 													}
 												}
+												//remove the last ,
+												buffer.deleteCharAt(buffer.length() - 1);
 												buffer.append("]}");
+												
 												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, buffer.toString());
 											}
 										}

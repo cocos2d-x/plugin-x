@@ -80,6 +80,18 @@ plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
     callback( at ? plugin.FacebookAgent.CodeSucceed : -1, {"accessToken" : at});
 };
 
+plugin.FacebookAgent.prototype._request = plugin.FacebookAgent.prototype.request;
+plugin.FacebookAgent.prototype.request = function(path, HttpMethod, params, callback){
+    if(callback == undefined){
+       callback = params;
+       params = {}; 
+    }
+
+    this._request(path, HttpMethod, params, function(code, msg){
+        callback(code, JSON.parse(msg));
+    });
+}
+
 plugin.FacebookAgent.prototype.getSDKVersion = function(){
     return "Facebook SDK for Cocos2d-JS 1.0 alpha";
 }
