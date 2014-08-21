@@ -85,6 +85,11 @@ bool FacebookAgent::isLoggedIn()
 	return agentManager->getUserPlugin()->isLoggedIn();
 }
 
+std::string FacebookAgent::getPermissionList()
+{
+    return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
+}
+    
 void FacebookAgent::requestPermissions(std::string permissions, FBCallback cb)
 {
 	auto userPlugin = agentManager->getUserPlugin();
