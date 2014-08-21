@@ -42,6 +42,7 @@ public:
     	eNoneMode = 0,
     	eAlipay,
     	eND91,
+    	eGoogle,
     } MyPayMode;
 
 	void unloadIAPPlugin();
@@ -56,6 +57,7 @@ private:
 
     cocos2d::plugin::ProtocolIAP* s_pAlipay;
     cocos2d::plugin::ProtocolIAP* s_pNd91;
+    cocos2d::plugin::ProtocolIAP* s_pGoogle;
     MyPurchaseResult* s_pRetListener;
 };
 
