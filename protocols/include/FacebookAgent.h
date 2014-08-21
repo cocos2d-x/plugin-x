@@ -80,6 +80,7 @@ public:
      @brief get AccessToken
      */
 	std::string getAccessToken();
+    std::string getPermissionList();
 
 	/**
      @brief share

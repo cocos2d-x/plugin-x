@@ -89,7 +89,7 @@ public:
              else return value is empty string.
      */
     std::string getSessionID();
-    std::string getPermissionList(ProtocolUserCallback &cb);
+    
     /**
      @brief get Access Token
      */

@@ -87,10 +87,5 @@ std::string ProtocolUser::getSessionID()
 {
     return PluginUtilsIOS::callOCStringFunctionWithName(this, "getSessionID");
 }
-std::string ProtocolUser::getPermissionList(ProtocolUserCallback &cb)
-{
-    _callback = cb;
-    PluginUtilsIOS::callOCFunctionWithName(this, "getPermissionList");
-}
 
 }} // namespace cocos2d { namespace plugin {
