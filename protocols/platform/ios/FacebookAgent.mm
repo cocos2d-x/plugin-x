@@ -67,7 +67,7 @@ namespace cocos2d{namespace plugin{
     }
     std::string FacebookAgent::getPermissionList()
     {
-        return agentManager->getUserPlugin()->callStringFuncWithParam("requestPermissions", NULL);
+        return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
     }
     void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
     {

@@ -41,7 +41,7 @@
 - (NSString*) getPluginVersion;
 - (NSString *)getUserId;
 - (NSString *)getAccessToken;
--(void) getPermissionList;
+-(NSString *) getPermissionList;
 -(void)requestPermissions:(NSString *)permission;
 -(void)request:(NSDictionary *)params;
 @end

@@ -88,7 +88,6 @@ public:
      @param cb callback of share
      */
 	void share(FBInfo &info, FBCallback cb);
-    void getPermissionList(FBCallback cb);
 	/**
      @brief open a dialog of Facebook app
      @param info share information
