@@ -67,17 +67,17 @@ plugin.FacebookAgent.prototype.logout = function(callback){
 
 plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
     if(this._isLoggedIn())
-        callback(0, "FacebookAgent: User logged in");
+        callback(0, {"isLoggedIn" : true, "accessToken": this.getAccessToken()});
     else
-        callback(1, "FacebookAgent: User logged out")
+        callback(1, {"error_message" : "FacebookAgent: User logged out"})
 };
 plugin.FacebookAgent.prototype.getPermissionList = function(callback){
     var list = this._getPermissionList();
-    callback( list ? plugin.FacebookAgent.CodeSucceed : -1, list);
+    callback( list ? plugin.FacebookAgent.CodeSucceed : -1, JSON.parse(list));
 };
 plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
     var at = this.getAccessToken();
-    callback( at ? plugin.FacebookAgent.CodeSucceed : -1, at);
+    callback( at ? plugin.FacebookAgent.CodeSucceed : -1, {"accessToken" : at});
 };
 
 plugin.FacebookAgent.prototype.getSDKVersion = function(){
