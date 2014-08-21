@@ -91,7 +91,7 @@ NSString *_accessToken = @"";
     return msg;
 }
 -(NSString *)getAccessToken{
-    return _accessToken;
+    return [ParseUtils MakeJsonStringWithObject:_accessToken andKey:@"acessToken"];
 }
 - (NSString*) getSessionID{
     return @"";
