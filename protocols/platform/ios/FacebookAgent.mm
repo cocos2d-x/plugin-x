@@ -65,7 +65,10 @@ namespace cocos2d{namespace plugin{
     {
         agentManager->getSharePlugin()->share(info, cb);
     }
-    
+    void FacebookAgent::getPermissionList(FBCallback cb)
+    {
+        agentManager->getUserPlugin()->getPermissionList(cb);
+    }
     void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
     {
         auto sharePlugin = agentManager->getSharePlugin();

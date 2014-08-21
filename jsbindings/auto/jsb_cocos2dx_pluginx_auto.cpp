@@ -2056,6 +2056,44 @@ bool js_pluginx_protocols_FacebookAgent_share(JSContext *cx, uint32_t argc, jsva
 	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_share : wrong number of arguments");
 	return false;
 }
+bool js_pluginx_protocols_FacebookAgent_getPermissionList(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_getPermissionList : Invalid Native Object");
+    
+	do {
+		if (argc == 1) {
+			std::function<void (int, std::string&)> arg0;
+			do {
+				std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+				auto lambda = [=](int larg0, std::string& larg1) -> void {
+					JSAutoCompartment ac(cx, obj);
+					jsval largv[2];
+					largv[0] = int32_to_jsval(cx, larg0);
+					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval rval;
+					bool succeed = func->invoke(2, &largv[0], rval);
+					if (!succeed && JS_IsExceptionPending(cx)) {
+						JS_ReportPendingException(cx);
+					}
+				};
+				arg0 = lambda;
+			} while(0);
+            
+			if (!ok) { ok = true; break; }
+			cobj->getPermissionList(arg0);
+			JS_SET_RVAL(cx, vp, JSVAL_VOID);
+			return true;
+		}
+	} while(0);
+    
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getPermissionList : wrong number of arguments");
+	return false;
+}
 
 bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -2226,6 +2264,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPermissionList", js_pluginx_protocols_FacebookAgent_getPermissionList, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("request", js_pluginx_protocols_FacebookAgent_request, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

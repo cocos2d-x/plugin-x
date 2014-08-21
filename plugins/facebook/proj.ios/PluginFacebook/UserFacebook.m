@@ -82,12 +82,12 @@ NSString *_accessToken = @"";
 
 -(void) getPermissionList{
     if(FBSession.activeSession.state != FBSessionStateOpen && FBSession.activeSession.state != FBSessionStateOpenTokenExtended){
+        NSString *errorMsg =[ParseUtils MakeJsonStringWithObject:@"session closed please login first" andKey:@"error_message"];
+        [UserWrapper onPermissionListResult:self withRet:kPermissionListFailed withMsg:errorMsg];
+    }else{
         NSArray *permissionList =  [FBSession.activeSession permissions];
         NSString *dict = [ParseUtils MakeJsonStringWithObject:permissionList andKey:@"permissions"];
         [UserWrapper onPermissionListResult:self withRet:kPermissionListSuccessd withMsg:dict];
-    }else{
-        NSString *errorMsg =[ParseUtils MakeJsonStringWithObject:@"session closed please login first" andKey:@"error_message"];
-        [UserWrapper onPermissionListResult:self withRet:kPermissionListFailed withMsg:errorMsg];
     }
 }
 -(NSString *)getAccessToken{
