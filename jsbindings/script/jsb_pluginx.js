@@ -58,6 +58,39 @@ plugin.FacebookAgent.HttpMethod.Get = 0;
 plugin.FacebookAgent.HttpMethod.Post = 1;
 plugin.FacebookAgent.HttpMethod.Delete = 2;
 
+plugin.FacebookAgent.AppEvent = {};
+plugin.FacebookAgent.AppEvent.ACTIVATED_APP = "fb_mobile_activate_app";
+plugin.FacebookAgent.AppEvent.COMPLETED_REGISTRATION = "fb_mobile_complete_registration";
+plugin.FacebookAgent.AppEvent.VIEWED_CONTENT = "fb_mobile_content_view";
+plugin.FacebookAgent.AppEvent.SEARCHED = "fb_mobile_search";
+plugin.FacebookAgent.AppEvent.RATED = "fb_mobile_rate";
+plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL = "fb_mobile_tutorial_completion";
+plugin.FacebookAgent.AppEvent.ADDED_TO_CART = "fb_mobile_add_to_cart";
+plugin.FacebookAgent.AppEvent.ADDED_TO_WISHLIST = "fb_mobile_add_to_wishlist";
+plugin.FacebookAgent.AppEvent.INITIATED_CHECKOUT = "fb_mobile_initiated_checkout";
+plugin.FacebookAgent.AppEvent.ADDED_PAYMENT_INFO = "fb_mobile_add_payment_info";
+plugin.FacebookAgent.AppEvent.PURCHASED = "fb_mobile_purchase";
+plugin.FacebookAgent.AppEvent.ACHIEVED_LEVEL = "fb_mobile_level_achieved";
+plugin.FacebookAgent.AppEvent.UNLOCKED_ACHIEVEMENT = "fb_mobile_achievement_unlocked";
+plugin.FacebookAgent.AppEvent.SPENT_CREDITS = "fb_mobile_spent_credits";
+
+plugin.FacebookAgent.AppEventParam = {};
+plugin.FacebookAgent.AppEventParam.CURRENCY = "fb_currency";
+plugin.FacebookAgent.AppEventParam.REGISTRATION_METHOD = "fb_registration_method";
+plugin.FacebookAgent.AppEventParam.CONTENT_TYPE = "fb_content_type";
+plugin.FacebookAgent.AppEventParam.CONTENT_ID = "fb_content_id";
+plugin.FacebookAgent.AppEventParam.SEARCH_STRING = "fb_search_string";
+plugin.FacebookAgent.AppEventParam.SUCCESS = "fb_success";
+plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE = "fb_max_rating_value";
+plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE = "fb_payment_info_available";
+plugin.FacebookAgent.AppEventParam.NUM_ITEMS = "fb_num_items";
+plugin.FacebookAgent.AppEventParam.DESCRIPTION = "fb_description";
+plugin.FacebookAgent.AppEventParam.VALUE_YES = "1";
+
+plugin.FacebookAgent.AppEventParamValue = {};
+plugin.FacebookAgent.AppEventParamValue.VALUE_YES = "1";
+plugin.FacebookAgent.AppEventParamValue.VALUE_NO = "0";
+
 plugin.FacebookAgent.CodeSucceed = 0;
 
 plugin.FacebookAgent.prototype.logout = function(callback){

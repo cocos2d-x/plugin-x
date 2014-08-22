@@ -169,7 +169,6 @@ public class UserFacebook implements InterfaceUser{
 		}
     	//    	.append(Session.getActiveSession().getPermissions().toString())
 		buffer.append("]}");
-    	System.out.println(buffer.toString());
     	return buffer.toString();
     }
     
@@ -196,7 +195,6 @@ public class UserFacebook implements InterfaceUser{
     }
     
     public void request(final JSONObject info /*String path, int method, JSONObject params, int nativeCallback*/ ){
-        System.out.println(info);
         PluginWrapper.runOnMainThread(new Runnable(){
 
             @Override
@@ -248,16 +246,13 @@ public class UserFacebook implements InterfaceUser{
     }
     
     public void logEvent(String eventName){
-    	System.out.println("param 1");
     	FacebookWrapper.getAppEventsLogger().logEvent(eventName);
     }
     
     public void logEvent(JSONObject info){
-    	System.out.println(info);
     	int length = info.length();
     	if(3 == length){
     		try {
-    			System.out.println("param 3");
     			String eventName = info.getString("Param1");
     			Double valueToSum = info.getDouble("Param2");
     			
@@ -274,7 +269,6 @@ public class UserFacebook implements InterfaceUser{
     			e.printStackTrace();
     		}
     	}else if(2 == length){
-    		System.out.println("param 2");
     		try {
     			String eventName = info.getString("Param1");
 				Double valueToSum = info.getDouble("Param2");

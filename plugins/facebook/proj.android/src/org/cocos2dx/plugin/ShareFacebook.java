@@ -223,7 +223,6 @@ public class ShareFacebook implements InterfaceShare{
 	
 	private void FBSharePhotoDialog(JSONObject info) throws JSONException{
 		String filepath = info.getString("photo");
-		System.out.println(filepath);
 		if("".equals(filepath)){
 			LogD("Must specify one photo");
 			return;
