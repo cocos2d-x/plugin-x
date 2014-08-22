@@ -117,9 +117,9 @@ public:
      @brief Log an app event with the specified name, supplied value, and set of parameters.
     */
     void logEvent(std::string& eventName);
-    void logEvent(std::string& eventName, double valueToSum);
+    void logEvent(std::string& eventName, float valueToSum);
     void logEvent(std::string& eventName, FBInfo& parameters);
-    void logEvent(std::string& eventName, double valueToSum, FBInfo& parameters);
+    void logEvent(std::string& eventName, float valueToSum, FBInfo& parameters);
 
 	
 	FBCallback getRequestCallback(int index);
