@@ -4,7 +4,8 @@ For the to compile correctly you must do the following.
 
 ## From C++
 
-1. IAP class must be called with 
+1. IAP class must be called with
+ 
  ```java
 	loadPlugin("IAPGooglePlay")
  ```
