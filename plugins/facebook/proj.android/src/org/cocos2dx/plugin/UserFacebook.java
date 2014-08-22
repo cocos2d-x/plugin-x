@@ -33,6 +33,7 @@ import java.util.Hashtable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.AppEventsLogger;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
@@ -54,7 +55,7 @@ public class UserFacebook implements InterfaceUser{
     private Session.StatusCallback statusCallback = new SessionStatusCallback();
     private static Activity mContext = null;
     private static InterfaceUser mAdapter = null;
-    public static Session session = null;
+    private static Session session = null;
     private static boolean bDebug = true;
     private static boolean isLogined = false;
     private final static String LOG_TAG = "UserFacebook";
@@ -155,6 +156,22 @@ public class UserFacebook implements InterfaceUser{
         return Session.getActiveSession().getAccessToken();
     }
     
+    public String getPermissionList(){
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("{\"permissions\":[");
+		List<String> list = Session.getActiveSession().getPermissions();
+		for(int i = 0; i < list.size(); ++i){
+			buffer.append("\"")
+					.append(list.get(i))
+					.append("\"");
+			if(i != list.size() - 1)
+				buffer.append(",");
+		}
+    	//    	.append(Session.getActiveSession().getPermissions().toString())
+		buffer.append("]}");
+    	return buffer.toString();
+    }
+    
     public void requestPermissions(String permissions){
         
         String[] permissonArray = permissions.split(",");
@@ -178,7 +195,6 @@ public class UserFacebook implements InterfaceUser{
     }
     
     public void request(final JSONObject info /*String path, int method, JSONObject params, int nativeCallback*/ ){
-        System.out.println(info);
         PluginWrapper.runOnMainThread(new Runnable(){
 
             @Override
@@ -207,12 +223,12 @@ public class UserFacebook implements InterfaceUser{
                             LogD(response.toString());
                             
                             FacebookRequestError error = response.getError();
-                            int resultCode = error == null? 0 : error.getErrorCode();
                             
-                            GraphObject graphObject = response.getGraphObject();
-                            JSONObject json = graphObject == null ? new JSONObject() : graphObject.getInnerJSONObject();
-                            
-                            nativeRequestCallback(resultCode, json.toString(), nativeCallback);
+                            if(error == null){
+                            	nativeRequestCallback(0, response.getGraphObject().getInnerJSONObject().toString(), nativeCallback);
+                            }else{
+                            	nativeRequestCallback(error.getErrorCode(), "{\"error_message\":\""+error.getErrorMessage()+"\"}", nativeCallback);
+                            }
                         }
                     });
                     request.executeAsync();
@@ -224,6 +240,57 @@ public class UserFacebook implements InterfaceUser{
         });
                 
     }
+    
+    public void publishInstall(){
+    	AppEventsLogger.activateApp(mContext);
+    }
+    
+    public void logEvent(String eventName){
+    	FacebookWrapper.getAppEventsLogger().logEvent(eventName);
+    }
+    
+    public void logEvent(JSONObject info){
+    	int length = info.length();
+    	if(3 == length){
+    		try {
+    			String eventName = info.getString("Param1");
+    			Double valueToSum = info.getDouble("Param2");
+    			
+    			JSONObject params = info.getJSONObject("Param3");
+    			Iterator<?> keys = params.keys();
+    			Bundle bundle = new Bundle();
+    			while(keys.hasNext()){
+    				String key = keys.next().toString();
+    				bundle.putString(key, params.getString(key));
+    			}
+    			
+    			FacebookWrapper.getAppEventsLogger().logEvent(eventName, valueToSum, bundle);
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	}else if(2 == length){
+    		try {
+    			String eventName = info.getString("Param1");
+				Double valueToSum = info.getDouble("Param2");
+				FacebookWrapper.getAppEventsLogger().logEvent(eventName, valueToSum);
+			} catch (JSONException e) {
+				try {
+					String eventName = info.getString("Param1");
+					JSONObject params = info.getJSONObject("Param2");
+	    			Iterator<?> keys = params.keys();
+	    			Bundle bundle = new Bundle();
+	    			while(keys.hasNext()){
+	    				String key = keys.next().toString();
+	    				bundle.putString(key, params.getString(key));
+	    			}
+	    			FacebookWrapper.getAppEventsLogger().logEvent(eventName, bundle);
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+			}
+    	}
+    	
+    }
         
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
@@ -231,22 +298,48 @@ public class UserFacebook implements InterfaceUser{
             if(false == isLogined){
                 if(SessionState.OPENED == state){
                     isLogined = true;
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, "login success");  
-                }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "login failed");
+                    
+                    StringBuffer successMessage = new StringBuffer();
+                    successMessage.append("{\"accessToken\":\"")
+				                    .append(session.getAccessToken())
+				                    .append("\"}");
+                    
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, successMessage.toString());  
+                }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){                 
+                	UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "login failed"));
                 }
                               
             }
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, session.getPermissions().toString());
+                	StringBuffer permissionBuffer = new StringBuffer();
+                	permissionBuffer.append("{\"permissions\":[");
+                	List<String> list = session.getActiveSession().getPermissions();
+            		for(int i = 0; i < list.size(); ++i){
+            			permissionBuffer.append("\"")
+            					.append(list.get(i))
+            					.append("\"");
+            			if(i != list.size() - 1)
+            				permissionBuffer.append(",");
+            		}
+				    permissionBuffer.append("]}");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, permissionBuffer.toString());
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
                     isLogined = false;
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, "request failed");
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "failed"));
                 }                   
             }
         }
+    }
+    
+    private String getErrorMessage(Exception exception, String message){
+    	StringBuffer errorMessage = new StringBuffer();
+    	errorMessage.append("{\"error_message\":\"")
+			    	.append(null == exception ? message : exception.getMessage())
+			    	.append("\"}");
+    	
+    	return errorMessage.toString();
     }
         
     private native void nativeRequestCallback(int ret, String msg,int cbIndex);

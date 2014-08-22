@@ -1892,7 +1892,11 @@ bool js_pluginx_protocols_FacebookAgent_login(JSContext *cx, uint32_t argc, jsva
 					JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
-					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval temp = std_string_to_jsval(cx, larg1);
+					JS::RootedValue outVal(cx);
+					JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+					largv[1] = outVal.get();
+					
 					jsval rval;
 					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
@@ -1973,7 +1977,11 @@ bool js_pluginx_protocols_FacebookAgent_requestPermissions(JSContext *cx, uint32
 					JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
-					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval temp = std_string_to_jsval(cx, larg1);
+					JS::RootedValue outVal(cx);
+					JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+					largv[1] = outVal.get();
+					
 					jsval rval;
 					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
@@ -2036,7 +2044,11 @@ bool js_pluginx_protocols_FacebookAgent_share(JSContext *cx, uint32_t argc, jsva
 					JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
-					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval temp = std_string_to_jsval(cx, larg1);
+					JS::RootedValue outVal(cx);
+					JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+					largv[1] = outVal.get();
+					
 					jsval rval;
 					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
@@ -2097,7 +2109,11 @@ bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsv
 					JSAutoCompartment ac(cx, obj);
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
-					largv[1] = std_string_to_jsval(cx, larg1);
+					jsval temp = std_string_to_jsval(cx, larg1);
+					JS::RootedValue outVal(cx);
+					JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+					largv[1] = outVal.get();
+					
 					jsval rval;
 					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
@@ -2148,6 +2164,7 @@ bool js_pluginx_protocols_FacebookAgent_request(JSContext *cx, uint32_t argc, js
 					jsval largv[2];
 					largv[0] = int32_to_jsval(cx, larg0);
 					largv[1] = std_string_to_jsval(cx, larg1);
+
 					jsval rval;
 					bool succeed = func->invoke(2, &largv[0], rval);
 					if (!succeed && JS_IsExceptionPending(cx)) {
@@ -2216,6 +2233,82 @@ void js_pluginx_protocols_FacebookAgent_finalize(JSFreeOp *fop, JSObject *obj) {
     }
 }
 
+bool js_pluginx_protocols_FacebookAgent_publishInstall(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_publishInstall : Invalid Native Object");
+	if (argc == 0) {
+		cobj->publishInstall();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_publishInstall : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	jsval *argv = JS_ARGV(cx, vp);
+	bool ok = true;
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_logEvent : Invalid Native Object");
+	if (argc == 1) {
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_logEvent : Error processing arguments");
+		cobj->logEvent(arg0);
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+	else if(argc == 3){
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		double arg1;
+		ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+		std::map<std::string, std::string> arg2;
+		ok &= pluginx::jsval_to_FBInfo(cx, argv[2], &arg2);
+		JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_logEvent : Error processing arguments");
+		cobj->logEvent(arg0, arg1, arg2);
+		return true;
+	}else if(argc == 2){
+		std::string arg0;
+		ok &= jsval_to_std_string(cx, argv[0], &arg0);
+		if(JSVAL_IS_NUMBER(argv[1])){
+			do{
+				double arg1;
+				ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[1]), &arg1);
+				if(!ok){			
+					ok = true;
+					break;
+				}
+				cobj->logEvent(arg0, arg1);
+				return true;
+			}while(0);	
+		}
+		else{
+			do{
+				std::map<std::string, std::string> arg1;
+				ok &= pluginx::jsval_to_FBInfo(cx, argv[1], &arg1);
+				if(!ok){
+					ok = true;
+					break;
+				}
+				cobj->logEvent(arg0, arg1);
+				return true;
+			}while(0);
+		}
+		
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logEvent : wrong number of arguments");
+	return false;
+}
+
 void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global)
 {
 	jsb_cocos2d_plugin_FacebookAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -2245,6 +2338,8 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("_getPermissionList", js_pluginx_protocols_FacebookAgent_getPermissionList, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("request", js_pluginx_protocols_FacebookAgent_request, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("publishInstall", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("logEvent", js_pluginx_protocols_FacebookAgent_logEvent, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
