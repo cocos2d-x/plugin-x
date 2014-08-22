@@ -106,7 +106,22 @@ public:
      @param params request parameters
      @param cb callback of request
      */
-	void request(std::string &path, int method, FBInfo &params, FBCallback cb);
+    void request(std::string &path, int method, FBInfo &params, FBCallback cb);
+
+    /**
+     @brief Notifies the events system that the app has launched & logs an activatedApp event. 
+    */
+    void publishInstall();
+
+    /**
+     @brief Log an app event with the specified name, supplied value, and set of parameters.
+    */
+    void logEvent(std::string& eventName);
+    void logEvent(std::string& eventName, double valueToSum);
+    void logEvent(std::string& eventName, FBInfo& parameters);
+    void logEvent(std::string& eventName, double valueToSum, FBInfo& parameters);
+
+	
 	FBCallback getRequestCallback(int index);
 private:
 	FacebookAgent();

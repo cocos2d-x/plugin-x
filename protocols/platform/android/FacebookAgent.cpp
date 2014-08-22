@@ -132,4 +132,9 @@ FacebookAgent::FBCallback FacebookAgent::getRequestCallback(int index)
 {
 	return requestCallbacks[index];
 }
+
+void FacebookAgent::publishInstall()
+{
+	agentManager->getUserPlugin()->callFuncWithParam("publishInstall", NULL);
+}
 }}

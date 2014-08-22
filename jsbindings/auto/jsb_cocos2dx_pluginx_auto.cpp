@@ -2233,6 +2233,28 @@ void js_pluginx_protocols_FacebookAgent_finalize(JSFreeOp *fop, JSObject *obj) {
     }
 }
 
+bool js_pluginx_protocols_FacebookAgent_publishInstall(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_publishInstall : Invalid Native Object");
+	if (argc == 0) {
+		cobj->publishInstall();
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return true;
+	}
+
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_publishInstall : wrong number of arguments: %d, was expecting %d", argc, 0);
+	return false;
+}
+
+bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_publishInstall : wrong number of arguments");
+	return false;
+}
+
 void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global)
 {
 	jsb_cocos2d_plugin_FacebookAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -2262,6 +2284,8 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("_getPermissionList", js_pluginx_protocols_FacebookAgent_getPermissionList, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("request", js_pluginx_protocols_FacebookAgent_request, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("publishInstall", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("logEvent", js_pluginx_protocols_FacebookAgent_logEvent, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
