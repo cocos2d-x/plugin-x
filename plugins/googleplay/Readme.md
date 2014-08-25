@@ -4,23 +4,24 @@ For the to compile correctly you must do the following.
 
 ## From C++
 
-1. IAP class must be called with 
-```java
+1. IAP class must be called with
+ 
+ ```java
 	loadPlugin("IAPGooglePlay")
-```
+ ```
 2. Item must be in google format like so
-```java
+ ```java
 	pInfo["IAPId"] = "com.game.example.item1" 
 
 	// pInfo is of type TProductInfo
-```
+ ```
 3. The developer info must be specific to your app like so
-```java
+ ```java
 	pPlayStoreInfo["GooglePlayAppKey"] = "Big long key from google :)"
 	s_pPlayStore->configDeveloperInfo(pPlayStoreInfo);
 
 	// s_pPlayStore is of type cocos2d::plugin::ProtocolIAP*
-```
+ ```
 
 
 ##From Java
