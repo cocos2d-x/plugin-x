@@ -38,6 +38,7 @@ obj/
 gen/
 assets/
 local.properties
+lint.xml
 
 # Ignore files built by NaCl
 samples/Cpp/HelloCpp/proj.nacl/Resources/

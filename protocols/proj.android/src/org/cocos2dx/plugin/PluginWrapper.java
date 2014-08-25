@@ -25,9 +25,13 @@ package org.cocos2dx.plugin;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -43,10 +47,10 @@ public class PluginWrapper {
     protected static GLSurfaceView sGLSurfaceView = null; 
     protected static Handler sMainThreadHandler = null;
     protected static Handler sGLThreadHandler = null;
+    protected static Set<PluginListener> sListeners = new LinkedHashSet<PluginListener>();
     private static final String TAG = "PluginWrapper";
     
-    public static void init(Context context)
-    {
+    public static void init(Context context) {
         sContext = context;
         if (null == sMainThreadHandler) {
             sMainThreadHandler = new Handler();
@@ -56,7 +60,7 @@ public class PluginWrapper {
     public static void setGLSurfaceView(GLSurfaceView value) {
         sGLSurfaceView = value;
     }
-
+    
     protected static void initFromNativeActivity(Activity act) {
         sContext = act;
         // @warning These lines will cause crash.
@@ -65,8 +69,41 @@ public class PluginWrapper {
 //        }
     }
     
-    protected static Object initPlugin(String classFullName)
-    {
+    public static void onResume() {
+    	for (PluginListener listener : sListeners) {
+    		listener.onResume();
+    	}
+    }
+    
+    public static void onPause() {
+    	for (PluginListener listener : sListeners) {
+    		listener.onPause();
+    	}
+    }
+    
+    public static void onDestroy() {
+    	Iterator<PluginListener> i = sListeners.iterator();
+    	while(i.hasNext()){
+    		PluginListener p = i.next();
+    		p.onDestroy();
+    	}
+    }
+
+    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for (PluginListener listener : sListeners) {
+            listener.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    
+    public static void addListener(PluginListener listener) {
+    	sListeners.add(listener);
+    }
+    
+    public static void removeListener(PluginListener listener) {
+    	sListeners.remove(listener);
+    }
+    
+    protected static Object initPlugin(String classFullName) {
         Log.i(TAG, "class name : ----" + classFullName + "----");
         Class<?> c = null;
         try {
