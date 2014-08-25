@@ -44,7 +44,7 @@ typedef struct tagEventMenuItem {
 static EventMenuItem s_EventMenuItem[] = {
     {"BtnAlipay.png", TAG_PAY_BY_ALIPAY},
 	{"BtnND91.png", TAG_PAY_BY_ND91},
-	{"BtnND91.png", TAG_PAY_BY_GOOGLE},
+	{"BtnGooglePlay.png", TAG_PAY_BY_GOOGLE},
 };
 
 Scene* TestIAP::scene()
