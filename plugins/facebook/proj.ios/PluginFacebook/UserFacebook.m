@@ -105,6 +105,30 @@ NSString *_accessToken = @"";
 - (NSString*) getPluginVersion{
     return @"";
 }
+-(void)publishInstall{
+    [FBAppEvents activateApp];
+}
+-(void)logEventWithName:(NSString*) eventName{
+    [FBAppEvents logEvent:eventName];
+}
+-(void)logEvent:(NSMutableDictionary*) logInfo{
+    if(logInfo.count == 2){
+        NSString *eventName = [logInfo objectForKey:@"Param1"];
+        id  param2 = [logInfo objectForKey:@"Param2"];
+        if([param2 isKindOfClass:[NSDictionary class]]){
+            NSDictionary *dic = (NSDictionary *)param2;
+            [FBAppEvents logEvent:eventName parameters:dic];
+        }else{
+            double floatval = [[logInfo objectForKey:@"Param2"] floatValue];
+            [FBAppEvents logEvent:eventName valueToSum:floatval];
+        }
+    }else if(logInfo.count == 3){
+        NSString *eventName = [logInfo objectForKey:@"Param1"];
+        double floatval = [[logInfo objectForKey:@"Param2"] floatValue];
+        NSDictionary *para = [logInfo objectForKey:@"Param3"];
+        [FBAppEvents logEvent:eventName valueToSum:floatval parameters:para];
+    }
+}
 -(void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error{
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){

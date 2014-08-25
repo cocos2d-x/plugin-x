@@ -93,4 +93,36 @@ namespace cocos2d{namespace plugin{
     {
         return requestCallbacks[index];
     }
+    void FacebookAgent::publishInstall()
+    {
+        agentManager->getUserPlugin()->callFuncWithParam("publishInstall", NULL);
+    }
+    
+    void FacebookAgent::logEvent(std::string& eventName)
+    {
+        PluginParam _eventName(eventName.c_str());
+        agentManager->getUserPlugin()->callFuncWithParam("logEventWithName", &_eventName, NULL);
+    }
+    
+    void FacebookAgent::logEvent(std::string& eventName, float valueToSum)
+    {
+        PluginParam _eventName(eventName.c_str());
+        PluginParam _valueToSum(valueToSum);
+        agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_valueToSum, NULL);
+    }
+    
+    void FacebookAgent::logEvent(std::string& eventName, FBInfo& parameters)
+    {
+        PluginParam _eventName(eventName.c_str());
+        PluginParam _params(parameters);
+        agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_params, NULL);
+    }
+    
+    void FacebookAgent::logEvent(std::string& eventName, float valueToSum, FBInfo& parameters)
+    {
+        PluginParam _eventName(eventName.c_str());
+        PluginParam _valueToSum(valueToSum);
+        PluginParam _params(parameters);
+        agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_valueToSum, &_params, NULL);
+    }
 }}

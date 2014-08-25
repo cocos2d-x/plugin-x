@@ -101,7 +101,7 @@ plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
     if(this._isLoggedIn())
         callback(0, {"isLoggedIn" : true, "accessToken": this.getAccessToken()});
     else
-        callback(1, {"error_message" : "FacebookAgent: User logged out"})
+        callback(0,  {"isLoggedIn" : false});
 };
 plugin.FacebookAgent.prototype.getPermissionList = function(callback){
     var list = this._getPermissionList();
