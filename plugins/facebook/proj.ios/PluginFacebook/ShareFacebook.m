@@ -43,7 +43,8 @@
         NSArray *kv = [pair componentsSeparatedByString:@"="];
         NSString *val =
         [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        params[kv[0]] = val;
+        NSString *key = [kv[0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[key] = val;
     }
     return params;
 }
@@ -207,8 +208,8 @@
             if ([FBDialogs canPresentShareDialogWithParams:params]) {
                 [self shareLinkDialogFB:params];
             } else {
-                // Fallback to web feed dialog
                 [self feedDialogWeb:shareInfo];
+                // Fallback to web feed dialog
             }
         }
         else if ([dialog_type isEqualToString:@"message_link"]) {
@@ -307,11 +308,21 @@
                                 clientState: nil
                                     handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                         if(error) {
-                                            NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
-                                            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                                            NSString *msg = [ParseUtils MakeJsonStringWithObject:error.description andKey:@"error_message"];
+                                            [ShareWrapper onShareResult:self withRet:(int)error.code withMsg:msg];
                                         } else {
-                                            NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-                                            [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                            if([self checkDialogResult:results]){
+                                                NSString *msg = nil;
+                                                if([results objectForKey:@"postId"]!=nil){
+                                                    NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:results];
+                                                    [mdic removeObjectForKey:@"postId"];
+                                                    [mdic setObject:[results objectForKey:@"postId"] forKey:@"post_id"];
+                                                    msg = [ParseUtils NSDictionaryToNSString:mdic];
+                                                }else{
+                                                    msg = [ParseUtils NSDictionaryToNSString: results];
+                                                }
+                                                [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                            }
                                         }
                                     }];
 }
@@ -326,8 +337,18 @@
              NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:@"Share Complete"];
+             if([self checkDialogResult:results]){
+                 NSString *msg = nil;
+                 if([results objectForKey:@"postId"]!=nil){
+                     NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:results];
+                     [mdic removeObjectForKey:@"postId"];
+                     [mdic setObject:[results objectForKey:@"postId"] forKey:@"post_id"];
+                     msg = [ParseUtils NSDictionaryToNSString:mdic];
+                 }else{
+                     msg = [ParseUtils NSDictionaryToNSString: results];
+                 }
+                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+             }
          }
      }];
 }
@@ -339,11 +360,19 @@
                                      clientState:nil
                                          handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                              if(error) {
-                                                 NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+                                                 NSString *msg = [ParseUtils MakeJsonStringWithObject:error.description andKey:@"error_message"];
                                                  [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                              } else {
-                                                 NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-                                                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                                 if([self checkDialogResult:results]){
+                                                     NSString *msg = nil;
+                                                     if([results objectForKey:@"didComplete"]){
+                                                         NSDictionary *dic = [NSDictionary  dictionaryWithObject:[results objectForKey:@"didComplete"] forKey:@"didComplete"];
+                                                         msg = [ParseUtils NSDictionaryToNSString:dic];
+                                                     }else{
+                                                         msg = [ParseUtils NSDictionaryToNSString:results];
+                                                     }
+                                                     [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                                 }
                                              }
                                          }];
 }
@@ -358,8 +387,16 @@
                                               NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                               [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                           } else {
-                                              NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-                                              [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                              if([self checkDialogResult:results]){
+                                                  NSString *msg = nil;
+                                                  if([results objectForKey:@"didComplete"]){
+                                                      NSDictionary *dic = [NSDictionary  dictionaryWithObject:[results objectForKey:@"didComplete"] forKey:@"didComplete"];
+                                                      msg = [ParseUtils NSDictionaryToNSString:dic];
+                                                  }else{
+                                                      msg = [ParseUtils NSDictionaryToNSString:results];
+                                                  }
+                                                  [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                              }
                                           }
                                       }];
 }
@@ -374,8 +411,16 @@
              NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
-             NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-             [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+             if([self checkDialogResult:results]){
+                 NSString *msg = nil;
+                 if([results objectForKey:@"didComplete"]){
+                     NSDictionary *dic = [NSDictionary  dictionaryWithObject:[results objectForKey:@"didComplete"] forKey:@"didComplete"];
+                     msg = [ParseUtils NSDictionaryToNSString:dic];
+                 }else{
+                     msg = [ParseUtils NSDictionaryToNSString:results];
+                 }
+                 [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+             }
          }
      }];
 }
@@ -390,12 +435,28 @@
                                                    NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
                                                    [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                                } else {
-                                                   NSString *msg = [ParseUtils NSDictionaryToNSString: results];
-                                                   [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                                   if([self checkDialogResult:results]){
+                                                       NSString *msg = nil;
+                                                       if([results objectForKey:@"didComplete"]){
+                                                           NSDictionary *dic = [NSDictionary  dictionaryWithObject:[results objectForKey:@"didComplete"] forKey:@"didComplete"];
+                                                           msg = [ParseUtils NSDictionaryToNSString:dic];
+                                                       }else{
+                                                           msg = [ParseUtils NSDictionaryToNSString:results];
+                                                       }
+                                                       [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                                                   }
                                                }
                                            }];
 }
-
+-(BOOL) checkDialogResult:(NSDictionary *)results{
+    if([results valueForKey:@"completionGesture"]!=nil &&![[results valueForKey:@"completionGesture"] isEqualToString:@"cancel"]){
+        return true;
+    }else{
+        NSString  *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled request" andKey:@"error_message"];
+        [ShareWrapper onShareResult:self withRet:kShareCancel withMsg:msg];
+        return false;
+    }
+}
 - (void) feedDialogWeb: (NSDictionary*) params
 {
     [FBWebDialogs
@@ -419,7 +480,7 @@
                  } else {
                      // User clicked the Share button
                      NSString *msg = [NSString stringWithFormat:@"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                     [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                  }
              }
          }
@@ -449,13 +510,29 @@
              } else {
                  // Handle the send request callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                 NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                 if([urlParams count]>0){
+                     int i = 0;
+                     NSMutableArray *resultArray = [[NSMutableArray alloc] init];
+                     while ([urlParams objectForKey:[NSString stringWithFormat:@"to[%d]",i]]!=nil) {
+                         resultArray[i] = [urlParams objectForKey:[NSString stringWithFormat:@"to[%d]",i]];
+                         ++i;
+                     }
+                     if([urlParams valueForKey:@"request"]){
+                         [dic setObject:[urlParams objectForKey:@"request"] forKey:@"request"];
+                     }
+                     if([resultArray count]>0){
+                         [dic setObject:resultArray forKey:@"to"];
+                     }
+                 }
                  if (![urlParams valueForKey:@"request"]) {
                      // User clicked the Cancel button
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request"];
+                     NSString *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled request" andKey:@"error_message"];
+                     [ShareWrapper onShareResult:self withRet:(int)error.code withMsg:msg];
                  } else {
                      // User clicked the Send button
-                     NSString *msg = [NSString stringWithFormat:@"Request sent, id: %@", [urlParams valueForKey:@"request"]];
-                     [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                     NSString *msg = [ParseUtils NSDictionaryToNSString:dic];
+                     [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                  }
              }
          }

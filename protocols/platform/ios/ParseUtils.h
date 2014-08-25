@@ -28,4 +28,5 @@
 @interface ParseUtils : NSObject
 + (id)NSStringToArrayOrNSDictionary:(NSString *)jsonData;
 + (NSString *) NSDictionaryToNSString:(id)dic;
++(NSString *)MakeJsonStringWithObject:(id) obj andKey:(NSString *)key;
 @end

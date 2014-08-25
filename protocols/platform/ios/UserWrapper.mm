@@ -61,7 +61,7 @@ using namespace cocos2d::plugin;
         PluginUtilsIOS::outputLog("an't find the C++ object of the requestCallback");
     }
 }
-+ (void) onPermissionsResult:(id)obj withRet:(UserPermissionResult)ret withMsg:(NSString *)msg{
++ (void) onPermissionsResult:(id)obj withRet:(int)ret withMsg:(NSString *)msg{
     PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
     ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
     if (pUser) {
@@ -69,7 +69,23 @@ using namespace cocos2d::plugin;
         const char* chMsg = [msg UTF8String];
         if(callback){
             std::string stdmsg(chMsg);
-            callback((UserPermissionResult) ret, stdmsg);
+            callback(ret, stdmsg);
+        }else{
+            PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Can't find the C++ object of the User plugin");
+    }
+}
++ (void)onPermissionListResult:(id)obj withRet:(PermissionListResult )ret withMsg:(NSString *)msg{
+    PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
+    ProtocolUser* pUser = dynamic_cast<ProtocolUser*>(pPlugin);
+    if (pUser) {
+        ProtocolUser::ProtocolUserCallback callback = pUser->getCallback();
+        const char* chMsg = [msg UTF8String];
+        if(callback){
+            std::string stdmsg(chMsg);
+            callback(ret, stdmsg);
         }else{
             PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
         }
