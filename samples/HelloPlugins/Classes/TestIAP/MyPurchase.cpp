@@ -35,6 +35,7 @@ MyPurchase::MyPurchase()
 : s_pAlipay(NULL)
 , s_pRetListener(NULL)
 , s_pNd91(NULL)
+, s_pGoogle(NULL)
 {
 
 }
@@ -104,6 +105,22 @@ void MyPurchase::loadIAPPlugin()
 		s_pNd91->configDeveloperInfo(pNdInfo);
 		s_pNd91->setResultListener(s_pRetListener);
 	}
+
+	//Google IAP
+	{
+		TIAPDeveloperInfo pGoogleInfo;
+		pGoogleInfo["GooglePlayAppKey"] = GOOGLE_APPKEY;
+
+		if(pGoogleInfo.empty()) {
+			char msg[256] = { 0 };
+			sprintf(msg, "Google App Key info is empty. PLZ fill your Google App Key info in %s(nearby line %d)", __FILE__, __LINE__);
+			MessageBox(msg, "Google IAP Warning");
+		}
+		s_pGoogle = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPGooglePlay"));
+//		s_pGoogle->setDebugMode(true);
+		s_pGoogle->configDeveloperInfo(pGoogleInfo);
+		s_pGoogle->setResultListener(s_pRetListener);
+	}
 }
 
 void MyPurchase::unloadIAPPlugin()
@@ -119,6 +136,12 @@ void MyPurchase::unloadIAPPlugin()
 		PluginManager::getInstance()->unloadPlugin("IAPNd91");
 		s_pNd91 = NULL;
 	}
+
+	if (s_pGoogle)
+	{
+		PluginManager::getInstance()->unloadPlugin("IAPGooglePlay");
+		s_pGoogle = NULL;
+	}
 }
 
 void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
@@ -131,6 +154,9 @@ void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
 		break;
 	case eND91:
 		pIAP = s_pNd91;
+		break;
+	case eGoogle:
+		pIAP = s_pGoogle;
 		break;
 	default:
 		break;

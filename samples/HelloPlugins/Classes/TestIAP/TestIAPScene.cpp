@@ -33,6 +33,7 @@ using namespace cocos2d::plugin;
 enum {
 	TAG_PAY_BY_ALIPAY = 100,
 	TAG_PAY_BY_ND91,
+	TAG_PAY_BY_GOOGLE,
 };
 
 typedef struct tagEventMenuItem {
@@ -43,6 +44,7 @@ typedef struct tagEventMenuItem {
 static EventMenuItem s_EventMenuItem[] = {
     {"BtnAlipay.png", TAG_PAY_BY_ALIPAY},
 	{"BtnND91.png", TAG_PAY_BY_ND91},
+	{"BtnGooglePlay.png", TAG_PAY_BY_GOOGLE},
 };
 
 Scene* TestIAP::scene()
@@ -123,6 +125,7 @@ void TestIAP::eventMenuCallback(Ref* pSender)
 	pInfo["productPrice"] = "0.01";
 	pInfo["productDesc"] = "100个金灿灿的游戏币哦";
 	pInfo["Nd91ProductId"] = "685994";
+	pInfo["IAPId"] = "test_product_1";
     MyPurchase::getInstance()->payByMode(pInfo, mode);
 }
 

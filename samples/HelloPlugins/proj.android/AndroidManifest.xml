@@ -24,7 +24,7 @@
 
         <meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
 
-    <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSControlCenterActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSControlCenterActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
         
         <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSLoginActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
         
@@ -38,8 +38,8 @@
         <service android:exported="false" android:name="com.nd.commplatform.versionupdate.ND2VersionUpdateService" android:process="android.intent.nd.sns.commplatform.versionupdate" />
         
         <service android:enabled="true" android:exported="false" android:name="com.nd.commplatform.service.NdNewMessageNotification" />
-    <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.ads.AdActivity" />
-    <activity android:configChanges="orientation|keyboardHidden|navigation" android:name="com.qihoopay.insdk.activity.ContainerActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.ads.AdActivity" />
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:name="com.qihoopay.insdk.activity.ContainerActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <activity android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:name="com.qihoopay.insdk.activity.RemoteContainerActivity" android:process=":remote" android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
@@ -65,21 +65,22 @@
         </activity>
     </application>
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
-                         
+
+    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.SEND_SMS" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-        <uses-permission android:name="android.permission.CALL_PHONE" />   
-        <uses-permission android:name="android.permission.GET_TASKS" />
-        <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />   
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-        <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.READ_SMS" />
-        <uses-permission android:name="android.permission.WAKE_LOCK" />
-    </manifest>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+</manifest>

@@ -1,6 +1,6 @@
 #define plugins array 
 export ALL_PLUGINS=("flurry" "umeng" \
-"alipay" "nd91" \
+"alipay" "nd91" "googleplay" \
 "admob" \
 "twitter" "weibo" \
 "qh360" "uc")

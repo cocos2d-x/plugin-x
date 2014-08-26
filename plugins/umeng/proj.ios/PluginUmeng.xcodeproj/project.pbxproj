@@ -209,6 +209,7 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../platform/ios\"",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PluginUmeng;
 				SKIP_INSTALL = YES;

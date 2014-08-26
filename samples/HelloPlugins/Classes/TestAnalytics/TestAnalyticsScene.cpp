@@ -102,7 +102,7 @@ bool TestAnalytics::init()
 
     float yPos = 0;
     for (int i = 0; i < sizeof(s_EventMenuItem)/sizeof(s_EventMenuItem[0]); i++) {
-        LabelTTF* label = LabelTTF::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
+        Label* label = Label::create(s_EventMenuItem[i].id.c_str(), "Arial", 24);
         MenuItemLabel* pMenuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestAnalytics::eventMenuCallback, this));
         pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
         yPos = visibleSize.height - 35*i - 100;
@@ -113,7 +113,7 @@ bool TestAnalytics::init()
     std::string strVer = _pluginAnalytics->getSDKVersion();
     char ret[256] = { 0 };
     sprintf(ret, "Plugin : %s, Ver : %s", strName.c_str(), strVer.c_str());
-    LabelTTF* pLabel = LabelTTF::create(ret, "Arial", 18, Size(visibleSize.width, 0), TextHAlignment::CENTER);
+    Label* pLabel = Label::create(ret, "Arial", 18, Size(visibleSize.width, 0), TextHAlignment::CENTER);
     pLabel->setPosition(Point(visibleSize.width / 2, yPos - 80));
     addChild(pLabel);
 

@@ -79,13 +79,13 @@ bool TestUser::init()
     Menu* pMenu = Menu::create(pBackItem, NULL);
     pMenu->setPosition(Point::ZERO);
 
-    LabelTTF* label1 = LabelTTF::create("Login", "Arial", 32);
+    Label* label1 = Label::create("Login", "Arial", 32);
     MenuItemLabel* pItemLogin = MenuItemLabel::create(label1, CC_CALLBACK_1(TestUser::testLogin, this));
     pItemLogin->setAnchorPoint(Point(0.5f, 0));
     pMenu->addChild(pItemLogin, 0);
     pItemLogin->setPosition(posMid + Point(-100, -120));
 
-    LabelTTF* label2 = LabelTTF::create("Logout", "Arial", 32);
+    Label* label2 = Label::create("Logout", "Arial", 32);
     MenuItemLabel* pItemLogout = MenuItemLabel::create(label2, CC_CALLBACK_1(TestUser::testLogout, this));
     pItemLogout->setAnchorPoint(Point(0.5f, 0));
     pMenu->addChild(pItemLogout, 0);

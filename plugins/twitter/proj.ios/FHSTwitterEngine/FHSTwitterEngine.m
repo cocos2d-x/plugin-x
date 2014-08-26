@@ -1455,14 +1455,14 @@ static NSString * const url_friends_list = @"https://api.twitter.com/1.1/friends
     
     int offset = 0;
     int remainder = fmod(array.count, 100);
-    int numberOfStrings = (array.count-remainder)/100;
+    int numberOfStrings = (int)((array.count-remainder)/100);
     
     NSMutableArray *reqStrs = [NSMutableArray array];
     
     for (int i = 1; i <= numberOfStrings; ++i) {
         NSString *ninetyNinththItem = (NSString *)[array objectAtIndex:(i*100)-1];
         NSRange range = [initialString rangeOfString:ninetyNinththItem];
-        int endOffset = range.location+range.length;
+        int endOffset = (int)(range.location+range.length);
         NSRange rangeOfAString = NSMakeRange(offset, endOffset-offset);
         offset = endOffset;
         NSString *endResult = [initialString fhs_stringWithRange:rangeOfAString];

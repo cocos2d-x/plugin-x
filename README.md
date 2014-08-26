@@ -1,16 +1,16 @@
-AnySDK
+Plugin-x
 ========
-AnySDK provides an easy way for developers to integrate various third party SDKs across different platforms. 
+Plugin-x provides an easy way for developers to integrate various third party SDKs across different platforms with [cocos2d-x](https://github.com/cocos2d/cocos2d-x)
 
 ## Highlights
-* One unified API for all SDKs
+One unified API for all SDKs
+* Ads
+* Analytics
+* IAP
+* Social
 
-## Getting Started
-### Try out Demo
-1. Download the latest cocos2d-x
-2. Open `HelloPlugins` project under `plugin/samples`
+##Getting Started
+* [Try the sample](https://github.com/cocos2d-x/plugin-x/wiki/Sample)
+* [Documentation](http://www.cocos2d-x.org/wiki/Third_Party_SDK_Integration)
+* Check out [wiki](https://github.com/cocos2d-x/plugin-x/wiki) for more info
 
-### Use Ads SDK
-
-## Create plugin for AnySDK
-### Ads SDK
