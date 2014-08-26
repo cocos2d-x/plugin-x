@@ -125,7 +125,7 @@ void TestIAP::eventMenuCallback(Ref* pSender)
 	pInfo["productPrice"] = "0.01";
 	pInfo["productDesc"] = "100个金灿灿的游戏币哦";
 	pInfo["Nd91ProductId"] = "685994";
-	pInfo["IAPId"] = "test_product_1";
+	pInfo["IAPId"] = "android.test.purchased";
     MyPurchase::getInstance()->payByMode(pInfo, mode);
 }
 
