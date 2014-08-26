@@ -132,7 +132,5 @@ void TestIAP::eventMenuCallback(Ref* pSender)
 void TestIAP::menuBackCallback(Ref* pSender)
 {
 	MyPurchase::purgePurchase();
-
-	Scene* newScene = HelloWorld::scene();
-    Director::getInstance()->replaceScene(newScene);
+    Director::getInstance()->replaceScene(HelloWorld::scene());
 }

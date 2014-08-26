@@ -317,9 +317,9 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
      * onActivityResult callback.
      * @return 
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         LogD("onActivityResult("+requestCode+", "+resultCode+", data)");
-        mHelper.handleActivityResult(requestCode, resultCode, data);
+        return mHelper.handleActivityResult(requestCode, resultCode, data);
     }
     
 	@Override

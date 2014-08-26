@@ -61,8 +61,10 @@ public class AppActivity extends Cocos2dxActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		PluginWrapper.onActivityResult(requestCode, resultCode, data);
-		super.onActivityResult(requestCode, resultCode, data);
+		if(!PluginWrapper.onActivityResult(requestCode, resultCode, data))
+		{
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	}
     
     

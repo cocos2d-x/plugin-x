@@ -89,10 +89,14 @@ public class PluginWrapper {
     	}
     }
 
-    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public static boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+    	boolean result = true;
+    	
         for (PluginListener listener : sListeners) {
-            listener.onActivityResult(requestCode, resultCode, data);
+            result = result && listener.onActivityResult(requestCode, resultCode, data);
         }
+        
+        return result;
     }
     
     public static void addListener(PluginListener listener) {
