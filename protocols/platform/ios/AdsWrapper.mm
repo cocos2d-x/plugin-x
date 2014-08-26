@@ -79,7 +79,7 @@ using namespace cocos2d::plugin;
     CGSize viewSize = view.frame.size;
     CGPoint viewOrigin;
 
-    if (UIInterfaceOrientationIsLandscape(controller.interfaceOrientation)){
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0 && UIInterfaceOrientationIsLandscape(controller.interfaceOrientation)){
         CGFloat temp = rootSize.width;
         rootSize.width = rootSize.height;
         rootSize.height = temp;
