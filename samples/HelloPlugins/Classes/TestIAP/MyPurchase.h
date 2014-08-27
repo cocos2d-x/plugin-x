@@ -26,10 +26,12 @@ THE SOFTWARE.
 
 #include "ProtocolIAP.h"
 
-class MyPurchaseResult : public cocos2d::plugin::PayResultListener
+using namespace cocos2d::plugin;
+
+class MyPurchaseResult : public PayResultListener
 {
 public:
-	virtual void onPayResult(cocos2d::plugin::PayResultCode ret, const char* msg, cocos2d::plugin::TProductInfo info);
+	virtual void onPayResult(PayResultCode ret, const char* msg, TProductInfo info);
 };
 
 class MyPurchase

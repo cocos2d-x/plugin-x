@@ -42,6 +42,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class IAPGooglePlay implements InterfaceIAP, PluginListener {
@@ -114,7 +115,13 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
             public void run() {
                 String iapId = productInfo.get("IAPId");
                 String iapSecKey = productInfo.get("IAPSecKey");
-                mHelper.launchPurchaseFlow(getActivity(), iapId, RC_REQUEST, mPurchaseFinishedListener, iapSecKey);
+                try{
+                	mHelper.launchPurchaseFlow(getActivity(), iapId, RC_REQUEST, mPurchaseFinishedListener, iapSecKey);
+                }
+                catch(IllegalStateException ex){
+                	LogD("Please retry in a few seconds.");
+                    mHelper.flagEndAsync();
+                }
             }
         });
     }
