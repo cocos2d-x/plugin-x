@@ -73,9 +73,6 @@ bool TestIAP::init()
     Size winSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    Point posBR = Point(origin.x + winSize.width, origin.y);
-    Point posTL = Point(origin.x, origin.y + winSize.height);
-
     //Back button
     auto backButton = Button::create("btn_normal.png","btn_pressed.png");
     backButton->setAnchorPoint(Vec2(1, 0));
@@ -106,7 +103,6 @@ bool TestIAP::init()
         MyPurchase::getInstance()->payByMode(pInfo, mode);
 
     });
-    btnGoogle->addTouchEventListener(CC_CALLBACK_2(TestIAP::eventMenuCallback, this));
     panel->addChild(btnGoogle);    
 
 

@@ -39,7 +39,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 LOCAL_STATIC_LIBRARIES += cocos_ui_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static \
-PluginProtocolStatic \
+PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
