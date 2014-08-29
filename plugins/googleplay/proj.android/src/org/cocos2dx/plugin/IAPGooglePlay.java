@@ -128,8 +128,12 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
 
     @Override
     public void setDebugMode(boolean debug) {
+        //TODO: fix this
+        //It's possible setDebug don't work at the first time because init was happening on another thread
         bDebug = debug;
-        mHelper.enableDebugLogging(debug);
+        if (mHelper != null) {
+            mHelper.enableDebugLogging(debug);
+        }
     }
 
     @Override
@@ -262,17 +266,24 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            //System.out.println("Purchase Finish heard something");
-   
-            
+            String productId = "";
+
             if (result.isFailure()) {
                  Log.d(TAG, "Error purchasing: " + result);
-                 return;
+
+                //if request failed, there is no purchase data.
+                //So we just use last productId instead, could lead to bug, 
+                //but until google fix their iap v3
+                failPurchase(productId);
+                return;
             }
             else {
                 Log.d(TAG,"Success!");
                 
-                succeedPurchase();
+                productId = purchase.getSku();
+                succeedPurchase(productId);
+
+                //Auto consume the purchase
                 mHelper.consumeAsync(purchase, mConsumeFinishedListener);
             }
         }
@@ -294,12 +305,12 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
         }
     };
 
-    void succeedPurchase() {
+    void succeedPurchase(String productId) {
         IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_SUCCESS, "");
         
     }
 
-    void failPurchase() {
+    void failPurchase(String productId) {
         IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_FAIL, "");
     }
 

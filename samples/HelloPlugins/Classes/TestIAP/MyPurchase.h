@@ -42,8 +42,6 @@ public:
 
     typedef enum {
     	eNoneMode = 0,
-    	eAlipay,
-    	eND91,
     	eGoogle,
     } MyPayMode;
 
@@ -56,9 +54,7 @@ private:
     virtual ~MyPurchase();
 
     static MyPurchase* s_pPurchase;
-
-    cocos2d::plugin::ProtocolIAP* s_pAlipay;
-    cocos2d::plugin::ProtocolIAP* s_pNd91;
+    
     cocos2d::plugin::ProtocolIAP* s_pGoogle;
     MyPurchaseResult* s_pRetListener;
 };

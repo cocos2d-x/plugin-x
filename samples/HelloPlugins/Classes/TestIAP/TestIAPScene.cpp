@@ -32,23 +32,6 @@ using namespace cocos2d;
 using namespace cocos2d::plugin;
 using namespace cocos2d::ui;
 
-enum {
-	TAG_PAY_BY_ALIPAY = 100,
-	TAG_PAY_BY_ND91,
-	TAG_PAY_BY_GOOGLE,
-};
-
-typedef struct tagEventMenuItem {
-    std::string id;
-    int tag;
-}EventMenuItem;
-
-static EventMenuItem s_EventMenuItem[] = {
-    {"BtnAlipay.png", TAG_PAY_BY_ALIPAY},
-	{"BtnND91.png", TAG_PAY_BY_ND91},
-	{"BtnGooglePlay.png", TAG_PAY_BY_GOOGLE},
-};
-
 Scene* TestIAP::scene()
 {
     Scene *scene = Scene::create();
@@ -77,7 +60,7 @@ bool TestIAP::init()
     auto backButton = Button::create("btn_normal.png","btn_pressed.png");
     backButton->setAnchorPoint(Vec2(1, 0));
     backButton->setTitleText("Back");
-    backButton->setScale(3.0f, 2.0f);
+    backButton->setScale(2);
     backButton->setPosition(Vec2(origin.x + winSize.width, origin.y));
     backButton->addClickEventListener([=](Ref* sender){
     	MyPurchase::purgePurchase();
@@ -94,7 +77,7 @@ bool TestIAP::init()
     //Google IAP button
     auto btnGoogle = Button::create("btn_normal.png","btn_pressed.png");
     btnGoogle->setTitleText("Google");
-    btnGoogle->setScale(3.0f, 2.0f);
+    btnGoogle->setScale(2);
     btnGoogle->addClickEventListener([=](Ref* sender){
     	//Perform IAP callback
         TProductInfo pInfo;
