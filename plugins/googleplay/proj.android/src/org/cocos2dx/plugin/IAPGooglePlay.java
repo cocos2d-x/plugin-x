@@ -42,7 +42,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 
 public class IAPGooglePlay implements InterfaceIAP, PluginListener {
@@ -266,22 +265,17 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            String productId = "";
-
+        	
             if (result.isFailure()) {
                  Log.d(TAG, "Error purchasing: " + result);
 
-                //if request failed, there is no purchase data.
-                //So we just use last productId instead, could lead to bug, 
-                //but until google fix their iap v3
-                failPurchase(productId);
+                failPurchase(result.getMessage());
                 return;
             }
             else {
                 Log.d(TAG,"Success!");
                 
-                productId = purchase.getSku();
-                succeedPurchase(productId);
+                succeedPurchase(result.getMessage());
 
                 //Auto consume the purchase
                 mHelper.consumeAsync(purchase, mConsumeFinishedListener);
@@ -305,13 +299,13 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
         }
     };
 
-    void succeedPurchase(String productId) {
-        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_SUCCESS, "");
+    void succeedPurchase(String msg) {
+        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_SUCCESS, msg);
         
     }
 
-    void failPurchase(String productId) {
-        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_FAIL, "");
+    void failPurchase(String msg) {
+        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_FAIL, msg);
     }
 
     // Enables or disables the "please wait" screen.
