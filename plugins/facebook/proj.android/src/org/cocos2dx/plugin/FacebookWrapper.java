@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.facebook.AppEventsLogger;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.FacebookDialog.PendingCall;
@@ -31,5 +32,9 @@ public class FacebookWrapper {
 	
 	public static void track(PendingCall pendingCall){
 		uiHelper.trackPendingDialogCall(pendingCall);
+	}
+	
+	public static AppEventsLogger getAppEventsLogger(){
+		return uiHelper.getAppEventsLogger();
 	}
 }

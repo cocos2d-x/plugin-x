@@ -30,7 +30,7 @@ using namespace cocos2d::plugin;
 
 @implementation ShareWrapper
 
-+ (void) onShareResult:(id) obj withRet:(ShareResult) ret withMsg:(NSString*) msg
++ (void) onShareResult:(id) obj withRet:(int) ret withMsg:(NSString*) msg
 {
     PluginProtocol* pPlugin = PluginUtilsIOS::getPluginPtr(obj);
     ProtocolShare* pShare = dynamic_cast<ProtocolShare*>(pPlugin);
@@ -45,7 +45,7 @@ using namespace cocos2d::plugin;
         }else if (callback)
         {
             std::string stdmsg(chMsg);
-            callback((ShareResultCode) ret, stdmsg);
+            callback(ret, stdmsg);
         }else{
             PluginUtilsIOS::outputLog("Can't find the listener of plugin %s", pPlugin->getPluginName());
         }

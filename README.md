@@ -1,27 +1,19 @@
 Plugin-x
 ========
-Plugin-x contains plugins for [cocos2d-x](https://github.com/cocos2d/cocos2d-x) and a unified API to work with various services and SDKs thats required for game development.
+Plugin-x provides an easy way for developers to integrate various third party SDKs across different platforms with [cocos2d-x](https://github.com/cocos2d/cocos2d-x)
 
-#About Plugin-x
-Plugin-x API currents offers unified API covers
+## Highlights
+One unified API for all SDKs
 * Ads
 * Analytics
 * IAP
 * Social
 
-#Getting Started
-1. Get cocos2d-x
- Clone cocos2d-x repo
- ```
- git clone https://github.com/cocos2d/cocos2d-x.git
- ```
- or 
- Download [cocos2d-x ](http://www.cocos2d-x.org/download)
+##Getting Started
+* [Try the sample](https://github.com/cocos2d-x/plugin-x/wiki/Sample)
+* [Documentation](http://www.cocos2d-x.org/wiki/Third_Party_SDK_Integration)
+* Check out [wiki](https://github.com/cocos2d-x/plugin-x/wiki) for more info
 
-2. Play with HelloPlugin project
- 
- iOS: open `plugin/plugin-x_ios` workspace 
- 
- Android: import `plugin/samples/HelloPlugins`
- 
-Check out our [wiki](https://github.com/cocos2d-x/plugin-x/wiki) for more info
+
+##Update
+* If you're looking for SDK integration solution for Chinese App Store, please consider using [AnySDK](http://www.anysdk.com) 
