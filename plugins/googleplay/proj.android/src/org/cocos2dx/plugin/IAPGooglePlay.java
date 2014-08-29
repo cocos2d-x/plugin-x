@@ -114,15 +114,25 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
             public void run() {
                 String iapId = productInfo.get("IAPId");
                 String iapSecKey = productInfo.get("IAPSecKey");
-                mHelper.launchPurchaseFlow(getActivity(), iapId, RC_REQUEST, mPurchaseFinishedListener, iapSecKey);
+                try{
+                	mHelper.launchPurchaseFlow(getActivity(), iapId, RC_REQUEST, mPurchaseFinishedListener, iapSecKey);
+                }
+                catch(IllegalStateException ex){
+                	LogD("Please retry in a few seconds.");
+                    mHelper.flagEndAsync();
+                }
             }
         });
     }
 
     @Override
     public void setDebugMode(boolean debug) {
+        //TODO: fix this
+        //It's possible setDebug don't work at the first time because init was happening on another thread
         bDebug = debug;
-        mHelper.enableDebugLogging(debug);
+        if (mHelper != null) {
+            mHelper.enableDebugLogging(debug);
+        }
     }
 
     @Override
@@ -255,17 +265,19 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            //System.out.println("Purchase Finish heard something");
-   
-            
+        	
             if (result.isFailure()) {
                  Log.d(TAG, "Error purchasing: " + result);
-                 return;
+
+                failPurchase(result.getMessage());
+                return;
             }
             else {
                 Log.d(TAG,"Success!");
                 
-                succeedPurchase();
+                succeedPurchase(result.getMessage());
+
+                //Auto consume the purchase
                 mHelper.consumeAsync(purchase, mConsumeFinishedListener);
             }
         }
@@ -287,13 +299,13 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
         }
     };
 
-    void succeedPurchase() {
-        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_SUCCESS, "");
+    void succeedPurchase(String msg) {
+        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_SUCCESS, msg);
         
     }
 
-    void failPurchase() {
-        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_FAIL, "");
+    void failPurchase(String msg) {
+        IAPWrapper.onPayResult(mAdapter, IAPWrapper.PAYRESULT_FAIL, msg);
     }
 
     // Enables or disables the "please wait" screen.
@@ -317,9 +329,9 @@ public class IAPGooglePlay implements InterfaceIAP, PluginListener {
      * onActivityResult callback.
      * @return 
      */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         LogD("onActivityResult("+requestCode+", "+resultCode+", data)");
-        mHelper.handleActivityResult(requestCode, resultCode, data);
+        return mHelper.handleActivityResult(requestCode, resultCode, data);
     }
     
 	@Override
