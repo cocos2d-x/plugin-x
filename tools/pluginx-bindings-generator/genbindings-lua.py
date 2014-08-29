@@ -11,6 +11,8 @@ import ConfigParser
 import subprocess
 import re
 from contextlib import contextmanager
+import shutil
+import yaml
 
 
 def _check_ndk_root_env():
@@ -55,6 +57,15 @@ def _run_cmd(command):
         message = "Error running command"
         raise CmdError(message)
 
+def _edit_yaml(filePath):
+    f = open(filePath, 'r')
+    data = yaml.load(f)
+    f.close()
+    data['conversions']['ns_map']['cocos2d::plugin::'] = 'plugin.'
+    f = open(filePath, 'w')
+    f.write(yaml.dump(data))
+    f.close()
+
 def main():
 
     cur_platform= '??'
@@ -90,9 +101,10 @@ def main():
         print 'path: %s or path: %s are not valid! ' % (x86_llvm_path, x64_llvm_path)
         sys.exit(1)
 
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
     cocos_root = os.path.abspath(os.path.join(project_root, ''))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
+    pluginx_root = os.path.abspath(os.path.join(project_root, 'plugin'))
 
     # save config to file
     config = ConfigParser.ConfigParser()
@@ -101,6 +113,7 @@ def main():
     config.set('DEFAULT', 'cocosdir', cocos_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
+    config.set('DEFAULT', 'pluginxdir', pluginx_root)
 
     # To fix parse error on windows, we must difine __WCHAR_MAX__ and undefine __MINGW32__ .
     if platform == 'win32':
@@ -120,22 +133,18 @@ def main():
         path_env = os.environ['PATH']
         os.putenv('PATH', r'%s;%s\libclang;%s\tools\win32;' % (path_env, cxx_generator_root, cxx_generator_root))
 
+    # edit conversions config for pluginx
+    conversions_yaml = '%s/targets/lua/conversions.yaml' % cxx_generator_root
+    conversions_backup = '%s.backup' % conversions_yaml
+    shutil.copy(conversions_yaml, conversions_backup)
+    _edit_yaml(conversions_yaml)
 
     try:
 
-        tolua_root = '%s/tools/tolua' % project_root
-        output_dir = '%s/cocos/scripting/lua-bindings/auto' % project_root
+        tolua_root = '%s/plugin/tools/pluginx-bindings-generator/tolua' % project_root
+        output_dir = '%s/plugin/luabindings/auto' % project_root
 
-        cmd_args = {'cocos2dx.ini' : ('cocos2d-x', 'lua_cocos2dx_auto'), \
-                    'cocos2dx_extension.ini' : ('cocos2dx_extension', 'lua_cocos2dx_extension_auto'), \
-                    'cocos2dx_ui.ini' : ('cocos2dx_ui', 'lua_cocos2dx_ui_auto'), \
-                    'cocos2dx_studio.ini' : ('cocos2dx_studio', 'lua_cocos2dx_studio_auto'), \
-                    'cocos2dx_spine.ini' : ('cocos2dx_spine', 'lua_cocos2dx_spine_auto'), \
-                    'cocos2dx_physics.ini' : ('cocos2dx_physics', 'lua_cocos2dx_physics_auto'), \
-                    'cocos2dx_experimental_video.ini' : ('cocos2dx_experimental_video', 'lua_cocos2dx_experimental_video_auto'), \
-                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'lua_cocos2dx_experimental_auto'), \
-                    'cocos2dx_controller.ini' : ('cocos2dx_controller', 'lua_cocos2dx_controller_auto'), \
-                    }
+        cmd_args = {'cocos2dx_pluginx.ini' : ('cocos2dx_pluginx', 'lua_cocos2dx_pluginx_auto')}
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root
         for key in cmd_args.keys():
@@ -161,6 +170,8 @@ def main():
             sys.exit(1)
         else:
             raise
+    finally:
+        shutil.move(conversions_backup, conversions_yaml)
 
 
 # -------------- main --------------
