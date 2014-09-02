@@ -13,6 +13,7 @@ import re
 from contextlib import contextmanager
 import shutil
 import yaml
+import tempfile
 
 
 def _check_ndk_root_env():
@@ -62,6 +63,7 @@ def _edit_yaml(filePath):
     data = yaml.load(f)
     f.close()
     data['conversions']['ns_map']['cocos2d::plugin::'] = 'plugin.'
+    data['conversions']['to_native']['TIAPDeveloperInfo'] = 'ok &= pluginx::luaval_to_TIAPDeveloperInfo(tolua_S, ${arg_idx}, &${out_value})'
     f = open(filePath, 'w')
     f.write(yaml.dump(data))
     f.close()
@@ -157,6 +159,19 @@ def main():
         if platform == 'win32':
             with _pushd(output_dir):
                 _run_cmd('dos2unix *')
+
+        # replace header file
+        tmpfd,tmpname = tempfile.mkstemp(dir='.')
+        input_file_name = '%s/%s.cpp' % (output_dir, args[1])
+        try:
+            output_file = os.fdopen(tmpfd, 'w')
+            input_file = open(input_file_name)
+            for line in input_file:
+                output_file.write(line.replace('#include "LuaBasicConversions.h"', '#include "LuaBasicConversions.h"\n#include "lua_pluginx_basic_conversions.h"')) 
+        finally:
+            output_file.close()
+            input_file.close()
+        shutil.move(tmpname, input_file_name)
 
         print '---------------------------------'
         print 'Generating lua bindings succeeds.'
