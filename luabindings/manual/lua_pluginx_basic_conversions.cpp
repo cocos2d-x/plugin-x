@@ -30,4 +30,14 @@ bool luaval_to_TAdsInfo(lua_State *L, int lo, TAdsInfo* outValue)
     return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
 }
 
+bool luaval_to_TShareDeveloperInfo(lua_State *L, int lo, TShareDeveloperInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
+bool luaval_to_TShareInfo(lua_State *L, int lo, TShareInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
 }// namespace pluginx {
