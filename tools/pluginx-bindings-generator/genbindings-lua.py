@@ -67,6 +67,7 @@ def _edit_yaml(filePath):
     data['conversions']['to_native']['TAdsDeveloperInfo'] = 'ok &= pluginx::luaval_to_TAdsDeveloperInfo(tolua_S, ${arg_idx}, &${out_value})'
     data['conversions']['to_native']['TAdsInfo'] = 'ok &= pluginx::luaval_to_TAdsInfo(tolua_S, ${arg_idx}, &${out_value})'
     data['conversions']['to_native']['TShareDeveloperInfo'] = 'ok &= pluginx::luaval_to_TShareDeveloperInfo(tolua_S, ${arg_idx}, &${out_value})'
+    data['conversions']['to_native']['TSocialDeveloperInfo'] = 'ok &= pluginx::luaval_to_TSocialDeveloperInfo(tolua_S, ${arg_idx}, &${out_value})'
     f = open(filePath, 'w')
     f.write(yaml.dump(data))
     f.close()

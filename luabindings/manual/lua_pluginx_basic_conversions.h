@@ -18,6 +18,8 @@ bool luaval_to_TAdsDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TAdsDeve
 bool luaval_to_TAdsInfo(lua_State *L, int lo, cocos2d::plugin::TAdsInfo* outValue);
 bool luaval_to_TShareDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TShareDeveloperInfo* outValue);
 bool luaval_to_TShareInfo(lua_State *L, int lo, cocos2d::plugin::TShareInfo* outValue);
+bool luaval_to_TSocialDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TSocialDeveloperInfo* outValue);
+bool luaval_to_TAchievementInfo(lua_State *L, int lo, cocos2d::plugin::TAchievementInfo* outValue);
 
 } // namespace pluginx {
 

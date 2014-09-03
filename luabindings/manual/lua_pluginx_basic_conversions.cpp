@@ -40,4 +40,14 @@ bool luaval_to_TShareInfo(lua_State *L, int lo, TShareInfo* outValue)
     return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
 }
 
+bool luaval_to_TSocialDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TSocialDeveloperInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
+bool luaval_to_TAchievementInfo(lua_State *L, int lo, cocos2d::plugin::TAchievementInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
 }// namespace pluginx {
