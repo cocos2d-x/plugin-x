@@ -32,9 +32,8 @@ using namespace cocos2d;
 MyPurchase* MyPurchase::s_pPurchase = NULL;
 
 MyPurchase::MyPurchase()
-: s_pAlipay(NULL)
-, s_pRetListener(NULL)
-, s_pNd91(NULL)
+: s_pRetListener(NULL)
+, s_pGoogle(NULL)
 {
 
 }
@@ -74,50 +73,29 @@ void MyPurchase::loadIAPPlugin()
 		s_pRetListener = new MyPurchaseResult();
 	}
 
+	//Google IAP
 	{
-		// init alipay plugin
-		s_pAlipay = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPAlipay"));
-		TIAPDeveloperInfo pAlipayInfo;
-		if (pAlipayInfo.empty())
-		{
-			char msg[256] = { 0 };
-			sprintf(msg, "Developer info is empty. PLZ fill your alipay info in %s(nearby line %d)", __FILE__, __LINE__);
-			MessageBox(msg, "Alipay Warning");
-		}
-		s_pAlipay->setDebugMode(true);
-		s_pAlipay->configDeveloperInfo(pAlipayInfo);
-		s_pAlipay->setResultListener(s_pRetListener);
-	}
+		TIAPDeveloperInfo pGoogleInfo;
+		pGoogleInfo["GooglePlayAppKey"] = GOOGLE_APPKEY;
 
-	{
-		TIAPDeveloperInfo pNdInfo;
-		pNdInfo["Nd91AppId"] = ND91_APPID;
-		pNdInfo["Nd91AppKey"] = ND91_APPKEY;
-		pNdInfo["Nd91Orientation"] = ND91_ORIENTATION;
-		if (pNdInfo.empty()) {
+		if(pGoogleInfo.empty()) {
 			char msg[256] = { 0 };
-			sprintf(msg, "Developer info is empty. PLZ fill your Nd91 info in %s(nearby line %d)", __FILE__, __LINE__);
-			MessageBox(msg, "Nd91 Warning");
+			sprintf(msg, "Google App Key info is empty. PLZ fill your Google App Key info in %s(nearby line %d)", __FILE__, __LINE__);
+			MessageBox(msg, "Google IAP Warning");
 		}
-		s_pNd91 = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPNd91"));
-		s_pNd91->setDebugMode(true);
-		s_pNd91->configDeveloperInfo(pNdInfo);
-		s_pNd91->setResultListener(s_pRetListener);
+		s_pGoogle = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPGooglePlay"));
+		s_pGoogle->configDeveloperInfo(pGoogleInfo);
+		s_pGoogle->setResultListener(s_pRetListener);
+		s_pGoogle->setDebugMode(true);
 	}
 }
 
 void MyPurchase::unloadIAPPlugin()
 {
-	if (s_pAlipay)
+	if (s_pGoogle)
 	{
-		PluginManager::getInstance()->unloadPlugin("IAPAlipay");
-		s_pAlipay = NULL;
-	}
-
-	if (s_pNd91)
-	{
-		PluginManager::getInstance()->unloadPlugin("IAPNd91");
-		s_pNd91 = NULL;
+		PluginManager::getInstance()->unloadPlugin("IAPGooglePlay");
+		s_pGoogle = NULL;
 	}
 }
 
@@ -126,13 +104,11 @@ void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
 	ProtocolIAP* pIAP = NULL;
 	switch(mode)
 	{
-	case eAlipay:
-		pIAP = s_pAlipay;
-		break;
-	case eND91:
-		pIAP = s_pNd91;
+	case eGoogle:
+		pIAP = s_pGoogle;
 		break;
 	default:
+		CCLOG("Unsupported IAP");
 		break;
 	}
 
@@ -144,9 +120,9 @@ void MyPurchase::payByMode(TProductInfo info, MyPayMode mode)
 void MyPurchaseResult::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
 	char goodInfo[1024] = { 0 };
-	sprintf(goodInfo, "商品名称:%s\n商品价格:%s\n商品描述:%s",
-			info.find("productName")->second.c_str(),
-			info.find("productPrice")->second.c_str(),
-			info.find("productDesc")->second.c_str());
+	sprintf(goodInfo, "ProductID:%s\nPrice:%s\nDesc:%s",
+			info.find("IAPId")->second.c_str(),
+			info.find("IAPId")->second.c_str(),
+			info.find("IAPId")->second.c_str());
 	MessageBox(goodInfo , msg);
 }

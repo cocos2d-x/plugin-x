@@ -27,6 +27,8 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.plugin.PluginWrapper;
 
+import android.content.Intent;
+
 public class AppActivity extends Cocos2dxActivity {
     
     public Cocos2dxGLSurfaceView onCreateView() {
@@ -38,4 +40,32 @@ public class AppActivity extends Cocos2dxActivity {
         PluginWrapper.setGLSurfaceView(glSurfaceView);
         return glSurfaceView;
     }
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		PluginWrapper.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		PluginWrapper.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		PluginWrapper.onDestroy();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(!PluginWrapper.onActivityResult(requestCode, resultCode, data))
+		{
+			super.onActivityResult(requestCode, resultCode, data);
+		}
+	}
+    
+    
 }

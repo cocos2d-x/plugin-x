@@ -26,110 +26,68 @@ THE SOFTWARE.
 #include "AppDelegate.h"
 #include "MyPurchase.h"
 #include "HelloWorldScene.h"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 using namespace cocos2d::plugin;
-
-enum {
-	TAG_PAY_BY_ALIPAY = 100,
-	TAG_PAY_BY_ND91,
-};
-
-typedef struct tagEventMenuItem {
-    std::string id;
-    int tag;
-}EventMenuItem;
-
-static EventMenuItem s_EventMenuItem[] = {
-    {"BtnAlipay.png", TAG_PAY_BY_ALIPAY},
-	{"BtnND91.png", TAG_PAY_BY_ND91},
-};
+using namespace cocos2d::ui;
 
 Scene* TestIAP::scene()
 {
-    // 'scene' is an autorelease object
     Scene *scene = Scene::create();
-    
-    // 'layer' is an autorelease object
     TestIAP *layer = TestIAP::create();
 
-    // add layer as a child to scene
     scene->addChild(layer);
 
-    // return the scene
     return scene;
 }
 
 // on "init" you need to initialize your instance
 bool TestIAP::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if ( !Layer::init() )
     {
         return false;
     }
 
+    //Load plugins
     MyPurchase::getInstance()->loadIAPPlugin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    Size winSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    auto pEGLView = Director::getInstance()->getOpenGLView();
-    Point posBR = Point(pEGLView->getVisibleOrigin().x + pEGLView->getVisibleSize().width, pEGLView->getVisibleOrigin().y);
-    Point posTL = Point(pEGLView->getVisibleOrigin().x, pEGLView->getVisibleOrigin().y + pEGLView->getVisibleSize().height);
+    //Back button
+    auto backButton = Button::create("btn_normal.png","btn_pressed.png");
+    backButton->setAnchorPoint(Vec2(1, 0));
+    backButton->setTitleText("Back");
+    backButton->setScale(2);
+    backButton->setPosition(Vec2(origin.x + winSize.width, origin.y));
+    backButton->addClickEventListener([=](Ref* sender){
+    	MyPurchase::purgePurchase();
+        Director::getInstance()->replaceScene(HelloWorld::scene());
+    });
+    addChild(backButton);
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestIAP::menuBackCallback, this));
-    Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
+    auto panel = Layout::create();
+    panel->setAnchorPoint(Vec2(0.5,0.5));
+    panel->setPosition(Vec2(origin.x + winSize.width/2, origin.y + winSize.height/2));
+    panel->setLayoutType(LayoutType::VERTICAL);
+    addChild(panel);
 
-    // create menu, it's an autorelease object
-    Menu* pMenu = Menu::create(pBackItem, NULL);
-    pMenu->setPosition( Point::ZERO );
-    this->addChild(pMenu, 1);
+    //Google IAP button
+    auto btnGoogle = Button::create("btn_normal.png","btn_pressed.png");
+    btnGoogle->setTitleText("Google");
+    btnGoogle->setScale(2);
+    btnGoogle->addClickEventListener([=](Ref* sender){
+    	//Perform IAP callback
+        TProductInfo pInfo;
+        MyPurchase::MyPayMode mode = MyPurchase::MyPayMode::eGoogle;
+    	pInfo["IAPId"] = "android.test.purchased";
+        MyPurchase::getInstance()->payByMode(pInfo, mode);
 
-    Point posStep = Point(220, -150);
-    Point beginPos = posTL + (posStep * 0.5f);
-    int line = 0;
-    int row = 0;
-    for (int i = 0; i < sizeof(s_EventMenuItem)/sizeof(s_EventMenuItem[0]); i++) {
-    	MenuItemImage* pMenuItem = MenuItemImage::create(s_EventMenuItem[i].id.c_str(), s_EventMenuItem[i].id.c_str(),
-    			CC_CALLBACK_1(TestIAP::eventMenuCallback, this));
-        pMenu->addChild(pMenuItem, 0, s_EventMenuItem[i].tag);
+    });
+    panel->addChild(btnGoogle);    
 
-        Point pos = beginPos + Point(posStep.x * row, posStep.y * line);
-        Size itemSize = pMenuItem->getContentSize();
-        if ((pos.x + itemSize.width / 2) > posBR.x)
-		{
-			line += 1;
-			row = 0;
-			pos = beginPos + Point(posStep.x * row, posStep.y * line);
-		}
-        row += 1;
-        pMenuItem->setPosition(pos);
-    }
 
     return true;
-}
-
-void TestIAP::eventMenuCallback(Ref* pSender)
-{
-    MenuItemLabel* pMenuItem = (MenuItemLabel*)pSender;
-    TProductInfo pInfo;
-    MyPurchase::MyPayMode mode = (MyPurchase::MyPayMode) (pMenuItem->getTag() - TAG_PAY_BY_ALIPAY + 1);
-    pInfo["productName"] = "100金币";
-	pInfo["productPrice"] = "0.01";
-	pInfo["productDesc"] = "100个金灿灿的游戏币哦";
-	pInfo["Nd91ProductId"] = "685994";
-    MyPurchase::getInstance()->payByMode(pInfo, mode);
-}
-
-void TestIAP::menuBackCallback(Ref* pSender)
-{
-	MyPurchase::purgePurchase();
-
-	Scene* newScene = HelloWorld::scene();
-    Director::getInstance()->replaceScene(newScene);
 }

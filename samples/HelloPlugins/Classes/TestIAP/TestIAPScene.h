@@ -25,6 +25,7 @@ THE SOFTWARE.
 #define __TEST_IAP_SCENE_H__
 
 #include "cocos2d.h"
+#include "ui/UIButton.h"
 
 class TestIAP : public cocos2d::Layer
 {
@@ -34,10 +35,6 @@ public:
 
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
     static cocos2d::Scene* scene();
-    
-    // a selector callback
-    void menuBackCallback(Ref* pSender);
-    void eventMenuCallback(Ref* pSender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(TestIAP);
