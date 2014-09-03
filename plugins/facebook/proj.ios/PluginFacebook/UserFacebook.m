@@ -47,16 +47,6 @@ NSString *_accessToken = @"";
     [self _loginWithPermission:permission];
 }
 -(void)_loginWithPermission:(NSArray *) permission{
-    if (FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        [FBSession openActiveSessionWithReadPermissions:permission
-                                           allowLoginUI:NO
-                                      completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             [self sessionStateChanged:session state:state error:error];
-             // Retrieve the app delegate
-         }];
-        
-    } else {
         [FBSession openActiveSessionWithReadPermissions:permission
                                            allowLoginUI:YES
                                       completionHandler:
@@ -64,7 +54,6 @@ NSString *_accessToken = @"";
              [self sessionStateChanged:session state:state error:error];
              // Retrieve the app delegate
          }];
-    }
 }
 - (void) logout{
     if (FBSession.activeSession.state == FBSessionStateOpen
@@ -142,7 +131,7 @@ NSString *_accessToken = @"";
         _accessToken = session.accessTokenData.accessToken;
         _isLogin = true;
         OUTPUT_LOG(@"Session opened");
-        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permission",session.accessTokenData.accessToken,@"accessToken", nil];
+        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permissions",session.accessTokenData.accessToken,@"accessToken", nil];
         NSString *msg = [ParseUtils NSDictionaryToNSString:result];
         [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
