@@ -59,6 +59,13 @@ public:
      */
 	void login(FBCallback cb);
 
+    /**
+     @brief log in with specific permissions
+     @param permissoins different permissions splited by ','
+     @param cb callback of login
+     */
+    void login(std::string& permissions, FBCallback cb);
+
 	/**
      @brief log out
      */
@@ -68,13 +75,6 @@ public:
      @brief Check whether the user logined or not
      */
 	bool isLoggedIn();
-
-	/**
-     @brief request new permissions
-     @param permissoins different permissions splited by ','
-     @param cb callback of requestPermissions
-     */
-	void requestPermissions(std::string permissions, FBCallback cb);
 	
 	/**
      @brief get AccessToken
@@ -98,7 +98,14 @@ public:
      @param cb callback of dialog
      */
 	void dialog(FBInfo &info, FBCallback cb);
-	
+
+	/**
+     @brief open the app request dialog of Facebook app
+     @param info share information
+     @param cb callback of dialog
+     */
+    void appRequest(FBInfo &info, FBCallback cb);
+
 	/**
      @brief use Facebook Open Graph api
      @param path path of Open Graph api
