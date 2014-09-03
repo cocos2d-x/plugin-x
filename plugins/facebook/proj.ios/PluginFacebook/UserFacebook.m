@@ -40,17 +40,24 @@ NSString *_accessToken = @"";
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo{
 }
 - (void) login{
+    [self _loginWithPermission:@[@"public_profile"]];
+}
+-(void) loginWithPermission:(NSString *)permissions{
+    NSArray *permission = [permissions componentsSeparatedByString:@","];
+    [self _loginWithPermission:permission];
+}
+-(void)_loginWithPermission:(NSArray *) permission{
     if (FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+        [FBSession openActiveSessionWithReadPermissions:permission
                                            allowLoginUI:NO
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
              [self sessionStateChanged:session state:state error:error];
              // Retrieve the app delegate
          }];
-
+        
     } else {
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+        [FBSession openActiveSessionWithReadPermissions:permission
                                            allowLoginUI:YES
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
@@ -135,8 +142,8 @@ NSString *_accessToken = @"";
         _accessToken = session.accessTokenData.accessToken;
         _isLogin = true;
         OUTPUT_LOG(@"Session opened");
-        NSString *msg = [ParseUtils MakeJsonStringWithObject:session.accessTokenData.accessToken andKey:@"accessToken"];
-//        [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permission",session.accessTokenData.accessToken,@"accessToken", nil];
+        NSString *msg = [ParseUtils NSDictionaryToNSString:result];
         [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){

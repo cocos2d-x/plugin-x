@@ -116,7 +116,7 @@ void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
 	sharePlugin->callFuncWithParam("dialog", &params, NULL);
 }
 
-void FacebookAgent::request(std::string &path, int method, FBInfo &params, FBCallback cb)
+void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)
 {
 	requestCallbacks.push_back(cb);
 
