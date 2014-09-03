@@ -192,6 +192,13 @@ void TestAds::menuBackCallback(Ref* pSender)
     	PluginManager::getInstance()->unloadPlugin("AdsAdmob");
     	_admob = NULL;
     }
+    
+    if (_facebookAds != NULL)
+    {
+        _facebookAds->hideAds(adInfo);
+        PluginManager::getInstance()->unloadPlugin("AdsFacebook");
+        _facebookAds = NULL;
+    }
 
     if (NULL != _listener)
     {
