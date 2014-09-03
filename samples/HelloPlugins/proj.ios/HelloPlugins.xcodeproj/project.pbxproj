@@ -16,6 +16,8 @@
 		1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AFCDA8116D4A25900906EA6 /* RootViewController.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		20D0F05719B7257F00D850B9 /* libPluginFacebookAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D0F05619B7257F00D850B9 /* libPluginFacebookAds.a */; };
+		20D0F05A19B7263500D850B9 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D0F05919B7263500D850B9 /* FBAudienceNetwork.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		592A55791964AD7D008E4BC7 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 592A55781964AD7D008E4BC7 /* GameController.framework */; };
 		59EB3BE719649CFC0020118E /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA848852182B3AE400858BDD /* libcocos2d iOS.a */; };
@@ -105,6 +107,8 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* HelloPlugins.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloPlugins.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		20D0F05619B7257F00D850B9 /* libPluginFacebookAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPluginFacebookAds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/plugin-x_ios-egxyomsmoitibvgnfdrjhhmbhksq/Build/Products/Debug-iphoneos/libPluginFacebookAds.a"; sourceTree = "<group>"; };
+		20D0F05919B7263500D850B9 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../../../../Documents/FacebookSDK/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		592A55781964AD7D008E4BC7 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		59EB3BE91964A7DD0020118E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -173,6 +177,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20D0F05A19B7263500D850B9 /* FBAudienceNetwork.framework in Frameworks */,
+				20D0F05719B7257F00D850B9 /* libPluginFacebookAds.a in Frameworks */,
 				59EB3BE719649CFC0020118E /* libcocos2d iOS.a in Frameworks */,
 				FAD55505177C170300968F54 /* AdSupport.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
@@ -264,6 +270,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				20D0F05919B7263500D850B9 /* FBAudienceNetwork.framework */,
+				20D0F05619B7257F00D850B9 /* libPluginFacebookAds.a */,
 				592A55781964AD7D008E4BC7 /* GameController.framework */,
 				59EB3BEB1964A86D0020118E /* CoreTelephony.framework */,
 				59EB3BE91964A7DD0020118E /* Security.framework */,
@@ -329,7 +337,7 @@
 		FA848831182B3AE300858BDD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FA848844182B3AE400858BDD /* libcocos2dx Mac.a */,
+				FA848844182B3AE400858BDD /* libcocos2d Mac.a */,
 				FA848852182B3AE400858BDD /* libcocos2d iOS.a */,
 			);
 			name = Products;
@@ -458,7 +466,7 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FA848844182B3AE400858BDD /* libcocos2dx Mac.a */ = {
+		FA848844182B3AE400858BDD /* libcocos2d Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libcocos2d Mac.a";
@@ -542,6 +550,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/giuseppelapenta/Documents/FacebookSDK/FBAudienceNetwork,
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -558,7 +570,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/plugin-x_ios-egxyomsmoitibvgnfdrjhhmbhksq/Build/Products/Debug-iphoneos";
 				OTHER_CFLAGS = "-O2";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
@@ -578,6 +590,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/giuseppelapenta/Documents/FacebookSDK/FBAudienceNetwork,
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -592,7 +608,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/plugin-x_ios-egxyomsmoitibvgnfdrjhhmbhksq/Build/Products/Debug-iphoneos";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
 				SDKROOT = iphoneos;

@@ -32,6 +32,7 @@ using namespace cocos2d::plugin;
 const std::string s_aTestCases[] = {
 	"Admob",
     "Flurry",
+    "Facebook"
 };
 
 const std::string s_aTestPoses[] = {
@@ -72,14 +73,18 @@ bool TestAds::init()
     _listener = new MyAdsListener();
     _admob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
     _flurryAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFlurry"));
+    _facebookAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFacebook"));
+    
     TAdsDeveloperInfo devInfo;
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    devInfo["AdmobID"] = ADMOB_ID_IOS;
+    devInfo["AdmobID"]      = ADMOB_ID_IOS;
     devInfo["FlurryAppKey"] = FLURRY_KEY_IOS;
+    devInfo["FacebookAdID"]   = FACEBOOK_KEY_IOS;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    devInfo["AdmobID"] = ADMOB_ID_ANDROID;
+    devInfo["AdmobID"]      = ADMOB_ID_ANDROID;
     devInfo["FlurryAppKey"] = FLURRY_KEY_ANDROID;
+    devInfo["FacebookAdID"]   = FACEBOOK_KEY_ANDROID;
 #endif
     
     _admob->configDeveloperInfo(devInfo);
@@ -89,6 +94,10 @@ bool TestAds::init()
     _flurryAds->configDeveloperInfo(devInfo);
     _flurryAds->setAdsListener(_listener);
     _flurryAds->setDebugMode(true);
+    
+    _facebookAds->configDeveloperInfo(devInfo);
+    _facebookAds->setAdsListener(_listener);
+    _facebookAds->setDebugMode(true);
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
@@ -154,6 +163,8 @@ bool TestAds::init()
     adInfo["AdmobSizeEnum"] = "1";
     adInfo["FlurryAdsID"] = "BANNER_MAIN_VC";
     adInfo["FlurryAdsSize"] = "2";
+    adInfo["FBAdType"] = "1";
+    adInfo["FBAdSizeEnum"] = "1";
 
     this->addChild(pMenu, 1);
 
@@ -197,16 +208,20 @@ void TestAds::caseChanged(Ref* pSender)
 	std::string strLog = "";
 	switch (_caseItem->getSelectedIndex())
 	{
-	case 0:
-		_ads = _admob;
-		strLog = "Admob";
-		break;
-    case 1:
-        _ads = _flurryAds;
-        strLog = "Flurry Ads";
-        break;
-	default:
-		break;
+        case 0:
+            _ads = _admob;
+            strLog = "Admob";
+            break;
+        case 1:
+            _ads = _flurryAds;
+            strLog = "Flurry Ads";
+            break;
+        case 2:
+            _ads = _facebookAds;
+            strLog = "Facebook Ads";
+            break;
+        default:
+            break;
 	}
 	log("case selected change to : %s", strLog.c_str());
 }

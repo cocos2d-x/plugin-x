@@ -17,6 +17,12 @@
 #define FLURRY_KEY_ANDROID      "SPKFH8KMPGHMMBWRBT5W"
 
 /**
+ @brief Developer information of flurry
+ */
+#define FACEBOOK_KEY_IOS          "281024655411962_324933371021090"
+#define FACEBOOK_KEY_ANDROID      "281024655411962_326911607489933"
+
+/**
  @brief Developer information of Umeng
  */
 #define UMENG_KEY_IOS           "50d2b18c5270152187000097"
