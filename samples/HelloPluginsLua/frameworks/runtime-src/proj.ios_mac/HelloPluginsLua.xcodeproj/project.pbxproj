@@ -164,6 +164,11 @@
 		C08D5D6718E567C6009071A4 /* tp.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5418E567C6009071A4 /* tp.lua */; };
 		C08D5D6818E567C6009071A4 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5518E567C6009071A4 /* url.lua */; };
 		C08D5D6918E567C6009071A4 /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = C08D5D5518E567C6009071A4 /* url.lua */; };
+		C60BEC8C19B75A17002DC2E9 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C60BEC8919B75A00002DC2E9 /* libPluginAdmob.a */; };
+		C60BEC8E19B75A49002DC2E9 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60BEC8D19B75A49002DC2E9 /* AdSupport.framework */; };
+		C60BEC9019B75A57002DC2E9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60BEC8F19B75A57002DC2E9 /* CoreTelephony.framework */; };
+		C60BEC9219B75A67002DC2E9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60BEC9119B75A67002DC2E9 /* MessageUI.framework */; };
+		C60BEC9419B75A74002DC2E9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C60BEC9319B75A74002DC2E9 /* SystemConfiguration.framework */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -329,11 +334,25 @@
 			remoteGlobalIDString = 05A9357D19260E2E00F08DC0;
 			remoteInfo = PluginIAP;
 		};
+		C60BEC8819B75A00002DC2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C60BEC8419B75A00002DC2E9 /* PluginAdmob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FADC44A7176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		C60BEC8A19B75A10002DC2E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C60BEC8419B75A00002DC2E9 /* PluginAdmob.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FADC44A6176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../../../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
+		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1AF4C402178663F200122817 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3EB51526195187AF006966AA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3EB5152A19528284006966AA /* Protos.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protos.pb.cc; sourceTree = "<group>"; };
@@ -457,16 +476,21 @@
 		C07828F518B4D72E00BD2287 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		C07828F618B4D72E00BD2287 /* SimulatorApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorApp.h; sourceTree = "<group>"; };
 		C07828F718B4D72E00BD2287 /* SimulatorApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimulatorApp.mm; sourceTree = "<group>"; };
-		C08D5D4C18E567C6009071A4 /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = "../../../../../../external/lua/luasocket/ftp.lua"; sourceTree = "<group>"; };
-		C08D5D4D18E567C6009071A4 /* headers.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = headers.lua; path = "../../../../../../external/lua/luasocket/headers.lua"; sourceTree = "<group>"; };
-		C08D5D4E18E567C6009071A4 /* http.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = http.lua; path = "../../../../../../external/lua/luasocket/http.lua"; sourceTree = "<group>"; };
-		C08D5D4F18E567C6009071A4 /* ltn12.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ltn12.lua; path = "../../../../../../external/lua/luasocket/ltn12.lua"; sourceTree = "<group>"; };
-		C08D5D5018E567C6009071A4 /* mbox.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mbox.lua; path = "../../../../../../external/lua/luasocket/mbox.lua"; sourceTree = "<group>"; };
-		C08D5D5118E567C6009071A4 /* mime.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mime.lua; path = "../../../../../../external/lua/luasocket/mime.lua"; sourceTree = "<group>"; };
-		C08D5D5218E567C6009071A4 /* smtp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = smtp.lua; path = "../../../../../../external/lua/luasocket/smtp.lua"; sourceTree = "<group>"; };
-		C08D5D5318E567C6009071A4 /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = "../../../../../../external/lua/luasocket/socket.lua"; sourceTree = "<group>"; };
-		C08D5D5418E567C6009071A4 /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = "../../../../../../external/lua/luasocket/tp.lua"; sourceTree = "<group>"; };
-		C08D5D5518E567C6009071A4 /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = "../../../../../../external/lua/luasocket/url.lua"; sourceTree = "<group>"; };
+		C08D5D4C18E567C6009071A4 /* ftp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ftp.lua; path = ../../../../../../external/lua/luasocket/ftp.lua; sourceTree = "<group>"; };
+		C08D5D4D18E567C6009071A4 /* headers.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = headers.lua; path = ../../../../../../external/lua/luasocket/headers.lua; sourceTree = "<group>"; };
+		C08D5D4E18E567C6009071A4 /* http.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = http.lua; path = ../../../../../../external/lua/luasocket/http.lua; sourceTree = "<group>"; };
+		C08D5D4F18E567C6009071A4 /* ltn12.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ltn12.lua; path = ../../../../../../external/lua/luasocket/ltn12.lua; sourceTree = "<group>"; };
+		C08D5D5018E567C6009071A4 /* mbox.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mbox.lua; path = ../../../../../../external/lua/luasocket/mbox.lua; sourceTree = "<group>"; };
+		C08D5D5118E567C6009071A4 /* mime.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mime.lua; path = ../../../../../../external/lua/luasocket/mime.lua; sourceTree = "<group>"; };
+		C08D5D5218E567C6009071A4 /* smtp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = smtp.lua; path = ../../../../../../external/lua/luasocket/smtp.lua; sourceTree = "<group>"; };
+		C08D5D5318E567C6009071A4 /* socket.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = socket.lua; path = ../../../../../../external/lua/luasocket/socket.lua; sourceTree = "<group>"; };
+		C08D5D5418E567C6009071A4 /* tp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tp.lua; path = ../../../../../../external/lua/luasocket/tp.lua; sourceTree = "<group>"; };
+		C08D5D5518E567C6009071A4 /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = ../../../../../../external/lua/luasocket/url.lua; sourceTree = "<group>"; };
+		C60BEC8419B75A00002DC2E9 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = ../../../../../plugins/admob/proj.ios/PluginAdmob.xcodeproj; sourceTree = "<group>"; };
+		C60BEC8D19B75A49002DC2E9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		C60BEC8F19B75A57002DC2E9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
+		C60BEC9119B75A67002DC2E9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		C60BEC9319B75A74002DC2E9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		F293B3C815EB7BE500256477 /* HelloPluginsLua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloPluginsLua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -504,6 +528,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60BEC9419B75A74002DC2E9 /* SystemConfiguration.framework in Frameworks */,
+				C60BEC9219B75A67002DC2E9 /* MessageUI.framework in Frameworks */,
+				C60BEC9019B75A57002DC2E9 /* CoreTelephony.framework in Frameworks */,
+				C60BEC8E19B75A49002DC2E9 /* AdSupport.framework in Frameworks */,
+				C60BEC8C19B75A17002DC2E9 /* libPluginAdmob.a in Frameworks */,
 				979E41A619B583EE004D18C9 /* GameController.framework in Frameworks */,
 				979E417A19B57D2B004D18C9 /* libPluginIAP.a in Frameworks */,
 				979E417919B57D21004D18C9 /* libPluginProtocol.a in Frameworks */,
@@ -785,13 +814,30 @@
 			path = ../Classes/runtime;
 			sourceTree = "<group>";
 		};
+		C60BEC7B19B759C1002DC2E9 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				C60BEC8419B75A00002DC2E9 /* PluginAdmob.xcodeproj */,
+				979E417319B57D11004D18C9 /* PluginIAP.xcodeproj */,
+				979E416D19B57CF7004D18C9 /* PluginProtocol.xcodeproj */,
+			);
+			name = Plugins;
+			sourceTree = "<group>";
+		};
+		C60BEC8519B75A00002DC2E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C60BEC8919B75A00002DC2E9 /* libPluginAdmob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F293B3BD15EB7BE500256477 = {
 			isa = PBXGroup;
 			children = (
-				979E417319B57D11004D18C9 /* PluginIAP.xcodeproj */,
-				979E416D19B57CF7004D18C9 /* PluginProtocol.xcodeproj */,
 				979E414019B5724E004D18C9 /* cocos2d_lua_bindings.xcodeproj */,
 				979E411D19B57219004D18C9 /* cocos2d_libs.xcodeproj */,
+				C60BEC7B19B759C1002DC2E9 /* Plugins */,
 				5023810617EBBCAC00990C9B /* ios */,
 				5023817117EBBE3400990C9B /* mac */,
 				F293BB7C15EB830F00256477 /* Classes */,
@@ -814,6 +860,10 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C60BEC9319B75A74002DC2E9 /* SystemConfiguration.framework */,
+				C60BEC9119B75A67002DC2E9 /* MessageUI.framework */,
+				C60BEC8F19B75A57002DC2E9 /* CoreTelephony.framework */,
+				C60BEC8D19B75A49002DC2E9 /* AdSupport.framework */,
 				979E41A519B583EE004D18C9 /* GameController.framework */,
 				3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */,
 				3EB51526195187AF006966AA /* CFNetwork.framework */,
@@ -898,6 +948,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C60BEC8B19B75A10002DC2E9 /* PBXTargetDependency */,
 				979E417E19B57D3A004D18C9 /* PBXTargetDependency */,
 				979E417C19B57D37004D18C9 /* PBXTargetDependency */,
 				979E415C19B5727A004D18C9 /* PBXTargetDependency */,
@@ -943,6 +994,10 @@
 				{
 					ProductGroup = 979E414119B5724E004D18C9 /* Products */;
 					ProjectRef = 979E414019B5724E004D18C9 /* cocos2d_lua_bindings.xcodeproj */;
+				},
+				{
+					ProductGroup = C60BEC8519B75A00002DC2E9 /* Products */;
+					ProjectRef = C60BEC8419B75A00002DC2E9 /* PluginAdmob.xcodeproj */;
 				},
 				{
 					ProductGroup = 979E417419B57D11004D18C9 /* Products */;
@@ -1058,6 +1113,13 @@
 			fileType = archive.ar;
 			path = libPluginIAP.a;
 			remoteRef = 979E417719B57D11004D18C9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C60BEC8919B75A00002DC2E9 /* libPluginAdmob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginAdmob.a;
+			remoteRef = C60BEC8819B75A00002DC2E9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1299,6 +1361,11 @@
 			isa = PBXTargetDependency;
 			name = PluginIAP;
 			targetProxy = 979E417D19B57D3A004D18C9 /* PBXContainerItemProxy */;
+		};
+		C60BEC8B19B75A10002DC2E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PluginAdmob;
+			targetProxy = C60BEC8A19B75A10002DC2E9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
