@@ -1384,7 +1384,7 @@ int lua_pluginx_protocols_ProtocolSocial_showAchievements(lua_State* tolua_S)
 
     return 0;
 }
-int lua_pluginx_protocols_ProtocolSocial_setCallback(lua_State* tolua_S)
+int lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::plugin::ProtocolSocial* cobj = nullptr;
@@ -1404,7 +1404,7 @@ int lua_pluginx_protocols_ProtocolSocial_setCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolSocial_setCallback'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo'", nullptr);
         return 0;
     }
 #endif
@@ -1412,137 +1412,20 @@ int lua_pluginx_protocols_ProtocolSocial_setCallback(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::function<void (int, std::basic_string<char> &)> arg0;
+        cocos2d::plugin::TSocialDeveloperInfo arg0;
 
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
+        ok &= pluginx::luaval_to_TSocialDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cobj->setCallback(arg0);
+        cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setCallback",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolSocial_setCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_ProtocolSocial_submitScore(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolSocial* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolSocial",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::plugin::ProtocolSocial*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolSocial_submitScore'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 3) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            long arg1;
-            ok &= luaval_to_long(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            std::function<void (int, std::basic_string<char> &)> arg2;
-            do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-
-            if (!ok) { break; }
-            cobj->submitScore(arg0, arg1, arg2);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            const char* arg0;
-            std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp); arg0 = arg0_tmp.c_str();
-
-            if (!ok) { break; }
-            long arg1;
-            ok &= luaval_to_long(tolua_S, 3, &arg1);
-
-            if (!ok) { break; }
-            cobj->submitScore(arg0, arg1);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "submitScore",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolSocial_submitScore'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_ProtocolSocial_getCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolSocial* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolSocial",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::plugin::ProtocolSocial*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolSocial_getCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        std::function<void (int, std::basic_string<char> &)>& ret = cobj->getCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolSocial_getCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo'.",&tolua_err);
 #endif
 
     return 0;
@@ -1561,9 +1444,7 @@ int lua_register_pluginx_protocols_ProtocolSocial(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"ProtocolSocial");
         tolua_function(tolua_S,"showLeaderboard",lua_pluginx_protocols_ProtocolSocial_showLeaderboard);
         tolua_function(tolua_S,"showAchievements",lua_pluginx_protocols_ProtocolSocial_showAchievements);
-        tolua_function(tolua_S,"setCallback",lua_pluginx_protocols_ProtocolSocial_setCallback);
-        tolua_function(tolua_S,"submitScore",lua_pluginx_protocols_ProtocolSocial_submitScore);
-        tolua_function(tolua_S,"getCallback",lua_pluginx_protocols_ProtocolSocial_getCallback);
+        tolua_function(tolua_S,"configDeveloperInfo",lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::plugin::ProtocolSocial).name();
     g_luaType[typeName] = "plugin.ProtocolSocial";
