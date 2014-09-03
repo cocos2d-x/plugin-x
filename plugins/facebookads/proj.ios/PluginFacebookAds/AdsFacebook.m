@@ -50,7 +50,7 @@
     if (self.debug){
         
         // The hash ID is printed to console when running on a device.
-        [self addTestDevice:@"Your device Hash ID"];
+        //[self addTestDevice:@"Your device Hash ID"];
     }
     
     NSString* strType = [info objectForKey:@"FBAdType"];
