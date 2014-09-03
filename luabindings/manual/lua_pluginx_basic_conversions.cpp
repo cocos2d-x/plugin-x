@@ -20,4 +20,14 @@ bool luaval_to_TProductInfo(lua_State *L, int lo, cocos2d::plugin::TProductInfo*
     return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
 }
 
+bool luaval_to_TAdsDeveloperInfo(lua_State *L, int lo, TAdsDeveloperInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
+bool luaval_to_TAdsInfo(lua_State *L, int lo, TAdsInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
 }// namespace pluginx {
