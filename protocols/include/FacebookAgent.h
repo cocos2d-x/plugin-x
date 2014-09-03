@@ -113,7 +113,7 @@ public:
      @param params request parameters
      @param cb callback of request
      */
-    void request(std::string &path, int method, FBInfo &params, FBCallback cb);
+    void api(std::string &path, int method, FBInfo &params, FBCallback cb);
 
     /**
      @brief Notifies the events system that the app has launched & logs an activatedApp event. 

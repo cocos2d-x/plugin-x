@@ -288,9 +288,6 @@
             not_supported = true;
         }
     }
-    else if ([dialog_type isEqualToString:@"apprequests"]) {
-        [self requestDialogWeb:shareInfo];
-    }
     else {
         not_supported = true;
     }
@@ -487,7 +484,7 @@
      }];
 }
 
-- (void) requestDialogWeb: (NSMutableDictionary*) shareInfo
+- (void) appRequest: (NSMutableDictionary*) shareInfo
 {
     NSString *message = [shareInfo objectForKey:@"message"];
     NSString *title = [shareInfo objectForKey:@"title"];

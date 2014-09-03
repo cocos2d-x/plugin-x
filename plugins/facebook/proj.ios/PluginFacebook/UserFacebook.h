@@ -32,6 +32,7 @@
 
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) login;
+- (void) loginWithPermission:(NSString *)permission;
 - (void) logout;
 - (NSNumber *) isLoggedIn;
 - (BOOL) isLogined;
