@@ -1179,56 +1179,6 @@ int lua_register_pluginx_protocols_ProtocolAds(lua_State* tolua_S)
     return 1;
 }
 
-int lua_pluginx_protocols_ProtocolShare_setCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolShare* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolShare",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::plugin::ProtocolShare*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolShare_setCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::function<void (int, std::basic_string<char> &)> arg0;
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-        if(!ok)
-            return 0;
-        cobj->setCallback(arg0);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setCallback",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolShare_setCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_pluginx_protocols_ProtocolShare_onShareResult(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1278,7 +1228,7 @@ int lua_pluginx_protocols_ProtocolShare_onShareResult(lua_State* tolua_S)
 
     return 0;
 }
-int lua_pluginx_protocols_ProtocolShare_getCallback(lua_State* tolua_S)
+int lua_pluginx_protocols_ProtocolShare_configDeveloperInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::plugin::ProtocolShare* cobj = nullptr;
@@ -1298,26 +1248,28 @@ int lua_pluginx_protocols_ProtocolShare_getCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolShare_getCallback'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolShare_configDeveloperInfo'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        cocos2d::plugin::TShareDeveloperInfo arg0;
+
+        ok &= pluginx::luaval_to_TShareDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cocos2d::plugin::ProtocolShare::ProtocolShareCallback ret = cobj->getCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
+        cobj->configDeveloperInfo(arg0);
+        return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCallback",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolShare_getCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolShare_configDeveloperInfo'.",&tolua_err);
 #endif
 
     return 0;
@@ -1334,9 +1286,8 @@ int lua_register_pluginx_protocols_ProtocolShare(lua_State* tolua_S)
     tolua_cclass(tolua_S,"ProtocolShare","plugin.ProtocolShare","plugin.PluginProtocol",nullptr);
 
     tolua_beginmodule(tolua_S,"ProtocolShare");
-        tolua_function(tolua_S,"setCallback",lua_pluginx_protocols_ProtocolShare_setCallback);
         tolua_function(tolua_S,"onShareResult",lua_pluginx_protocols_ProtocolShare_onShareResult);
-        tolua_function(tolua_S,"getCallback",lua_pluginx_protocols_ProtocolShare_getCallback);
+        tolua_function(tolua_S,"configDeveloperInfo",lua_pluginx_protocols_ProtocolShare_configDeveloperInfo);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::plugin::ProtocolShare).name();
     g_luaType[typeName] = "plugin.ProtocolShare";
