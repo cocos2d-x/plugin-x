@@ -29,6 +29,12 @@ THE SOFTWARE.
 USING_NS_CC;
 using namespace cocos2d::plugin;
 
+const std::string s_aTestAdType[] = {
+    
+    "Banner",
+    "Interstitial"
+};
+
 const std::string s_aTestCases[] = {
 	"Admob",
     "Flurry",
@@ -153,6 +159,20 @@ bool TestAds::init()
 	}
 	_posItem->setPosition(posMid + Point(200, 120));
 	pMenu->addChild(_posItem);
+    
+    // type item
+    _typeItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::typeChanged, this),
+                                                   MenuItemFont::create(s_aTestAdType[0].c_str()),
+                                                   NULL);
+    
+    int typeLen = sizeof(s_aTestAdType) / sizeof(std::string);
+    for (int i = 1; i < typeLen; ++i)
+    {
+        _typeItem->getSubItems().pushBack(MenuItemFont::create(s_aTestAdType[i].c_str()));
+    }
+    
+    _typeItem->setPosition(posMid + Point(0,120));
+    pMenu->addChild(_typeItem);
 
 	// init options
 	_ads = _admob;
@@ -238,6 +258,33 @@ void TestAds::posChanged(Ref* pSender)
 	int selectIndex = _posItem->getSelectedIndex();
 	_pos = (ProtocolAds::AdsPos) selectIndex;
 	log("pos selected change to : %d", _pos);
+}
+
+void TestAds::typeChanged(cocos2d::Ref *pSender)
+{
+    int selectedIndex = _typeItem->getSelectedIndex();
+    
+    switch (selectedIndex)
+    {
+        case 0:
+            // Banner
+            // init the AdsInfo
+            adInfo["AdmobType"] = "1";
+            adInfo["FBAdType"] = "1";
+            break;
+        case 1:
+            // Interstitial
+            // init the AdsInfo
+            adInfo["AdmobType"] = "2";
+            adInfo["FBAdType"] = "2";
+            break;
+        default:
+            break;
+    }
+    if (_admob != NULL)
+    {
+        log("type ad changed to : %s", s_aTestAdType[selectedIndex].c_str());
+    }
 }
 
 void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
