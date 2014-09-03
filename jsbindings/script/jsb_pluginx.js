@@ -113,14 +113,14 @@ plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
     callback( at ? plugin.FacebookAgent.CodeSucceed : -1, {"accessToken" : at});
 };
 
-plugin.FacebookAgent.prototype._request = plugin.FacebookAgent.prototype.request;
-plugin.FacebookAgent.prototype.request = function(path, HttpMethod, params, callback){
+plugin.FacebookAgent.prototype._api = plugin.FacebookAgent.prototype.api;
+plugin.FacebookAgent.prototype.api = function(path, HttpMethod, params, callback){
     if(callback == undefined){
        callback = params;
        params = {}; 
     }
 
-    this._request(path, HttpMethod, params, function(code, msg){
+    this._api(path, HttpMethod, params, function(code, msg){
         callback(code, JSON.parse(msg));
     });
 }
