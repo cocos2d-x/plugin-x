@@ -15,6 +15,10 @@ function TestAdsScene:ctor()
     self.admob = plugin.PluginManager:getInstance():loadPlugin("AdsAdmob")
     self.admob:configDeveloperInfo({AdmobID = "ca-app-pub-3940256099942544/2934735716"})
     self.admob:setDebugMode(true)
+    self.admob:setCallback(function(code, info)
+        cclog("%d, %s", code, info)
+    end)
+    self.admob:getCallback()(777, "getCallback test")
 end
 
 function TestAdsScene:createLayerMenu()
