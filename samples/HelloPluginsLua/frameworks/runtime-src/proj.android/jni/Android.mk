@@ -33,7 +33,8 @@ lua/Runtime_android.cpp \
 lua/main.cpp \
 ../../../../../../luabindings/auto/lua_cocos2dx_pluginx_auto.cpp \
 ../../../../../../luabindings/manual/lua_pluginx_basic_conversions.cpp \
-../../../../../../luabindings/manual/lua_pluginx_manual_callback.cpp
+../../../../../../luabindings/manual/lua_pluginx_manual_callback.cpp \
+../../../../../../luabindings/manual/lua_pluginx_manual_protocols.cpp \
 
 
 LOCAL_C_INCLUDES := \
