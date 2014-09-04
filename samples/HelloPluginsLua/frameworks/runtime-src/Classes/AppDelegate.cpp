@@ -6,6 +6,7 @@
 #include "ConfigParser.h"
 #include "lua_cocos2dx_pluginx_auto.hpp"
 #include "lua_pluginx_manual_callback.h"
+#include "lua_pluginx_manual_protocols.h"
 
 using namespace CocosDenshion;
 
@@ -63,6 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_getglobal(luaState, "_G");
     register_all_pluginx_protocols(luaState);
     register_all_pluginx_manual_callback(luaState);
+    register_all_pluginx_manual_protocols(luaState);
     
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())

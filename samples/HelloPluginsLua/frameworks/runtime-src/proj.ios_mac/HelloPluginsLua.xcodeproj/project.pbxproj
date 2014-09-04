@@ -71,6 +71,7 @@
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
 		9759DC7B19B86FFE009987A8 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759DC7819B86FEA009987A8 /* libPluginFacebook.a */; };
 		9759DC7D19B870CD009987A8 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759DC7C19B870CD009987A8 /* FacebookSDK.framework */; };
+		9759DC8019B88119009987A8 /* lua_pluginx_manual_protocols.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9759DC7E19B88119009987A8 /* lua_pluginx_manual_protocols.cpp */; };
 		979E416619B57297004D18C9 /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E413D19B57219004D18C9 /* libbox2d iOS.a */; };
 		979E416719B5729B004D18C9 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E413B19B57219004D18C9 /* libchipmunk iOS.a */; };
 		979E416819B572A0004D18C9 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E413719B57219004D18C9 /* libcocos2dx iOS.a */; };
@@ -460,6 +461,8 @@
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9759DC6B19B86FEA009987A8 /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = ../../../../../plugins/facebook/proj.ios/PluginFacebook.xcodeproj; sourceTree = "<group>"; };
 		9759DC7C19B870CD009987A8 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
+		9759DC7E19B88119009987A8 /* lua_pluginx_manual_protocols.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_pluginx_manual_protocols.cpp; sourceTree = "<group>"; };
+		9759DC7F19B88119009987A8 /* lua_pluginx_manual_protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_pluginx_manual_protocols.h; sourceTree = "<group>"; };
 		979E411D19B57219004D18C9 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		979E414019B5724E004D18C9 /* cocos2d_lua_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_lua_bindings.xcodeproj; path = "../../../../../../cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj"; sourceTree = "<group>"; };
 		979E416D19B57CF7004D18C9 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = ../../../../../protocols/proj.ios/PluginProtocol.xcodeproj; sourceTree = "<group>"; };
@@ -836,6 +839,8 @@
 				979E419019B57E4E004D18C9 /* lua_pluginx_basic_conversions.h */,
 				979E41A719B58552004D18C9 /* lua_pluginx_manual_callback.cpp */,
 				979E41A819B58552004D18C9 /* lua_pluginx_manual_callback.h */,
+				9759DC7E19B88119009987A8 /* lua_pluginx_manual_protocols.cpp */,
+				9759DC7F19B88119009987A8 /* lua_pluginx_manual_protocols.h */,
 			);
 			path = manual;
 			sourceTree = "<group>";
@@ -1369,6 +1374,7 @@
 			files = (
 				3EB5156A1952865D006966AA /* once.cc in Sources */,
 				979E41A919B58552004D18C9 /* lua_pluginx_manual_callback.cpp in Sources */,
+				9759DC8019B88119009987A8 /* lua_pluginx_manual_protocols.cpp in Sources */,
 				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
 				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,

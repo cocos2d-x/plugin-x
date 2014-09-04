@@ -12,9 +12,9 @@ function TestIAPScene.create()
 end
 
 function TestIAPScene:ctor()
-    self.visibleSize = cc.Director:getInstance():getVisibleSize()
-    self.origin = cc.Director:getInstance():getVisibleOrigin()
-    self.schedulerID = nil
+    self.iap = plugin.PluginManager:getInstance():loadPlugin("IOSIAP")
+    self.iap:setDebugMode(true)
+    self.iap:callFuncWithParam("requestProducts", "YOUR_PRODUCT_ID")
 end
 
 function TestIAPScene:createLayerMenu()
@@ -23,12 +23,11 @@ function TestIAPScene:createLayerMenu()
         cc.Director:getInstance():replaceScene(require("HelloWorldScene").create())
     end)
     local pay = cc.MenuItemFont:create("pay")
-    pay:setPositionY(100)
+    pay:setPositionY(50)
     pay:registerScriptTapHandler(function()
-        local iap = plugin.PluginManager:getInstance():loadPlugin("IOSIAP")
-        iap:setDebugMode(true)
-        iap:configDeveloperInfo({hoge = "foo"})
-        iap:payForProduct({productId = "hoge"}, function(ret, products) print(string.format("%d, %s", ret, products)) end)
+        self.iap:payForProduct({productId = "YOUR_PRODUCT_ID"}, function(ret, products)
+            cclog("%d, %s", ret, products)
+        end)
     end)
     return cc.Menu:create(back, pay)
 end
