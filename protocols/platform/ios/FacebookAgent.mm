@@ -84,7 +84,7 @@ namespace cocos2d{namespace plugin{
         PluginParam _params(params);
         PluginParam _cbIndex((int)(requestCallbacks.size() - 1));
         
-        agentManager->getUserPlugin()->callFuncWithParam("request", &_path, &_method, &_params, &_cbIndex, NULL);
+        agentManager->getUserPlugin()->callFuncWithParam("api", &_path, &_method, &_params, &_cbIndex, NULL);
     }
     void FacebookAgent::appRequest(FBInfo& info, FBCallback cb)
     {
@@ -99,7 +99,7 @@ namespace cocos2d{namespace plugin{
     }
     void FacebookAgent::publishInstall()
     {
-        agentManager->getUserPlugin()->callFuncWithParam("publishInstall", NULL);
+        agentManager->getUserPlugin()->callFuncWithParam("activateApp", NULL);
     }
     
     void FacebookAgent::logEvent(std::string& eventName)
