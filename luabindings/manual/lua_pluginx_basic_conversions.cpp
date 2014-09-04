@@ -50,4 +50,9 @@ bool luaval_to_TAchievementInfo(lua_State *L, int lo, cocos2d::plugin::TAchievem
     return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
 }
 
+bool luaval_to_TUserDeveloperInfo(lua_State *L, int lo, TUserDeveloperInfo* outValue)
+{
+    return luaval_to_TIAPDeveloperInfo(L, lo, outValue);
+}
+
 }// namespace pluginx {
