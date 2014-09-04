@@ -140,7 +140,7 @@ plugin.FacebookAgent.CODE_SUCCEED = 0;
 
 plugin.FacebookAgent.prototype.logout = function(callback){
     this._logout();
-    callback(2, {"isLoggedIn" : false});
+    callback(0, {"isLoggedIn" : false});
 };
 
 plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
@@ -151,18 +151,18 @@ plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
 };
 plugin.FacebookAgent.prototype.getPermissionList = function(callback){
     var list = this._getPermissionList();
-    callback( list ? plugin.FacebookAgent.CodeSucceed : -1, JSON.parse(list));
+    callback( list ? plugin.FacebookAgent.CODE_SUCCEED : -1, JSON.parse(list));
 };
 plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
     var at = this.getAccessToken();
-    callback( at ? plugin.FacebookAgent.CodeSucceed : -1, {"accessToken" : at});
+    callback( at ? plugin.FacebookAgent.CODE_SUCCEED : -1, {"accessToken" : at});
 };
 
 plugin.FacebookAgent.prototype._api = plugin.FacebookAgent.prototype.api;
 plugin.FacebookAgent.prototype.api = function(path, HttpMethod, params, callback){
     if(callback == undefined){
        callback = params;
-       params = {}; 
+       params = {};
     }
 
     this._api(path, HttpMethod, params, function(code, msg){
