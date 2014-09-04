@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15E270A519B8482600BDBFD7 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E270A419B8482600BDBFD7 /* libPluginFacebook.a */; };
+		15E270A819B849C400BDBFD7 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E270A719B849C400BDBFD7 /* FacebookSDK.framework */; };
+		15E270AE19B84C7200BDBFD7 /* TestFacebookUserScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E270AC19B84C7200BDBFD7 /* TestFacebookUserScene.cpp */; };
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
 		1AC3624B16D4A1E8000847F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624516D4A1E8000847F2 /* main.m */; };
 		1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */; };
@@ -90,6 +93,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15E270A419B8482600BDBFD7 /* libPluginFacebook.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPluginFacebook.a; path = "../../../plugins/facebook/proj.ios/build/Debug-iphoneos/libPluginFacebook.a"; sourceTree = "<group>"; };
+		15E270A719B849C400BDBFD7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
+		15E270AC19B84C7200BDBFD7 /* TestFacebookUserScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookUserScene.cpp; sourceTree = "<group>"; };
+		15E270AD19B84C7200BDBFD7 /* TestFacebookUserScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookUserScene.h; sourceTree = "<group>"; };
 		1AC3624216D4A1E8000847F2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		1AC3624316D4A1E8000847F2 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		1AC3624516D4A1E8000847F2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
@@ -173,6 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E270A819B849C400BDBFD7 /* FacebookSDK.framework in Frameworks */,
+				15E270A519B8482600BDBFD7 /* libPluginFacebook.a in Frameworks */,
 				59EB3BE719649CFC0020118E /* libcocos2d iOS.a in Frameworks */,
 				FAD55505177C170300968F54 /* AdSupport.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
@@ -223,6 +232,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15E270AB19B84C7200BDBFD7 /* TestFacebookUser */,
 				FADBF89D179E559900F59B1D /* TestSocial */,
 				FA3D264717867219009B234A /* TestIAPOnline */,
 				FAD5550E177D1EE900968F54 /* TestIAP */,
@@ -238,6 +248,16 @@
 			);
 			name = Classes;
 			path = ../classes;
+			sourceTree = "<group>";
+		};
+		15E270AB19B84C7200BDBFD7 /* TestFacebookUser */ = {
+			isa = PBXGroup;
+			children = (
+				15E270AC19B84C7200BDBFD7 /* TestFacebookUserScene.cpp */,
+				15E270AD19B84C7200BDBFD7 /* TestFacebookUserScene.h */,
+			);
+			name = TestFacebookUser;
+			path = ../Classes/TestFacebookUser;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -264,6 +284,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15E270A719B849C400BDBFD7 /* FacebookSDK.framework */,
+				15E270A419B8482600BDBFD7 /* libPluginFacebook.a */,
 				592A55781964AD7D008E4BC7 /* GameController.framework */,
 				59EB3BEB1964A86D0020118E /* CoreTelephony.framework */,
 				59EB3BE91964A7DD0020118E /* Security.framework */,
@@ -329,7 +351,7 @@
 		FA848831182B3AE300858BDD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FA848844182B3AE400858BDD /* libcocos2dx Mac.a */,
+				FA848844182B3AE400858BDD /* libcocos2d Mac.a */,
 				FA848852182B3AE400858BDD /* libcocos2d iOS.a */,
 			);
 			name = Products;
@@ -458,7 +480,7 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FA848844182B3AE400858BDD /* libcocos2dx Mac.a */ = {
+		FA848844182B3AE400858BDD /* libcocos2d Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libcocos2d Mac.a";
@@ -517,6 +539,7 @@
 				FAD5551B177D1EE900968F54 /* TestUserScene.cpp in Sources */,
 				FA3D264D17867219009B234A /* MyIAPOLManager.cpp in Sources */,
 				FA3D264E17867219009B234A /* TestIAPOnlineScene.cpp in Sources */,
+				15E270AE19B84C7200BDBFD7 /* TestFacebookUserScene.cpp in Sources */,
 				FADBF8A2179E559900F59B1D /* MySocialManager.cpp in Sources */,
 				FADBF8A3179E559900F59B1D /* TestSocialScene.cpp in Sources */,
 			);
@@ -542,6 +565,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -558,7 +585,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/build/Debug-iphoneos";
 				OTHER_CFLAGS = "-O2";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
@@ -578,6 +605,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -592,7 +623,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/build/Debug-iphoneos";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
 				SDKROOT = iphoneos;
