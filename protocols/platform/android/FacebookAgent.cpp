@@ -75,6 +75,14 @@ void FacebookAgent::login(FBCallback cb)
 	agentManager->getUserPlugin()->login(cb);
 }
 
+void FacebookAgent::login(std::string& permissions, FBCallback cb)
+{
+	auto userPlugin = agentManager->getUserPlugin();
+	userPlugin->setCallback(cb);
+	PluginParam _permissions(permissions.c_str());
+	userPlugin->callFuncWithParam("login", &_permissions, NULL);
+}
+
 void FacebookAgent::logout()
 {
 	agentManager->getUserPlugin()->logout();
@@ -88,14 +96,6 @@ bool FacebookAgent::isLoggedIn()
 std::string FacebookAgent::getPermissionList()
 {
     return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
-}
-    
-void FacebookAgent::requestPermissions(std::string permissions, FBCallback cb)
-{
-	auto userPlugin = agentManager->getUserPlugin();
-	userPlugin->setCallback(cb);
-	PluginParam _permissions(permissions.c_str());
-	userPlugin->callFuncWithParam("requestPermissions", &_permissions, NULL);
 }
 
 std::string FacebookAgent::getAccessToken()
@@ -116,7 +116,7 @@ void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
 	sharePlugin->callFuncWithParam("dialog", &params, NULL);
 }
 
-void FacebookAgent::request(std::string &path, int method, FBInfo &params, FBCallback cb)
+void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)
 {
 	requestCallbacks.push_back(cb);
 
@@ -165,4 +165,13 @@ void FacebookAgent::logEvent(std::string& eventName, float valueToSum, FBInfo& p
 	PluginParam _params(parameters);
 	agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_valueToSum, &_params, NULL);
 }
+
+void FacebookAgent::appRequest(FBInfo& info, FBCallback cb)
+{
+	auto sharePlugin = agentManager->getSharePlugin();
+	sharePlugin->setCallback(cb);
+	PluginParam params(info);
+	sharePlugin->callFuncWithParam("appRequest", &params, NULL);
+}
+
 }}

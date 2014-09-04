@@ -32,6 +32,7 @@
 
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) login;
+- (void) loginWithPermission:(NSString *)permission;
 - (void) logout;
 - (NSNumber *) isLoggedIn;
 - (BOOL) isLogined;
@@ -42,7 +43,7 @@
 - (NSString *)getUserId;
 - (NSString *)getAccessToken;
 -(NSString *) getPermissionList;
--(void)requestPermissions:(NSString *)permission;
+//-(void)requestPermissions:(NSString *)permission;
 -(void)request:(NSDictionary *)params;
 -(void)publishInstall;
 -(void)logEvent:(NSMutableDictionary*) logInfo;
