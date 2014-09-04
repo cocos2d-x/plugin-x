@@ -2344,6 +2344,22 @@ bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, j
 	return false;
 }
 
+bool js_pluginx_protocols_FacebookAgent_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_getSDKVersion : Invalid Native Object");
+
+	if (argc == 0) {
+		std::string version = cobj->getSDKVersion();
+		JS_SET_RVAL(cx, vp, std_string_to_jsval(cx, version));
+		return true;
+	}
+	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getSDKVersion : wrong number of arguments");
+	return false;
+}
+
 void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global)
 {
 	jsb_cocos2d_plugin_FacebookAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -2375,6 +2391,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("api", js_pluginx_protocols_FacebookAgent_api, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("activateApp", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logEvent", js_pluginx_protocols_FacebookAgent_logEvent, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("getSDKVersion", js_pluginx_protocols_FacebookAgent_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
