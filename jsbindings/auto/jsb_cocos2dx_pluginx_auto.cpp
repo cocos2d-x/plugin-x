@@ -2275,7 +2275,7 @@ bool js_pluginx_protocols_FacebookAgent_publishInstall(JSContext *cx, uint32_t a
 	cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_publishInstall : Invalid Native Object");
 	if (argc == 0) {
-		cobj->publishInstall();
+		cobj->activateApp();
 		JS_SET_RVAL(cx, vp, JSVAL_VOID);
 		return true;
 	}
@@ -2373,7 +2373,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("appRequest", js_pluginx_protocols_FacebookAgent_appRequest, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("_getPermissionList", js_pluginx_protocols_FacebookAgent_getPermissionList, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("api", js_pluginx_protocols_FacebookAgent_api, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-		JS_FN("publishInstall", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+		JS_FN("activateApp", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logEvent", js_pluginx_protocols_FacebookAgent_logEvent, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

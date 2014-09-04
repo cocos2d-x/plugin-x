@@ -33,6 +33,7 @@ import java.util.Hashtable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.AppEventsLogger;
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.LoggingBehavior;
@@ -260,8 +261,8 @@ public class UserFacebook implements InterfaceUser{
     }
     
     public void publishInstall(){
-//    	AppEventsLogger.activateApp(mContext);
-    	com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
+   	    AppEventsLogger.activateApp(mContext);
+    	// com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
     }
     
     public void logEvent(String eventName){

@@ -118,7 +118,7 @@ public:
     /**
      @brief Notifies the events system that the app has launched & logs an activatedApp event. 
     */
-    void publishInstall();
+    void activateApp();
 
     /**
      @brief Log an app event with the specified name, supplied value, and set of parameters.
@@ -128,6 +128,10 @@ public:
     void logEvent(std::string& eventName, FBInfo& parameters);
     void logEvent(std::string& eventName, float valueToSum, FBInfo& parameters);
 
+    /*
+     @breif return the version of Facebook SDK for Cocos 
+     */
+    std::string getSDKVersion();
 	
 	FBCallback getRequestCallback(int index);
 private:
