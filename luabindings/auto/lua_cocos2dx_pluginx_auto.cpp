@@ -1452,7 +1452,7 @@ int lua_register_pluginx_protocols_ProtocolSocial(lua_State* tolua_S)
     return 1;
 }
 
-int lua_pluginx_protocols_ProtocolUser_setCallback(lua_State* tolua_S)
+int lua_pluginx_protocols_ProtocolUser_configDeveloperInfo(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::plugin::ProtocolUser* cobj = nullptr;
@@ -1472,7 +1472,7 @@ int lua_pluginx_protocols_ProtocolUser_setCallback(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolUser_setCallback'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolUser_configDeveloperInfo'", nullptr);
         return 0;
     }
 #endif
@@ -1480,121 +1480,20 @@ int lua_pluginx_protocols_ProtocolUser_setCallback(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::function<void (int, std::basic_string<char> &)> arg0;
+        cocos2d::plugin::TUserDeveloperInfo arg0;
 
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
+        ok &= pluginx::luaval_to_TUserDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
             return 0;
-        cobj->setCallback(arg0);
+        cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setCallback",argc, 1);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_setCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_ProtocolUser_logout(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolUser* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolUser",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::plugin::ProtocolUser*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolUser_logout'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            std::function<void (int, std::basic_string<char> &)> arg0;
-            do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-
-            if (!ok) { break; }
-            cobj->logout(arg0);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 0) {
-            cobj->logout();
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "logout",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_logout'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_ProtocolUser_getCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolUser* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolUser",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::plugin::ProtocolUser*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolUser_getCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        std::function<void (int, std::basic_string<char> &)>& ret = cobj->getCallback();
-        #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getCallback",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_getCallback'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_configDeveloperInfo'.",&tolua_err);
 #endif
 
     return 0;
@@ -1639,59 +1538,6 @@ int lua_pluginx_protocols_ProtocolUser_isLoggedIn(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_isLoggedIn'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_ProtocolUser_login(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::ProtocolUser* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.ProtocolUser",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::plugin::ProtocolUser*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_ProtocolUser_login'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 1) {
-            std::function<void (int, std::basic_string<char> &)> arg0;
-            do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-
-            if (!ok) { break; }
-            cobj->login(arg0);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 0) {
-            cobj->login();
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "login",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_ProtocolUser_login'.",&tolua_err);
 #endif
 
     return 0;
@@ -1796,11 +1642,8 @@ int lua_register_pluginx_protocols_ProtocolUser(lua_State* tolua_S)
     tolua_cclass(tolua_S,"ProtocolUser","plugin.ProtocolUser","plugin.PluginProtocol",nullptr);
 
     tolua_beginmodule(tolua_S,"ProtocolUser");
-        tolua_function(tolua_S,"setCallback",lua_pluginx_protocols_ProtocolUser_setCallback);
-        tolua_function(tolua_S,"logout",lua_pluginx_protocols_ProtocolUser_logout);
-        tolua_function(tolua_S,"getCallback",lua_pluginx_protocols_ProtocolUser_getCallback);
+        tolua_function(tolua_S,"configDeveloperInfo",lua_pluginx_protocols_ProtocolUser_configDeveloperInfo);
         tolua_function(tolua_S,"isLoggedIn",lua_pluginx_protocols_ProtocolUser_isLoggedIn);
-        tolua_function(tolua_S,"login",lua_pluginx_protocols_ProtocolUser_login);
         tolua_function(tolua_S,"getSessionID",lua_pluginx_protocols_ProtocolUser_getSessionID);
         tolua_function(tolua_S,"getAccessToken",lua_pluginx_protocols_ProtocolUser_getAccessToken);
     tolua_endmodule(tolua_S);

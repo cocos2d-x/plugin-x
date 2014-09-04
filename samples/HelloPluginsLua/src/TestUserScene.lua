@@ -16,7 +16,15 @@ function TestUserScene:createLayerMenu()
     back:registerScriptTapHandler(function()
         cc.Director:getInstance():replaceScene(require("HelloWorldScene").create())
     end)
-    return cc.Menu:create(back)
+    local login = cc.MenuItemFont:create("login")
+    login:registerScriptTapHandler(function()
+        local facebook = plugin.PluginManager:getInstance():loadPlugin("UserFacebook")
+        facebook:login(function(code, mes)
+            cclog("%d, %s", code, msg)
+        end)
+    end)
+    login:setPosition(0, 50)
+    return cc.Menu:create(back, login)
 end
 
 return TestUserScene
