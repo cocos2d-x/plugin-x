@@ -5,19 +5,14 @@
 -- @parent_module plugin
 
 --------------------------------
--- @function [parent=#ProtocolShare] setCallback 
--- @param self
--- @param #function func
-        
---------------------------------
 -- @function [parent=#ProtocolShare] onShareResult 
 -- @param self
 -- @param #int shareresultcode
 -- @param #char char
         
 --------------------------------
--- @function [parent=#ProtocolShare] getCallback 
+-- @function [parent=#ProtocolShare] configDeveloperInfo 
 -- @param self
--- @return function#function ret (return value: function)
+-- @param #map_table map
         
 return nil

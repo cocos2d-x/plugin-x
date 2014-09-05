@@ -5,34 +5,15 @@
 -- @parent_module plugin
 
 --------------------------------
--- @function [parent=#ProtocolUser] setCallback 
+-- @function [parent=#ProtocolUser] configDeveloperInfo 
 -- @param self
--- @param #function func
-        
---------------------------------
--- @overload self, function         
--- @overload self         
--- @function [parent=#ProtocolUser] logout
--- @param self
--- @param #function func
-
---------------------------------
--- @function [parent=#ProtocolUser] getCallback 
--- @param self
--- @return function#function ret (return value: function)
+-- @param #map_table map
         
 --------------------------------
 -- @function [parent=#ProtocolUser] isLoggedIn 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
---------------------------------
--- @overload self, function         
--- @overload self         
--- @function [parent=#ProtocolUser] login
--- @param self
--- @param #function func
-
 --------------------------------
 -- @function [parent=#ProtocolUser] getSessionID 
 -- @param self

@@ -14,22 +14,8 @@
 -- @param self
         
 --------------------------------
--- @function [parent=#ProtocolSocial] setCallback 
+-- @function [parent=#ProtocolSocial] configDeveloperInfo 
 -- @param self
--- @param #function func
-        
---------------------------------
--- @overload self, char, long, function         
--- @overload self, char, long         
--- @function [parent=#ProtocolSocial] submitScore
--- @param self
--- @param #char char
--- @param #long long
--- @param #function func
-
---------------------------------
--- @function [parent=#ProtocolSocial] getCallback 
--- @param self
--- @return function#function ret (return value: function)
+-- @param #map_table map
         
 return nil
