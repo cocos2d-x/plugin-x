@@ -101,7 +101,7 @@ NSString *_accessToken = @"";
 - (NSString*) getPluginVersion{
     return @"";
 }
--(void)publishInstall{
+-(void)activateApp{
     [FBAppEvents activateApp];
 }
 -(void)logEventWithName:(NSString*) eventName{
@@ -196,7 +196,7 @@ NSString *_accessToken = @"";
                                      }];
 }
 
--(void)request:(NSMutableDictionary *)params{
+-(void)api:(NSMutableDictionary *)params{
     NSString *graphPath = [params objectForKey:@"Param1"];
     int methodID = [[params objectForKey:@"Param2"] intValue];
     NSString * method = methodID == 0? @"GET":methodID == 1?@"POST":@"DELETE";

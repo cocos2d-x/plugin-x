@@ -44,8 +44,8 @@
 - (NSString *)getAccessToken;
 -(NSString *) getPermissionList;
 //-(void)requestPermissions:(NSString *)permission;
--(void)request:(NSDictionary *)params;
--(void)publishInstall;
+-(void)api:(NSDictionary *)params;
+-(void)activateApp;
 -(void)logEvent:(NSMutableDictionary*) logInfo;
 -(void)logEventWithName:(NSString*) eventName;
 @end

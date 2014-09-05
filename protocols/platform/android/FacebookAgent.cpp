@@ -133,9 +133,9 @@ FacebookAgent::FBCallback FacebookAgent::getRequestCallback(int index)
 	return requestCallbacks[index];
 }
 
-void FacebookAgent::publishInstall()
+void FacebookAgent::activateApp()
 {
-	agentManager->getUserPlugin()->callFuncWithParam("publishInstall", NULL);
+	agentManager->getUserPlugin()->callFuncWithParam("activateApp", NULL);
 }
 
 void FacebookAgent::logEvent(std::string& eventName)
@@ -174,4 +174,8 @@ void FacebookAgent::appRequest(FBInfo& info, FBCallback cb)
 	sharePlugin->callFuncWithParam("appRequest", &params, NULL);
 }
 
+std::string FacebookAgent::getSDKVersion()
+{
+	return std::string("Facebook SDK beta2");
+}
 }}
