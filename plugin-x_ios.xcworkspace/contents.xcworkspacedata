@@ -5,6 +5,9 @@
       location = "container:"
       name = "plugins">
       <FileRef
+         location = "group:plugins/facebookads/proj.ios/PluginFacebookAds.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:protocols/proj.ios/PluginProtocol.xcodeproj">
       </FileRef>
       <FileRef
