@@ -99,3 +99,4 @@ plugins/punchbox*
 plugins/touchpay*
 samplesPrivate*
 userconf.ini
+samples/HelloPluginsLua/runtime
