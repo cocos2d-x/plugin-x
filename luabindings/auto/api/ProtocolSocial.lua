@@ -5,35 +5,17 @@
 -- @parent_module plugin
 
 --------------------------------
--- 
 -- @function [parent=#ProtocolSocial] showLeaderboard 
 -- @param self
--- @param #char leaderboardID
+-- @param #char char
         
 --------------------------------
--- 
 -- @function [parent=#ProtocolSocial] showAchievements 
 -- @param self
         
 --------------------------------
--- 
--- @function [parent=#ProtocolSocial] setCallback 
+-- @function [parent=#ProtocolSocial] configDeveloperInfo 
 -- @param self
--- @param #function cb
-        
---------------------------------
--- @overload self, char, long, function         
--- @overload self, char, long         
--- @function [parent=#ProtocolSocial] submitScore
--- @param self
--- @param #char leadboardID
--- @param #long score
--- @param #function cb
-
---------------------------------
--- 
--- @function [parent=#ProtocolSocial] getCallback 
--- @param self
--- @return function#function ret (return value: function)
+-- @param #map_table map
         
 return nil

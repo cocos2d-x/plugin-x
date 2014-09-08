@@ -40,24 +40,20 @@ NSString *_accessToken = @"";
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo{
 }
 - (void) login{
-    if (FBSession.activeSession.state == FBSessionStateOpen || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
-                                           allowLoginUI:NO
-                                      completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             [self sessionStateChanged:session state:state error:error];
-             // Retrieve the app delegate
-         }];
-
-    } else {
-        [FBSession openActiveSessionWithReadPermissions:@[@"public_profile"]
+    [self _loginWithPermission:@[@"public_profile"]];
+}
+-(void) loginWithPermission:(NSString *)permissions{
+    NSArray *permission = [permissions componentsSeparatedByString:@","];
+    [self _loginWithPermission:permission];
+}
+-(void)_loginWithPermission:(NSArray *) permission{
+        [FBSession openActiveSessionWithReadPermissions:permission
                                            allowLoginUI:YES
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
              [self sessionStateChanged:session state:state error:error];
              // Retrieve the app delegate
          }];
-    }
 }
 - (void) logout{
     if (FBSession.activeSession.state == FBSessionStateOpen
@@ -105,7 +101,7 @@ NSString *_accessToken = @"";
 - (NSString*) getPluginVersion{
     return @"";
 }
--(void)publishInstall{
+-(void)activateApp{
     [FBAppEvents activateApp];
 }
 -(void)logEventWithName:(NSString*) eventName{
@@ -135,8 +131,8 @@ NSString *_accessToken = @"";
         _accessToken = session.accessTokenData.accessToken;
         _isLogin = true;
         OUTPUT_LOG(@"Session opened");
-        NSString *msg = [ParseUtils MakeJsonStringWithObject:session.accessTokenData.accessToken andKey:@"accessToken"];
-//        [UserWrapper onPermissionsResult:self withRet:kPermissionFailed withMsg:msg];
+        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permissions",session.accessTokenData.accessToken,@"accessToken", nil];
+        NSString *msg = [ParseUtils NSDictionaryToNSString:result];
         [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
@@ -200,7 +196,7 @@ NSString *_accessToken = @"";
                                      }];
 }
 
--(void)request:(NSMutableDictionary *)params{
+-(void)api:(NSMutableDictionary *)params{
     NSString *graphPath = [params objectForKey:@"Param1"];
     int methodID = [[params objectForKey:@"Param2"] intValue];
     NSString * method = methodID == 0? @"GET":methodID == 1?@"POST":@"DELETE";

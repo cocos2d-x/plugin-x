@@ -44,7 +44,6 @@ import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
-import com.facebook.model.GraphObject;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -107,12 +106,54 @@ public class UserFacebook implements InterfaceUser{
                 if (!session.isOpened() && !session.isClosed()) {
                     OpenRequest request = new Session.OpenRequest(mContext);
                     request.setCallback(statusCallback);
-                    //request.setPermissions(Arrays.asList("publish_actions"));
                     session.openForRead(request);
-                    //session.openForPublish(new Session.OpenRequest(mContext).setCallback(statusCallback));
                 } else {
                     Session.openActiveSession(mContext, true, statusCallback);
                 }
+            } 
+        });
+    }
+    
+    public void login(final String permissions){
+    	        
+    	PluginWrapper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                String[] permissionArray = permissions.split(",");
+                boolean publishPermission = false;
+                for (int i = 0; i < permissionArray.length; i++) {
+                    if (allPublishPermissions.contains(permissionArray[i])) {
+                        publishPermission = true;
+                        break;
+                    }
+                }
+                
+                Session session = Session.getActiveSession();
+                if(session.isOpened()){
+                	if(session.getPermissions().containsAll(Arrays.asList(permissionArray))){
+                		LogD("login called when use is already connected");
+                	}else{
+                		NewPermissionsRequest newPermissionsRequest = new NewPermissionsRequest(mContext, Arrays.asList(permissionArray));
+                		newPermissionsRequest.setCallback(statusCallback);
+                		if(publishPermission)
+                			session.requestNewPublishPermissions(newPermissionsRequest);
+                		else
+                			session.requestNewReadPermissions(newPermissionsRequest);
+                	}
+                }else{
+                	if (!session.isClosed()) {
+                        OpenRequest request = new Session.OpenRequest(mContext);
+                        request.setCallback(statusCallback);
+                        request.setPermissions(Arrays.asList(permissionArray));
+                        if(publishPermission)
+                        	session.openForPublish(request);
+                        else
+                        	session.openForRead(request);
+                    } else {
+                        Session.openActiveSession(mContext, true, Arrays.asList(permissionArray), statusCallback);
+                    }
+                }
+                
             } 
         });
     }
@@ -172,28 +213,6 @@ public class UserFacebook implements InterfaceUser{
     	return buffer.toString();
     }
     
-    public void requestPermissions(String permissions){
-        
-        String[] permissonArray = permissions.split(",");
-        boolean publishPermission = false;
-        for (int i = 0; i < permissonArray.length; i++) {
-            if (allPublishPermissions.contains(permissonArray[i])) {
-                publishPermission = true;
-                break;
-            }
-        }
-        
-
-        NewPermissionsRequest newPermissionsRequest = new NewPermissionsRequest(mContext, Arrays.asList(permissonArray));
-        newPermissionsRequest.setCallback(statusCallback);
-        if(publishPermission){
-            Session.getActiveSession().requestNewPublishPermissions(newPermissionsRequest);    
-        }else{
-            Session.getActiveSession().requestNewReadPermissions(newPermissionsRequest);
-        }
-        
-    }
-    
     public void request(final JSONObject info /*String path, int method, JSONObject params, int nativeCallback*/ ){
         PluginWrapper.runOnMainThread(new Runnable(){
 
@@ -241,8 +260,9 @@ public class UserFacebook implements InterfaceUser{
                 
     }
     
-    public void publishInstall(){
-    	AppEventsLogger.activateApp(mContext);
+    public void activateApp(){
+   	    AppEventsLogger.activateApp(mContext);
+    	// com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
     }
     
     public void logEvent(String eventName){
@@ -298,13 +318,7 @@ public class UserFacebook implements InterfaceUser{
             if(false == isLogined){
                 if(SessionState.OPENED == state){
                     isLogined = true;
-                    
-                    StringBuffer successMessage = new StringBuffer();
-                    successMessage.append("{\"accessToken\":\"")
-				                    .append(session.getAccessToken())
-				                    .append("\"}");
-                    
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, successMessage.toString());  
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, getSessionMessage(session));  
                 }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){                 
                 	UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "login failed"));
                 }
@@ -312,18 +326,7 @@ public class UserFacebook implements InterfaceUser{
             }
             else{
                 if(SessionState.OPENED_TOKEN_UPDATED == state){
-                	StringBuffer permissionBuffer = new StringBuffer();
-                	permissionBuffer.append("{\"permissions\":[");
-                	List<String> list = session.getActiveSession().getPermissions();
-            		for(int i = 0; i < list.size(); ++i){
-            			permissionBuffer.append("\"")
-            					.append(list.get(i))
-            					.append("\"");
-            			if(i != list.size() - 1)
-            				permissionBuffer.append(",");
-            		}
-				    permissionBuffer.append("]}");
-                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, permissionBuffer.toString());
+                    UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, getSessionMessage(session));
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
                     isLogined = false;
@@ -331,6 +334,23 @@ public class UserFacebook implements InterfaceUser{
                 }                   
             }
         }
+    }
+    
+    private String getSessionMessage(Session session){
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("{\"accessToken\":\"").append(session.getAccessToken()).append("\",");
+    	buffer.append("\"permissions\":[");
+    	List<String> list = session.getPermissions();
+		for(int i = 0; i < list.size(); ++i){
+			buffer.append("\"")
+					.append(list.get(i))
+					.append("\"");
+			if(i != list.size() - 1)
+				buffer.append(",");
+		}
+		buffer.append("]}");
+		System.out.println(buffer.toString());
+    	return buffer.toString();
     }
     
     private String getErrorMessage(Exception exception, String message){

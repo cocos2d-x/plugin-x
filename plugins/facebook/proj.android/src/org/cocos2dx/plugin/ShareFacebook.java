@@ -236,6 +236,21 @@ public class ShareFacebook implements InterfaceShare{
 									.build();
 		FacebookWrapper.track(dialog.present());
 	}
+	public void appRequest(final JSONObject info){
+		PluginWrapper.runOnMainThread(new Runnable(){
+
+			@Override
+			public void run() {
+				try{
+					WebRequestDialog(info);
+				}catch(JSONException e){
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+	}
 	
 	private void WebRequestDialog(JSONObject info) throws JSONException{
 		WebDialog dialog = new WebDialog.RequestsDialogBuilder(mContext)
