@@ -7,6 +7,7 @@
 #include "TestUserScene.h"
 #include "TestSocialScene.h"
 #include "TestFacebookUserScene.h"
+#include "TestFacebookShare.h"
 
 USING_NS_CC;
 
@@ -101,6 +102,7 @@ void HelloWorld::menuCallback(Ref* pSender)
         newScene = TestFacebookUser::scene();
         break;
     case 4:
+        newScene = TestFacebookShare::scene();
         break;
     case 5:
         newScene = TestIAP::scene();

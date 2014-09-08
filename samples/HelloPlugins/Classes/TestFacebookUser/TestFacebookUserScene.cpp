@@ -154,42 +154,68 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         break;
     case TAG_FB_LOGOUT:
         {
-
+            FacebookAgent::getInstance()->logout();
+            callbackInfo->setString("FacebookAgent: User logout succeed");
         }
         break;
     case TAG_FB_GETUID:
         {
-
+            FacebookAgent::FBInfo params;
+            std::string path = "/me";
+            FacebookAgent::getInstance()->request(path, FacebookAgent::HttpMethod::Get, params, [=](int ret, std::string& msg){
+                    callbackInfo->setString(msg.c_str());
+            });
         }
         break;
     case TAG_FB_GETTOKEN:
         {
-            
+            std::string token = FacebookAgent::getInstance()->getAccessToken();
+            callbackInfo->setString(token.c_str());
         }
         break;
     case TAG_FB_NEW_PERMISSIONS:
         {
-            
+            std::string permissins =  "create_event,create_note,manage_pages,publish_actions";
+            FacebookAgent::getInstance()->requestPermissions(permissins, [=](int ret, std::string& msg){
+                callbackInfo->setString(msg.c_str());
+            });
         }
         break;
     case TAG_FB_GETPERMISSIONS:
         {
- 
+            std::string permissionList = FacebookAgent::getInstance()->getPermissionList();
+            callbackInfo->setString(permissionList.c_str());
         }
         break;
     case TAG_FB_REQUEST_API:
         {
-
+            std::string path = "/me/photos";
+            FacebookAgent::FBInfo params;
+            params["url"] = "http://files.cocos2d-x.org/images/orgsite/logo.png";
+            FacebookAgent::getInstance()->request(path, FacebookAgent::HttpMethod::Post, params, [=](int ret, std::string& msg){
+                if (0 == ret) {
+                    callbackInfo->setString(msg.c_str());
+                }
+            });
         }
         break;
     case TAG_FB_PUBLISH_INSTALL:
         {
-            
+            FacebookAgent::getInstance()->publishInstall();
+            callbackInfo->setString("publishInstall is invoked");
         }
         break;
     case TAG_FB_LOG_EVENT:
         {
-            
+            std::string appEventMsg = "fb_mobile_tutorial_completion";
+            float floatVal = 888.888;
+            FacebookAgent::FBInfo fbInfo;
+            fbInfo["fb_success"] = "1";
+            FacebookAgent::getInstance()->logEvent(appEventMsg);
+            FacebookAgent::getInstance()->logEvent(appEventMsg, floatVal);
+            FacebookAgent::getInstance()->logEvent(appEventMsg, fbInfo);
+            FacebookAgent::getInstance()->logEvent(appEventMsg, floatVal, fbInfo);
+            callbackInfo->setString("logEvent is invoked");
         }
         break;
     default:

@@ -10,6 +10,8 @@
 		15E270A519B8482600BDBFD7 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E270A419B8482600BDBFD7 /* libPluginFacebook.a */; };
 		15E270A819B849C400BDBFD7 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E270A719B849C400BDBFD7 /* FacebookSDK.framework */; };
 		15E270AE19B84C7200BDBFD7 /* TestFacebookUserScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E270AC19B84C7200BDBFD7 /* TestFacebookUserScene.cpp */; };
+		15E270FD19B95A6100BDBFD7 /* TestFacebookShare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E270FB19B95A6100BDBFD7 /* TestFacebookShare.cpp */; };
+		15E2710319B9638A00BDBFD7 /* cocos2dx.png in Resources */ = {isa = PBXBuildFile; fileRef = 15E2710219B9638A00BDBFD7 /* cocos2dx.png */; };
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
 		1AC3624B16D4A1E8000847F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624516D4A1E8000847F2 /* main.m */; };
 		1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */; };
@@ -97,6 +99,9 @@
 		15E270A719B849C400BDBFD7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 		15E270AC19B84C7200BDBFD7 /* TestFacebookUserScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookUserScene.cpp; sourceTree = "<group>"; };
 		15E270AD19B84C7200BDBFD7 /* TestFacebookUserScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookUserScene.h; sourceTree = "<group>"; };
+		15E270FB19B95A6100BDBFD7 /* TestFacebookShare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookShare.cpp; sourceTree = "<group>"; };
+		15E270FC19B95A6100BDBFD7 /* TestFacebookShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookShare.h; sourceTree = "<group>"; };
+		15E2710219B9638A00BDBFD7 /* cocos2dx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cocos2dx.png; sourceTree = "<group>"; };
 		1AC3624216D4A1E8000847F2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		1AC3624316D4A1E8000847F2 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		1AC3624516D4A1E8000847F2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
@@ -232,6 +237,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15E270FA19B95A6100BDBFD7 /* TestFacebookShare */,
 				15E270AB19B84C7200BDBFD7 /* TestFacebookUser */,
 				FADBF89D179E559900F59B1D /* TestSocial */,
 				FA3D264717867219009B234A /* TestIAPOnline */,
@@ -258,6 +264,16 @@
 			);
 			name = TestFacebookUser;
 			path = ../Classes/TestFacebookUser;
+			sourceTree = "<group>";
+		};
+		15E270FA19B95A6100BDBFD7 /* TestFacebookShare */ = {
+			isa = PBXGroup;
+			children = (
+				15E270FB19B95A6100BDBFD7 /* TestFacebookShare.cpp */,
+				15E270FC19B95A6100BDBFD7 /* TestFacebookShare.h */,
+			);
+			name = TestFacebookShare;
+			path = ../Classes/TestFacebookShare;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -318,6 +334,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15E2710219B9638A00BDBFD7 /* cocos2dx.png */,
 				FAD55523177D2C2000968F54 /* BtnAlipay.png */,
 				FAD55524177D2C2000968F54 /* BtnND91.png */,
 				FAD55525177D2C2000968F54 /* twitter.jpeg */,
@@ -503,6 +520,7 @@
 			files = (
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
+				15E2710319B9638A00BDBFD7 /* cocos2dx.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
@@ -538,6 +556,7 @@
 				FAD5551A177D1EE900968F54 /* MyUserManager.cpp in Sources */,
 				FAD5551B177D1EE900968F54 /* TestUserScene.cpp in Sources */,
 				FA3D264D17867219009B234A /* MyIAPOLManager.cpp in Sources */,
+				15E270FD19B95A6100BDBFD7 /* TestFacebookShare.cpp in Sources */,
 				FA3D264E17867219009B234A /* TestIAPOnlineScene.cpp in Sources */,
 				15E270AE19B84C7200BDBFD7 /* TestFacebookUserScene.cpp in Sources */,
 				FADBF8A2179E559900F59B1D /* MySocialManager.cpp in Sources */,
