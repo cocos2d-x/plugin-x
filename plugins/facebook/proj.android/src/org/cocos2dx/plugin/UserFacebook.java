@@ -150,7 +150,7 @@ public class UserFacebook implements InterfaceUser{
                         else
                         	session.openForRead(request);
                     } else {
-                        Session.openActiveSession(mContext, true, Arrays.asList(permissionArray), statusCallback);
+                        Session.openActiveSession(mContext, true, statusCallback);
                     }
                 }
                 
