@@ -162,7 +162,7 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         {
             FacebookAgent::FBInfo params;
             std::string path = "/me";
-            FacebookAgent::getInstance()->request(path, FacebookAgent::HttpMethod::Get, params, [=](int ret, std::string& msg){
+            FacebookAgent::getInstance()->api(path, FacebookAgent::HttpMethod::Get, params, [=](int ret, std::string& msg){
                     callbackInfo->setString(msg.c_str());
             });
         }
@@ -175,10 +175,10 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         break;
     case TAG_FB_NEW_PERMISSIONS:
         {
-            std::string permissins =  "create_event,create_note,manage_pages,publish_actions";
-            FacebookAgent::getInstance()->requestPermissions(permissins, [=](int ret, std::string& msg){
-                callbackInfo->setString(msg.c_str());
-            });
+//            std::string permissins =  "create_event,create_note,manage_pages,publish_actions";
+//            FacebookAgent::getInstance()->requestPermissions(permissins, [=](int ret, std::string& msg){
+//                callbackInfo->setString(msg.c_str());
+//            });
         }
         break;
     case TAG_FB_GETPERMISSIONS:
@@ -192,7 +192,7 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
             std::string path = "/me/photos";
             FacebookAgent::FBInfo params;
             params["url"] = "http://files.cocos2d-x.org/images/orgsite/logo.png";
-            FacebookAgent::getInstance()->request(path, FacebookAgent::HttpMethod::Post, params, [=](int ret, std::string& msg){
+            FacebookAgent::getInstance()->api(path, FacebookAgent::HttpMethod::Post, params, [=](int ret, std::string& msg){
                 if (0 == ret) {
                     callbackInfo->setString(msg.c_str());
                 }
@@ -201,8 +201,8 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         break;
     case TAG_FB_PUBLISH_INSTALL:
         {
-            FacebookAgent::getInstance()->publishInstall();
-            callbackInfo->setString("publishInstall is invoked");
+            FacebookAgent::getInstance()->activateApp();
+            callbackInfo->setString("activateApp is invoked");
         }
         break;
     case TAG_FB_LOG_EVENT:
