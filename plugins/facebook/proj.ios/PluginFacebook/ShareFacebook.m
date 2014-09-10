@@ -340,7 +340,8 @@
      clientState: nil
      handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
          if(error) {
-             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+             NSString *errorMsg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+             NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if([self checkDialogResult:results]){
@@ -390,7 +391,8 @@
                                   clientState: nil
                                       handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                           if(error) {
-                                              NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+                                              NSString *errorMsg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+                                              NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
                                               [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                           } else {
                                               if([self checkDialogResult:results]){
@@ -414,7 +416,8 @@
      clientState:nil
      handler: ^(FBAppCall *call, NSDictionary *results, NSError *error) {
          if(error) {
-             NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+             NSString *errorMsg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+             NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if([self checkDialogResult:results]){
@@ -438,7 +441,8 @@
                                        clientState:nil
                                            handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                                if(error) {
-                                                   NSString *msg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+                                                   NSString *errorMsg = [NSString stringWithFormat:@"Failed to send message: %@", error.description];
+                                                   NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
                                                    [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
                                                } else {
                                                    if([self checkDialogResult:results]){
@@ -471,7 +475,8 @@
      handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
          if (error) {
              // Error launching the dialog or publishing a story.
-             NSString *msg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+             NSString *errorMsg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+             NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if (result == FBWebDialogResultDialogNotCompleted) {
@@ -485,7 +490,7 @@
                      [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing"];
                  } else {
                      // User clicked the Share button
-                     NSString *msg = [NSString stringWithFormat:@"Posted story, id: %@", [urlParams valueForKey:@"post_id"]];
+                     NSString *msg = [ParseUtils MakeJsonStringWithObject:[urlParams valueForKey:@"post_id"] andKey:@"post_id"];
                      [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
                  }
              }
@@ -507,12 +512,14 @@
      handler: ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
          if (error) {
              // Error launching the dialog or sending the request.
-             NSString *msg = [NSString stringWithFormat:@"Sending request failed: %@", error.description];
+             NSString *errorMsg = [NSString stringWithFormat:@"Sending request failed: %@", error.description];
+             NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
              [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
          } else {
              if (result == FBWebDialogResultDialogNotCompleted) {
                  // User clicked the "x" icon
-                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled request"];
+                 NSString *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled request" andKey:@"error_message"];
+                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
              } else {
                  // Handle the send request callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];

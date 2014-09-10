@@ -59,10 +59,13 @@ public:
 private:
     cocos2d::plugin::ProtocolAds* _admob;
     cocos2d::plugin::ProtocolAds* _flurryAds;
+    cocos2d::plugin::ProtocolAds* _facebookAds;
+    
     MyAdsListener* _listener;
 
     cocos2d::MenuItemToggle* _caseItem;
     cocos2d::MenuItemToggle* _posItem;
+    cocos2d::MenuItemToggle* _typeItem;
 
     cocos2d::plugin::ProtocolAds* _ads;
     cocos2d::plugin::ProtocolAds::AdsPos _pos;

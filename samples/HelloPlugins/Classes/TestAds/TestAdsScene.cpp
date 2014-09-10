@@ -29,9 +29,16 @@ THE SOFTWARE.
 USING_NS_CC;
 using namespace cocos2d::plugin;
 
+const std::string s_aTestAdType[] = {
+    
+    "Banner",
+    "Interstitial"
+};
+
 const std::string s_aTestCases[] = {
 	"Admob",
     "Flurry",
+    "Facebook"
 };
 
 const std::string s_aTestPoses[] = {
@@ -72,14 +79,18 @@ bool TestAds::init()
     _listener = new MyAdsListener();
     _admob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
     _flurryAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFlurry"));
+    _facebookAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFacebook"));
+    
     TAdsDeveloperInfo devInfo;
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    devInfo["AdmobID"] = ADMOB_ID_IOS;
+    devInfo["AdmobID"]      = ADMOB_ID_IOS;
     devInfo["FlurryAppKey"] = FLURRY_KEY_IOS;
+    devInfo["FacebookAdID"]   = FACEBOOK_KEY_IOS;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    devInfo["AdmobID"] = ADMOB_ID_ANDROID;
+    devInfo["AdmobID"]      = ADMOB_ID_ANDROID;
     devInfo["FlurryAppKey"] = FLURRY_KEY_ANDROID;
+    devInfo["FacebookAdID"]   = FACEBOOK_KEY_ANDROID;
 #endif
     
     _admob->configDeveloperInfo(devInfo);
@@ -89,6 +100,10 @@ bool TestAds::init()
     _flurryAds->configDeveloperInfo(devInfo);
     _flurryAds->setAdsListener(_listener);
     _flurryAds->setDebugMode(true);
+    
+    _facebookAds->configDeveloperInfo(devInfo);
+    _facebookAds->setAdsListener(_listener);
+    _facebookAds->setDebugMode(true);
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
@@ -144,6 +159,20 @@ bool TestAds::init()
 	}
 	_posItem->setPosition(posMid + Point(200, 120));
 	pMenu->addChild(_posItem);
+    
+    // type item
+    _typeItem = MenuItemToggle::createWithCallback(CC_CALLBACK_1(TestAds::typeChanged, this),
+                                                   MenuItemFont::create(s_aTestAdType[0].c_str()),
+                                                   NULL);
+    
+    int typeLen = sizeof(s_aTestAdType) / sizeof(std::string);
+    for (int i = 1; i < typeLen; ++i)
+    {
+        _typeItem->getSubItems().pushBack(MenuItemFont::create(s_aTestAdType[i].c_str()));
+    }
+    
+    _typeItem->setPosition(posMid + Point(0,120));
+    pMenu->addChild(_typeItem);
 
 	// init options
 	_ads = _admob;
@@ -154,6 +183,8 @@ bool TestAds::init()
     adInfo["AdmobSizeEnum"] = "1";
     adInfo["FlurryAdsID"] = "BANNER_MAIN_VC";
     adInfo["FlurryAdsSize"] = "2";
+    adInfo["FBAdType"] = "1";
+    adInfo["FBAdSizeEnum"] = "1";
 
     this->addChild(pMenu, 1);
 
@@ -181,6 +212,13 @@ void TestAds::menuBackCallback(Ref* pSender)
     	PluginManager::getInstance()->unloadPlugin("AdsAdmob");
     	_admob = NULL;
     }
+    
+    if (_facebookAds != NULL)
+    {
+        _facebookAds->hideAds(adInfo);
+        PluginManager::getInstance()->unloadPlugin("AdsFacebook");
+        _facebookAds = NULL;
+    }
 
     if (NULL != _listener)
     {
@@ -197,16 +235,20 @@ void TestAds::caseChanged(Ref* pSender)
 	std::string strLog = "";
 	switch (_caseItem->getSelectedIndex())
 	{
-	case 0:
-		_ads = _admob;
-		strLog = "Admob";
-		break;
-    case 1:
-        _ads = _flurryAds;
-        strLog = "Flurry Ads";
-        break;
-	default:
-		break;
+        case 0:
+            _ads = _admob;
+            strLog = "Admob";
+            break;
+        case 1:
+            _ads = _flurryAds;
+            strLog = "Flurry Ads";
+            break;
+        case 2:
+            _ads = _facebookAds;
+            strLog = "Facebook Ads";
+            break;
+        default:
+            break;
 	}
 	log("case selected change to : %s", strLog.c_str());
 }
@@ -216,6 +258,33 @@ void TestAds::posChanged(Ref* pSender)
 	int selectIndex = _posItem->getSelectedIndex();
 	_pos = (ProtocolAds::AdsPos) selectIndex;
 	log("pos selected change to : %d", _pos);
+}
+
+void TestAds::typeChanged(cocos2d::Ref *pSender)
+{
+    int selectedIndex = _typeItem->getSelectedIndex();
+    
+    switch (selectedIndex)
+    {
+        case 0:
+            // Banner
+            // init the AdsInfo
+            adInfo["AdmobType"] = "1";
+            adInfo["FBAdType"] = "1";
+            break;
+        case 1:
+            // Interstitial
+            // init the AdsInfo
+            adInfo["AdmobType"] = "2";
+            adInfo["FBAdType"] = "2";
+            break;
+        default:
+            break;
+    }
+    if (_admob != NULL)
+    {
+        log("type ad changed to : %s", s_aTestAdType[selectedIndex].c_str());
+    }
 }
 
 void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
