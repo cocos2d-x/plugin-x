@@ -46,4 +46,9 @@
 -- @field [parent=#plugin] AgentManager#AgentManager AgentManager preloaded module
 
 
+--------------------------------------------------------
+-- the plugin FacebookAgent
+-- @field [parent=#plugin] FacebookAgent#FacebookAgent FacebookAgent preloaded module
+
+
 return nil
