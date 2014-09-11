@@ -240,10 +240,9 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
     case TAG_FBS_APP_REQUEST:
         {
             FacebookAgent::FBInfo params;
-            params.insert(std::make_pair("dialog", "apprequests"));
             params.insert(std::make_pair("message", "Cocos2d-x is a great game engine"));
-            params.insert(std::make_pair("link", "http://www.cocos2d-x.org"));
-            FacebookAgent::getInstance()->dialog(params, [=](int ret, std::string& msg){
+            params.insert(std::make_pair("title", "Cocos2d-x"));
+            FacebookAgent::getInstance()->appRequest(params, [=](int ret, std::string& msg){
                 CCLOG("%s", msg.c_str());
             });
         }

@@ -80,6 +80,10 @@ bool HelloWorld::init()
         pItem->setTag(i);
         pItem->setPosition(Point(beginPos.x, beginPos.y - i * step));
         pMenu->addChild(pItem);
+        if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID && (i == 3 || i == 4) )
+        {
+            pItem->setEnabled(false);
+        }
     }
     return true;
 }

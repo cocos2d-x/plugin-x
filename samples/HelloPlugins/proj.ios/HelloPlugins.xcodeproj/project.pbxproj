@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15CF33CA19C029BF00D5614B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CF33C919C029BF00D5614B /* FacebookSDK.framework */; };
+		15CF33CD19C02A0900D5614B /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CF33CC19C02A0900D5614B /* libPluginFacebook.a */; };
+		15CF33D919C0319E00D5614B /* TestFacebookShare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CF33D419C0319E00D5614B /* TestFacebookShare.cpp */; };
+		15CF33DA19C0319E00D5614B /* TestFacebookUserScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CF33D719C0319E00D5614B /* TestFacebookUserScene.cpp */; };
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
 		1AC3624B16D4A1E8000847F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624516D4A1E8000847F2 /* main.m */; };
 		1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */; };
@@ -92,6 +96,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15CF33C919C029BF00D5614B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
+		15CF33CC19C02A0900D5614B /* libPluginFacebook.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPluginFacebook.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/plugin-x_ios-fysyavvghimhoocmmnsbuzczqjwo/Build/Products/Debug-iphoneos/libPluginFacebook.a"; sourceTree = "<group>"; };
+		15CF33D419C0319E00D5614B /* TestFacebookShare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookShare.cpp; sourceTree = "<group>"; };
+		15CF33D519C0319E00D5614B /* TestFacebookShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookShare.h; sourceTree = "<group>"; };
+		15CF33D719C0319E00D5614B /* TestFacebookUserScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookUserScene.cpp; sourceTree = "<group>"; };
+		15CF33D819C0319E00D5614B /* TestFacebookUserScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookUserScene.h; sourceTree = "<group>"; };
 		1AC3624216D4A1E8000847F2 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = SOURCE_ROOT; };
 		1AC3624316D4A1E8000847F2 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = SOURCE_ROOT; };
 		1AC3624516D4A1E8000847F2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
@@ -177,9 +187,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15CF33CD19C02A0900D5614B /* libPluginFacebook.a in Frameworks */,
 				20D0F05719B7257F00D850B9 /* libPluginFacebookAds.a in Frameworks */,
 				59EB3BE719649CFC0020118E /* libcocos2d iOS.a in Frameworks */,
 				FAD55505177C170300968F54 /* AdSupport.framework in Frameworks */,
+				15CF33CA19C029BF00D5614B /* FacebookSDK.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -229,6 +241,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				15CF33D319C0319E00D5614B /* TestFacebookShare */,
+				15CF33D619C0319E00D5614B /* TestFacebookUser */,
 				FADBF89D179E559900F59B1D /* TestSocial */,
 				FA3D264717867219009B234A /* TestIAPOnline */,
 				FAD5550E177D1EE900968F54 /* TestIAP */,
@@ -244,6 +258,26 @@
 			);
 			name = Classes;
 			path = ../classes;
+			sourceTree = "<group>";
+		};
+		15CF33D319C0319E00D5614B /* TestFacebookShare */ = {
+			isa = PBXGroup;
+			children = (
+				15CF33D419C0319E00D5614B /* TestFacebookShare.cpp */,
+				15CF33D519C0319E00D5614B /* TestFacebookShare.h */,
+			);
+			name = TestFacebookShare;
+			path = ../Classes/TestFacebookShare;
+			sourceTree = "<group>";
+		};
+		15CF33D619C0319E00D5614B /* TestFacebookUser */ = {
+			isa = PBXGroup;
+			children = (
+				15CF33D719C0319E00D5614B /* TestFacebookUserScene.cpp */,
+				15CF33D819C0319E00D5614B /* TestFacebookUserScene.h */,
+			);
+			name = TestFacebookUser;
+			path = ../Classes/TestFacebookUser;
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -270,6 +304,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15CF33CC19C02A0900D5614B /* libPluginFacebook.a */,
+				15CF33C919C029BF00D5614B /* FacebookSDK.framework */,
 				593E0BDC19BE206C00836D29 /* FBAudienceNetwork.framework */,
 				20D0F05619B7257F00D850B9 /* libPluginFacebookAds.a */,
 				592A55781964AD7D008E4BC7 /* GameController.framework */,
@@ -515,6 +551,7 @@
 				1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */,
 				1AC3624B16D4A1E8000847F2 /* main.m in Sources */,
 				1AFCDA8216D4A25900906EA6 /* RootViewController.mm in Sources */,
+				15CF33D919C0319E00D5614B /* TestFacebookShare.cpp in Sources */,
 				FAD554E5177C131500968F54 /* TestAdsScene.cpp in Sources */,
 				FAD554E6177C131500968F54 /* TestAnalyticsScene.cpp in Sources */,
 				FAD554E9177C131500968F54 /* MyShareManager.cpp in Sources */,
@@ -522,6 +559,7 @@
 				FAD55518177D1EE900968F54 /* MyPurchase.cpp in Sources */,
 				FAD55519177D1EE900968F54 /* TestIAPScene.cpp in Sources */,
 				FAD5551A177D1EE900968F54 /* MyUserManager.cpp in Sources */,
+				15CF33DA19C0319E00D5614B /* TestFacebookUserScene.cpp in Sources */,
 				FAD5551B177D1EE900968F54 /* TestUserScene.cpp in Sources */,
 				FA3D264D17867219009B234A /* MyIAPOLManager.cpp in Sources */,
 				FA3D264E17867219009B234A /* TestIAPOnlineScene.cpp in Sources */,
@@ -550,7 +588,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
+					"/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -567,7 +608,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/plugin-x_ios-fysyavvghimhoocmmnsbuzczqjwo/Build/Products/Debug-iphoneos";
 				OTHER_CFLAGS = "-O2";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
@@ -587,7 +628,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
+					"/Users/cocos2d/MyWork/cocos2d-x-develop/plugin/plugins/facebook/proj.ios/sdk",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -602,7 +646,7 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/plugin-x_ios-fysyavvghimhoocmmnsbuzczqjwo/Build/Products/Debug-iphoneos";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HelloPlugins;
 				SDKROOT = iphoneos;

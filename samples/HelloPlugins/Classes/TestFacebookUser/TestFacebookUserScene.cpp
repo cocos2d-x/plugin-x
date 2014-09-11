@@ -31,10 +31,10 @@ using namespace cocos2d::plugin;
 
 enum {
     TAG_FB_LOGIN = 0,
+    TAG_FB_LOGIN_WITH_PERMISSION,
     TAG_FB_LOGOUT,
     TAG_FB_GETUID,
     TAG_FB_GETTOKEN,
-    TAG_FB_NEW_PERMISSIONS,
     TAG_FB_GETPERMISSIONS,
     TAG_FB_REQUEST_API,
     TAG_FB_PUBLISH_INSTALL,
@@ -49,10 +49,10 @@ struct FBEventMenuItem {
 static FBEventMenuItem s_FBMenuItem[] =
 {
     {"login",  TAG_FB_LOGIN},
+    {"loginWithPermission", TAG_FB_LOGIN_WITH_PERMISSION},
     {"logout", TAG_FB_LOGOUT},
     {"getUid", TAG_FB_GETUID},
     {"getToken", TAG_FB_GETTOKEN},
-    {"new permissions", TAG_FB_NEW_PERMISSIONS},
     {"getPermissions", TAG_FB_GETPERMISSIONS},
     {"request API", TAG_FB_REQUEST_API},
     {"publishInstall",TAG_FB_PUBLISH_INSTALL},
@@ -152,6 +152,14 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
             }
         }
         break;
+    case TAG_FB_LOGIN_WITH_PERMISSION:
+        {
+            std::string permissions = "create_event,create_note,manage_pages,publish_actions,user_about_me";
+            FacebookAgent::getInstance()->login(permissions, [=](int ret, std::string& msg){
+                callbackInfo->setString(msg.c_str());
+            });
+        }
+        break;
     case TAG_FB_LOGOUT:
         {
             FacebookAgent::getInstance()->logout();
@@ -171,14 +179,6 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         {
             std::string token = FacebookAgent::getInstance()->getAccessToken();
             callbackInfo->setString(token.c_str());
-        }
-        break;
-    case TAG_FB_NEW_PERMISSIONS:
-        {
-//            std::string permissins =  "create_event,create_note,manage_pages,publish_actions";
-//            FacebookAgent::getInstance()->requestPermissions(permissins, [=](int ret, std::string& msg){
-//                callbackInfo->setString(msg.c_str());
-//            });
         }
         break;
     case TAG_FB_GETPERMISSIONS:
