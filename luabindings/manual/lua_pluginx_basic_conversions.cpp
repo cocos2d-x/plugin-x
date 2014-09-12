@@ -21,7 +21,7 @@ bool luaval_to_TProductInfo(lua_State* L, int lo, cocos2d::plugin::TProductInfo*
 }
 
 
-bool luaval_to_FBInfo(lua_State* L, int lo, cocos2d::plugin::FBInfo* outValue, const char* funcName)
+bool luaval_to_FBInfo(lua_State* L, int lo, cocos2d::plugin::FacebookAgent::FBInfo* outValue, const char* funcName)
 {
     return luaval_to_TIAPDeveloperInfo(L, lo, outValue, funcName);
 }

@@ -103,11 +103,11 @@ std::string getCurAppPath(void)
         height = tmpvalue;
     }
     g_windTop = true;
-    g_eglView = GLView::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
+    g_eglView = cocos2d::GLViewImpl::createWithRect([viewName cStringUsingEncoding:NSUTF8StringEncoding],cocos2d::Rect(0.0f,0.0f,width,height),frameZoomFactor);
     auto director = Director::getInstance();
     director->setOpenGLView(g_eglView);
 
-    window = glfwGetCocoaWindow(g_eglView->getWindow());
+    window = g_eglView->getCocoaWindow();
     [NSApp setDelegate: self];
     
     [self createViewMenu];

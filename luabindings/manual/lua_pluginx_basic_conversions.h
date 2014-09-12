@@ -8,6 +8,7 @@
 #include "ProtocolShare.h"
 #include "ProtocolSocial.h"
 #include "ProtocolUser.h"
+#include "FacebookAgent.h"
 
 namespace pluginx {
 
@@ -21,7 +22,7 @@ bool luaval_to_TShareInfo(lua_State *L, int lo, cocos2d::plugin::TShareInfo* out
 bool luaval_to_TSocialDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TSocialDeveloperInfo* outValue);
 bool luaval_to_TAchievementInfo(lua_State *L, int lo, cocos2d::plugin::TAchievementInfo* outValue);
 bool luaval_to_TUserDeveloperInfo(lua_State *L, int lo, cocos2d::plugin::TUserDeveloperInfo* outValue);
-bool luaval_to_FBInfo(lua_State* L, int lo, cocos2d::plugin::FBInfo* outValue, const char* funcName = "");
+bool luaval_to_FBInfo(lua_State* L, int lo, cocos2d::plugin::FacebookAgent::FBInfo* outValue, const char* funcName = "");
 
 } // namespace pluginx {
 
