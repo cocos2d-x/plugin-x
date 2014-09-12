@@ -4,48 +4,15 @@
 -- @parent_module plugin
 
 --------------------------------
--- brief open the app request dialog of Facebook app<br>
--- param info share information<br>
--- param cb callback of dialog
--- @function [parent=#FacebookAgent] appRequest 
+-- brief get permissoin list
+-- @function [parent=#FacebookAgent] getPermissionList 
 -- @param self
--- @param #map_table info
--- @param #function cb
-        
---------------------------------
--- brief use Facebook Open Graph api<br>
--- param path path of Open Graph api<br>
--- param method HttpMethod<br>
--- param params request parameters<br>
--- param cb callback of request
--- @function [parent=#FacebookAgent] api 
--- @param self
--- @param #string path
--- @param #int method
--- @param #map_table params
--- @param #function cb
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- brief Notifies the events system that the app has launched & logs an activatedApp event. 
 -- @function [parent=#FacebookAgent] activateApp 
 -- @param self
-        
---------------------------------
--- @overload self, string, float         
--- @overload self, string         
--- @overload self, string, map_table         
--- @overload self, string, float, map_table         
--- @function [parent=#FacebookAgent] logEvent
--- @param self
--- @param #string eventName
--- @param #float valueToSum
--- @param #map_table parameters
-
---------------------------------
--- brief Check whether the user logined or not
--- @function [parent=#FacebookAgent] isLoggedIn 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- brief log out
@@ -59,10 +26,10 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- brief get permissoin list
--- @function [parent=#FacebookAgent] getPermissionList 
+-- brief Check whether the user logined or not
+-- @function [parent=#FacebookAgent] isLoggedIn 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- brief get AccessToken
