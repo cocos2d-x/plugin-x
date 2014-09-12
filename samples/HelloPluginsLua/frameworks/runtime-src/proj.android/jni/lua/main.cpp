@@ -14,7 +14,9 @@ using namespace cocos2d;
 void cocos_android_app_init (JNIEnv* env, jobject thiz) {
     LOGD("cocos_android_app_init");
     AppDelegate *pAppDelegate = new AppDelegate();
-    PluginJniHelper::setJavaVM(JniHelper::getJavaVM());
+    JavaVM* vm;
+    env->GetJavaVM(&vm);
+    PluginJniHelper::setJavaVM(vm);
 }
 
 extern "C"

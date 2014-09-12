@@ -13,18 +13,35 @@
             "exclude": [
                 "*.gz"
             ]
-        },
-        {
-            "from": "../../../res",
-            "to": "res",
-            "exclude": [
-                "*.gz"
-            ]
         }
     ],
     "must_copy_resources": [
         {
-            "from": "../../../../../../cocos/scripting/lua-bindings/script",
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/cocos2d",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/cocosdenshion",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/cocosbuilder",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/cocostudio",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/extension",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/network",
+            "to": ""
+        },
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/ui",
             "to": ""
         },
         {

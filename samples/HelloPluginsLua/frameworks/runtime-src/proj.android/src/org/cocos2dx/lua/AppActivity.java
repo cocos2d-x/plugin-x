@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.plugin.PluginWrapper;
+import org.cocos2dx.plugin.FacebookWrapper;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -77,23 +78,6 @@ public class AppActivity extends Cocos2dxActivity{
 		if(nativeIsDebug())
 		{
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-			if(!isNetworkConnected())
-			{
-				AlertDialog.Builder builder=new AlertDialog.Builder(this);
-				builder.setTitle("Warning");
-				builder.setMessage("Open Wifi for debuging...");
-				builder.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-						finish();
-						System.exit(0);
-					}
-				});
-				builder.setCancelable(false);
-				builder.show();
-			}
 		}
 		hostIPAdress = getHostIpAddress();
 	}
@@ -102,8 +86,19 @@ public class AppActivity extends Cocos2dxActivity{
 		Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
 		PluginWrapper.init(this);
 		PluginWrapper.setGLSurfaceView(glSurfaceView);
+		FacebookWrapper.onCreate(this);
 		return glSurfaceView;
 	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		FacebookWrapper.onAcitivityResult(requestCode, resultCode, data);
+	}
+	@Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        FacebookWrapper.onSaveInstanceState(outState);
+    }
 	private boolean isNetworkConnected() {
 	        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);  
 	        if (cm != null) {  

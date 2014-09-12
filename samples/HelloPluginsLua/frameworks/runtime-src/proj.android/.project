@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>plugin-x</name>
+			<type>2</type>
+			<locationURI>PARENT-5-PROJECT_LOC/publish</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

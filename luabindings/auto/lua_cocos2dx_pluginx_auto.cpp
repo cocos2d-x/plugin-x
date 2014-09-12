@@ -2050,7 +2050,7 @@ int lua_register_pluginx_protocols_AgentManager(lua_State* tolua_S)
     return 1;
 }
 
-int lua_pluginx_protocols_FacebookAgent_appRequest(lua_State* tolua_S)
+int lua_pluginx_protocols_FacebookAgent_getPermissionList(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::plugin::FacebookAgent* cobj = nullptr;
@@ -2070,94 +2070,26 @@ int lua_pluginx_protocols_FacebookAgent_appRequest(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_appRequest'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_getPermissionList'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 0) 
     {
-        std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > > arg0;
-        std::function<void (int, std::basic_string<char> &)> arg1;
-
-        ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 2, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >",&arg0);
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
         if(!ok)
             return 0;
-        cobj->appRequest(arg0, arg1);
-        return 0;
+        std::string ret = cobj->getPermissionList();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:appRequest",argc, 2);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getPermissionList",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_appRequest'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_FacebookAgent_api(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::FacebookAgent* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_api'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
-    {
-        std::string arg0;
-        int arg1;
-        std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > > arg2;
-        std::function<void (int, std::basic_string<char> &)> arg3;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "plugin.FacebookAgent:api");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "plugin.FacebookAgent:api");
-
-        ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 4, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >",&arg2);
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-        if(!ok)
-            return 0;
-        cobj->api(arg0, arg1, arg2, arg3);
-        return 0;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:api",argc, 4);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_api'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_getPermissionList'.",&tolua_err);
 #endif
 
     return 0;
@@ -2201,141 +2133,6 @@ int lua_pluginx_protocols_FacebookAgent_activateApp(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_activateApp'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_FacebookAgent_logEvent(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::FacebookAgent* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_logEvent'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            cobj->logEvent(arg0, arg1);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            cobj->logEvent(arg0);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > > arg1;
-            ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 3, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >",&arg1);
-
-            if (!ok) { break; }
-            cobj->logEvent(arg0, arg1);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            double arg1;
-            ok &= luaval_to_number(tolua_S, 3,&arg1, "plugin.FacebookAgent:logEvent");
-
-            if (!ok) { break; }
-            std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > > arg2;
-            ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 4, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >",&arg2);
-
-            if (!ok) { break; }
-            cobj->logEvent(arg0, arg1, arg2);
-            return 0;
-        }
-    }while(0);
-    ok  = true;
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n",  "plugin.FacebookAgent:logEvent",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_logEvent'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_pluginx_protocols_FacebookAgent_isLoggedIn(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::plugin::FacebookAgent* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_isLoggedIn'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-            return 0;
-        bool ret = cobj->isLoggedIn();
-        tolua_pushboolean(tolua_S,(bool)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:isLoggedIn",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_isLoggedIn'.",&tolua_err);
 #endif
 
     return 0;
@@ -2427,7 +2224,7 @@ int lua_pluginx_protocols_FacebookAgent_getSDKVersion(lua_State* tolua_S)
 
     return 0;
 }
-int lua_pluginx_protocols_FacebookAgent_getPermissionList(lua_State* tolua_S)
+int lua_pluginx_protocols_FacebookAgent_isLoggedIn(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::plugin::FacebookAgent* cobj = nullptr;
@@ -2447,7 +2244,7 @@ int lua_pluginx_protocols_FacebookAgent_getPermissionList(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_getPermissionList'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_isLoggedIn'", nullptr);
         return 0;
     }
 #endif
@@ -2457,16 +2254,16 @@ int lua_pluginx_protocols_FacebookAgent_getPermissionList(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        std::string ret = cobj->getPermissionList();
-        tolua_pushcppstring(tolua_S,ret);
+        bool ret = cobj->isLoggedIn();
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getPermissionList",argc, 0);
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:isLoggedIn",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_getPermissionList'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_isLoggedIn'.",&tolua_err);
 #endif
 
     return 0;
@@ -2588,14 +2385,11 @@ int lua_register_pluginx_protocols_FacebookAgent(lua_State* tolua_S)
     tolua_cclass(tolua_S,"FacebookAgent","plugin.FacebookAgent","",nullptr);
 
     tolua_beginmodule(tolua_S,"FacebookAgent");
-        tolua_function(tolua_S,"appRequest",lua_pluginx_protocols_FacebookAgent_appRequest);
-        tolua_function(tolua_S,"api",lua_pluginx_protocols_FacebookAgent_api);
+        tolua_function(tolua_S,"getPermissionList",lua_pluginx_protocols_FacebookAgent_getPermissionList);
         tolua_function(tolua_S,"activateApp",lua_pluginx_protocols_FacebookAgent_activateApp);
-        tolua_function(tolua_S,"logEvent",lua_pluginx_protocols_FacebookAgent_logEvent);
-        tolua_function(tolua_S,"_isLoggedIn",lua_pluginx_protocols_FacebookAgent_isLoggedIn);
-        tolua_function(tolua_S,"_logout",lua_pluginx_protocols_FacebookAgent_logout);
+        tolua_function(tolua_S,"logout",lua_pluginx_protocols_FacebookAgent_logout);
         tolua_function(tolua_S,"getSDKVersion",lua_pluginx_protocols_FacebookAgent_getSDKVersion);
-        tolua_function(tolua_S,"_getPermissionList",lua_pluginx_protocols_FacebookAgent_getPermissionList);
+        tolua_function(tolua_S,"isLoggedIn",lua_pluginx_protocols_FacebookAgent_isLoggedIn);
         tolua_function(tolua_S,"getAccessToken",lua_pluginx_protocols_FacebookAgent_getAccessToken);
         tolua_function(tolua_S,"destroyInstance", lua_pluginx_protocols_FacebookAgent_destroyInstance);
         tolua_function(tolua_S,"getInstance", lua_pluginx_protocols_FacebookAgent_getInstance);
