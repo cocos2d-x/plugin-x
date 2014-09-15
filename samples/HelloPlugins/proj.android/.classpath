@@ -25,11 +25,11 @@
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/libPluginQH360.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/uc/android/libPluginUC.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/android-support-v4.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/bolts.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/facebooksdk.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/libPluginFacebook.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
