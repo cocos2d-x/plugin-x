@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/FlurryAgent.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/libPluginFlurry.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/umeng/android/libPluginUmeng.jar"/>
