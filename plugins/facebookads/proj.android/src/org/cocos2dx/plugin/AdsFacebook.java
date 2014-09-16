@@ -91,8 +91,11 @@ public class AdsFacebook implements InterfaceAds{
 		        // Set a listener to get notified on changes or when the user interact with the ad.
 		        interstitialAd.setAdListener(new FacebookAdsListener());
 		
-//				AdSettings.addTestDevice("Device Hash ID");
-		
+		        if(mTestDevices != null)
+					AdSettings.addTestDevices(mTestDevices);
+				else if(bDebug == true)
+					LogD("You must specify hash id, see the log");
+		        
 		        // Load a new interstitial.
 		        interstitialAd.loadAd();
 			} 
@@ -207,7 +210,11 @@ public class AdsFacebook implements InterfaceAds{
 //					LogE("Error during add test device", e);
 //				}
 				
-//				AdSettings.addTestDevice("Device Hash ID");
+				if(mTestDevices != null)
+					AdSettings.addTestDevices(mTestDevices);
+				else if(bDebug == true)
+					LogD("You must specify hash id, see the log");
+				
 				adView.setAdListener(new FacebookAdsListener());
 				adView.loadAd();
 
@@ -247,7 +254,7 @@ public class AdsFacebook implements InterfaceAds{
 		});
 	}
 
-	public void addTestDevice(String deviceID) {
+	protected void addTestDevice(String deviceID) {
 		LogD("addTestDevice invoked:" + deviceID);
 		if (null == mTestDevices) {
 			mTestDevices = new HashSet<String>();
