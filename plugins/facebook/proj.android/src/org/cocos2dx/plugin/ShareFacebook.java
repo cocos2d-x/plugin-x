@@ -135,6 +135,76 @@ public class ShareFacebook implements InterfaceShare{
 		return bRet;
 	}
 	
+	public String getUserID(){
+		return "";
+	}
+	
+	public boolean canPresentDialogWithParams(final JSONObject cpInfo){ 
+		try {
+			String dialogType = cpInfo.getString("dialog");
+			if("share_link".equals(dialogType)){
+				return FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.SHARE_DIALOG);
+			}
+			else if("share_open_graph".equals(dialogType)){
+				return FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG);
+				
+			}
+			else if("share_photo".equals(dialogType)){
+				return FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS);
+				
+			}
+			else if("apprequests".equals(dialogType)){
+				return true;
+			}
+			else if("message_link".equals(dialogType)){
+				return FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.MESSAGE_DIALOG);
+			}
+			else if("message_open_graph".equals(dialogType)){
+				return FacebookDialog.canPresentOpenGraphMessageDialog(mContext, OpenGraphMessageDialogFeature.OG_MESSAGE_DIALOG);
+			}
+			else if("message_photo".equals(dialogType)){
+				return FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.PHOTOS);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public void webDialog(final JSONObject cpInfo){ 
+		PluginWrapper.runOnMainThread(new Runnable(){
+			@Override
+			public void run() {
+				try {
+					String dialogType = cpInfo.getString("dialog");
+					if("share_link".equals(dialogType)){
+						WebFeedDialog(cpInfo);
+					}
+					else if("share_open_graph".equals(dialogType)){
+						LogD("need Facebook app");
+					}
+					else if("share_photo".equals(dialogType)){
+						LogD("need Facebook app to share photo");
+					}
+					else if("apprequests".equals(dialogType)){
+						WebRequestDialog(cpInfo);
+					}
+					else if("message_link".equals(dialogType)){
+						LogD("need Facebook app");
+					}
+					else if("message_open_graph".equals(dialogType)){
+						LogD("need Facebook app to share photo");
+					}
+					else if("message_photo".equals(dialogType)){
+						LogD("need Facebook app");
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		});
+	}
 
 	public void dialog(final JSONObject cpInfo){
 		PluginWrapper.runOnMainThread(new Runnable(){
