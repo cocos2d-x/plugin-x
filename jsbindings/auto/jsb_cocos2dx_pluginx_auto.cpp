@@ -2219,6 +2219,32 @@ bool js_pluginx_protocols_FacebookAgent_api(JSContext *cx, uint32_t argc, jsval 
 	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_api : wrong number of arguments");
 	return false;
 }
+bool js_pluginx_protocols_FacebookAgent_canPresentDialog(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    jsval *argv = JS_ARGV(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_canPresentDialogWithParams : Invalid Native Object");
+
+    if(argc == 1)
+    {
+        bool ok = true;
+        cocos2d::plugin::TShareInfo arg0;
+        ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_canPresentDialogWithParams : Error processing arguments");
+        if (!ok) { return false; }
+        
+        bool ret = cobj->canPresentDialogWithParams(arg0);
+        jsval jsret = BOOLEAN_TO_JSVAL(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_canPresentDialogWithParams : wrong number of arguments: %d", argc);
+    return false;
+
+}
 
 bool js_pluginx_protocols_FacebookAgent_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -2386,6 +2412,8 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("canPresentDialog", js_pluginx_protocols_FacebookAgent_canPresentDialog, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        
 		JS_FN("appRequest", js_pluginx_protocols_FacebookAgent_appRequest, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("_getPermissionList", js_pluginx_protocols_FacebookAgent_getPermissionList, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("api", js_pluginx_protocols_FacebookAgent_api, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),

@@ -140,6 +140,7 @@ bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsv
 bool js_pluginx_protocols_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getPermissionList(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_api(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_FacebookAgent_canPresentDialog(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_publishInstall(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
