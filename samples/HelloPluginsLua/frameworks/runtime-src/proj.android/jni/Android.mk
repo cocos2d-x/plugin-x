@@ -26,6 +26,7 @@ LOCAL_SRC_FILES := \
 ../../Classes/runtime/Shine_png.cpp \
 ../../Classes/runtime/Runtime.cpp \
 ../../Classes/runtime/Protos.pb.cc \
+../../Classes/runtime/lua_debugger.c \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
@@ -45,11 +46,11 @@ $(LOCAL_PATH)/../../../../../../luabindings/auto \
 $(LOCAL_PATH)/../../../../../../luabindings/manual
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
-
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos_lua_static PluginProtocolStatic
+LOCAL_STATIC_LIBRARIES += cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,scripting/lua-bindings)
-$(call import-module,protocols/android)
+$(call import-module,scripting/lua-bindings/proj.android)
+$(call import-module,plugin/protocols/proj.android/jni)
 

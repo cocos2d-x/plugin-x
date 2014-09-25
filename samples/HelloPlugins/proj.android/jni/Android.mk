@@ -25,7 +25,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/TestIAPOnline/TestIAPOnlineScene.cpp \
                    ../../Classes/TestIAPOnline/MyIAPOLManager.cpp \
                    ../../Classes/TestSocial/TestSocialScene.cpp \
-                   ../../Classes/TestSocial/MySocialManager.cpp
+                   ../../Classes/TestSocial/MySocialManager.cpp \
+                   ../../Classes/TestFacebookUser/TestFacebookUserScene.cpp \
+                   ../../Classes/TestFacebookShare/TestFacebookShare.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
     $(LOCAL_PATH)/../../Classes/TestAds \
@@ -34,7 +36,11 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
     $(LOCAL_PATH)/../../Classes/TestShare \
     $(LOCAL_PATH)/../../Classes/TestUser \
     $(LOCAL_PATH)/../../Classes/TestIAPOnline \
-    $(LOCAL_PATH)/../../Classes/TestSocial
+    $(LOCAL_PATH)/../../Classes/TestSocial \
+    $(LOCAL_PATH)/../../Classes/TestFacebookUser \
+    $(LOCAL_PATH)/../../Classes/TestFacebookShare
+
+
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static \
 PluginProtocolStatic

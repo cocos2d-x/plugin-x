@@ -1,5 +1,6 @@
 require "Cocos2d"
 require "Cocos2dConstants"
+require "extern"
 
 local HelloWorldScene = class("HelloWorldScene",function()
     return cc.Scene:create()
@@ -14,7 +15,7 @@ end
 function HelloWorldScene:createLayerMenu()
     local visibleSize = cc.Director:getInstance():getVisibleSize()
     local menu = cc.Menu:create()
-    for i, plugin in ipairs({"IAP", "Ads", "Share", "Social", "User"}) do
+    for i, plugin in ipairs({"IAP", "Ads", "Share", "FBShare", "User", "FBUser", "Social"}) do
         local item = cc.MenuItemFont:create(plugin)
         item:setPosition(0, visibleSize.height / 2 - i * 50)
         item:registerScriptTapHandler(function()

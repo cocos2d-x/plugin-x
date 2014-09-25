@@ -29,8 +29,10 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import "CCEAGLView.h"
+#import "CCEAGLView-ios.h"
+#import <FacebookSDK/FacebookSDK.h>
 #include "ConfigParser.h"
+
 
 @implementation AppController
 
@@ -81,7 +83,7 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
 
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
-    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
+    cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     cocos2d::Application::getInstance()->run();
@@ -101,6 +103,7 @@ static AppDelegate s_sharedApplication;
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    [FBAppCall handleDidBecomeActive];
     cocos2d::Director::getInstance()->resume();
 }
 
@@ -142,6 +145,11 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    // attempt to extract a token from the url
+    return [FBSession.activeSession handleOpenURL:url];
+}
 
 @end
 
