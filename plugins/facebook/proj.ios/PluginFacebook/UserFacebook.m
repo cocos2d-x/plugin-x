@@ -222,4 +222,16 @@ NSString *_accessToken = @"";
                               
                           }];
 }
+-(void)logPurchase:(NSMutableDictionary *)purchaseInfo{
+    if(purchaseInfo.count == 2){
+        NSNumber *count = [purchaseInfo objectForKey:@"Param1"];
+        NSString *currency = [purchaseInfo objectForKey:@"Param2"];
+        [FBAppEvents logPurchase:[count floatValue] currency:currency];
+    }else if(purchaseInfo.count == 3){
+        NSNumber *count = [purchaseInfo objectForKey:@"Param1"];
+        NSString *currency = [purchaseInfo objectForKey:@"Param2"];
+        NSDictionary *dict = [purchaseInfo objectForKey:@"Param3"];
+        [FBAppEvents logPurchase:[count floatValue] currency:currency parameters:dict];
+    }
+}
 @end
