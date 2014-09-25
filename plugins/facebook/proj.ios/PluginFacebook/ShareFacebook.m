@@ -324,11 +324,10 @@
                                                                     picture:[NSURL URLWithString:photo]];
         if ([dialog_type isEqualToString:@"share_link"]) {
             // If the Facebook app is installed and we can present the share dialog
-//            BOOL status = [FBDialogs canPresentShareDialogWithParams:params];
-//            return status;
+            return [NSNumber numberWithBool:[FBDialogs canPresentShareDialogWithParams:params]];
         }
         else if ([dialog_type isEqualToString:@"message_link"]) {
-//            return [FBDialogs canPresentMessageDialogWithParams:params];
+            return [NSNumber numberWithBool:[FBDialogs canPresentMessageDialogWithParams:params]];
         }
         
     }else if ([dialog_type hasSuffix:@"open_graph"]) {
@@ -351,30 +350,29 @@
                                                                       previewPropertyName:previewProperty];
         
         if ([dialog_type isEqualToString:@"share_open_graph"]) {
-             NSNumber *status = [NSNumber numberWithBool:[FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]];
-            return status;
+             return [NSNumber numberWithBool:[FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]];
         }
-//        else if ([dialog_type isEqualToString:@"message_open_graph"]) {
-//            return [FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params];
-//        }
-//    }else if ([dialog_type hasSuffix:@"photo"]) {
-//        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
-//        if(img ==nil){
-//            NSString *msg = [ParseUtils MakeJsonStringWithObject:@"Share failed, photo can't be found" andKey:@"error_message"];
-//            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
-//            return false;
-//        }
-//        FBPhotoParams *params = [[FBPhotoParams alloc] init];
-//        params.photos = @[img];
-//        
-//        if ([dialog_type isEqualToString:@"share_photo"]) {
-//            return [FBDialogs canPresentShareDialogWithPhotos];
-//        }
-//        else if ([dialog_type isEqualToString:@"message_photo"]) {
-//            return [FBDialogs canPresentMessageDialogWithPhotos];
-//        }
+        else if ([dialog_type isEqualToString:@"message_open_graph"]) {
+            return [NSNumber numberWithBool:[FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params]];
+        }
+    }else if ([dialog_type hasSuffix:@"photo"]) {
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
+        if(img ==nil){
+            NSString *msg = [ParseUtils MakeJsonStringWithObject:@"Share failed, photo can't be found" andKey:@"error_message"];
+            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+            return false;
+        }
+        FBPhotoParams *params = [[FBPhotoParams alloc] init];
+        params.photos = @[img];
+        
+        if ([dialog_type isEqualToString:@"share_photo"]) {
+            return [NSNumber numberWithBool:[FBDialogs canPresentShareDialogWithPhotos]];
+        }
+        else if ([dialog_type isEqualToString:@"message_photo"]) {
+            return [NSNumber numberWithBool:[FBDialogs canPresentMessageDialogWithPhotos]];
+        }
     }
-    return false;
+    return [NSNumber numberWithBool:NO];
 }
 - (void) shareLinkDialogFB: (FBLinkShareParams*) params
 {

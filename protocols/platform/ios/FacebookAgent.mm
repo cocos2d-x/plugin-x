@@ -67,6 +67,10 @@ namespace cocos2d{namespace plugin{
     {
         return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
     }
+    std::string FacebookAgent::getUserID()
+    {
+        return  agentManager->getUserPlugin()->callStringFuncWithParam("getUserID", NULL);
+    }
     void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
     {
         auto sharePlugin = agentManager->getSharePlugin();
@@ -76,8 +80,7 @@ namespace cocos2d{namespace plugin{
     }
     bool FacebookAgent::canPresentDialogWithParams(FBInfo& info){
         PluginParam params(info);
-        bool status = false;
-        agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params);
+        bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params);;
         return status;
     }
     void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)
@@ -126,7 +129,17 @@ namespace cocos2d{namespace plugin{
         PluginParam _params(parameters);
         agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_params, NULL);
     }
-    
+    void FacebookAgent::logPurchase(float mount, std::string currency){
+        PluginParam _mount(mount);
+        PluginParam _currency(currency.c_str());
+        agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, NULL);
+    }
+    void FacebookAgent::logPurchase(float mount, std::string currency,FBInfo &params){
+        PluginParam _mount(mount);
+        PluginParam _currency(currency.c_str());
+        PluginParam _params(params);
+        agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, &_params, NULL);
+    }
     void FacebookAgent::logEvent(std::string& eventName, float valueToSum, FBInfo& parameters)
     {
         PluginParam _eventName(eventName.c_str());

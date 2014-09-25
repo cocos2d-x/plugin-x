@@ -48,4 +48,6 @@
 -(void)activateApp;
 -(void)logEvent:(NSMutableDictionary*) logInfo;
 -(void)logEventWithName:(NSString*) eventName;
+-(void)logPurchase:(double)purchaseAmount currency:(NSString *)currency;
+-(void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters;
 @end

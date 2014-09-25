@@ -2369,6 +2369,37 @@ bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, j
 	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logEvent : wrong number of arguments");
 	return false;
 }
+bool js_pluginx_protocols_FacebookAgent_logPurchase(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_logPurchase : Invalid Native Object");
+    if(argc == 2){
+        double arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, argv[1], &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_logPurchase : Error processing arguments");
+        cobj->logPurchase(arg0, arg1);
+        return true;
+    }else if(argc == 3){
+        double arg0;
+        std::string arg1;
+        std::map<std::string, std::string> arg2;
+        ok &= pluginx::jsval_to_FBInfo(cx, argv[2], &arg2);
+        ok &= jsval_to_std_string(cx, argv[1], &arg1);
+        ok &= JS::ToNumber( cx, JS::RootedValue(cx, argv[0]), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_FacebookAgent_logPurchase : Error processing arguments");
+        cobj->logPurchase(arg0, arg1,arg2);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_logPurchase : wrong number of arguments");
+    return false;
+}
 
 bool js_pluginx_protocols_FacebookAgent_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -2419,6 +2450,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("api", js_pluginx_protocols_FacebookAgent_api, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("activateApp", js_pluginx_protocols_FacebookAgent_publishInstall, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("logEvent", js_pluginx_protocols_FacebookAgent_logEvent, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("logPurchase", js_pluginx_protocols_FacebookAgent_logPurchase, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getSDKVersion", js_pluginx_protocols_FacebookAgent_getSDKVersion, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
