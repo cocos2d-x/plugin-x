@@ -98,6 +98,7 @@ public:
      @param cb callback of dialog
      */
 	void dialog(FBInfo &info, FBCallback cb);
+    bool canPresentDialogWithParams(FBInfo &info);
 
 	/**
      @brief open the app request dialog of Facebook app
