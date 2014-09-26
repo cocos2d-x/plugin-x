@@ -97,7 +97,10 @@ std::string FacebookAgent::getPermissionList()
 {
     return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
 }
-
+std::string FacebookAgent::getUserID()
+{
+	return  agentManager->getUserPlugin()->callStringFuncWithParam("getUserID", NULL);
+}
 std::string FacebookAgent::getAccessToken()
 {
 	return agentManager->getUserPlugin()->callStringFuncWithParam("getAccessToken", NULL);
@@ -114,6 +117,12 @@ void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
 	sharePlugin->setCallback(cb);
 	PluginParam params(info);
 	sharePlugin->callFuncWithParam("dialog", &params, NULL);
+}
+
+bool FacebookAgent::canPresentDialogWithParams(FBInfo& info){
+	PluginParam params(info);
+	bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params, NULL);
+	return status;
 }
 
 void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)
@@ -157,7 +166,17 @@ void FacebookAgent::logEvent(std::string& eventName, FBInfo& parameters)
 	PluginParam _params(parameters);
 	agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_params, NULL);
 }
-
+void FacebookAgent::logPurchase(float mount, std::string currency){
+	PluginParam _mount(mount);
+	PluginParam _currency(currency.c_str());
+	agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, NULL);
+}
+void FacebookAgent::logPurchase(float mount, std::string currency,FBInfo &params){
+	PluginParam _mount(mount);
+	PluginParam _currency(currency.c_str());
+	PluginParam _params(params);
+	agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, &_params, NULL);
+}
 void FacebookAgent::logEvent(std::string& eventName, float valueToSum, FBInfo& parameters)
 {
 	PluginParam _eventName(eventName.c_str());

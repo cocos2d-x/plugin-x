@@ -24,14 +24,20 @@
  
 package org.cocos2dx.plugin;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Currency;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import java.util.Hashtable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.FacebookRequestError;
@@ -44,10 +50,6 @@ import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 
 public class UserFacebook implements InterfaceUser{
 
@@ -265,6 +267,8 @@ public class UserFacebook implements InterfaceUser{
     	// com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
     }
     
+    
+    
     public void logEvent(String eventName){
     	FacebookWrapper.getAppEventsLogger().logEvent(eventName);
     }
@@ -311,7 +315,39 @@ public class UserFacebook implements InterfaceUser{
     	}
     	
     }
-        
+    
+    public void logPurchase(JSONObject info)
+    {
+    	int length = info.length();
+    	if(3 == length){
+    		try {
+    			Double purchaseNum = info.getDouble("Param1");
+    			String  currency= info.getString("Param2");
+    			
+    			JSONObject params = info.getJSONObject("Param3");
+    			Iterator<?> keys = params.keys();
+    			Bundle bundle = new Bundle();
+    			while(keys.hasNext()){
+    				String key = keys.next().toString();
+    				bundle.putString(key, params.getString(key));
+    			}
+    			System.out.println(Currency.getInstance(currency));
+    			FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), Currency.getInstance(currency), bundle);
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	}else if(2 == length){
+    		try {
+    			Double purchaseNum = info.getDouble("Param1");
+    			String  currency= info.getString("Param2");
+				FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), Currency.getInstance(currency));
+	    	} catch (JSONException e) {
+				e.printStackTrace();
+			}
+    	}
+    }
+    
+    
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
