@@ -78,9 +78,15 @@ namespace cocos2d{namespace plugin{
         PluginParam params(info);
         sharePlugin->callFuncWithParam("dialog", &params, NULL);
     }
+    void FacebookAgent::webDialog(FBInfo &info, FBCallback cb){
+        auto sharePlugin = agentManager->getSharePlugin();
+        sharePlugin->setCallback(cb);
+        PluginParam params(info);
+        sharePlugin->callFuncWithParam("webDialog", &params, NULL);
+    }
     bool FacebookAgent::canPresentDialogWithParams(FBInfo& info){
         PluginParam params(info);
-        bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params);;
+        bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params,NULL);
         return status;
     }
     void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)

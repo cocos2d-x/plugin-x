@@ -135,8 +135,9 @@ bool js_pluginx_protocols_FacebookAgent_login(JSContext *cx, uint32_t argc, jsva
 bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_isLogedIn(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getAccessToken(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_FacebookAgent_share(JSContext *cx, uint32_t argc, jsval *vp);
+//bool js_pluginx_protocols_FacebookAgent_share(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_protocols_FacebookAgent_webDialog(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getPermissionList(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_api(JSContext *cx, uint32_t argc, jsval *vp);

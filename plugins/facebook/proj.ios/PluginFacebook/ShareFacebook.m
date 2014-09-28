@@ -307,7 +307,6 @@
     }
 }
 -(NSNumber *) canPresentDialogWithParams :(NSMutableDictionary *)shareInfo{
-    shareInfo = [shareInfo objectForKey:@"Param1"];
     [self convertParamsToFBParams:shareInfo];
     NSString *dialog_type = [shareInfo objectForKey:@"dialog"];
     if ([dialog_type hasSuffix:@"link"]) {
@@ -373,6 +372,70 @@
         }
     }
     return [NSNumber numberWithBool:NO];
+}
+-(void)webDialog:(NSMutableDictionary *)shareInfo{
+    [self convertParamsToFBParams:shareInfo];
+    NSString *dialog_type = [shareInfo objectForKey:@"dialog"];
+    NSMutableDictionary *newShareInfo = [[NSMutableDictionary alloc] init];
+    if([dialog_type isEqualToString:@"share_link"]){
+        [newShareInfo setObject:[shareInfo objectForKey:@"link"] forKey:@"href"];
+        [self showDialog:@"share" widthInfo:newShareInfo];
+    }else if([dialog_type isEqualToString:@"share_open_graph"] && [shareInfo objectForKey:@"url"]!=nil){
+        NSMutableDictionary *action_properties = [[NSMutableDictionary alloc] init];
+        if([shareInfo objectForKey:@"action_properties"] == nil){
+            [shareInfo removeObjectForKey:@"dialog"];
+            for(NSString *key in shareInfo){
+                NSString *item = [shareInfo objectForKey:key];
+                if(![item isEqualToString:@"action_type"]){
+                    [action_properties setObject:item forKey:key];
+                }
+            }
+        }
+        if([shareInfo objectForKey:@"preview_property"] !=nil){
+            [action_properties setObject:[shareInfo objectForKey:@"url"] forKey:[shareInfo objectForKey:@"preview_property"]];
+        }else{
+            [action_properties setObject:[shareInfo objectForKey:@"url"] forKey:@"object"];
+        }
+        [newShareInfo setObject:[shareInfo objectForKey:@"action_type"] forKey:@"action_type"];
+        NSString *action = [ParseUtils NSDictionaryToNSString:action_properties];
+        [newShareInfo setObject:action forKey:@"action_properties"];
+        [self showDialog:@"share_open_graph" widthInfo:newShareInfo];
+    }else{
+        // Error launching the dialog or publishing a story.
+        NSString *msg = [ParseUtils MakeJsonStringWithObject:@"do not support this type!" andKey:@"error_message"];
+        [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+    }
+    
+}
+-(void) showDialog:(NSString *) type widthInfo:(NSMutableDictionary *)shareInfo{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:@"{\"object\":\"www.baidu.com\"}" forKey:@"action_properties"];
+    [FBWebDialogs presentDialogModallyWithSession:[FBSession activeSession] dialog:type parameters:shareInfo handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+        if (error) {
+            // Error launching the dialog or publishing a story.
+            NSString *errorMsg = [NSString stringWithFormat:@"Share failed: %@", error.description];
+            NSString *msg = [ParseUtils MakeJsonStringWithObject:errorMsg andKey:@"error_message"];
+            [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+        } else {
+            if (result == FBWebDialogResultDialogNotCompleted) {
+                // User clicked the "x" icon
+                 NSString *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled sharing" andKey:@"error_message"];
+                [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+            } else {
+                // Handle the publish feed callback
+                NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                if (![urlParams valueForKey:@"post_id"]) {
+                    // User clicked the Cancel button
+                     NSString *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled sharing" andKey:@"error_message"];
+                    [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
+                } else {
+                    // User clicked the Share button
+                    NSString *msg = [ParseUtils MakeJsonStringWithObject:[urlParams valueForKey:@"post_id"] andKey:@"post_id"];
+                    [ShareWrapper onShareResult:self withRet:kShareSuccess withMsg:msg];
+                }
+            }
+        }
+    }];
 }
 - (void) shareLinkDialogFB: (FBLinkShareParams*) params
 {
