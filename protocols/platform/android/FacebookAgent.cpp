@@ -99,7 +99,7 @@ std::string FacebookAgent::getPermissionList()
 }
 std::string FacebookAgent::getUserID()
 {
-	return  agentManager->getUserPlugin()->callStringFuncWithParam("getUserID", NULL);
+	return agentManager->getUserPlugin()->callStringFuncWithParam("getUserID", NULL);
 }
 std::string FacebookAgent::getAccessToken()
 {
