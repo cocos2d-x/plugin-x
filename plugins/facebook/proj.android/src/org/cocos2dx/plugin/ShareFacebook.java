@@ -181,22 +181,11 @@ public class ShareFacebook implements InterfaceShare{
 						WebFeedDialog(cpInfo);
 					}
 					else if("share_open_graph".equals(dialogType)){
-						LogD("need Facebook app");
+						WebShareOpenGraphDialog(cpInfo);
 					}
-					else if("share_photo".equals(dialogType)){
-						LogD("need Facebook app to share photo");
-					}
-					else if("apprequests".equals(dialogType)){
-						WebRequestDialog(cpInfo);
-					}
-					else if("message_link".equals(dialogType)){
-						LogD("need Facebook app");
-					}
-					else if("message_open_graph".equals(dialogType)){
-						LogD("need Facebook app to share photo");
-					}
-					else if("message_photo".equals(dialogType)){
-						LogD("need Facebook app");
+					else {
+						String errMsgString = "{\"error_message\" : \"do not support this type!\"}";
+						ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, errMsgString);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -214,43 +203,47 @@ public class ShareFacebook implements InterfaceShare{
 				try {
 					String dialogType = cpInfo.getString("dialog");
 					if("share_link".equals(dialogType)){
-						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.SHARE_DIALOG)){
-							FBShareDialog(cpInfo);
-						}else{
-							WebFeedDialog(cpInfo);
-						}
+						FBShareDialog(cpInfo);
+//						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.SHARE_DIALOG)){
+//							FBShareDialog(cpInfo);
+//						}
 					}
 					else if("share_open_graph".equals(dialogType)){
-						if(FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG)){
-							FBShareOpenGraphDialog(cpInfo);
-						}else{
-							LogD("need Facebook app");
-						}
+						FBShareOpenGraphDialog(cpInfo);
+//						if(FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG)){
+//							FBShareOpenGraphDialog(cpInfo);
+//						}else{
+//							LogD("need Facebook app");
+//						}
 					}
 					else if("share_photo".equals(dialogType)){
-						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS)){
-							FBSharePhotoDialog(cpInfo);
-						}else{
-							LogD("need Facebook app to share photo");
-						}
+						FBSharePhotoDialog(cpInfo);
+//						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS)){
+//							FBSharePhotoDialog(cpInfo);
+//						}else{
+//							LogD("need Facebook app to share photo");
+//						}
 					}
 					else if("apprequests".equals(dialogType)){
 						WebRequestDialog(cpInfo);
 					}
 					else if("message_link".equals(dialogType)){
-						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.MESSAGE_DIALOG)){
-							FBMessageDialog(cpInfo);
-						}
+						FBMessageDialog(cpInfo);
+//						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.MESSAGE_DIALOG)){
+//							FBMessageDialog(cpInfo);
+//						}
 					}
 					else if("message_open_graph".equals(dialogType)){
-						if(FacebookDialog.canPresentOpenGraphMessageDialog(mContext, OpenGraphMessageDialogFeature.OG_MESSAGE_DIALOG)){
-							FBMessageOpenGraphDialog(cpInfo);
-						}
+						FBMessageOpenGraphDialog(cpInfo);
+//						if(FacebookDialog.canPresentOpenGraphMessageDialog(mContext, OpenGraphMessageDialogFeature.OG_MESSAGE_DIALOG)){
+//							FBMessageOpenGraphDialog(cpInfo);
+//						}
 					}
 					else if("message_photo".equals(dialogType)){
-						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.PHOTOS)){
-							FBMessagePhotoDialog(cpInfo);
-						}
+						FBMessagePhotoDialog(cpInfo);
+//						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.PHOTOS)){
+//							FBMessagePhotoDialog(cpInfo);
+//						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -261,17 +254,9 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void FBShareDialog(JSONObject info) throws JSONException{
-		String caption = info.has("title")?info.getString("title"):info.getString("caption");
 		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
-		String description = info.has("text")?info.getString("text"):info.getString("description");
-		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("picture");
-		///String name = info.getString("site");
 		FacebookDialog dialog = new FacebookDialog.ShareDialogBuilder(mContext)
-										.setCaption(caption)
 										.setLink(link)
-										//.setName(name)
-										.setDescription(description)
-										.setPicture(picture)
 										.build();
 		FacebookWrapper.track(dialog.present());
 	}
@@ -285,10 +270,10 @@ public class ShareFacebook implements InterfaceShare{
                         info.getString("description"));
         OpenGraphAction action = GraphObject.Factory.create(OpenGraphAction.class);
         action.setProperty(previewProperty, obj);
+        action.setType(type);
         //action.setType(type);
-        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, type, previewProperty)
-        									.build();
-    	FacebookWrapper.track(shareDialog.present());
+        FacebookDialog shareDialog = new FacebookDialog.OpenGraphActionDialogBuilder(mContext, action, previewProperty).build();
+        FacebookWrapper.track(shareDialog.present());
 	}
 	
 	private void FBSharePhotoDialog(JSONObject info) throws JSONException{
@@ -368,10 +353,28 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void WebFeedDialog(JSONObject info) throws JSONException{
-		String caption = info.has("title")?info.getString("title"):info.getString("caption");
 		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
+		
+		WebDialog dialog = new WebDialog.FeedDialogBuilder(mContext)
+								.setLink(link)
+								//.setTo(info.getString("to"))
+								.setOnCompleteListener(new OnCompleteListener(){
+
+									@Override
+									public void onComplete(Bundle arg0,
+											FacebookException arg1) {
+										ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");
+										
+									}})
+								.build();
+		dialog.show();
+	}
+	
+	private void WebShareOpenGraphDialog(JSONObject info) throws JSONException{
+		String caption = info.has("title")?info.getString("title"):info.getString("caption");
+		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("url");
 		String description = info.has("text")?info.getString("text"):info.getString("description");
-		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("picture");
+		String picture = info.has("imageUrl")?info.getString("imageUrl"):info.getString("image");
 		
 		WebDialog dialog = new WebDialog.FeedDialogBuilder(mContext)
 								.setCaption(caption)
@@ -389,6 +392,7 @@ public class ShareFacebook implements InterfaceShare{
 									}})
 								.build();
 		dialog.show();
+		//WebDialog dialog = new WebDialog.WebDialog(mContext).build();
 	}
 	
 	private void FBMessageDialog(JSONObject info) throws JSONException{

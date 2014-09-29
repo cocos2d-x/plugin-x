@@ -119,6 +119,13 @@ void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
 	sharePlugin->callFuncWithParam("dialog", &params, NULL);
 }
 
+void FacebookAgent::webDialog(FBInfo &info, FBCallback cb){
+    auto sharePlugin = agentManager->getSharePlugin();
+    sharePlugin->setCallback(cb);
+    PluginParam params(info);
+    sharePlugin->callFuncWithParam("webDialog", &params, NULL);
+}
+    
 bool FacebookAgent::canPresentDialogWithParams(FBInfo& info){
 	PluginParam params(info);
 	bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params, NULL);
