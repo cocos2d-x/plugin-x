@@ -30,6 +30,7 @@ import java.util.Currency;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -326,7 +327,7 @@ public class UserFacebook implements InterfaceUser{
     	if(3 == length){
     		try {
     			Double purchaseNum = info.getDouble("Param1");
-    			String  currency= info.getString("Param2");
+    			String currency= info.getString("Param2");
     			
     			JSONObject params = info.getJSONObject("Param3");
     			Iterator<?> keys = params.keys();
@@ -335,8 +336,15 @@ public class UserFacebook implements InterfaceUser{
     				String key = keys.next().toString();
     				bundle.putString(key, params.getString(key));
     			}
-    			System.out.println(Currency.getInstance(currency));
-    			FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), Currency.getInstance(currency), bundle);
+    			Currency currencyStr = null;
+    			try {
+    				currencyStr = Currency.getInstance(currency);
+				} catch (IllegalArgumentException e) {
+					currencyStr = Currency.getInstance(Locale.getDefault());
+					e.printStackTrace();
+				}
+    			
+    			FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), currencyStr, bundle);
     		} catch (JSONException e) {
     			e.printStackTrace();
     		}
