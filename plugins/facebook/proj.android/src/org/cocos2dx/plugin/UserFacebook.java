@@ -50,6 +50,7 @@ import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
+import com.facebook.model.GraphUser;
 
 public class UserFacebook implements InterfaceUser{
 
@@ -63,7 +64,7 @@ public class UserFacebook implements InterfaceUser{
     private static final List<String> allPublishPermissions = Arrays.asList(
             "publish_actions", "ads_management", "create_event", "rsvp_event",
             "manage_friendlists", "manage_notifications", "manage_pages");
-    
+    private static String userIdStr = "";
     protected static void LogE(String msg, Exception e) {
         Log.e(LOG_TAG, msg, e);
         e.printStackTrace();
@@ -74,6 +75,10 @@ public class UserFacebook implements InterfaceUser{
             Log.d(LOG_TAG, msg);
         }
     }
+    
+    public String getUserID(){
+		return userIdStr;
+	}
     
     public UserFacebook(Context context) {
 
@@ -90,7 +95,6 @@ public class UserFacebook implements InterfaceUser{
                 session.openForRead(new Session.OpenRequest((Activity) context).setCallback(statusCallback));
             }
         }
-        
     }
 
     @Override
@@ -351,6 +355,7 @@ public class UserFacebook implements InterfaceUser{
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
+        	onSessionStateChange(session, state, exception);
             if(false == isLogined){
                 if(SessionState.OPENED == state){
                     isLogined = true;
@@ -369,6 +374,35 @@ public class UserFacebook implements InterfaceUser{
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "failed"));
                 }                   
             }
+        }
+    }
+    
+    @SuppressWarnings("deprecation")
+	private void onSessionStateChange(Session session, SessionState state,
+            Exception exception) {
+        if (session != null && session.isOpened()) {
+            Log.d("DEBUG", "facebook session is open ");
+            // make request to the /me API
+            Request.executeMeRequestAsync(session,
+                    new Request.GraphUserCallback() {
+                        @Override
+                        public void onCompleted(GraphUser user,
+                                Response response) {
+                            if (user != null) {
+//                                  Log.i("Birthday", ""+user.getBirthday());
+//                                  Log.i("LastName", ""+user.getLastName());
+//                                  Log.i("FirstName", ""+user.getFirstName());
+//                                  Log.i("getId", ""+user.getId());
+//                                  Log.i("email", ""+user.asMap().get("email"));
+//                                  Log.i("gender", ""+user.asMap().get("gender"));
+//                                  Log.i("Birthday", ""+user.getBirthday());
+//                                  Log.i("city", ""+user.getLocation().getProperty("name").toString());
+                            		userIdStr = user.getId();
+
+                            }
+
+                        }
+                    });
         }
     }
     

@@ -135,10 +135,6 @@ public class ShareFacebook implements InterfaceShare{
 		return bRet;
 	}
 	
-	public String getUserID(){
-		return "";
-	}
-	
 	public boolean canPresentDialogWithParams(final JSONObject cpInfo){ 
 		try {
 			String dialogType = cpInfo.getString("dialog");
@@ -204,46 +200,24 @@ public class ShareFacebook implements InterfaceShare{
 					String dialogType = cpInfo.getString("dialog");
 					if("share_link".equals(dialogType)){
 						FBShareDialog(cpInfo);
-//						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.SHARE_DIALOG)){
-//							FBShareDialog(cpInfo);
-//						}
 					}
 					else if("share_open_graph".equals(dialogType)){
 						FBShareOpenGraphDialog(cpInfo);
-//						if(FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG)){
-//							FBShareOpenGraphDialog(cpInfo);
-//						}else{
-//							LogD("need Facebook app");
-//						}
 					}
 					else if("share_photo".equals(dialogType)){
 						FBSharePhotoDialog(cpInfo);
-//						if(FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS)){
-//							FBSharePhotoDialog(cpInfo);
-//						}else{
-//							LogD("need Facebook app to share photo");
-//						}
 					}
 					else if("apprequests".equals(dialogType)){
 						WebRequestDialog(cpInfo);
 					}
 					else if("message_link".equals(dialogType)){
 						FBMessageDialog(cpInfo);
-//						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.MESSAGE_DIALOG)){
-//							FBMessageDialog(cpInfo);
-//						}
 					}
 					else if("message_open_graph".equals(dialogType)){
 						FBMessageOpenGraphDialog(cpInfo);
-//						if(FacebookDialog.canPresentOpenGraphMessageDialog(mContext, OpenGraphMessageDialogFeature.OG_MESSAGE_DIALOG)){
-//							FBMessageOpenGraphDialog(cpInfo);
-//						}
 					}
 					else if("message_photo".equals(dialogType)){
 						FBMessagePhotoDialog(cpInfo);
-//						if(FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.PHOTOS)){
-//							FBMessagePhotoDialog(cpInfo);
-//						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
