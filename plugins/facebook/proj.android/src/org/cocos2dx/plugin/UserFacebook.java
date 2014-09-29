@@ -385,32 +385,20 @@ public class UserFacebook implements InterfaceUser{
         }
     }
     
-    @SuppressWarnings("deprecation")
 	private void onSessionStateChange(Session session, SessionState state,
             Exception exception) {
         if (session != null && session.isOpened()) {
-            Log.d("DEBUG", "facebook session is open ");
             // make request to the /me API
-            Request.executeMeRequestAsync(session,
-                    new Request.GraphUserCallback() {
-                        @Override
-                        public void onCompleted(GraphUser user,
-                                Response response) {
-                            if (user != null) {
-//                                  Log.i("Birthday", ""+user.getBirthday());
-//                                  Log.i("LastName", ""+user.getLastName());
-//                                  Log.i("FirstName", ""+user.getFirstName());
-//                                  Log.i("getId", ""+user.getId());
-//                                  Log.i("email", ""+user.asMap().get("email"));
-//                                  Log.i("gender", ""+user.asMap().get("gender"));
-//                                  Log.i("Birthday", ""+user.getBirthday());
-//                                  Log.i("city", ""+user.getLocation().getProperty("name").toString());
-                            		userIdStr = user.getId();
+            Request.newMeRequest(session, new Request.GraphUserCallback() {
+                @Override
+                public void onCompleted(GraphUser user,
+                        Response response) {
+                    if (user != null) {
+                    	userIdStr = user.getId();
+                    }
 
-                            }
-
-                        }
-                    });
+                }
+            }).executeAsync();
         }
     }
     
