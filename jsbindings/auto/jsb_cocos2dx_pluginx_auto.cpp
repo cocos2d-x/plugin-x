@@ -1987,6 +1987,24 @@ bool js_pluginx_protocols_FacebookAgent_isLogedIn(JSContext *cx, uint32_t argc, 
 	JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_isLogedIn : wrong number of arguments: %d", argc);
 	return false;
 }
+bool js_pluginx_protocols_FacebookAgent_getUserID(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::FacebookAgent* cobj = (cocos2d::plugin::FacebookAgent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_FacebookAgent_getUserID : Invalid Native Object");
+    
+    if(argc == 0)
+    {
+        std::string userID = cobj->getUserID();
+        jsval jsret = std_string_to_jsval(cx,userID);
+        JS_SET_RVAL(cx, vp, jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getUserID : wrong number of arguments: %d", argc);
+    return false;
+}
 
 bool js_pluginx_protocols_FacebookAgent_getAccessToken(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -2487,6 +2505,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 		JS_FN("_logout", js_pluginx_protocols_FacebookAgent_logout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("_isLoggedIn", js_pluginx_protocols_FacebookAgent_isLogedIn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("getAccessToken", js_pluginx_protocols_FacebookAgent_getAccessToken, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getUserID", js_pluginx_protocols_FacebookAgent_getUserID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("webDialog", js_pluginx_protocols_FacebookAgent_webDialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

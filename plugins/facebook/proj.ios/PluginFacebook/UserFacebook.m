@@ -69,6 +69,9 @@ NSString *_accessToken = @"";
 - (BOOL) isLogined{
     return _isLogin;
 }
+-(NSString *)getUserID{
+    return _userId;
+}
 - (NSNumber *) isLoggedIn{
     return [NSNumber  numberWithBool:_isLogin];
 }
@@ -129,11 +132,22 @@ NSString *_accessToken = @"";
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
         _accessToken = session.accessTokenData.accessToken;
-        _isLogin = true;
         OUTPUT_LOG(@"Session opened");
-        NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permissions",session.accessTokenData.accessToken,@"accessToken", nil];
-        NSString *msg = [ParseUtils NSDictionaryToNSString:result];
-        [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
+        
+        [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+            if (!error) {
+                NSDictionary *dic = (NSDictionary *)result;
+                _userId = [dic objectForKey:@"id"];
+                _isLogin = true;
+                NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys:[FBSession.activeSession permissions],@"permissions",session.accessTokenData.accessToken,@"accessToken", nil];
+                NSString *msg = [ParseUtils NSDictionaryToNSString:result];
+                [UserWrapper onActionResult:self withRet:kLoginSucceed withMsg:msg];
+            } else {
+                NSString *msg = [ParseUtils MakeJsonStringWithObject:@"loginFailed" andKey:@"error_message"];
+                [UserWrapper onActionResult:self withRet:kLoginFailed withMsg:msg];
+            }
+        }];
+        
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         NSString *msg = [ParseUtils MakeJsonStringWithObject:@"loginFail Session closed" andKey:@"error_message"];
