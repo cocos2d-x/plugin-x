@@ -102,6 +102,7 @@ public:
      */
 	void dialog(FBInfo &info, FBCallback cb);
     bool canPresentDialogWithParams(FBInfo &info);
+    void webDialog(FBInfo &info,FBCallback cb);
 
 	/**
      @brief open the app request dialog of Facebook app
