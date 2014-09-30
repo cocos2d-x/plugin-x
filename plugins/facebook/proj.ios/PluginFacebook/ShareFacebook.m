@@ -303,7 +303,7 @@
         NSString *previewProperty = [shareInfo objectForKey:@"preview_property"];
         NSString *title = [shareInfo objectForKey:@"title"];
         NSString *image = [shareInfo objectForKey:@"image"];
-        NSString *link = [shareInfo objectForKey:@"link"];
+        NSString *link = [shareInfo objectForKey:@"url"];
         NSString *desc = [shareInfo objectForKey:@"description"];
         
         id<FBGraphObject> object = [FBGraphObject openGraphObjectForPostWithType: type

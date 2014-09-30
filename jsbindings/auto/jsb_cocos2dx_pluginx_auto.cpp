@@ -2508,7 +2508,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
         JS_FN("getUserID", js_pluginx_protocols_FacebookAgent_getUserID, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //		JS_FN("share", js_pluginx_protocols_FacebookAgent_share, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 		JS_FN("dialog", js_pluginx_protocols_FacebookAgent_dialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("webDialog", js_pluginx_protocols_FacebookAgent_webDialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//        JS_FN("webDialog", js_pluginx_protocols_FacebookAgent_webDialog, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canPresentDialog", js_pluginx_protocols_FacebookAgent_canPresentDialog, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         
 		JS_FN("appRequest", js_pluginx_protocols_FacebookAgent_appRequest, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

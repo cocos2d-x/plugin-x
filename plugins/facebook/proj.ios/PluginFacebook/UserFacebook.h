@@ -44,11 +44,9 @@
 - (NSString *)getUserId;
 - (NSString *)getAccessToken;
 -(NSString *) getPermissionList;
-//-(void)requestPermissions:(NSString *)permission;
 -(void)api:(NSDictionary *)params;
 -(void)activateApp;
 -(void)logEvent:(NSMutableDictionary*) logInfo;
 -(void)logEventWithName:(NSString*) eventName;
--(void)logPurchase:(double)purchaseAmount currency:(NSString *)currency;
--(void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters;
+-(void)logPurchase:(NSMutableDictionary *)purchaseInfo;
 @end
