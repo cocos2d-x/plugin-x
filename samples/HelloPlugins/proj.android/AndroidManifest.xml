@@ -72,11 +72,6 @@
         <provider android:authorities="com.facebook.app.NativeAppCallContentProvider641876029265874"
                   android:name="com.facebook.NativeAppCallContentProvider"
                   android:exported="true"/>
-        <receiver android:name="org.cocos2dx.plugin.ShareFacebookBroadcastReceiver">
-            <intent-filter>
-                <action android:name="com.facebook.platform.AppCallResultBroadcast" />
-            </intent-filter>
-        </receiver>
     </application>
     <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
 
