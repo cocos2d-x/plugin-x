@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/FlurryAgent.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/libPluginFlurry.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/umeng/android/libPluginUmeng.jar"/>
@@ -24,6 +24,8 @@
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/360SDK.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/libPluginQH360.jar"/>
 	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/uc/android/libPluginUC.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebookads/android/AudienceNetwork.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebookads/android/libPluginFacebookAds.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
