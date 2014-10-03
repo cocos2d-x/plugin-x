@@ -4,7 +4,7 @@ export ALL_PLUGINS=("flurry" "umeng" \
 "admob" \
 "twitter" "weibo" \
 "qh360" "uc" \
-"facebook")
+"facebook" "facebookads")
 
 # define the plugin root directory & publish target directory
 export TARGET_DIR_NAME="publish"
