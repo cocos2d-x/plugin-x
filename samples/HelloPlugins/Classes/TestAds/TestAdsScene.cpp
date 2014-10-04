@@ -104,6 +104,8 @@ bool TestAds::init()
     _facebookAds->configDeveloperInfo(devInfo);
     _facebookAds->setAdsListener(_listener);
     _facebookAds->setDebugMode(true);
+    PluginParam pParam2("7d842b871e121416b2f732443a355523");
+    _facebookAds->callFuncWithParam("addTestDevice", &pParam2, NULL);
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Point origin = Director::getInstance()->getVisibleOrigin();
