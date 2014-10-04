@@ -75,7 +75,10 @@ public:
      @brief Check whether the user logined or not
      */
 	bool isLoggedIn();
-	
+    /**
+     @brief get UserID
+     **/
+    std::string getUserID();
 	/**
      @brief get AccessToken
      */
@@ -98,6 +101,8 @@ public:
      @param cb callback of dialog
      */
 	void dialog(FBInfo &info, FBCallback cb);
+    bool canPresentDialogWithParams(FBInfo &info);
+    void webDialog(FBInfo &info,FBCallback cb);
 
 	/**
      @brief open the app request dialog of Facebook app
@@ -127,7 +132,12 @@ public:
     void logEvent(std::string& eventName, float valueToSum);
     void logEvent(std::string& eventName, FBInfo& parameters);
     void logEvent(std::string& eventName, float valueToSum, FBInfo& parameters);
-
+    
+    /*
+     @breif Log an app event for purchase.
+     */
+    void logPurchase(float mount,std::string currency);
+    void logPurchase(float mount,std::string currency,FBInfo &parmeters);
     /*
      @breif return the version of Facebook SDK for Cocos 
      */

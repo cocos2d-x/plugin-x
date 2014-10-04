@@ -41,5 +41,6 @@
 - (void)appRequest:(NSMutableDictionary *)shareInfo;
 - (NSString*) getSDKVersion;
 - (NSString*) getPluginVersion;
+-(NSNumber *)canPresentDialogWithParams:(NSMutableDictionary *)shareInfo;
 
 @end

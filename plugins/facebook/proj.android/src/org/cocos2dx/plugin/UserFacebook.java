@@ -24,14 +24,21 @@
  
 package org.cocos2dx.plugin;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Currency;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-
-import java.util.Hashtable;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.FacebookRequestError;
@@ -44,10 +51,7 @@ import com.facebook.Session.NewPermissionsRequest;
 import com.facebook.Session.OpenRequest;
 import com.facebook.SessionState;
 import com.facebook.Settings;
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
+import com.facebook.model.GraphUser;
 
 public class UserFacebook implements InterfaceUser{
 
@@ -61,7 +65,7 @@ public class UserFacebook implements InterfaceUser{
     private static final List<String> allPublishPermissions = Arrays.asList(
             "publish_actions", "ads_management", "create_event", "rsvp_event",
             "manage_friendlists", "manage_notifications", "manage_pages");
-    
+    private static String userIdStr = "";
     protected static void LogE(String msg, Exception e) {
         Log.e(LOG_TAG, msg, e);
         e.printStackTrace();
@@ -72,6 +76,10 @@ public class UserFacebook implements InterfaceUser{
             Log.d(LOG_TAG, msg);
         }
     }
+    
+    public String getUserID(){
+		return userIdStr;
+	}
     
     public UserFacebook(Context context) {
 
@@ -88,7 +96,6 @@ public class UserFacebook implements InterfaceUser{
                 session.openForRead(new Session.OpenRequest((Activity) context).setCallback(statusCallback));
             }
         }
-        
     }
 
     @Override
@@ -265,6 +272,8 @@ public class UserFacebook implements InterfaceUser{
     	// com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
     }
     
+    
+    
     public void logEvent(String eventName){
     	FacebookWrapper.getAppEventsLogger().logEvent(eventName);
     }
@@ -311,10 +320,50 @@ public class UserFacebook implements InterfaceUser{
     	}
     	
     }
-        
+    
+    public void logPurchase(JSONObject info)
+    {
+    	int length = info.length();
+    	if(3 == length){
+    		try {
+    			Double purchaseNum = info.getDouble("Param1");
+    			String currency= info.getString("Param2");
+    			
+    			JSONObject params = info.getJSONObject("Param3");
+    			Iterator<?> keys = params.keys();
+    			Bundle bundle = new Bundle();
+    			while(keys.hasNext()){
+    				String key = keys.next().toString();
+    				bundle.putString(key, params.getString(key));
+    			}
+    			Currency currencyStr = null;
+    			try {
+    				currencyStr = Currency.getInstance(currency);
+				} catch (IllegalArgumentException e) {
+					currencyStr = Currency.getInstance(Locale.getDefault());
+					e.printStackTrace();
+				}
+    			
+    			FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), currencyStr, bundle);
+    		} catch (JSONException e) {
+    			e.printStackTrace();
+    		}
+    	}else if(2 == length){
+    		try {
+    			Double purchaseNum = info.getDouble("Param1");
+    			String  currency= info.getString("Param2");
+				FacebookWrapper.getAppEventsLogger().logPurchase(new BigDecimal(purchaseNum), Currency.getInstance(currency));
+	    	} catch (JSONException e) {
+				e.printStackTrace();
+			}
+    	}
+    }
+    
+    
     private class SessionStatusCallback implements Session.StatusCallback {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
+        	onSessionStateChange(session, state, exception);
             if(false == isLogined){
                 if(SessionState.OPENED == state){
                     isLogined = true;
@@ -333,6 +382,23 @@ public class UserFacebook implements InterfaceUser{
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "failed"));
                 }                   
             }
+        }
+    }
+    
+	private void onSessionStateChange(Session session, SessionState state,
+            Exception exception) {
+        if (session != null && session.isOpened()) {
+            // make request to the /me API
+            Request.newMeRequest(session, new Request.GraphUserCallback() {
+                @Override
+                public void onCompleted(GraphUser user,
+                        Response response) {
+                    if (user != null) {
+                    	userIdStr = user.getId();
+                    }
+
+                }
+            }).executeAsync();
         }
     }
     

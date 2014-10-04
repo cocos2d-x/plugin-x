@@ -67,6 +67,10 @@ namespace cocos2d{namespace plugin{
     {
         return agentManager->getUserPlugin()->callStringFuncWithParam("getPermissionList", NULL);
     }
+    std::string FacebookAgent::getUserID()
+    {
+        return  agentManager->getUserPlugin()->callStringFuncWithParam("getUserID", NULL);
+    }
     void FacebookAgent::dialog(FBInfo& info, FBCallback cb)
     {
         auto sharePlugin = agentManager->getSharePlugin();
@@ -74,7 +78,17 @@ namespace cocos2d{namespace plugin{
         PluginParam params(info);
         sharePlugin->callFuncWithParam("dialog", &params, NULL);
     }
-    
+    void FacebookAgent::webDialog(FBInfo &info, FBCallback cb){
+        auto sharePlugin = agentManager->getSharePlugin();
+        sharePlugin->setCallback(cb);
+        PluginParam params(info);
+        sharePlugin->callFuncWithParam("webDialog", &params, NULL);
+    }
+    bool FacebookAgent::canPresentDialogWithParams(FBInfo& info){
+        PluginParam params(info);
+        bool status = agentManager->getSharePlugin()->callBoolFuncWithParam("canPresentDialogWithParams", &params,NULL);
+        return status;
+    }
     void FacebookAgent::api(std::string &path, int method, FBInfo &params, FBCallback cb)
     {
         requestCallbacks.push_back(cb);
@@ -121,7 +135,17 @@ namespace cocos2d{namespace plugin{
         PluginParam _params(parameters);
         agentManager->getUserPlugin()->callFuncWithParam("logEvent", &_eventName, &_params, NULL);
     }
-    
+    void FacebookAgent::logPurchase(float mount, std::string currency){
+        PluginParam _mount(mount);
+        PluginParam _currency(currency.c_str());
+        agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, NULL);
+    }
+    void FacebookAgent::logPurchase(float mount, std::string currency,FBInfo &params){
+        PluginParam _mount(mount);
+        PluginParam _currency(currency.c_str());
+        PluginParam _params(params);
+        agentManager->getUserPlugin()->callFuncWithParam("logPurchase", &_mount, &_currency, &_params, NULL);
+    }
     void FacebookAgent::logEvent(std::string& eventName, float valueToSum, FBInfo& parameters)
     {
         PluginParam _eventName(eventName.c_str());
