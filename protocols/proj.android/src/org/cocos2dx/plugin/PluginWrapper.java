@@ -177,7 +177,7 @@ public class PluginWrapper {
     
     public static Hashtable<String, String> getPluginConfigure()
     {
-        Hashtable<String, String> ht = new Hashtable();
+        Hashtable<String, String> ht = new Hashtable<String, String>();
         try {
             ApplicationInfo ai = sContext.getPackageManager().getApplicationInfo(sContext.getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
