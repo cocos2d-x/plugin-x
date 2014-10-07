@@ -173,7 +173,7 @@
 - (void) addTestDevice: (NSString*) deviceID
 {
     if (nil == self.testDeviceIDs) {
-        self.testDeviceIDs = [NSMutableArray alloc];
+        self.testDeviceIDs = [[NSMutableArray alloc] init];
         [self.testDeviceIDs addObject:GAD_SIMULATOR_ID];
     }
     [self.testDeviceIDs addObject:deviceID];
