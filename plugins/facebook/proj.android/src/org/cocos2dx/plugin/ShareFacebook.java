@@ -30,22 +30,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.cocos2dx.plugin.InterfaceShare;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.facebook.FacebookException;
-import com.facebook.model.GraphObject;
-import com.facebook.model.OpenGraphAction;
-import com.facebook.model.OpenGraphObject;
-import com.facebook.widget.FacebookDialog;
-import com.facebook.widget.FacebookDialog.PendingCall;
-import com.facebook.widget.WebDialog;
-import com.facebook.widget.FacebookDialog.MessageDialogFeature;
-import com.facebook.widget.FacebookDialog.OpenGraphActionDialogFeature;
-import com.facebook.widget.FacebookDialog.OpenGraphMessageDialogFeature;
-import com.facebook.widget.FacebookDialog.ShareDialogFeature;
-import com.facebook.widget.WebDialog.OnCompleteListener;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,6 +39,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.facebook.FacebookException;
+import com.facebook.model.GraphObject;
+import com.facebook.model.OpenGraphAction;
+import com.facebook.model.OpenGraphObject;
+import com.facebook.widget.FacebookDialog;
+import com.facebook.widget.FacebookDialog.MessageDialogFeature;
+import com.facebook.widget.FacebookDialog.OpenGraphActionDialogFeature;
+import com.facebook.widget.FacebookDialog.OpenGraphMessageDialogFeature;
+import com.facebook.widget.FacebookDialog.PendingCall;
+import com.facebook.widget.FacebookDialog.ShareDialogBuilder;
+import com.facebook.widget.FacebookDialog.ShareDialogFeature;
+import com.facebook.widget.WebDialog;
+import com.facebook.widget.WebDialog.FeedDialogBuilder;
+import com.facebook.widget.WebDialog.OnCompleteListener;
+import com.facebook.widget.WebDialog.RequestsDialogBuilder;
 
 public class ShareFacebook implements InterfaceShare{
 
@@ -227,14 +229,6 @@ public class ShareFacebook implements InterfaceShare{
 		});
 	}
 	
-	private void FBShareDialog(JSONObject info) throws JSONException{
-		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
-		FacebookDialog dialog = new FacebookDialog.ShareDialogBuilder(mContext)
-										.setLink(link)
-										.build();
-		FacebookWrapper.track(dialog.present());
-	}
-	
 	private void FBShareOpenGraphDialog(JSONObject info) throws JSONException{
 		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
 		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
@@ -282,66 +276,155 @@ public class ShareFacebook implements InterfaceShare{
 	}
 	
 	private void WebRequestDialog(JSONObject info) throws JSONException{
-		WebDialog dialog = new WebDialog.RequestsDialogBuilder(mContext)
-									.setMessage(info.getString("message"))
-									.setTitle(info.has("title")?info.getString("title"):"")
-									//.setTo(info.getString("to"))
-									.setOnCompleteListener(new OnCompleteListener(){
+		String message = null;
+		String app_id = null;
+		RequestsDialogBuilder requestDialogBuilder = new WebDialog.RequestsDialogBuilder(mContext);
+		// some property need to add
+		
+		if ((message = safeGetJsonString(info, "message")) == null)
+		{
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "{ \"error_message\" : \" need to add property 'message' \"}");
+			return;
+		}
+		
+		requestDialogBuilder.setMessage(message);
+		
+		// some property can be choose
+		String to = null;
+		if ((to = safeGetJsonString(info, "to")) != null)
+			requestDialogBuilder.setTo(to);
+		
+		String title = null;
+		if ((title = safeGetJsonString(info, "title")) != null)
+			requestDialogBuilder.setTitle(title);
+		
+		String data = null;
+		if ((data = safeGetJsonString(info, "data")) != null)
+			requestDialogBuilder.setData(data);
+
+		requestDialogBuilder.setOnCompleteListener(new OnCompleteListener(){
+			@Override
+			public void onComplete(Bundle values,	FacebookException error) {
+				if(null != error){
+					StringBuffer buffer = new StringBuffer();
+					buffer.append("{\"error_message\":\"")
+						.append(error.getMessage())
+						.append("\"}");
+					
+					ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, buffer.toString());
+				}else{
+					StringBuffer buffer = new StringBuffer();
+					buffer.append("{\"request\":\"");
+					buffer.append(values.getString("request"));
+					buffer.append("\", \"to\":[");
+					
+					Set<String> keys = values.keySet();
+					Iterator<String> it = keys.iterator();
+					while(it.hasNext()){
+						String key = it.next();
+						if(!"request".equals(key)){
+							
+							buffer.append("\"");
+							buffer.append(values.getString(it.next()));
+							buffer.append("\",");
+						}
+					}
+					//remove the last ,
+					buffer.deleteCharAt(buffer.length() - 1);
+					buffer.append("]}");
+					
+					ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, buffer.toString());
+				}
+			}
+		});
+		requestDialogBuilder.build().show();
+	}
 	
-										@Override
-										public void onComplete(Bundle arg0,	FacebookException arg1) {
-											if(null != arg1){
-												StringBuffer buffer = new StringBuffer();
-												buffer.append("{\"error_message\":\"")
-													.append(arg1.getMessage())
-													.append("\"}");
-												
-												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, buffer.toString());
-											}else{
-												StringBuffer buffer = new StringBuffer();
-												buffer.append("{\"request\":\"");
-												buffer.append(arg0.getString("request"));
-												buffer.append("\", \"to\":[");
-												
-												Set<String> keys = arg0.keySet();
-												Iterator<String> it = keys.iterator();
-												while(it.hasNext()){
-													String key = it.next();
-													if(!"request".equals(key)){
-														
-														buffer.append("\"");
-														buffer.append(arg0.getString(it.next()));
-														buffer.append("\",");
-													}
-												}
-												//remove the last ,
-												buffer.deleteCharAt(buffer.length() - 1);
-												buffer.append("]}");
-												
-												ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, buffer.toString());
-											}
-										}
-									})
-									.build();
-		dialog.show();
+	private String safeGetJsonString(JSONObject info, String key) {
+		try {
+			return info.getString(key);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	private void FBShareDialog(JSONObject info) throws JSONException{
+		String link = null;
+		
+		// some property need to add
+		if ((link = safeGetJsonString(info, "link")) == null)
+		{
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "{ \"error_message\" : \" need to add property 'link' \"}");
+			return;
+		}
+		
+		ShareDialogBuilder shareDialogBuilder = new FacebookDialog.ShareDialogBuilder(mContext);
+		shareDialogBuilder.setLink(link);
+		
+		// some property can be choose
+		String name = null;
+		if ((name = safeGetJsonString(info, "name")) != null)
+			shareDialogBuilder.setName(name);
+		
+		String caption = null;
+		if ((caption = safeGetJsonString(info, "caption")) != null)
+			shareDialogBuilder.setCaption(caption);
+		
+		String description = null;
+		if ((description = safeGetJsonString(info, "description")) != null)
+			shareDialogBuilder.setDescription(description);
+		
+		String picture = null;
+		if ((description = safeGetJsonString(info, "picture")) != null)
+			shareDialogBuilder.setPicture(picture);
+		
+		FacebookWrapper.track(shareDialogBuilder.build().present());
 	}
 	
 	private void WebFeedDialog(JSONObject info) throws JSONException{
-		String link = info.has("siteUrl")?info.getString("siteUrl"):info.getString("link");
+		String link = null;
 		
-		WebDialog dialog = new WebDialog.FeedDialogBuilder(mContext)
-								.setLink(link)
-								//.setTo(info.getString("to"))
-								.setOnCompleteListener(new OnCompleteListener(){
+		// some property need to add
+		if ((link = safeGetJsonString(info, "link")) == null)
+		{
+			ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_FAIL, "{ \"error_message\" : \" need to add property 'link' \"}");
+			return;
+		}
+		
+		FeedDialogBuilder feedDialogBuilder = new WebDialog.FeedDialogBuilder(mContext);
+		feedDialogBuilder.setLink(link);
+		feedDialogBuilder.setOnCompleteListener(new OnCompleteListener(){
+				@Override
+				public void onComplete(Bundle arg0,
+						FacebookException arg1) {
+					ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");
+					
+				}
+			}
+		);
+		
+		// some property can be choose
+		String name = null;
+		if ((name = safeGetJsonString(info, "name")) != null)
+			feedDialogBuilder.setName(name);
+		
+		String caption = null;
+		if ((caption = safeGetJsonString(info, "caption")) != null)
+			feedDialogBuilder.setCaption(caption);
+		
+		String description = null;
+		if ((description = safeGetJsonString(info, "description")) != null)
+			feedDialogBuilder.setDescription(description);
+		
+		String picture = null;
+		if ((description = safeGetJsonString(info, "picture")) != null)
+			feedDialogBuilder.setPicture(picture);
 
-									@Override
-									public void onComplete(Bundle arg0,
-											FacebookException arg1) {
-										ShareWrapper.onShareResult(mAdapter, ShareWrapper.SHARERESULT_SUCCESS, "share success");
-										
-									}})
-								.build();
-		dialog.show();
+		String media_source = null;
+		if ((description = safeGetJsonString(info, "media_source")) != null)
+			feedDialogBuilder.setSource(media_source);
+
+		feedDialogBuilder.build().show();
 	}
 	
 	private void WebShareOpenGraphDialog(JSONObject info) throws JSONException{
