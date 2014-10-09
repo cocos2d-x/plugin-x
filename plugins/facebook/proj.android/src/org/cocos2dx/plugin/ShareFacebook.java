@@ -301,7 +301,7 @@ public class ShareFacebook implements InterfaceShare{
 		String data = null;
 		if ((data = safeGetJsonString(info, "data")) != null)
 			requestDialogBuilder.setData(data);
-
+		
 		requestDialogBuilder.setOnCompleteListener(new OnCompleteListener(){
 			@Override
 			public void onComplete(Bundle values,	FacebookException error) {
@@ -375,7 +375,7 @@ public class ShareFacebook implements InterfaceShare{
 			shareDialogBuilder.setDescription(description);
 		
 		String picture = null;
-		if ((description = safeGetJsonString(info, "picture")) != null)
+		if ((picture = safeGetJsonString(info, "picture")) != null)
 			shareDialogBuilder.setPicture(picture);
 		
 		FacebookWrapper.track(shareDialogBuilder.build().present());
@@ -417,13 +417,17 @@ public class ShareFacebook implements InterfaceShare{
 			feedDialogBuilder.setDescription(description);
 		
 		String picture = null;
-		if ((description = safeGetJsonString(info, "picture")) != null)
+		if ((picture = safeGetJsonString(info, "picture")) != null)
 			feedDialogBuilder.setPicture(picture);
 
 		String media_source = null;
-		if ((description = safeGetJsonString(info, "media_source")) != null)
+		if ((media_source = safeGetJsonString(info, "media_source")) != null)
 			feedDialogBuilder.setSource(media_source);
 
+		String to = null;
+		if ((to = safeGetJsonString(info, "to")) != null)
+			feedDialogBuilder.setTo(to);
+		
 		feedDialogBuilder.build().show();
 	}
 	
