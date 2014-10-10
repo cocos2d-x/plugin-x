@@ -192,16 +192,6 @@ char
 plugin.ProtocolIAP = {
 
 /**
- * @method payForProduct
- * @param {map_object} arg0
- */
-payForProduct : function (
-map 
-)
-{
-},
-
-/**
  * @method onPayResult
  * @param {cc.plugin::PayResultCode} arg0
  * @param {char} arg1
@@ -211,6 +201,16 @@ payresultcode,
 char 
 )
 {
+},
+
+/**
+ * @method getCallback
+ * @return {function}
+ */
+getCallback : function (
+)
+{
+    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 /**
@@ -261,6 +261,16 @@ queryPoints : function (
 },
 
 /**
+ * @method getCallback
+ * @return {function}
+ */
+getCallback : function (
+)
+{
+    return std::function<void (int, std::basic_string<char> &)>;
+},
+
+/**
  * @method spendPoints
  * @param {int} arg0
  */
@@ -288,16 +298,6 @@ map
 plugin.ProtocolShare = {
 
 /**
- * @method share
- * @param {map_object} arg0
- */
-share : function (
-map 
-)
-{
-},
-
-/**
  * @method onShareResult
  * @param {cc.plugin::ShareResultCode} arg0
  * @param {char} arg1
@@ -307,6 +307,16 @@ shareresultcode,
 char 
 )
 {
+},
+
+/**
+ * @method getCallback
+ * @return {function}
+ */
+getCallback : function (
+)
+{
+    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 /**
@@ -345,15 +355,13 @@ showAchievements : function (
 },
 
 /**
- * @method submitScore
- * @param {char} arg0
- * @param {long} arg1
+ * @method getCallback
+ * @return {function}
  */
-submitScore : function (
-char, 
-long 
+getCallback : function (
 )
 {
+    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 /**
@@ -361,16 +369,6 @@ long
  * @param {map_object} arg0
  */
 configDeveloperInfo : function (
-map 
-)
-{
-},
-
-/**
- * @method unlockAchievement
- * @param {map_object} arg0
- */
-unlockAchievement : function (
 map 
 )
 {
@@ -384,21 +382,13 @@ map
 plugin.ProtocolUser = {
 
 /**
- * @method isLogined
- * @return {bool}
+ * @method getCallback
+ * @return {function}
  */
-isLogined : function (
+getCallback : function (
 )
 {
-    return false;
-},
-
-/**
- * @method logout
- */
-logout : function (
-)
-{
+    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 /**
@@ -412,11 +402,13 @@ map
 },
 
 /**
- * @method login
+ * @method isLoggedIn
+ * @return {bool}
  */
-login : function (
+isLoggedIn : function (
 )
 {
+    return false;
 },
 
 /**
@@ -424,6 +416,16 @@ login : function (
  * @return {String}
  */
 getSessionID : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getAccessToken
+ * @return {String}
+ */
+getAccessToken : function (
 )
 {
     return ;
@@ -437,16 +439,6 @@ getSessionID : function (
 plugin.AgentManager = {
 
 /**
- * @method showAds
- * @param {map_object} arg0
- */
-showAds : function (
-map 
-)
-{
-},
-
-/**
  * @method getSocialPlugin
  * @return {cc.plugin::ProtocolSocial}
  */
@@ -454,232 +446,6 @@ getSocialPlugin : function (
 )
 {
     return cc.plugin::ProtocolSocial;
-},
-
-/**
- * @method setSessionContinueMillis
- * @param {long} arg0
- */
-setSessionContinueMillis : function (
-long 
-)
-{
-},
-
-/**
- * @method getAnalyticsPlugin
- * @return {cc.plugin::ProtocolAnalytics}
- */
-getAnalyticsPlugin : function (
-)
-{
-    return cc.plugin::ProtocolAnalytics;
-},
-
-/**
- * @method startSession
- * @param {char} arg0
- */
-startSession : function (
-char 
-)
-{
-},
-
-/**
- * @method stopSession
- */
-stopSession : function (
-)
-{
-},
-
-/**
- * @method getSharePlugin
- * @return {cc.plugin::ProtocolShare}
- */
-getSharePlugin : function (
-)
-{
-    return cc.plugin::ProtocolShare;
-},
-
-/**
- * @method getSessionID
- * @return {String}
- */
-getSessionID : function (
-)
-{
-    return ;
-},
-
-/**
- * @method logTimedEventBegin
- * @param {char} arg0
- */
-logTimedEventBegin : function (
-char 
-)
-{
-},
-
-/**
- * @method logError
- * @param {char} arg0
- * @param {char} arg1
- */
-logError : function (
-char, 
-char 
-)
-{
-},
-
-/**
- * @method showLeaderboard
- * @param {String} arg0
- */
-showLeaderboard : function (
-str 
-)
-{
-},
-
-/**
- * @method getIAPPlugin
- * @return {cc.plugin::ProtocolIAP}
- */
-getIAPPlugin : function (
-)
-{
-    return cc.plugin::ProtocolIAP;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method unlockAchievement
- * @param {map_object} arg0
- */
-unlockAchievement : function (
-map 
-)
-{
-},
-
-/**
- * @method queryPoints
- */
-queryPoints : function (
-)
-{
-},
-
-/**
- * @method setCaptureUncaughtException
- * @param {bool} arg0
- */
-setCaptureUncaughtException : function (
-bool 
-)
-{
-},
-
-/**
- * @method payForProduct
- * @param {map_object} arg0
- */
-payForProduct : function (
-map 
-)
-{
-},
-
-/**
- * @method showAchievements
- */
-showAchievements : function (
-)
-{
-},
-
-/**
- * @method logEvent
- * @param {char} arg0
- */
-logEvent : function (
-char 
-)
-{
-},
-
-/**
- * @method logout
- */
-logout : function (
-)
-{
-},
-
-/**
- * @method submitScore
- * @param {String} arg0
- * @param {long} arg1
- */
-submitScore : function (
-str, 
-long 
-)
-{
-},
-
-/**
- * @method spendPoints
- * @param {int} arg0
- */
-spendPoints : function (
-int 
-)
-{
-},
-
-/**
- * @method hideAds
- * @param {map_object} arg0
- */
-hideAds : function (
-map 
-)
-{
-},
-
-/**
- * @method logTimedEventEnd
- * @param {char} arg0
- */
-logTimedEventEnd : function (
-char 
-)
-{
-},
-
-/**
- * @method isLogined
- * @return {bool}
- */
-isLogined : function (
-)
-{
-    return false;
 },
 
 /**
@@ -711,6 +477,44 @@ getUserPlugin : function (
 },
 
 /**
+ * @method getIAPPlugin
+ * @return {cc.plugin::ProtocolIAP}
+ */
+getIAPPlugin : function (
+)
+{
+    return cc.plugin::ProtocolIAP;
+},
+
+/**
+ * @method getSharePlugin
+ * @return {cc.plugin::ProtocolShare}
+ */
+getSharePlugin : function (
+)
+{
+    return cc.plugin::ProtocolShare;
+},
+
+/**
+ * @method getAnalyticsPlugin
+ * @return {cc.plugin::ProtocolAnalytics}
+ */
+getAnalyticsPlugin : function (
+)
+{
+    return cc.plugin::ProtocolAnalytics;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
  * @method getInstance
  * @return {cc.plugin::AgentManager}
  */
@@ -718,6 +522,127 @@ getInstance : function (
 )
 {
     return cc.plugin::AgentManager;
+},
+
+};
+
+/**
+ * @class FacebookAgent
+ */
+plugin.FacebookAgent = {
+
+/**
+ * @method activateApp
+ */
+activateApp : function (
+)
+{
+},
+
+/**
+ * @method getUserID
+ * @return {String}
+ */
+getUserID : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method logEvent
+* @param {String|String|String|String} str
+* @param {float|map_object|float} float
+* @param {map_object} map
+*/
+logEvent : function(
+str,
+float,
+map 
+)
+{
+},
+
+/**
+ * @method logout
+ */
+logout : function (
+)
+{
+},
+
+/**
+ * @method getSDKVersion
+ * @return {String}
+ */
+getSDKVersion : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method logPurchase
+* @param {float|float} float
+* @param {String|String} str
+* @param {map_object} map
+*/
+logPurchase : function(
+float,
+str,
+map 
+)
+{
+},
+
+/**
+ * @method isLoggedIn
+ * @return {bool}
+ */
+isLoggedIn : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method canPresentDialogWithParams
+ * @param {map_object} arg0
+ * @return {bool}
+ */
+canPresentDialogWithParams : function (
+map 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAccessToken
+ * @return {String}
+ */
+getAccessToken : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.plugin::FacebookAgent}
+ */
+getInstance : function (
+)
+{
+    return cc.plugin::FacebookAgent;
 },
 
 };
