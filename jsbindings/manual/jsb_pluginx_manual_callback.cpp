@@ -138,6 +138,54 @@ bool js_pluginx_ProtocolIAP_getResultListener(JSContext *cx, uint32_t argc, jsva
 	return false;
 }
 
+bool js_pluginx_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolIAP_payForProduct : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::plugin::TProductInfo arg0;
+        ok &= pluginx::jsval_to_TProductInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolIAP_payForProduct : Error processing arguments");
+        cobj->payForProduct(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    if(argc == 2){
+        cocos2d::plugin::TProductInfo arg0;
+        ok &= pluginx::jsval_to_TProductInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolIAP_payForProduct : Error processing arguments");
+        
+        std::function<void (int, std::string&)> arg1;
+        do {
+            std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+            auto lambda = [=](int larg0, std::string& larg1) -> void {
+                JSAutoCompartment ac(cx, obj);
+                jsval largv[2];
+                largv[0] = int32_to_jsval(cx, larg0);
+                largv[1] = std_string_to_jsval(cx, larg1);
+                jsval rval;
+                bool succeed = func->invoke(2, &largv[0], rval);
+                if (!succeed && JS_IsExceptionPending(cx)) {
+                    JS_ReportPendingException(cx);
+                }
+            };
+            arg1 = lambda;
+        } while(0);
+        
+        cobj->payForProduct(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolIAP_payForProduct : wrong number of arguments");
+    return false;
+}
+
 class Pluginx_AdsListener : public cocos2d::plugin::AdsListener
 {
 public:
@@ -354,6 +402,54 @@ bool js_pluginx_ProtocolShare_getResultListener(JSContext *cx, uint32_t argc, js
 	return false;
 }
 
+bool js_pluginx_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolShare_share : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::plugin::TShareInfo arg0;
+        ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
+        cobj->share(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    if(argc == 2){
+        cocos2d::plugin::TShareInfo arg0;
+        ok &= pluginx::jsval_to_TShareInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_share : Error processing arguments");
+        
+        std::function<void (int, std::string&)> arg1;
+        do {
+            std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+            auto lambda = [=](int larg0, std::string& larg1) -> void {
+                JSAutoCompartment ac(cx, obj);
+                jsval largv[2];
+                largv[0] = int32_to_jsval(cx, larg0);
+                largv[1] = std_string_to_jsval(cx, larg1);
+                jsval rval;
+                bool succeed = func->invoke(2, &largv[0], rval);
+                if (!succeed && JS_IsExceptionPending(cx)) {
+                    JS_ReportPendingException(cx);
+                }
+            };
+            arg1 = lambda;
+        } while(0);
+        
+        cobj->share(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolShare_share : wrong number of arguments");
+    return false;
+}
+
 class Pluginx_SocialResult : public cocos2d::plugin::SocialListener
 {
 public:
@@ -444,6 +540,106 @@ bool js_pluginx_ProtocolSocial_getListener(JSContext *cx, uint32_t argc, jsval *
     
 	JS_ReportError(cx, "js_pluginx_ProtocolSocial_getListener : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
+}
+
+bool js_pluginx_ProtocolSocial_submitScore(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolSocial_submitScore : Invalid Native Object");
+    if (argc == 2) {
+        const char* arg0;
+        long arg1;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= jsval_to_long(cx, argv[1], (long *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_submitScore : Error processing arguments");
+        cobj->submitScore(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    if(argc == 3){
+        const char* arg0;
+        long arg1;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        ok &= jsval_to_long(cx, argv[1], (long *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_submitScore : Error processing arguments");
+        
+        std::function<void (int, std::string&)> arg2;
+        do {
+            std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[2]));
+            auto lambda = [=](int larg0, std::string& larg1) -> void {
+                JSAutoCompartment ac(cx, obj);
+                jsval largv[2];
+                largv[0] = int32_to_jsval(cx, larg0);
+                largv[1] = std_string_to_jsval(cx, larg1);
+                jsval rval;
+                bool succeed = func->invoke(2, &largv[0], rval);
+                if (!succeed && JS_IsExceptionPending(cx)) {
+                    JS_ReportPendingException(cx);
+                }
+            };
+            arg2 = lambda;
+        } while(0);
+        
+        cobj->submitScore(arg0, arg1, arg2);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolSocial_submitScore : wrong number of arguments");
+    return false;
+}
+
+bool js_pluginx_ProtocolSocial_unlockAchievement(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::plugin::TAchievementInfo arg0;
+        ok &= pluginx::jsval_to_TAchievementInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Error processing arguments");
+        cobj->unlockAchievement(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    if(argc ==2){
+        cocos2d::plugin::TAchievementInfo arg0;
+        ok &= pluginx::jsval_to_TAchievementInfo(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : Error processing arguments");
+        
+        std::function<void (int, std::string&)> arg1;
+        do {
+            std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[1]));
+            auto lambda = [=](int larg0, std::string& larg1) -> void {
+                JSAutoCompartment ac(cx, obj);
+                jsval largv[2];
+                largv[0] = int32_to_jsval(cx, larg0);
+                largv[1] = std_string_to_jsval(cx, larg1);
+                jsval rval;
+                bool succeed = func->invoke(2, &largv[0], rval);
+                if (!succeed && JS_IsExceptionPending(cx)) {
+                    JS_ReportPendingException(cx);
+                }
+            };
+            arg1 = lambda;
+        } while(0);
+        
+        cobj->unlockAchievement(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolSocial_unlockAchievement : wrong number of arguments");
+    return false;
 }
 
 class Pluginx_UserActionListener : public cocos2d::plugin::UserActionListener
@@ -543,4 +739,48 @@ bool js_pluginx_ProtocolUser_getActionListener(JSContext *cx, uint32_t argc, jsv
     
 	JS_ReportError(cx, "js_pluginx_ProtocolUser_getActionListener : wrong number of arguments: %d, was expecting %d", argc, 0);
 	return false;
+}
+
+bool js_pluginx_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    bool ok = true;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_logout : Invalid Native Object");
+    if (argc == 0) {
+        cobj->logout();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return true;
+    }
+    
+    do {
+        if (argc == 1) {
+            std::function<void (int, std::string&)> arg0;
+            do {
+                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, JS_THIS_OBJECT(cx, vp), argv[0]));
+                auto lambda = [=](int larg0, std::string& larg1) -> void {
+                    JSAutoCompartment ac(cx, obj);
+                    jsval largv[2];
+                    largv[0] = int32_to_jsval(cx, larg0);
+                    largv[1] = std_string_to_jsval(cx, larg1);
+                    jsval rval;
+                    bool succeed = func->invoke(2, &largv[0], rval);
+                    if (!succeed && JS_IsExceptionPending(cx)) {
+                        JS_ReportPendingException(cx);
+                    }
+                };
+                arg0 = lambda;
+            } while(0);
+            
+            if (!ok) { ok = true; break; }
+            cobj->logout(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return true;
+        }
+    } while(0);
+    
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_logout : wrong number of arguments");
+    return false;
 }

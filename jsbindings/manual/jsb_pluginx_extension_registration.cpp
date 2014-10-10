@@ -33,14 +33,19 @@ void register_pluginx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolIAP_prototype, "setListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolIAP_prototype, "getListener", js_pluginx_ProtocolIAP_getResultListener, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolIAP_prototype, "payForProduct", js_pluginx_ProtocolIAP_payForProduct, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolAds_prototype, "setListener", js_pluginx_ProtocolAds_setAdsListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolAds_prototype, "getListener", js_pluginx_ProtocolAds_getAdsListener, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolShare_prototype, "setListener", js_pluginx_ProtocolShare_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolShare_prototype, "getListener", js_pluginx_ProtocolShare_getResultListener, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolShare_prototype, "share", js_pluginx_ProtocolShare_share, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolSocial_prototype, "setListener", js_pluginx_ProtocolSocial_setListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolSocial_prototype, "getListener", js_pluginx_ProtocolSocial_getListener, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolSocial_prototype, "submitScore", js_pluginx_ProtocolSocial_submitScore, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolSocial_prototype, "unlockAchievement", js_pluginx_ProtocolSocial_unlockAchievement, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolUser_prototype, "setActionListener", js_pluginx_ProtocolUser_setActionListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolUser_prototype, "getActionListener", js_pluginx_ProtocolUser_getActionListener, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_plugin_ProtocolUser_prototype, "logout", js_pluginx_ProtocolUser_logout, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callFuncWithParam", js_pluginx_PluginProtocol_callFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callStringFuncWithParam", js_pluginx_PluginProtocol_callStringFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_cocos2d_plugin_PluginProtocol_prototype, "callIntFuncWithParam", js_pluginx_PluginProtocol_callIntFuncWithParam, 1, JSPROP_READONLY | JSPROP_PERMANENT);
