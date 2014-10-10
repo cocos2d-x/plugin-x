@@ -318,7 +318,7 @@
         [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
     }
 }
--(NSNumber *) canPresentDialogWithParams:(NSMutableDictionary *)shareInfo{
+-(BOOL) canPresentDialogWithParams:(NSMutableDictionary *)shareInfo{
     [self convertParamsToFBParams:shareInfo];
     NSString *dialog_type = [shareInfo objectForKey:@"dialog"];
     
