@@ -192,28 +192,6 @@ char
 plugin.ProtocolIAP = {
 
 /**
- * @method payForProduct
-* @param {map_object|map_object} map
-* @param {function} func
-*/
-payForProduct : function(
-map,
-func 
-)
-{
-},
-
-/**
- * @method setCallback
- * @param {function} arg0
- */
-setCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method onPayResult
  * @param {cc.plugin::PayResultCode} arg0
  * @param {char} arg1
@@ -293,16 +271,6 @@ getCallback : function (
 },
 
 /**
- * @method setCallback
- * @param {function} arg0
- */
-setCallback : function (
-func 
-)
-{
-},
-
-/**
  * @method spendPoints
  * @param {int} arg0
  */
@@ -328,28 +296,6 @@ map
  * @class ProtocolShare
  */
 plugin.ProtocolShare = {
-
-/**
- * @method setCallback
- * @param {function} arg0
- */
-setCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method share
-* @param {map_object|map_object} map
-* @param {function} func
-*/
-share : function(
-map,
-func 
-)
-{
-},
 
 /**
  * @method onShareResult
@@ -409,30 +355,6 @@ showAchievements : function (
 },
 
 /**
- * @method setCallback
- * @param {function} arg0
- */
-setCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method submitScore
-* @param {char|char} char
-* @param {long|long} long
-* @param {function} func
-*/
-submitScore : function(
-char,
-long,
-func 
-)
-{
-},
-
-/**
  * @method getCallback
  * @return {function}
  */
@@ -452,44 +374,12 @@ map
 {
 },
 
-/**
- * @method unlockAchievement
-* @param {map_object|map_object} map
-* @param {function} func
-*/
-unlockAchievement : function(
-map,
-func 
-)
-{
-},
-
 };
 
 /**
  * @class ProtocolUser
  */
 plugin.ProtocolUser = {
-
-/**
- * @method setCallback
- * @param {function} arg0
- */
-setCallback : function (
-func 
-)
-{
-},
-
-/**
- * @method logout
-* @param {function} func
-*/
-logout : function(
-func 
-)
-{
-},
 
 /**
  * @method getCallback
@@ -519,16 +409,6 @@ isLoggedIn : function (
 )
 {
     return false;
-},
-
-/**
- * @method login
-* @param {function} func
-*/
-login : function(
-func 
-)
-{
 },
 
 /**
@@ -597,18 +477,6 @@ getUserPlugin : function (
 },
 
 /**
- * @method init
- * @param {map_object} arg0
- * @return {bool}
- */
-init : function (
-map 
-)
-{
-    return false;
-},
-
-/**
  * @method getIAPPlugin
  * @return {cc.plugin::ProtocolIAP}
  */
@@ -639,16 +507,6 @@ getAnalyticsPlugin : function (
 },
 
 /**
- * @method initWithConfigureFile
- * @return {bool}
- */
-initWithConfigureFile : function (
-)
-{
-    return false;
-},
-
-/**
  * @method destroyInstance
  */
 destroyInstance : function (
@@ -674,49 +532,9 @@ getInstance : function (
 plugin.FacebookAgent = {
 
 /**
- * @method api
- * @param {String} arg0
- * @param {int} arg1
- * @param {map_object} arg2
- * @param {function} arg3
- */
-api : function (
-str, 
-int, 
-map, 
-func 
-)
-{
-},
-
-/**
  * @method activateApp
  */
 activateApp : function (
-)
-{
-},
-
-/**
- * @method dialog
- * @param {map_object} arg0
- * @param {function} arg1
- */
-dialog : function (
-map, 
-func 
-)
-{
-},
-
-/**
- * @method appRequest
- * @param {map_object} arg0
- * @param {function} arg1
- */
-appRequest : function (
-map, 
-func 
 )
 {
 },
@@ -729,18 +547,6 @@ getUserID : function (
 )
 {
     return ;
-},
-
-/**
- * @method getRequestCallback
- * @param {int} arg0
- * @return {function}
- */
-getRequestCallback : function (
-int 
-)
-{
-    return std::function<void (int, std::basic_string<char> &)>;
 },
 
 /**
@@ -797,18 +603,6 @@ isLoggedIn : function (
 )
 {
     return false;
-},
-
-/**
- * @method login
-* @param {String|function} str
-* @param {function} func
-*/
-login : function(
-str,
-func 
-)
-{
 },
 
 /**

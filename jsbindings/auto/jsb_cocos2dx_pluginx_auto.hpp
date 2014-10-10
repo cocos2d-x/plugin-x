@@ -52,8 +52,6 @@ bool js_pluginx_protocols_ProtocolIAP_constructor(JSContext *cx, uint32_t argc, 
 void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_ProtocolIAP_payForProduct(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolIAP_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
@@ -69,7 +67,6 @@ bool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsva
 bool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_queryPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolAds_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -80,8 +77,6 @@ bool js_pluginx_protocols_ProtocolShare_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_ProtocolShare_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_ProtocolShare_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolShare_share(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
@@ -95,11 +90,8 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JSObject *globa
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
 bool js_pluginx_protocols_ProtocolSocial_showLeaderboard(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_showAchievements(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolSocial_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolSocial_submitScore(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolSocial_unlockAchievement(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_plugin_ProtocolUser_class;
 extern JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
@@ -108,12 +100,9 @@ bool js_pluginx_protocols_ProtocolUser_constructor(JSContext *cx, uint32_t argc,
 void js_pluginx_protocols_ProtocolUser_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_ProtocolUser_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_isLoggedIn(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getSessionID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getAccessToken(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -128,11 +117,9 @@ bool js_pluginx_protocols_AgentManager_getSocialPlugin(JSContext *cx, uint32_t a
 bool js_pluginx_protocols_AgentManager_getAdsPlugin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_purge(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_getUserPlugin(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_AgentManager_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_getIAPPlugin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_getSharePlugin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_getAnalyticsPlugin(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_AgentManager_initWithConfigureFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -143,18 +130,13 @@ bool js_pluginx_protocols_FacebookAgent_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_FacebookAgent_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global);
 void register_all_pluginx_protocols(JSContext* cx, JSObject* obj);
-bool js_pluginx_protocols_FacebookAgent_api(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_activateApp(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getUserID(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_FacebookAgent_getRequestCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_logEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_logout(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getSDKVersion(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_logPurchase(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_isLoggedIn(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_canPresentDialogWithParams(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_getAccessToken(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_FacebookAgent_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
