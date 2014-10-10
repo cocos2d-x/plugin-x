@@ -334,6 +334,17 @@
                                                                     caption:caption
                                                                 description:desc
                                                                     picture:[NSURL URLWithString:photo]];
+        
+        // Additional properties
+        NSString *place = [shareInfo objectForKey:@"place"];
+        if (place) {
+            params.place = place;
+        }
+        NSString *ref = [shareInfo objectForKey:@"reference"];
+        if (place) {
+            params.ref = ref;
+        }
+        
         if ([dialog_type isEqualToString:@"share_link"]) {
             // If the Facebook app is installed and we can present the share dialog
             return [FBDialogs canPresentShareDialogWithParams:params];
@@ -344,7 +355,7 @@
     }
     else if ([dialog_type hasSuffix:@"open_graph"]) {
         NSString *type = [shareInfo objectForKey:@"action_type"];
-        NSString *previewProperty = [shareInfo objectForKey:@"preview_property"];
+        NSString *previewProperty = [shareInfo objectForKey:@"preview_property_name"];
         NSString *title = [shareInfo objectForKey:@"title"];
         NSString *image = [shareInfo objectForKey:@"image"];
         NSString *link = [shareInfo objectForKey:@"url"];

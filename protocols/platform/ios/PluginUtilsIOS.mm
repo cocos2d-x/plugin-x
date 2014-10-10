@@ -243,9 +243,9 @@ float PluginUtilsIOS::callOCFloatFunctionWithName(PluginProtocol* pPlugin, const
 bool PluginUtilsIOS::callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin, const char* funcName, id param)
 {
     bool ret = false;
-    NSNumber* pRet = (NSNumber*)callRetFunctionWithParam(pPlugin, funcName, param);
+    BOOL* pRet = (BOOL*)callRetFunctionWithParam(pPlugin, funcName, param);
     if (nil != pRet) {
-        ret = [pRet boolValue];
+        ret = pRet;
     }
 
     return ret;
@@ -254,9 +254,9 @@ bool PluginUtilsIOS::callOCBoolFunctionWithName_oneParam(PluginProtocol* pPlugin
 bool PluginUtilsIOS::callOCBoolFunctionWithName(PluginProtocol* pPlugin, const char* funcName)
 {
     bool ret = false;
-    NSNumber* pRet = (NSNumber*)callRetFunction(pPlugin, funcName);
+    BOOL* pRet = (BOOL*)callRetFunction(pPlugin, funcName);
     if (nil != pRet) {
-        ret = [pRet boolValue];
+        ret = pRet;
     }
     
     return ret;
