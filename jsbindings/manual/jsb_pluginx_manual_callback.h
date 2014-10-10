@@ -22,9 +22,15 @@ bool js_pluginx_ProtocolSocial_unlockAchievement(JSContext *cx, uint32_t argc, j
 
 bool js_pluginx_ProtocolUser_setActionListener(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_ProtocolUser_getActionListener(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_ProtocolUser_login(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_ProtocolUser_logout(JSContext *cx, uint32_t argc, jsval *vp);
 
 bool js_pluginx_protocols_AgentManager_share(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_AgentManager_login(JSContext *cx, uint32_t argc, jsval *vp);
+
+bool js_pluginx_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_FacebookAgent_api(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_pluginx_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif /* __JS_MANUAL_CALLBACK_H__ */
