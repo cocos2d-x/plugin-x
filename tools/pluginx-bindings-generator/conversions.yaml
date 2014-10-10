@@ -18,6 +18,8 @@ conversions:
     "@std::vector<std::basic_string.*>.>.>": "std::vector<std::string>"
     "@std::vector<int.*>.>": "std::vector<int>"
     "@cocos2d::Map<std::basic_string.*,": "cocos2d::Map<std::string,"
+    "@std::map<std::basic_string<char>,.*std::basic_string<char>.*>": "std::map<std::string, std::string>"
+    "@std::map<std::basic_string<char>,.*std::basic_string<char>.*>*": "std::map<std::string, std::string>*"
   ns_map:
     "cocos2d::extension::": "cc."
     "cocos2d::ui::": "ccui."
@@ -44,6 +46,8 @@ conversions:
     "long long": "ok &= jsval_to_long_long(cx, ${in_value}, &${out_value})"
     "std::string": "ok &= jsval_to_std_string(cx, ${in_value}, &${out_value})"
     "char*": "std::string ${out_value}_tmp; ok &= jsval_to_std_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = ${out_value}_tmp.c_str()"
+    "@map<std::basic_string<char>,.*std::basic_string<char>.*>": "ok &= jsval_to_std_map_string_string(cx, ${in_value}, &${out_value})"
+    "@map<std::basic_string<char>,.*std::basic_string<char>.*>\\*": "std::map<std::string, std::string> ${out_value}_tmp; ok &= jsval_to_std_map_string_string(cx, ${in_value}, &${out_value}_tmp); ${out_value} = &${out_value}_tmp"
     "Point": "ok &= jsval_to_ccpoint(cx, ${in_value}, &${out_value})"
     "Rect": "ok &= jsval_to_ccrect(cx, ${in_value}, &${out_value})"
     "Size": "ok &= jsval_to_ccsize(cx, ${in_value}, &${out_value})"
@@ -64,32 +68,19 @@ conversions:
     "@vector<std::basic_string.*>": "ok &= jsval_to_std_vector_string(cx, ${in_value}, &${out_value})"
     "@vector<int.*>": "ok &= jsval_to_std_vector_int(cx, ${in_value}, &${out_value})"
     "Acceleration": "ok &= jsval_to_ccacceleration(cx, ${in_value}, &${out_value})"
+    "Mat4": "ok &= jsval_to_matrix(cx, ${in_value}, &${out_value})"
+    "Vec2": "ok &= jsval_to_vector2(cx, ${in_value}, &${out_value})"
+    "Vec3": "ok &= jsval_to_vector3(cx, ${in_value}, &${out_value})"
+    "BlendFunc": "ok &= jsval_to_blendfunc(cx, ${in_value}, &${out_value})"
     object: |
       do {
-      ${($level + 1) * '\t'}if (!${in_value}.isObject()) { ok = false; break; }
-      ${($level + 1) * '\t'}js_proxy_t *jsProxy;
-      ${($level + 1) * '\t'}JSObject *tmpObj = JSVAL_TO_OBJECT(${in_value});
-      ${($level + 1) * '\t'}jsProxy = jsb_get_js_proxy(tmpObj);
-      ${($level + 1) * '\t'}${out_value} = (${ntype})(jsProxy ? jsProxy->ptr : NULL);
-      ${($level + 1) * '\t'}JSB_PRECONDITION2( ${out_value}, cx, false, "Invalid Native Object");
-      ${($level + 0) * '\t'}} while (0)
-    TProductInfo: "ok &= pluginx::jsval_to_TProductInfo(cx, ${in_value}, &${out_value})"
-    TIAPDeveloperInfo: "ok &= pluginx::jsval_to_TIAPDeveloperInfo(cx, ${in_value}, &${out_value})"
-    TPaymentInfo: "ok &= pluginx::jsval_to_TPaymentInfo(cx, ${in_value}, &${out_value})"
-    TAdsDeveloperInfo: "ok &= pluginx::jsval_to_TAdsDeveloperInfo(cx, ${in_value}, &${out_value})"
-    TAdsInfo: "ok &= pluginx::jsval_to_TAdsInfo(cx, ${in_value}, &${out_value})"
-    TShareDeveloperInfo: "ok &= pluginx::jsval_to_TShareDeveloperInfo(cx, ${in_value}, &${out_value})"
-    TShareInfo: "ok &= pluginx::jsval_to_TShareInfo(cx, ${in_value}, &${out_value})"
-    TUserDeveloperInfo: "ok &= pluginx::jsval_to_TUserDeveloperInfo(cx, ${in_value}, &${out_value})"
-    TSocialDeveloperInfo: "ok &= pluginx::jsval_to_TSocialDeveloperInfo(cx, ${in_value}, &${out_value})"
-    TAchievementInfo: "ok &= pluginx::jsval_to_TAchievementInfo(cx, ${in_value}, &${out_value})"
-    LogEventParamMap*: |
-      cocos2d::plugin::LogEventParamMap ${out_value}_tmp;
-      ${($level + 0) * '\t'}do {
-      ${($level + 1) * '\t'}ok &= pluginx::jsval_to_LogEventParamMap(cx, ${in_value}, &${out_value});
-      ${($level + 1) * '\t'}if (ok) { ${out_value}_tmp = *${out_value}; delete ${out_value}; ${out_value} = &${out_value}_tmp; } else { ${out_value} = NULL; }
-      ${($level + 0) * '\t'}} while(0)
-    long: "ok &= jsval_to_long(cx, ${in_value}, (long *)&${out_value})"
+      ${($level + 1) * '    '}if (!${in_value}.isObject()) { ok = false; break; }
+      ${($level + 1) * '    '}js_proxy_t *jsProxy;
+      ${($level + 1) * '    '}JSObject *tmpObj = JSVAL_TO_OBJECT(${in_value});
+      ${($level + 1) * '    '}jsProxy = jsb_get_js_proxy(tmpObj);
+      ${($level + 1) * '    '}${out_value} = (${ntype})(jsProxy ? jsProxy->ptr : NULL);
+      ${($level + 1) * '    '}JSB_PRECONDITION2( ${out_value}, cx, false, "Invalid Native Object");
+      ${($level + 0) * '    '}} while (0)
 
   from_native:
     # int to jsval
@@ -99,12 +90,11 @@ conversions:
     "unsigned char": "${out_value} = uint32_to_jsval(cx, ${in_value})"
     "long long": "${out_value} = long_long_to_jsval(cx, ${in_value})"
     "std::string": "${out_value} = std_string_to_jsval(cx, ${in_value})"
+    "basic_string<char>": "${out_value} = std_string_to_jsval(cx, ${in_value})"
     "char*": "${out_value} = c_string_to_jsval(cx, ${in_value})"
     bool: "${out_value} = BOOLEAN_TO_JSVAL(${in_value})"
     float: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
     double: "${out_value} = DOUBLE_TO_JSVAL(${in_value})"
-    TProductInfo: "${out_value} = pluginx::TProductInfo_to_jsval(cx, ${in_value})"
-    LogEventParamMap*: "${out_value} = pluginx::LogEventParamMap_to_jsval(cx, ${in_value})"
     long: "${out_value} = long_to_jsval(cx, ${in_value})"
     "unsigned long": "${out_value} = ulong_to_jsval(cx, ${in_value})"
     "ssize_t": "${out_value} = ssize_to_jsval(cx, ${in_value})"
@@ -125,15 +115,19 @@ conversions:
     "ValueMap": "${out_value} = ccvaluemap_to_jsval(cx, ${in_value})"
     "ValueMapIntKey": "${out_value} = ccvaluemapintkey_to_jsval(cx, ${in_value})"
     "ValueVector": "${out_value} = ccvaluevector_to_jsval(cx, ${in_value})"
-    "@vector<std::basic_string.*>": "${out_value} = ccvector_std_string_to_jsval(cx, ${in_value})"
-    "@vector<int.*>": "${out_value} = ccvector_int_to_jsval(cx, ${in_value})"
+    "@vector<std::basic_string.*>": "${out_value} = std_vector_string_to_jsval(cx, ${in_value})"
+    "@vector<int.*>": "${out_value} = std_vector_int_to_jsval(cx, ${in_value})"
     "Acceleration*": "${out_value} = ccacceleration_to_jsval(cx, *${in_value})"
+    "Mat4": "${out_value} = matrix_to_jsval(cx, ${in_value})"
+    "Vec2": "${out_value} = vector2_to_jsval(cx, ${in_value})"
+    "Vec3": "${out_value} = vector3_to_jsval(cx, ${in_value})"
+    "BlendFunc": "${out_value} = blendfunc_to_jsval(cx, ${in_value})"
     object: |
       do {
-      ${($level + 1) * '\t'}if (${in_value}) {
-      ${($level + 2) * '\t'}js_proxy_t *jsProxy = js_get_or_create_proxy<${ntype.replace("*", "").replace("const ", "")}>(cx, (${ntype.replace("const ", "")})${in_value});
-      ${($level + 2) * '\t'}${out_value} = OBJECT_TO_JSVAL(jsProxy->obj);
-      ${($level + 1) * '\t'}} else {
-      ${($level + 2) * '\t'}${out_value} = JSVAL_NULL;
-      ${($level + 1) * '\t'}}
-      ${($level) * '\t'}} while (0)
+      ${($level + 1) * '    '}if (${in_value}) {
+      ${($level + 2) * '    '}js_proxy_t *jsProxy = js_get_or_create_proxy<${ntype.replace("*", "").replace("const ", "")}>(cx, (${ntype.replace("const ", "")})${in_value});
+      ${($level + 2) * '    '}${out_value} = OBJECT_TO_JSVAL(jsProxy->obj);
+      ${($level + 1) * '    '}} else {
+      ${($level + 2) * '    '}${out_value} = JSVAL_NULL;
+      ${($level + 1) * '    '}}
+      ${($level) * '    '}} while (0)

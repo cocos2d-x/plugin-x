@@ -368,6 +368,56 @@ bool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
+    
+bool jsval_to_std_map_string_string(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
+{
+    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    {
+        return true;
+    }
+    
+    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    if (!tmp) {
+        CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
+        return false;
+    }
+    
+    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    
+    while (true)
+    {
+        jsid idp;
+        jsval key;
+        if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
+            return false; // error
+        }
+        
+        if (key == JSVAL_VOID) {
+            break; // end of iteration
+        }
+        
+        if (!JSVAL_IS_STRING(key)) {
+            continue; // ignore integer properties
+        }
+        
+        JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
+        
+        JS::RootedValue value(cx);
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isString())
+        {
+            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            ret->insert(std::make_pair(keyWrapper.get(), valueWapper.get()));
+        }
+        else
+        {
+            CCASSERT(false, "not a string");
+        }
+    }
+        
+    return true;
+}
+
 
 // From native type to jsval
 jsval int32_to_jsval( JSContext *cx, int32_t number )
