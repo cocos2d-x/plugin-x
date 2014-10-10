@@ -37,10 +37,11 @@
  */
 - (void) configDeveloperInfo : (NSMutableDictionary*) cpInfo;
 - (void) share: (NSMutableDictionary*) shareInfo;
+- (void) dialog: (NSMutableDictionary*) shareInfo;
 - (void) setDebugMode: (BOOL) debug;
-- (void)appRequest:(NSMutableDictionary *)shareInfo;
+- (void) appRequest:(NSMutableDictionary *)shareInfo;
 - (NSString*) getSDKVersion;
 - (NSString*) getPluginVersion;
--(NSNumber *)canPresentDialogWithParams:(NSMutableDictionary *)shareInfo;
+- (BOOL) canPresentDialogWithParams:(NSMutableDictionary *)shareInfo;
 
 @end
