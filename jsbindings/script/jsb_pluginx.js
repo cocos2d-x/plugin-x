@@ -130,6 +130,7 @@ plugin.FacebookAgent.AppEventParam.SUCCESS = "fb_success";
 plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE = "fb_max_rating_value";
 plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE = "fb_payment_info_available";
 plugin.FacebookAgent.AppEventParam.NUM_ITEMS = "fb_num_items";
+plugin.FacebookAgent.AppEventParam.LEVEL = "fb_level";
 plugin.FacebookAgent.AppEventParam.DESCRIPTION = "fb_description";
 
 plugin.FacebookAgent.AppEventParamValue = {};
