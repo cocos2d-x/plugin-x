@@ -105,6 +105,14 @@ function TestFBUserScene:createLayerMenu()
             self.infoLabel:setString("logEvent is invoked")
         end
         },
+
+        {"logPurchase", function (tag, sender)
+            local mount = 1.23
+            local currency = "CNY"
+            local fbInfo = {cocos2d = 1, lua = 2}
+            plugin.FacebookAgent:getInstance():logPurchase(mount, currency, fbInfo)
+        end
+        },
     }
     local y_pos = 0
     for i = 1, table.getn(menuItemNames) do

@@ -46,6 +46,181 @@ function TestFBShareScene:sceenshot(filename)
     return ""
 end
 
+local secondMenuItem_SL = {
+    {"share a simple link", function(tag, sender)
+        local params = {
+            dialog = "share_link",
+            link   = "http://www.cocos2d-x.org",
+        }
+
+        if plugin.FacebookAgent:getInstance():canPresentDialogWithParams(params) then
+            plugin.FacebookAgent:getInstance():dialog(params, function(ret, msg)
+                print(msg)
+            end)
+        else
+            plugin.FacebookAgent:getInstance():webDialog(params, function(ret, msg)
+                print(msg)
+            end)
+        end
+    end},
+
+    {"share a Text link", function(tag, sender)
+        local params = {
+            dialog = "share_link",
+            name   = "Cocos2d-x web site",
+            caption = "Cocos2d-x caption"
+            description = "Cocos2d-x description",
+            link   = "http://www.cocos2d-x.org",
+        }
+
+        if plugin.FacebookAgent:getInstance():canPresentDialogWithParams(params) then
+            plugin.FacebookAgent:getInstance():dialog(params, function(ret, msg)
+                print(msg)
+            end)
+        else
+            plugin.FacebookAgent:getInstance():webDialog(params, function(ret, msg)
+                print(msg)
+            end)
+        end
+    end},
+
+    {"share a Picture link", function(tag, sender)
+        local params = {
+            dialog = "share_link",
+            name   = "Cocos2d-x web site",
+            caption = "Cocos2d-x caption"
+            description = "Cocos2d-x description",
+            to  = "100006738453912",--android only web view support
+            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png"
+            link   = "http://www.cocos2d-x.org",
+        }
+
+        if plugin.FacebookAgent:getInstance():canPresentDialogWithParams(params) then
+            plugin.FacebookAgent:getInstance():dialog(params, function(ret, msg)
+                print(msg)
+            end)
+        else
+            plugin.FacebookAgent:getInstance():webDialog(params, function(ret, msg)
+                print(msg)
+            end)
+        end
+    end},
+
+    {"share a media link", function(tag, sender)
+        local params = {
+            dialog = "share_link",
+            name   = "Cocos2d-x web site",
+            caption = "Cocos2d-x caption"
+            description = "Cocos2d-x description",
+            media_source  = "http://221.203.1.212/youku/6775B002C8F48839F6AFA63BDA/0300200100540438A173C515AA2BED245C4903-F675-B311-EF1A-4544B5C04370.mp4",
+            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png"
+            link   = "http://www.cocos2d-x.org",
+        }
+
+        -- only support in web dialog
+        plugin.FacebookAgent:getInstance():webDialog(params, function(ret, msg)
+            print(msg)
+        end)
+    end},
+}
+
+local secondMenuItem_AR = {
+    {"Invites request", function(tag, sender)
+        local params = {
+            message = "Cocos2d-x is a great game engine",
+            title   = "Cocos2d-x title",
+        }
+
+        plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
+                print(msg)
+        end)
+    end},
+
+    {"Target invite request", function(tag, sender)
+        local params = {
+            message = "Cocos2d-x is a great game engine",
+            title   = "Cocos2d-x title",
+            to = "100006738453912, 10204182777160522",
+        }
+
+        plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
+                print(msg)
+        end)
+    end},
+
+    {"Specific lists of friends", function(tag, sender)
+
+        local params = {
+            message = "Cocos2d-x is a great game engine",
+            title   = "Cocos2d-x title",
+            filters = "[{\"name\":\"company\", \"user_ids\":[\"100006738453912\",\"10204182777160522\"]}]",
+        }
+
+        plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
+                print(msg)
+        end)
+    end},
+
+    {"Sending requests explicitly", function(tag, sender)
+        local params = {
+            message = "Cocos2d-x is a great game engine",
+            to = "100006738453912",
+            action_type = "send",
+            object_id   = "191181717736427",
+        }
+
+        plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
+                print(msg)
+        end)
+    end},
+
+    {"Turn-based games", function(tag, sender)
+
+        local params = {
+            message = "Cocos2d-x is a great game engine",
+            title   = "Cocos2d-x title",
+            to = "100006738453912",
+            action_type = "turn",
+        }
+
+        plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
+            print(msg)
+        end)
+    end},
+}
+
+function TestFBShareScene:showSecondMenu(tag)
+    local secondMenu = self:getChildByTag(2)
+    if nil ~= secondMenu then
+        local visibleSize = Director:getInstance():getVisibleSize()
+        local origin = cc.Director:getInstance():getVisibleOrigin()
+        local posBR = cc.p(origin.x + visibleSize.width, origin.y)
+        
+        secondMenu:removeAllChildren()
+        local top = 70
+
+        if 0 == tag then
+            for i = 1, table.getn(secondMenuItem_SL) do
+                local label = cc.Label:createWithSystemFont(secondMenuItem_SL[i][1], "Arial", 24)
+                local menuItem = cc.MenuItemLabel:create(label)
+                menuItem:registerScriptTapHandler(secondMenuItem_SL[i][2])
+                menuItem:setPosition(cc.p(visibleSize.width / 3, visibleSize.height - top))
+                secondMenu:addChild(menuItem, 0, i - 1 )
+                top = top + 70
+            end
+        else
+            for i = 1, table.getn(secondMenuItem_AR) do
+                local label = cc.Label:createWithSystemFont(secondMenuItem_AR[i][1], "Arial", 24)
+                local menuItem = cc.MenuItemLabel:create(label)
+                menuItem:registerScriptTapHandler(secondMenuItem_AR[i][2])
+                menuItem:setPosition(cc.p(visibleSize.width / 3, visibleSize.height - top))
+                secondMenu:addChild(menuItem, 0, i - 1 )
+                top = top + 70
+            end
+        end
+    end
+end
+
 function TestFBShareScene:createLayerMenu()
 
     local backItem = cc.MenuItemFont:create("Back")
@@ -56,21 +231,12 @@ function TestFBShareScene:createLayerMenu()
     backItem:setPosition(posBR.x - backSize.width / 2, posBR.y + backSize.height / 2)
     local menu = cc.Menu:create(backItem)
     menu:setPosition(cc.p(0,0))
-    self:addChild(menu, 1) 
+    self:addChild(menu, 0, 1) 
 
     local menuItemNames =
     {
         {"Share link", function(tag, sender)
-            local params = {
-                dialog = "share_link",
-                description = "Cocos2d-x is a great game engine",
-                title  = "Cocos2d-x",
-                link   = "http://www.cocos2d-x.org",
-                imageUrl = "http://files.cocos2d-x.org/images/orgsite/logo.png",
-            }
-            plugin.FacebookAgent:getInstance():share(params, function(ret, msg)
-                print(msg)
-            end)
+            self:showSecondMenu(0)
         end},
 
         {"Share open graph", function(tag, sender)
@@ -153,15 +319,10 @@ function TestFBShareScene:createLayerMenu()
             self:runAction(seq)
         end},
         {"App request", function(tag, sender)
-            local params = {
-                message = "Cocos2d-x is a great game engine",
-                title   = "Cocos2d-x",
-            }
-            plugin.FacebookAgent:getInstance():appRequest(params, function(ret, msg)
-                print(msg)
-            end)
+            self:showSecondMenu(0)
         end},
     }
+
     local y_pos = 0
     for i = 1, table.getn(menuItemNames) do
         local label = cc.Label:createWithSystemFont(menuItemNames[i][1], "Arial", 24)
@@ -171,6 +332,11 @@ function TestFBShareScene:createLayerMenu()
         menuItem:setPosition(origin.x + 100, y_pos)
         menu:addChild(menuItem, 0, i -1 )
     end
+
+    --create second menu
+    local secondMenu = cc.Menu:create()
+    secondMenu:setPosition(cc.p(340, 0))
+    self:addChild(secondMenu, 0, 1) 
 end
 
 return TestFBShareScene

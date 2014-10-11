@@ -38,7 +38,8 @@ enum {
     TAG_FB_GETPERMISSIONS,
     TAG_FB_REQUEST_API,
     TAG_FB_PUBLISH_INSTALL,
-    TAG_FB_LOG_EVENT
+    TAG_FB_LOG_EVENT,
+    TAG_FB_LOG_PURCHASE,
 };
 
 struct FBEventMenuItem {
@@ -56,7 +57,8 @@ static FBEventMenuItem s_FBMenuItem[] =
     {"getPermissions", TAG_FB_GETPERMISSIONS},
     {"request API", TAG_FB_REQUEST_API},
     {"publishInstall",TAG_FB_PUBLISH_INSTALL},
-    {"logEvent",TAG_FB_LOG_EVENT}
+    {"logEvent",TAG_FB_LOG_EVENT},
+    {"logPurchase",TAG_FB_LOG_PURCHASE},
 };
 
 Scene* TestFacebookUser::scene()
@@ -216,6 +218,14 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
             FacebookAgent::getInstance()->logEvent(appEventMsg, fbInfo);
             FacebookAgent::getInstance()->logEvent(appEventMsg, floatVal, fbInfo);
             callbackInfo->setString("logEvent is invoked");
+        }
+        break;
+    case TAG_FB_LOG_PURCHASE:
+        {
+            FacebookAgent::FBInfo fbInfo;
+            fbInfo["cocos2d"] = 1;
+            fbInfo["cpp"]     = 2;
+            FacebookAgent::getInstance()->logPurchase(1.23, "CNY", fbInfo);
         }
         break;
     default:

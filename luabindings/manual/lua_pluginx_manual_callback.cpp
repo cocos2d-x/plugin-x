@@ -972,6 +972,179 @@ tolua_lerror:
     return 0;
 }
 
+int lua_pluginx_protocols_FacebookAgent_webDialog(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::plugin::FacebookAgent* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_webDialog'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::plugin::FacebookAgent::FBInfo arg0;
+
+        ok &= pluginx::luaval_to_FBInfo(tolua_S, 2, &arg0, "plugin.FacebookAgent:webDialog");
+        if(!ok)
+            return 0;
+
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 3, 0);
+
+        cobj->webDialog(arg0, [=](int ret, std::string& msg){
+            tolua_pushnumber(tolua_S, ret);
+            tolua_pushstring(tolua_S, msg.c_str());
+            LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
+            LuaEngine::getInstance()->removeScriptHandler(handler);
+        });
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:webDialog",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_webDialog'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+int lua_pluginx_protocols_FacebookAgent_logPurchase(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::plugin::FacebookAgent* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_logPurchase'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        float mount;
+        std::string currency;
+        cocos2d::plugin::FacebookAgent::FBInfo fbInfo;
+
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
+            !tolua_isstring(tolua_S, 3, 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+
+        mount = lua_tonumber(tolua_S, 2);
+        currency = tolua_tocppstring(tolua_S, 3, 0);
+
+        ok &= pluginx::luaval_to_FBInfo(tolua_S, 4, &fbInfo, "plugin.FacebookAgent:logPurchase");
+        if(!ok)
+            return 0;
+
+        cobj->logPurchase(mount, currency, fbInfo);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:logPurchase",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_logPurchase'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+int lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::plugin::FacebookAgent* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::plugin::FacebookAgent*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+
+        cocos2d::plugin::FacebookAgent::FBInfo fbInfo;
+
+        ok &= pluginx::luaval_to_FBInfo(tolua_S, 2, &fbInfo, "plugin.FacebookAgent:canPresentDialogWithParams");
+        if(!ok)
+            return 0;
+
+        bool ret = cobj->canPresentDialogWithParams(fbInfo);
+
+        tolua_pushboolean(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:canPresentDialogWithParams",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
 static void extendFacebookAgent(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "plugin.FacebookAgent");
@@ -984,6 +1157,9 @@ static void extendFacebookAgent(lua_State* tolua_S)
         tolua_function(tolua_S, "login", lua_pluginx_protocols_FacebookAgent_login);
         tolua_function(tolua_S, "appRequest", lua_pluginx_protocols_FacebookAgent_appRequest);
         tolua_function(tolua_S, "logEvent", lua_pluginx_protocols_FacebookAgent_logEvent);
+        tolua_function(tolua_S, "webDialog", lua_pluginx_protocols_FacebookAgent_webDialog);
+        tolua_function(tolua_S, "logPurchase", lua_pluginx_protocols_FacebookAgent_logPurchase);
+        tolua_function(tolua_S, "canPresentDialogWithParams", lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams);
     }
     lua_pop(tolua_S, 1);
 }
