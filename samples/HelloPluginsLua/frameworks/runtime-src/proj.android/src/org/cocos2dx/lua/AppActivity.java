@@ -80,6 +80,22 @@ public class AppActivity extends Cocos2dxActivity{
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 		hostIPAdress = getHostIpAddress();
+		
+	    // Add code to print out the key hash
+	    try {
+	        PackageInfo info = getPackageManager().getPackageInfo(
+	                "org.cocos2dx.lua", 
+	                PackageManager.GET_SIGNATURES);
+	        for (Signature signature : info.signatures) {
+	            MessageDigest md = MessageDigest.getInstance("SHA");
+	            md.update(signature.toByteArray());
+	            Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+	            }
+	    } catch (NameNotFoundException e) {
+
+	    } catch (NoSuchAlgorithmException e) {
+
+	    }
 	}
 	@Override
 	public Cocos2dxGLSurfaceView onCreateView() {
