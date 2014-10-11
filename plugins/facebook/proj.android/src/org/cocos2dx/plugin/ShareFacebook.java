@@ -203,6 +203,9 @@ public class ShareFacebook implements InterfaceShare{
 					if("share_link".equals(dialogType)){
 						FBShareDialog(cpInfo);
 					}
+					else if("feed_dialog".equals(dialogType)){
+						WebFeedDialog(cpInfo);
+					}
 					else if("share_open_graph".equals(dialogType)){
 						FBShareOpenGraphDialog(cpInfo);
 					}
@@ -231,8 +234,8 @@ public class ShareFacebook implements InterfaceShare{
 	
 	private void FBShareOpenGraphDialog(JSONObject info) throws JSONException{
 		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
-		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
-	
+		String previewProperty = info.has("preview_property_name")?info.getString("preview_property_name"):info.getString("previewPropertyName");
+
 		OpenGraphObject obj = OpenGraphObject.Factory.createForPost(OpenGraphObject.class, type, info.getString("title"),
                         info.getString("image"), info.getString("url"),
                         info.getString("description"));
@@ -478,7 +481,7 @@ public class ShareFacebook implements InterfaceShare{
 
 	private void FBMessageOpenGraphDialog(JSONObject info) throws JSONException{
 		String type = info.has("action_type")?info.getString("action_type"):info.getString("actionType");
-		String previewProperty = info.has("preview_property")?info.getString("preview_property"):info.getString("previewPropertyName");
+		String previewProperty = info.has("preview_property_name")?info.getString("preview_property_name"):info.getString("previewPropertyName");
 	
 		OpenGraphObject obj = OpenGraphObject.Factory.createForPost(OpenGraphObject.class, type, info.getString("title"),
                         info.getString("image"), info.getString("url"),

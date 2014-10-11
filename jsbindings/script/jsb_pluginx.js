@@ -130,6 +130,7 @@ plugin.FacebookAgent.AppEventParam.SUCCESS = "fb_success";
 plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE = "fb_max_rating_value";
 plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE = "fb_payment_info_available";
 plugin.FacebookAgent.AppEventParam.NUM_ITEMS = "fb_num_items";
+plugin.FacebookAgent.AppEventParam.LEVEL = "fb_level";
 plugin.FacebookAgent.AppEventParam.DESCRIPTION = "fb_description";
 
 plugin.FacebookAgent.AppEventParamValue = {};
@@ -143,22 +144,16 @@ plugin.FacebookAgent.prototype.logout = function(callback){
     callback(0, {"isLoggedIn" : false});
 };
 
-plugin.FacebookAgent.prototype.isLoggedIn = function(callback){
-    if(this._isLoggedIn())
-        callback(0, {"isLoggedIn" : true, "accessToken": this.getAccessToken()});
-    else
-        callback(0,  {"isLoggedIn" : false});
-};
-plugin.FacebookAgent.prototype.getPermissionList = function(callback){
-    var list = this._getPermissionList();
-    callback( list ? plugin.FacebookAgent.CODE_SUCCEED : -1, JSON.parse(list));
-};
-plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
-    var at = this.getAccessToken();
-    callback( at ? plugin.FacebookAgent.CODE_SUCCEED : -1, {"accessToken" : at});
-};
+//plugin.FacebookAgent.prototype.getPermissionList = function(callback){
+//    var list = this._getPermissionList();
+//    callback( list ? plugin.FacebookAgent.CODE_SUCCEED : -1, JSON.parse(list));
+//};
 
-plugin.FacebookAgent.prototype._api = plugin.FacebookAgent.prototype.api;
+//plugin.FacebookAgent.prototype.requestAccessToken = function(callback){
+//    var at = this.getAccessToken();
+//    callback( at ? plugin.FacebookAgent.CODE_SUCCEED : -1, {"accessToken" : at});
+//};
+
 plugin.FacebookAgent.prototype.api = function(path, HttpMethod, params, callback){
     if(callback == undefined){
        callback = params;
