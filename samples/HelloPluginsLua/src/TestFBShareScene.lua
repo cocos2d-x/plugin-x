@@ -68,7 +68,7 @@ local secondMenuItem_SL = {
         local params = {
             dialog = "share_link",
             name   = "Cocos2d-x web site",
-            caption = "Cocos2d-x caption"
+            caption = "Cocos2d-x caption",
             description = "Cocos2d-x description",
             link   = "http://www.cocos2d-x.org",
         }
@@ -88,10 +88,10 @@ local secondMenuItem_SL = {
         local params = {
             dialog = "share_link",
             name   = "Cocos2d-x web site",
-            caption = "Cocos2d-x caption"
+            caption = "Cocos2d-x caption",
             description = "Cocos2d-x description",
             to  = "100006738453912",--android only web view support
-            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png"
+            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png",
             link   = "http://www.cocos2d-x.org",
         }
 
@@ -110,10 +110,10 @@ local secondMenuItem_SL = {
         local params = {
             dialog = "share_link",
             name   = "Cocos2d-x web site",
-            caption = "Cocos2d-x caption"
+            caption = "Cocos2d-x caption",
             description = "Cocos2d-x description",
             media_source  = "http://221.203.1.212/youku/6775B002C8F48839F6AFA63BDA/0300200100540438A173C515AA2BED245C4903-F675-B311-EF1A-4544B5C04370.mp4",
-            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png"
+            picture = "http://files.cocos2d-x.org/images/orgsite/logo.png",
             link   = "http://www.cocos2d-x.org",
         }
 
@@ -192,12 +192,12 @@ local secondMenuItem_AR = {
 function TestFBShareScene:showSecondMenu(tag)
     local secondMenu = self:getChildByTag(2)
     if nil ~= secondMenu then
-        local visibleSize = Director:getInstance():getVisibleSize()
+        local visibleSize = cc.Director:getInstance():getVisibleSize()
         local origin = cc.Director:getInstance():getVisibleOrigin()
         local posBR = cc.p(origin.x + visibleSize.width, origin.y)
         
         secondMenu:removeAllChildren()
-        local top = 70
+        local top = 50
 
         if 0 == tag then
             for i = 1, table.getn(secondMenuItem_SL) do
@@ -206,7 +206,7 @@ function TestFBShareScene:showSecondMenu(tag)
                 menuItem:registerScriptTapHandler(secondMenuItem_SL[i][2])
                 menuItem:setPosition(cc.p(visibleSize.width / 3, visibleSize.height - top))
                 secondMenu:addChild(menuItem, 0, i - 1 )
-                top = top + 70
+                top = top + 50
             end
         else
             for i = 1, table.getn(secondMenuItem_AR) do
@@ -215,7 +215,7 @@ function TestFBShareScene:showSecondMenu(tag)
                 menuItem:registerScriptTapHandler(secondMenuItem_AR[i][2])
                 menuItem:setPosition(cc.p(visibleSize.width / 3, visibleSize.height - top))
                 secondMenu:addChild(menuItem, 0, i - 1 )
-                top = top + 70
+                top = top + 50
             end
         end
     end
@@ -319,7 +319,7 @@ function TestFBShareScene:createLayerMenu()
             self:runAction(seq)
         end},
         {"App request", function(tag, sender)
-            self:showSecondMenu(0)
+            self:showSecondMenu(1)
         end},
     }
 
@@ -336,7 +336,7 @@ function TestFBShareScene:createLayerMenu()
     --create second menu
     local secondMenu = cc.Menu:create()
     secondMenu:setPosition(cc.p(340, 0))
-    self:addChild(secondMenu, 0, 1) 
+    self:addChild(secondMenu, 0, 2) 
 end
 
 return TestFBShareScene

@@ -116,10 +116,10 @@ function TestFBUserScene:createLayerMenu()
     }
     local y_pos = 0
     for i = 1, table.getn(menuItemNames) do
-        local label = cc.Label:createWithSystemFont(menuItemNames[i][1], "Arial", 24)
+        local label = cc.Label:createWithSystemFont(menuItemNames[i][1], "Arial", 16)
         local menuItem = cc.MenuItemLabel:create(label)
         menuItem:registerScriptTapHandler(menuItemNames[i][2])
-        y_pos = visibleSize.height - 35 * (i - 1) - 100
+        y_pos = visibleSize.height - 24 * (i - 1) - 100
         menuItem:setPosition(origin.x + 100, y_pos)
         menu:addChild(menuItem, 0, i -1 )
     end

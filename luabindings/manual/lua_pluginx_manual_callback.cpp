@@ -714,6 +714,11 @@ int lua_pluginx_protocols_FacebookAgent_dialog(lua_State* tolua_S)
         ok &= pluginx::luaval_to_FBInfo(tolua_S, 2, &arg0, "plugin.FacebookAgent:dialog");
         if(!ok)
             return 0;
+        auto iter = arg0.begin();
+        for (; iter != arg0.end(); iter++)
+        {
+            CCLOG("key is %s, value is %s", iter->first.c_str(), iter->second.c_str());
+        }
 
 #if COCOS2D_DEBUG >= 1
         if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
@@ -1005,6 +1010,12 @@ int lua_pluginx_protocols_FacebookAgent_webDialog(lua_State* tolua_S)
         ok &= pluginx::luaval_to_FBInfo(tolua_S, 2, &arg0, "plugin.FacebookAgent:webDialog");
         if(!ok)
             return 0;
+        
+        auto iter = arg0.begin();
+        for (; iter != arg0.end(); iter++)
+        {
+            CCLOG("key is %s, value is %s", iter->first.c_str(), iter->second.c_str());
+        }
 
 #if COCOS2D_DEBUG >= 1
         if (!toluafix_isfunction(tolua_S,3,"LUA_FUNCTION",0,&tolua_err))
