@@ -60,7 +60,7 @@ public class UserFacebook implements InterfaceUser{
     private static InterfaceUser mAdapter = null;
     private static Session session = null;
     private static boolean bDebug = true;
-    private static boolean isLogined = false;
+    private static boolean isLoggedIn = false;
     private final static String LOG_TAG = "UserFacebook";
     private static final List<String> allPublishPermissions = Arrays.asList(
             "publish_actions", "ads_management", "create_event", "rsvp_event",
@@ -170,16 +170,20 @@ public class UserFacebook implements InterfaceUser{
         Session session = Session.getActiveSession();
         if (!session.isClosed()) {
             session.closeAndClearTokenInformation();
-            isLogined = false;
+            isLoggedIn = false;
         }
         
     }
 
     @Override
     public boolean isLogined() {
-        return isLogined;
+        return isLoggedIn;
     }
 
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+    
     @Override
     public String getSessionID() {
         return null;
@@ -364,9 +368,9 @@ public class UserFacebook implements InterfaceUser{
         @Override
         public void call(Session session, SessionState state, Exception exception) {
         	onSessionStateChange(session, state, exception);
-            if(false == isLogined){
+            if(false == isLoggedIn){
                 if(SessionState.OPENED == state){
-                    isLogined = true;
+                	isLoggedIn = true;
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, getSessionMessage(session));  
                 }else if(SessionState.CLOSED_LOGIN_FAILED == state /*|| SessionState.CLOSED == state*/){                 
                 	UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "login failed"));
@@ -378,7 +382,7 @@ public class UserFacebook implements InterfaceUser{
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_SUCCEED, getSessionMessage(session));
                 }                   
                 else if(SessionState.CLOSED == state || SessionState.CLOSED_LOGIN_FAILED == state){
-                    isLogined = false;
+                	isLoggedIn = false;
                     UserWrapper.onActionResult(mAdapter, UserWrapper.ACTION_RET_LOGIN_FAILED, getErrorMessage(exception, "failed"));
                 }                   
             }
