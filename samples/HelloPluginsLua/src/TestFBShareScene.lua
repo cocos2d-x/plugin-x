@@ -242,7 +242,7 @@ function TestFBShareScene:createLayerMenu()
         {"Share open graph", function(tag, sender)
             local params = {
             dialog = "share_open_graph",
-            action_type = "pluginlua:share",
+            action_type = "cocostestmyfc:share",
             preview_property =  "cocos_document",
             title = "Cocos2d-x Game Engine",
             image =  "http://files.cocos2d-x.org/images/orgsite/logo.png",
@@ -288,7 +288,7 @@ function TestFBShareScene:createLayerMenu()
         {"Open graph message", function(tag, sender)
             local params = {
                 dialog = "message_open_graph",
-                action_type = "pluginlua:share",
+                action_type = "cocostestmyfc:share",
                 preview_property = "cocos_document",
                 title =  "Cocos2d-x Game Engine",
                 image = "http://files.cocos2d-x.org/images/orgsite/logo.png",

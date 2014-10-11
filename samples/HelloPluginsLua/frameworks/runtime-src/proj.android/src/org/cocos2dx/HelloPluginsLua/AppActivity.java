@@ -24,7 +24,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.lua;
+package org.cocos2dx.HelloPluginsLua;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -80,22 +80,6 @@ public class AppActivity extends Cocos2dxActivity{
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 		hostIPAdress = getHostIpAddress();
-		
-	    // Add code to print out the key hash
-	    try {
-	        PackageInfo info = getPackageManager().getPackageInfo(
-	                "org.cocos2dx.lua", 
-	                PackageManager.GET_SIGNATURES);
-	        for (Signature signature : info.signatures) {
-	            MessageDigest md = MessageDigest.getInstance("SHA");
-	            md.update(signature.toByteArray());
-	            Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-	            }
-	    } catch (NameNotFoundException e) {
-
-	    } catch (NoSuchAlgorithmException e) {
-
-	    }
 	}
 	@Override
 	public Cocos2dxGLSurfaceView onCreateView() {
