@@ -34,19 +34,18 @@
 - (void) login;
 - (void) loginWithPermission:(NSString *)permission;
 - (void) logout;
-- (NSNumber *) isLoggedIn;
+- (BOOL) isLoggedIn;
 - (BOOL) isLogined;
 - (NSString*) getSessionID;
 - (NSString*) getUserID;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
 - (NSString*) getPluginVersion;
-- (NSString *)getUserId;
-- (NSString *)getAccessToken;
--(NSString *) getPermissionList;
--(void)api:(NSDictionary *)params;
--(void)activateApp;
--(void)logEvent:(NSMutableDictionary*) logInfo;
--(void)logEventWithName:(NSString*) eventName;
--(void)logPurchase:(NSMutableDictionary *)purchaseInfo;
+- (NSString *) getAccessToken;
+- (NSString *) getPermissionList;
+- (void) api:(NSDictionary *)params;
+- (void) activateApp;
+- (void) logEvent:(NSMutableDictionary*) logInfo;
+- (void) logEventWithName:(NSString*) eventName;
+- (void) logPurchase:(NSMutableDictionary *)purchaseInfo;
 @end

@@ -40,6 +40,7 @@ bool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret);
 bool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret);
 bool jsval_to_FBInfo(JSContext *cx, jsval v, StringMap* ret);
 bool jsval_array_to_string(JSContext *cx, jsval v, std::string* ret);
+bool jsval_to_std_map_string_string(JSContext *cx, jsval v, std::map<std::string, std::string>* ret);
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );

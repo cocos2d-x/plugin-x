@@ -72,11 +72,8 @@ NSString *_accessToken = @"";
 -(NSString *)getUserID{
     return _userId;
 }
-- (NSNumber *) isLoggedIn{
-    return [NSNumber  numberWithBool:_isLogin];
-}
-- (NSString *)getUserId{
-    return _userId;
+- (BOOL) isLoggedIn{
+    return _isLogin;
 }
 
 -(NSString *) getPermissionList{
@@ -90,7 +87,7 @@ NSString *_accessToken = @"";
     return msg;
 }
 -(NSString *)getAccessToken{
-    return [ParseUtils MakeJsonStringWithObject:_accessToken andKey:@"acessToken"];
+    return _accessToken;
 }
 - (NSString*) getSessionID{
     return @"";
