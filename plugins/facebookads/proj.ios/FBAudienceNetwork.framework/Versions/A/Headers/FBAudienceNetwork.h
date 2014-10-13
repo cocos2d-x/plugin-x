@@ -20,4 +20,4 @@
 #import "FBNativeAd.h"
 #import "FBAdImage.h"
 
-#define FB_AD_SDK_VERSION @"3.17.1"
+#define FB_AD_SDK_VERSION @"3.18"
