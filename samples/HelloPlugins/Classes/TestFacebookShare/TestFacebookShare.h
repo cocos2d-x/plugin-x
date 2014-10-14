@@ -45,6 +45,8 @@ public:
     CREATE_FUNC(TestFacebookShare);
 private:
     std::string sceenshot(std::string& filename);
+    void showSecondMenu(int menuTag);
+    void secondMenuCallback(Ref* sender);
 private:
     cocos2d::Label* tipsLabel;
 };

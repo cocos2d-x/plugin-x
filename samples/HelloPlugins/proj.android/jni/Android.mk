@@ -47,5 +47,5 @@ PluginProtocolStatic
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,protocols/android)
+$(call import-module,plugin/protocols/proj.android/jni)
 $(call import-module,cocos)

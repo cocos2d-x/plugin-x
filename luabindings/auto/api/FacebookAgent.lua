@@ -4,15 +4,21 @@
 -- @parent_module plugin
 
 --------------------------------
+-- brief Notifies the events system that the app has launched & logs an activatedApp event. 
+-- @function [parent=#FacebookAgent] activateApp 
+-- @param self
+        
+--------------------------------
 -- brief get permissoin list
 -- @function [parent=#FacebookAgent] getPermissionList 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- brief Notifies the events system that the app has launched & logs an activatedApp event. 
--- @function [parent=#FacebookAgent] activateApp 
+-- brief get UserID
+-- @function [parent=#FacebookAgent] getUserID 
 -- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- brief log out
