@@ -1,5 +1,6 @@
 require "Cocos2d"
 require "Cocos2dConstants"
+require "lua_plugin"
 
 local visibleSize = cc.Director:getInstance():getVisibleSize()
 local origin = cc.Director:getInstance():getVisibleOrigin()
@@ -21,8 +22,10 @@ function TestFBUserScene:ctor()
 
     self:createLayerMenu()
 
-    self.infoLabel = cc.Label:createWithSystemFont("You can see the result at this label", "Arial", 22)
-    self.infoLabel:setPosition(origin.x + visibleSize.width / 2 , origin.y + visibleSize.height / 2)
+    self.infoLabel = cc.Label:createWithSystemFont("You can see the result at this label", "Arial", 18)
+
+    self.infoLabel:setPosition(origin.x + visibleSize.width - self.infoLabel:getContentSize().width + 100, origin.y + visibleSize.height / 2)
+    self.infoLabel:setDimensions(self.infoLabel:getContentSize().width, 0)
     self:addChild(self.infoLabel)
 end
 
@@ -63,45 +66,54 @@ function TestFBUserScene:createLayerMenu()
             plugin.FacebookAgent:getInstance():logout()
             self.infoLabel:setString("FacebookAgent: User logout succeed")
         end},
-        {"getUid", function(tag, sender)
-            local path = "/me"
-            --FacebookAgent::HttpMethod::Get
-            plugin.FacebookAgent:getInstance():api(path, 0, {}, function(ret, msg)
-                self.infoLabel:setString(msg)
-            end)
 
+        {"getUid", function(tag, sender)
+            if plugin.FacebookAgent:getInstance():isLoggedIn() then
+                self.infoLabel:setString(plugin.FacebookAgent:getInstance():getUserID())
+            else
+                self.infoLabel:setString("User haven't been logged in")
+            end
         end},
+
         {"getToken", function(tag, sender)
-            self.infoLabel:setString(plugin.FacebookAgent:getInstance():getAccessToken())
+            if plugin.FacebookAgent:getInstance():isLoggedIn() then
+                self.infoLabel:setString(plugin.FacebookAgent:getInstance():getAccessToken())
+            else
+                self.infoLabel:setString("User haven't been logged in")
+            end  
         end
         },
+
         {"getPermissions", function(tag, sender)
-            self.infoLabel:setString(plugin.FacebookAgent:getInstance():getPermissionList())
+            local path = "/me/permissions"
+            if plugin.FacebookAgent:getInstance():isLoggedIn() then
+                plugin.FacebookAgent:getInstance():api(path,  plugin.FacebookAgent.HttpMethod.GET, {}, function(ret, msg)
+                    self.infoLabel:setString(msg)
+                end)
+            else
+                self.infoLabel:setString("User haven't been logged in")
+            end
         end
         },
+
         {"request API", function(tag, sender)
             local path = "/me/photos"
             local params = {url = "http://files.cocos2d-x.org/images/orgsite/logo.png"}
-            plugin.FacebookAgent:getInstance():api(path, 1, params, function(ret, msg)
+            plugin.FacebookAgent:getInstance():api(path,  plugin.FacebookAgent.HttpMethod.POST, params, function(ret, msg)
                 if 0 == ret then
                     self.infoLabel:setString(msg)
                 end
             end)
         end
         },
-        {"publishInstall", function(tag, sender)
-            plugin.FacebookAgent:getInstance():activateApp()
-            self.infoLabel:setString("activateApp is invoked")
-        end
-        },
+
         {"logEvent", function(tag, sender)
-            local appEventMsg = "fb_mobile_tutorial_completion"
             local floatVal = 888.888
-            local fbInfo = { fb_success = "1" }
-            plugin.FacebookAgent:getInstance():logEvent(appEventMsg)
-            plugin.FacebookAgent:getInstance():logEvent(appEventMsg, floatVal)
-            plugin.FacebookAgent:getInstance():logEvent(appEventMsg, fbInfo)
-            plugin.FacebookAgent:getInstance():logEvent(appEventMsg, floatVal, fbInfo)
+            local fbInfo = {}
+            fbInfo[plugin.FacebookAgent.AppEventParam.SUCCESS] =  plugin.FacebookAgent.AppEventParamValue.VALUE_YES
+            plugin.FacebookAgent:getInstance():logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal)
+            plugin.FacebookAgent:getInstance():logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, fbInfo)
+            plugin.FacebookAgent:getInstance():logEvent(plugin.FacebookAgent.AppEvent.COMPLETED_TUTORIAL, floatVal, fbInfo)
             self.infoLabel:setString("logEvent is invoked")
         end
         },
@@ -109,8 +121,21 @@ function TestFBUserScene:createLayerMenu()
         {"logPurchase", function (tag, sender)
             local mount = 1.23
             local currency = "CNY"
-            local fbInfo = {cocos2d = 1, lua = 2}
+            local fbInfo = {}
+            fbInfo[plugin.FacebookAgent.AppEventParam.CURRENCY] = "CNY"
+            fbInfo[plugin.FacebookAgent.AppEventParam.REGISTRATION_METHOD] = "Facebook"
+            fbInfo[plugin.FacebookAgent.AppEventParam.CONTENT_TYPE] = "game"
+            fbInfo[plugin.FacebookAgent.AppEventParam.CONTENT_ID] = "201410102342"
+            fbInfo[plugin.FacebookAgent.AppEventParam.SEARCH_STRING] = "cocos2dx-lua"
+            fbInfo[plugin.FacebookAgent.AppEventParam.SUCCESS] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES
+            fbInfo[plugin.FacebookAgent.AppEventParam.MAX_RATING_VALUE] = "10"
+            fbInfo[plugin.FacebookAgent.AppEventParam.PAYMENT_INFO_AVAILABLE] = plugin.FacebookAgent.AppEventParamValue.VALUE_YES
+            fbInfo[plugin.FacebookAgent.AppEventParam.NUM_ITEMS] = "99"
+            fbInfo[plugin.FacebookAgent.AppEventParam.LEVEL] = "10"
+            fbInfo[plugin.FacebookAgent.AppEventParam.DESCRIPTION] = "Cocos2dx-lua"
+
             plugin.FacebookAgent:getInstance():logPurchase(mount, currency, fbInfo)
+            self.infoLabel:setString("Purchase logged.")
         end
         },
     }
@@ -119,7 +144,7 @@ function TestFBUserScene:createLayerMenu()
         local label = cc.Label:createWithSystemFont(menuItemNames[i][1], "Arial", 16)
         local menuItem = cc.MenuItemLabel:create(label)
         menuItem:registerScriptTapHandler(menuItemNames[i][2])
-        y_pos = visibleSize.height - 24 * (i - 1) - 100
+        y_pos = visibleSize.height - 24 * (i - 1) - 90
         menuItem:setPosition(origin.x + 100, y_pos)
         menu:addChild(menuItem, 0, i -1 )
     end

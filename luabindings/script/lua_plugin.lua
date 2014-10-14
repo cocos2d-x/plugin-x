@@ -38,6 +38,7 @@ plugin.FacebookAgent.AppEventParam =
     MAX_RATING_VALUE = "fb_max_rating_value",
     PAYMENT_INFO_AVAILABLE = "fb_payment_info_available",
     NUM_ITEMS = "fb_num_items",
+    LEVEL = "fb_level",
     DESCRIPTION = "fb_description",
 }
 
@@ -46,7 +47,3 @@ plugin.FacebookAgent.AppEventParamValue =
     VALUE_YES = "1",
     VALUE_NO = "0",
 }
-
-function plugin.FacebookAgent.getSDKVersion()
-    return "Facebook SDK for Cocos2d-JS 1.0 alpha"
-end

@@ -38,7 +38,7 @@
 		<string>Icon-144.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>org.cocos2d-x.js-tests-iOS</string>
+	<string>org.cocos2dx.HelloPluginsLua</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -52,16 +52,16 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1426774790893461</string>
+				<string>fb284667701726875</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>1426774790893461</string>
+	<string>284667701726875</string>
 	<key>FacebookDisplayName</key>
-	<string>myFc</string>
+	<string>HelloPluginsLua</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIPrerenderedIcon</key>

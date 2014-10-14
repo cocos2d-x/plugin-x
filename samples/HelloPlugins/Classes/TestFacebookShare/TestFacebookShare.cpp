@@ -182,8 +182,8 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
         {
             FacebookAgent::FBInfo params;
             params.insert(std::make_pair("dialog", "share_open_graph"));
-            params.insert(std::make_pair("action_type", "cocosx_facebook:share"));
-            params.insert(std::make_pair("preview_property", "cocos_document"));
+            params.insert(std::make_pair("action_type", "cocostestmyfc:share"));
+            params.insert(std::make_pair("preview_property_name", "cocos_document"));
             params.insert(std::make_pair("title", "Cocos2d-x Game Engine"));
             params.insert(std::make_pair("image", "http://files.cocos2d-x.org/images/orgsite/logo.png"));
             params.insert(std::make_pair("url", "http://cocos2d-x.org/docs/catalog/en"));
@@ -197,9 +197,7 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
             }
             else
             {
-                FacebookAgent::getInstance()->webDialog(params, [=](int ret, std::string& msg){
-                     CCLOG("%s", msg.c_str());
-                });
+                CCLOG("Can't open dialog for share_open_graph");
             }
         }
         break;
@@ -222,7 +220,7 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
                 }
                 else
                 {
-                    CCLOG("Can't use webDialog for share_photo");
+                    CCLOG("Can't open dialog for share_photo");
                 }
             });
             
@@ -247,7 +245,7 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
             }
             else
             {
-               CCLOG("Can't use webDialog for message_link");
+               CCLOG("Can't open dialog for message_link");
             }
         }
         break;
@@ -255,8 +253,8 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
         {
             FacebookAgent::FBInfo params;
             params.insert(std::make_pair("dialog", "message_open_graph"));
-            params.insert(std::make_pair("action_type", "cocosx_facebook:share"));
-            params.insert(std::make_pair("preview_property", "cocos_document"));
+            params.insert(std::make_pair("action_type", "cocostestmyfc:share"));
+            params.insert(std::make_pair("preview_property_name", "cocos_document"));
             params.insert(std::make_pair("title", "Cocos2d-x Game Engine"));
             params.insert(std::make_pair("image", "http://files.cocos2d-x.org/images/orgsite/logo.png"));
             params.insert(std::make_pair("url", "http://cocos2d-x.org/docs/catalog/en"));
@@ -269,14 +267,14 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
             }
             else
             {
-                CCLOG("Can't use webDialog for message_open_graph");
+                CCLOG("Can't open dialog for message_open_graph");
             }
 
         }
         break;
     case TAG_FBS_PHOTO_MESSAGE:
         {
-            std::string fileName = "facebookshare.jpg";
+            std::string fileName = "facebookmessage.jpg";
             std::string imgPath = sceenshot(fileName);
             
             auto delay = DelayTime::create(2.0);
@@ -293,7 +291,7 @@ void TestFacebookShare::eventMenuCallback(Ref* sender)
                 }
                 else
                 {
-                    CCLOG("Can't use webDialog for message_photo");
+                    CCLOG("Can't open dialog for message_photo");
                 }
             });
             
@@ -404,7 +402,8 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 }
                 else
                 {
-                    FacebookAgent::getInstance()->webDialog(params, [=](int ret ,std::string& msg){
+                    params.insert(std::make_pair("dialog", "feed_dialog"));
+                    FacebookAgent::getInstance()->dialog(params, [=](int ret ,std::string& msg){
                         CCLOG("%s", msg.c_str());
                     });
                 }
@@ -427,7 +426,8 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 }
                 else
                 {
-                    FacebookAgent::getInstance()->webDialog(params, [=](int ret ,std::string& msg){
+                    params.insert(std::make_pair("dialog", "feed_dialog"));
+                    FacebookAgent::getInstance()->dialog(params, [=](int ret ,std::string& msg){
                         CCLOG("%s", msg.c_str());
                     });
                 }
@@ -452,7 +452,8 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 }
                 else
                 {
-                    FacebookAgent::getInstance()->webDialog(params, [=](int ret ,std::string& msg){
+                    params.insert(std::make_pair("dialog", "feed_dialog"));
+                    FacebookAgent::getInstance()->dialog(params, [=](int ret ,std::string& msg){
                         CCLOG("%s", msg.c_str());
                     });
                 }
@@ -469,7 +470,7 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 params.insert(std::make_pair("link", "http://www.cocos2d-x.org"));
                 
                 // only support in web dialog
-                FacebookAgent::getInstance()->webDialog(params, [=](int ret ,std::string& msg){
+                FacebookAgent::getInstance()->dialog(params, [=](int ret ,std::string& msg){
                     CCLOG("%s", msg.c_str());
                 });
             }
@@ -491,7 +492,7 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 params.insert(std::make_pair("message", "Cocos2d-x is a great game engine"));
                 params.insert(std::make_pair("title", "Cocos2d-x title"));
                 params.insert(std::make_pair("to", "100006738453912, 10204182777160522"));
-                
+                // android only web view support to
                 FacebookAgent::getInstance()->appRequest(params, [=](int ret, std::string& msg){
                     CCLOG("%s", msg.c_str());
                 });
@@ -503,7 +504,7 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 params.insert(std::make_pair("message", "Cocos2d-x is a great game engine"));
                 params.insert(std::make_pair("title", "Cocos2d-x title"));
                 params.insert(std::make_pair("filters", "[{\"name\":\"company\", \"user_ids\":[\"100006738453912\",\"10204182777160522\"]}]"));
-                
+                // android not support filters
                 FacebookAgent::getInstance()->appRequest(params, [=](int ret, std::string& msg){
                     CCLOG("%s", msg.c_str());
                 });
@@ -516,7 +517,7 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 params.insert(std::make_pair("to", "100006738453912"));
                 params.insert(std::make_pair("action_type", "send"));
                 params.insert(std::make_pair("object_id", "191181717736427"));
-                
+                // android not support action_type
                 FacebookAgent::getInstance()->appRequest(params, [=](int ret, std::string& msg){
                     CCLOG("%s", msg.c_str());
                 });
@@ -529,7 +530,7 @@ void TestFacebookShare::secondMenuCallback(Ref* sender)
                 params.insert(std::make_pair("title", "Cocos2d-x title"));
                 params.insert(std::make_pair("to", "100006738453912"));
                 params.insert(std::make_pair("action_type", "turn"));
-
+                // android not support action_type
                 FacebookAgent::getInstance()->appRequest(params, [=](int ret, std::string& msg){
                     CCLOG("%s", msg.c_str());
                 });

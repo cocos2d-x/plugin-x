@@ -123,7 +123,8 @@ bool TestFacebookUser::init()
 
     //4. create result label
     callbackInfo = Label::createWithSystemFont("You can see the result at this label", "Arial", 22);
-    callbackInfo->setPosition(origin.x + visibleSize.width / 2 , origin.y + visibleSize.height / 2);
+    callbackInfo->setPosition(origin.x + visibleSize.width - callbackInfo->getContentSize().width, origin.y + visibleSize.height / 2);
+    callbackInfo->setDimensions(callbackInfo->getContentSize().width, 0);
     addChild(callbackInfo);
 
     return true;
@@ -170,23 +171,35 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         break;
     case TAG_FB_GETUID:
         {
-            FacebookAgent::FBInfo params;
-            std::string path = "/me";
-            FacebookAgent::getInstance()->api(path, FacebookAgent::HttpMethod::Get, params, [=](int ret, std::string& msg){
-                    callbackInfo->setString(msg.c_str());
-            });
+            if (FacebookAgent::getInstance()->isLoggedIn())
+            {
+                callbackInfo->setString(FacebookAgent::getInstance()->getUserID());
+            }
+            else
+            {
+                callbackInfo->setString("User haven't been logged in");
+            }
         }
         break;
     case TAG_FB_GETTOKEN:
         {
-            std::string token = FacebookAgent::getInstance()->getAccessToken();
-            callbackInfo->setString(token.c_str());
+            if (FacebookAgent::getInstance()->isLoggedIn())
+            {
+                callbackInfo->setString(FacebookAgent::getInstance()->getAccessToken());
+            }
+            else
+            {
+                callbackInfo->setString("User haven't been logged in");
+            }
         }
         break;
     case TAG_FB_GETPERMISSIONS:
         {
-            std::string permissionList = FacebookAgent::getInstance()->getPermissionList();
-            callbackInfo->setString(permissionList.c_str());
+            std::string path = "/me/permissions";
+            FacebookAgent::FBInfo params;
+            FacebookAgent::getInstance()->api(path, FacebookAgent::HttpMethod::Get, params, [=](int ret, std::string& msg){
+                callbackInfo->setString(msg.c_str());
+            });
         }
         break;
     case TAG_FB_REQUEST_API:
@@ -213,7 +226,6 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
             float floatVal = 888.888;
             FacebookAgent::FBInfo fbInfo;
             fbInfo["fb_success"] = "1";
-            FacebookAgent::getInstance()->logEvent(appEventMsg);
             FacebookAgent::getInstance()->logEvent(appEventMsg, floatVal);
             FacebookAgent::getInstance()->logEvent(appEventMsg, fbInfo);
             FacebookAgent::getInstance()->logEvent(appEventMsg, floatVal, fbInfo);
@@ -222,10 +234,33 @@ void TestFacebookUser::eventMenuCallback(Ref* sender)
         break;
     case TAG_FB_LOG_PURCHASE:
         {
+            static const char*  AppEventParam_CURRENCY = "fb_currency";
+            static const char*  AppEventParam_REGISTRATION_METHOD = "fb_registration_method";
+            static const char*  AppEventParam_CONTENT_TYPE = "fb_content_type";
+            static const char*  AppEventParam_CONTENT_ID = "fb_content_id";
+            static const char*  AppEventParam_SEARCH_STRING = "fb_search_string";
+            static const char*  AppEventParam_SUCCESS = "fb_success";
+            static const char*  AppEventParam_MAX_RATING_VALUE = "fb_max_rating_value";
+            static const char*  AppEventParam_PAYMENT_INFO_AVAILABLE = "fb_payment_info_available";
+            static const char*  AppEventParam_NUM_ITEMS = "fb_num_items";
+            static const char*  AppEventParam_LEVEL = "fb_level";
+            static const char*  AppEventParam_DESCRIPTION = "fb_description";
+            
             FacebookAgent::FBInfo fbInfo;
-            fbInfo["cocos2d"] = 1;
-            fbInfo["cpp"]     = 2;
+            fbInfo[AppEventParam_CURRENCY] = "CNY";
+            fbInfo[AppEventParam_REGISTRATION_METHOD]     = "Facebook";
+            fbInfo[AppEventParam_CONTENT_TYPE]     = "game";
+            fbInfo[AppEventParam_CONTENT_ID]     = "201410102342";
+            fbInfo[AppEventParam_SEARCH_STRING]     = "cocos2dx";
+            fbInfo[AppEventParam_SUCCESS]     = "1";
+            fbInfo[AppEventParam_MAX_RATING_VALUE]     = "10";
+            fbInfo[AppEventParam_PAYMENT_INFO_AVAILABLE]     = "1";
+            fbInfo[AppEventParam_NUM_ITEMS]     = "99";
+            fbInfo[AppEventParam_LEVEL]     = "10";
+            fbInfo[AppEventParam_DESCRIPTION]     = "Cocos2dx";
+            
             FacebookAgent::getInstance()->logPurchase(1.23, "CNY", fbInfo);
+            callbackInfo->setString("Purchase logged");
         }
         break;
     default:
