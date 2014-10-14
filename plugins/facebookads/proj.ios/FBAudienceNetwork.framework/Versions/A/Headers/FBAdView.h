@@ -153,5 +153,16 @@ extern FBAdSize const kFBAdSizeInterstital;
  */
 - (void)adView:(FBAdView *)adView didFailWithError:(NSError *)error;
 
+/*!
+ @method
+
+ @abstract
+ Asks the delegate for a view controller to present modal content, such as the in-app
+ browser that can appear when an ad is clicked.
+
+ @return A view controller that is used to present modal content.
+ */
+- (UIViewController *)viewControllerForPresentingModalView;
+
 @end
 
