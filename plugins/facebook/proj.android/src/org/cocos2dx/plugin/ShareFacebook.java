@@ -140,27 +140,27 @@ public class ShareFacebook implements InterfaceShare{
 	public boolean canPresentDialogWithParams(final JSONObject cpInfo){ 
 		try {
 			String dialogType = cpInfo.getString("dialog");
-			if("share_link".equals(dialogType)){
+			if("shareLink".equals(dialogType)){
 				return FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.SHARE_DIALOG);
 			}
-			else if("share_open_graph".equals(dialogType)){
+			else if("shareOpenGraph".equals(dialogType)){
 				return FacebookDialog.canPresentOpenGraphActionDialog(mContext, OpenGraphActionDialogFeature.OG_ACTION_DIALOG);
 				
 			}
-			else if("share_photo".equals(dialogType)){
+			else if("sharePhoto".equals(dialogType)){
 				return FacebookDialog.canPresentShareDialog(mContext, ShareDialogFeature.PHOTOS);
 				
 			}
 			else if("apprequests".equals(dialogType)){
 				return true;
 			}
-			else if("message_link".equals(dialogType)){
+			else if("messageLink".equals(dialogType)){
 				return FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.MESSAGE_DIALOG);
 			}
-			else if("message_open_graph".equals(dialogType)){
+			else if("messageOpenGraph".equals(dialogType)){
 				return FacebookDialog.canPresentOpenGraphMessageDialog(mContext, OpenGraphMessageDialogFeature.OG_MESSAGE_DIALOG);
 			}
-			else if("message_photo".equals(dialogType)){
+			else if("messagePhoto".equals(dialogType)){
 				return FacebookDialog.canPresentMessageDialog(mContext, MessageDialogFeature.PHOTOS);
 			}
 		} catch (JSONException e) {
@@ -175,10 +175,10 @@ public class ShareFacebook implements InterfaceShare{
 			public void run() {
 				try {
 					String dialogType = cpInfo.getString("dialog");
-					if("share_link".equals(dialogType)){
+					if("shareLink".equals(dialogType)){
 						WebFeedDialog(cpInfo);
 					}
-					else if("share_open_graph".equals(dialogType)){
+					else if("shareOpenGraph".equals(dialogType)){
 						WebShareOpenGraphDialog(cpInfo);
 					}
 					else {
@@ -203,25 +203,25 @@ public class ShareFacebook implements InterfaceShare{
 					if("share_link".equals(dialogType)){
 						FBShareDialog(cpInfo);
 					}
-					else if("feed_dialog".equals(dialogType)){
+					else if("feedDialog".equals(dialogType)){
 						WebFeedDialog(cpInfo);
 					}
-					else if("share_open_graph".equals(dialogType)){
+					else if("shareOpenGraph".equals(dialogType)){
 						FBShareOpenGraphDialog(cpInfo);
 					}
-					else if("share_photo".equals(dialogType)){
+					else if("sharePhoto".equals(dialogType)){
 						FBSharePhotoDialog(cpInfo);
 					}
 					else if("apprequests".equals(dialogType)){
 						WebRequestDialog(cpInfo);
 					}
-					else if("message_link".equals(dialogType)){
+					else if("messageLink".equals(dialogType)){
 						FBMessageDialog(cpInfo);
 					}
-					else if("message_open_graph".equals(dialogType)){
+					else if("messageOpenGraph".equals(dialogType)){
 						FBMessageOpenGraphDialog(cpInfo);
 					}
-					else if("message_photo".equals(dialogType)){
+					else if("messagePhoto".equals(dialogType)){
 						FBMessagePhotoDialog(cpInfo);
 					}
 				} catch (JSONException e) {
