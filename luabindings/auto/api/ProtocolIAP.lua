@@ -12,10 +12,10 @@
 -- @param #char msg
         
 --------------------------------
--- brief config the developer info<br>
--- param devInfo This parameter is the info of developer,<br>
--- different plugin have different format<br>
--- warning Must invoke this interface before other interfaces.<br>
+-- brief config the developer info<br>
+-- param devInfo This parameter is the info of developer,<br>
+-- different plugin have different format<br>
+-- warning Must invoke this interface before other interfaces.<br>
 -- And invoked only once.
 -- @function [parent=#ProtocolIAP] configDeveloperInfo 
 -- @param self
