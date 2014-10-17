@@ -200,7 +200,7 @@ public class ShareFacebook implements InterfaceShare{
 			public void run() {
 				try {
 					String dialogType = cpInfo.getString("dialog");
-					if("share_link".equals(dialogType)){
+					if("shareLink".equals(dialogType)){
 						FBShareDialog(cpInfo);
 					}
 					else if("feedDialog".equals(dialogType)){
