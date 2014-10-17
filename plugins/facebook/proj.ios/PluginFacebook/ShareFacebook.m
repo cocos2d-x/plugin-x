@@ -190,7 +190,7 @@
     
     bool not_supported = false;
     
-    if ([dialog_type hasSuffix:@"link"]) {
+    if ([dialog_type hasSuffix:@"Link"]) {
         // Link type share info
         NSString *link = [shareInfo objectForKey:@"link"];
         NSString *caption = [shareInfo objectForKey:@"caption"];
@@ -214,7 +214,7 @@
             params.ref = ref;
         }
         
-        if ([dialog_type isEqualToString:@"share_link"]) {
+        if ([dialog_type isEqualToString:@"shareLink"]) {
             // If the Facebook app is installed and we can present the share dialog
             if ([FBDialogs canPresentShareDialogWithParams:params]) {
                 [self shareLinkDialogFB:params];
@@ -223,7 +223,7 @@
                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
             }
         }
-        else if ([dialog_type isEqualToString:@"message_link"]) {
+        else if ([dialog_type isEqualToString:@"messageLink"]) {
             if ([FBDialogs canPresentMessageDialogWithParams:params]) {
                 [self messageLinkDialogFB:params];
             }
@@ -236,7 +236,7 @@
             not_supported = true;
         }
     }
-    else if ([dialog_type hasSuffix:@"open_graph"]) {
+    else if ([dialog_type hasSuffix:@"OpenGraph"]) {
         NSString *type = [shareInfo objectForKey:@"action_type"];
         NSString *previewProperty = [shareInfo objectForKey:@"preview_property_name"];
         NSString *title = [shareInfo objectForKey:@"title"];
@@ -255,7 +255,7 @@
                                                                                actionType:type
                                                                       previewPropertyName:previewProperty];
         
-        if ([dialog_type isEqualToString:@"share_open_graph"]) {
+        if ([dialog_type isEqualToString:@"shareOpenGraph"]) {
             if ([FBDialogs canPresentShareDialogWithOpenGraphActionParams:params]) {
                 [self shareOpenGraphDialogFB:params];
             } else {
@@ -263,7 +263,7 @@
                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
             }
         }
-        else if ([dialog_type isEqualToString:@"message_open_graph"]) {
+        else if ([dialog_type isEqualToString:@"messageOpenGraph"]) {
             if ([FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params]) {
                 [self messageOpenGraphDialogFB:params];
             } else {
@@ -275,7 +275,7 @@
             not_supported = true;
         }
     }
-    else if ([dialog_type hasSuffix:@"photo"]) {
+    else if ([dialog_type hasSuffix:@"Photo"]) {
         UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
         if(img ==nil){
             NSString *msg = [ParseUtils MakeJsonStringWithObject:@"Share failed, photo can't be found" andKey:@"error_message"];
@@ -285,7 +285,7 @@
         FBPhotoParams *params = [[FBPhotoParams alloc] init];
         params.photos = @[img];
         
-        if ([dialog_type isEqualToString:@"share_photo"]) {
+        if ([dialog_type isEqualToString:@"sharePhoto"]) {
             if ([FBDialogs canPresentShareDialogWithPhotos]) {
                 [self sharePhotoDialogFB:params];
             } else {
@@ -293,7 +293,7 @@
                 [ShareWrapper onShareResult:self withRet:kShareFail withMsg:msg];
             }
         }
-        else if ([dialog_type isEqualToString:@"message_photo"]) {
+        else if ([dialog_type isEqualToString:@"messagePhoto"]) {
             if ([FBDialogs canPresentMessageDialogWithPhotos]) {
                 [self messagePhotoDialogFB:params];
             } else {
@@ -305,7 +305,7 @@
             not_supported = true;
         }
     }
-    else if ([dialog_type isEqualToString:@"feed_dialog"]) {
+    else if ([dialog_type isEqualToString:@"feedDialog"]) {
         [self feedDialogWeb:shareInfo];
     }
     else {
@@ -322,7 +322,7 @@
     [self convertParamsToFBParams:shareInfo];
     NSString *dialog_type = [shareInfo objectForKey:@"dialog"];
     
-    if ([dialog_type hasSuffix:@"link"]) {
+    if ([dialog_type hasSuffix:@"Link"]) {
         NSString *link = [shareInfo objectForKey:@"link"];
         NSString *caption = [shareInfo objectForKey:@"caption"];
         NSString *name = [shareInfo objectForKey:@"name"];
@@ -345,15 +345,15 @@
             params.ref = ref;
         }
         
-        if ([dialog_type isEqualToString:@"share_link"]) {
+        if ([dialog_type isEqualToString:@"shareLink"]) {
             // If the Facebook app is installed and we can present the share dialog
             return [FBDialogs canPresentShareDialogWithParams:params];
         }
-        else if ([dialog_type isEqualToString:@"message_link"]) {
+        else if ([dialog_type isEqualToString:@"messageLink"]) {
             return [FBDialogs canPresentMessageDialogWithParams:params];
         }
     }
-    else if ([dialog_type hasSuffix:@"open_graph"]) {
+    else if ([dialog_type hasSuffix:@"OpenGraph"]) {
         NSString *type = [shareInfo objectForKey:@"action_type"];
         NSString *previewProperty = [shareInfo objectForKey:@"preview_property_name"];
         NSString *title = [shareInfo objectForKey:@"title"];
@@ -372,14 +372,14 @@
                                                                                actionType:type
                                                                       previewPropertyName:previewProperty];
         
-        if ([dialog_type isEqualToString:@"share_open_graph"]) {
+        if ([dialog_type isEqualToString:@"shareOpenGraph"]) {
              return [FBDialogs canPresentShareDialogWithOpenGraphActionParams:params];
         }
-        else if ([dialog_type isEqualToString:@"message_open_graph"]) {
+        else if ([dialog_type isEqualToString:@"messageOpenGraph"]) {
             return [FBDialogs canPresentMessageDialogWithOpenGraphActionParams:params];
         }
     }
-    else if ([dialog_type hasSuffix:@"photo"]) {
+    else if ([dialog_type hasSuffix:@"Photo"]) {
         UIImage *img = [[UIImage alloc] initWithContentsOfFile:[shareInfo objectForKey:@"photo"]];
         if(img ==nil){
             NSString *msg = [ParseUtils MakeJsonStringWithObject:@"Share failed, photo can't be found" andKey:@"error_message"];
@@ -389,10 +389,10 @@
         FBPhotoParams *params = [[FBPhotoParams alloc] init];
         params.photos = @[img];
         
-        if ([dialog_type isEqualToString:@"share_photo"]) {
+        if ([dialog_type isEqualToString:@"sharePhoto"]) {
             return [FBDialogs canPresentShareDialogWithPhotos];
         }
-        else if ([dialog_type isEqualToString:@"message_photo"]) {
+        else if ([dialog_type isEqualToString:@"messagePhoto"]) {
             return [FBDialogs canPresentMessageDialogWithPhotos];
         }
     }
@@ -414,6 +414,12 @@
             } else {
                 // Handle the publish feed callback
                 NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                if([urlParams objectForKey:@"error_code"] != nil){
+                    NSString *msg = [ParseUtils MakeJsonStringWithObject:[urlParams objectForKey:@"error_message"] andKey:@"error_message"];
+                    [ShareWrapper onShareResult:self withRet:(int)[urlParams objectForKey:@"error_code"] withMsg:msg];
+                    return;
+                }
+
                 if (![urlParams valueForKey:@"post_id"]) {
                     // User clicked the Cancel button
                      NSString *msg = [ParseUtils MakeJsonStringWithObject:@"User canceled sharing" andKey:@"error_message"];
@@ -605,6 +611,12 @@
              } else {
                  // Handle the publish feed callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                 if([urlParams objectForKey:@"error_code"] != nil){
+                     NSString *msg = [ParseUtils MakeJsonStringWithObject:[urlParams objectForKey:@"error_message"] andKey:@"error_message"];
+                     [ShareWrapper onShareResult:self withRet:(int)[urlParams objectForKey:@"error_code"] withMsg:msg];
+                     return;
+                 }
+
                  if (![urlParams valueForKey:@"post_id"]) {
                      // User clicked the Cancel button
                      [ShareWrapper onShareResult:self withRet:kShareFail withMsg:@"User canceled sharing"];
@@ -622,13 +634,20 @@
 {
     NSString *message = [shareInfo objectForKey:@"message"];
     NSString *title = [shareInfo objectForKey:@"title"];
+    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    for(NSString *key in shareInfo){
+        NSString *item = [shareInfo objectForKey:key];
+        if(![@"message" isEqualToString:key]&& ![@"title" isEqualToString:key]){
+            [param setObject:item forKey:key];
+        }
+    }
     
     // Display the requests dialog
     [FBWebDialogs
      presentRequestsDialogModallyWithSession:[FBSession activeSession]
      message: message
      title: title
-     parameters: nil
+     parameters: param
      handler: ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
          if (error) {
              // Error launching the dialog or sending the request.
@@ -644,6 +663,11 @@
                  // Handle the send request callback
                  NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                  NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+                 if([urlParams objectForKey:@"error_code"] != nil){
+                     NSString *msg = [ParseUtils MakeJsonStringWithObject:[urlParams objectForKey:@"error_message"] andKey:@"error_message"];
+                     [ShareWrapper onShareResult:self withRet:(int)[urlParams objectForKey:@"error_code"] withMsg:msg];
+                     return;
+                 }
                  if([urlParams count]>0){
                      int i = 0;
                      NSMutableArray *resultArray = [[NSMutableArray alloc] init];
