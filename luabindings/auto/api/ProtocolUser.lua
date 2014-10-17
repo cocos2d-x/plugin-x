@@ -5,10 +5,10 @@
 -- @parent_module plugin
 
 --------------------------------
--- brief config the application info<br>
--- param devInfo This parameter is the info of aplication,<br>
--- different plugin have different format<br>
--- warning Must invoke this interface before other interfaces.<br>
+-- brief config the application info<br>
+-- param devInfo This parameter is the info of aplication,<br>
+-- different plugin have different format<br>
+-- warning Must invoke this interface before other interfaces.<br>
 -- And invoked only once.
 -- @function [parent=#ProtocolUser] configDeveloperInfo 
 -- @param self
@@ -21,8 +21,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- brief Get session ID<br>
--- return If user logined, return value is session ID;<br>
+-- brief Get session ID<br>
+-- return If user logined, return value is session ID;<br>
 -- else return value is empty string.
 -- @function [parent=#ProtocolUser] getSessionID 
 -- @param self
