@@ -1,7 +1,3 @@
-require "Cocos2d"
-require "Cocos2dConstants"
-require "extern"
-
 local HelloWorldScene = class("HelloWorldScene",function()
     return cc.Scene:create()
 end)

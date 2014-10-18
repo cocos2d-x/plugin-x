@@ -1,6 +1,3 @@
-require "Cocos2d"
-require "Cocos2dConstants"
-
 local visibleSize = cc.Director:getInstance():getVisibleSize()
 local origin = cc.Director:getInstance():getVisibleOrigin()
 local posBR = cc.p(origin.x + visibleSize.width, origin.y)

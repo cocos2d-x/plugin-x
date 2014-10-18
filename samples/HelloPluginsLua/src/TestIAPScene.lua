@@ -1,6 +1,3 @@
-require "Cocos2d"
-require "Cocos2dConstants"
-
 local TestIAPScene = class("TestIAPScene",function()
     return cc.Scene:create()
 end)
