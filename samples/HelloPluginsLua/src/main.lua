@@ -1,5 +1,7 @@
-
-require "Cocos2d"
+cc.FileUtils:getInstance():addSearchPath("src")
+cc.FileUtils:getInstance():addSearchPath("res")
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
 
 -- cclog
 cclog = function(...)
@@ -21,8 +23,6 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
     
-    cc.FileUtils:getInstance():addSearchPath("src")
-    cc.FileUtils:getInstance():addSearchPath("res")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
     --create scene 

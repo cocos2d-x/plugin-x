@@ -1,6 +1,4 @@
-require "Cocos2d"
-require "Cocos2dConstants"
-require "lua_plugin"
+require "cocos.lua_plugin.lua_plugin"
 
 local visibleSize = cc.Director:getInstance():getVisibleSize()
 local origin = cc.Director:getInstance():getVisibleOrigin()

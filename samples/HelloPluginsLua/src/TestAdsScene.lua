@@ -1,6 +1,3 @@
-require "Cocos2d"
-require "Cocos2dConstants"
-
 local TestAdsScene = class("TestAdsScene",function()
     return cc.Scene:create()
 end)
