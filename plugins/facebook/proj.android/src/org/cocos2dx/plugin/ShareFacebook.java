@@ -390,6 +390,17 @@ public class ShareFacebook implements InterfaceShare{
 			shareDialogBuilder.setFriends(list);
 		}
 		
+		String place = null;
+		if ((place = safeGetJsonString(info, "place")) != null)
+		{
+			shareDialogBuilder.setPlace(place);
+		}
+		
+		String ref = null;
+		if ((ref = safeGetJsonString(info, "reference")) != null)
+		{
+			shareDialogBuilder.setRef(ref);
+		}
 		
 		FacebookWrapper.track(shareDialogBuilder.build().present());
 	}
