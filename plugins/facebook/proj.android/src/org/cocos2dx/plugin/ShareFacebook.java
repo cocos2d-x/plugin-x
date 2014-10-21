@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONException;
@@ -200,7 +201,7 @@ public class ShareFacebook implements InterfaceShare{
 			public void run() {
 				try {
 					String dialogType = cpInfo.getString("dialog");
-					if("share_link".equals(dialogType)){
+					if("shareLink".equals(dialogType)){
 						FBShareDialog(cpInfo);
 					}
 					else if("feedDialog".equals(dialogType)){
@@ -380,6 +381,15 @@ public class ShareFacebook implements InterfaceShare{
 		String picture = null;
 		if ((picture = safeGetJsonString(info, "picture")) != null)
 			shareDialogBuilder.setPicture(picture);
+		
+		String friendStr = null;
+		if ((friendStr = safeGetJsonString(info, "to")) != null)
+		{
+			String []arr = friendStr.split(",");
+			List<String> list=Arrays.asList(arr); 
+			shareDialogBuilder.setFriends(list);
+		}
+		
 		
 		FacebookWrapper.track(shareDialogBuilder.build().present());
 	}
