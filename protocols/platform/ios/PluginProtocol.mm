@@ -25,6 +25,15 @@ THE SOFTWARE.
 #include "PluginUtilsIOS.h"
 #include "PluginOCMacros.h"
 
+
+@protocol OCPluginProtocol
+@optional
+- (void)setDebugMode:(BOOL)debug;
+- (NSString *)getPluginVersion;
+- (NSString *)getSDKVersion;
+@end
+
+
 namespace cocos2d { namespace plugin {
 
 PluginProtocol::~PluginProtocol()
@@ -42,8 +51,10 @@ std::string PluginProtocol::getPluginVersion()
         SEL selector = NSSelectorFromString(@"getPluginVersion");
         
         if ([pOCObj respondsToSelector:selector]) {
-            NSString* strRet = (NSString*)[pOCObj performSelector:selector];
-            verName = [strRet UTF8String];
+            NSString* strRet = [pOCObj getPluginVersion];
+            if (strRet) {
+                verName = [strRet UTF8String];
+            }
         } else {
             PluginUtilsIOS::outputLog("Can't find function 'getPluginVersion' in class '%s'", pData->className.c_str());
         }
@@ -64,8 +75,10 @@ std::string PluginProtocol::getSDKVersion()
         SEL selector = NSSelectorFromString(@"getSDKVersion");
 
         if ([pOCObj respondsToSelector:selector]) {
-            NSString* strRet = (NSString*)[pOCObj performSelector:selector];
-            verName = [strRet UTF8String];
+            NSString* strRet = [pOCObj getSDKVersion];
+            if (strRet) {
+                verName = [strRet UTF8String];
+            }
         } else {
             PluginUtilsIOS::outputLog("Can't find function 'getSDKVersion' in class '%s'", pData->className.c_str());
         }
@@ -78,8 +91,19 @@ std::string PluginProtocol::getSDKVersion()
 
 void PluginProtocol::setDebugMode(bool isDebugMode)
 {
-    NSNumber* bDebug = [NSNumber numberWithBool:isDebugMode];
-    PluginUtilsIOS::callOCFunctionWithName_oneParam(this, "setDebugMode", bDebug);
+    PluginOCData* pData = PluginUtilsIOS::getPluginOCData(this);
+    if (pData) {
+        id pOCObj = pData->obj;
+        SEL selector = NSSelectorFromString(@"setDebugMode:");
+
+        if ([pOCObj respondsToSelector:selector]) {
+            [pOCObj setDebugMode:(BOOL)isDebugMode];
+        } else {
+            PluginUtilsIOS::outputLog("Can't find function 'setDebugMode' in class '%s'", pData->className.c_str());
+        }
+    } else {
+        PluginUtilsIOS::outputLog("Plugin %s is not initialized", this->getPluginName());
+    }
 }
 
 void PluginProtocol::callFuncWithParam(const char* funcName, PluginParam* param, ...)
