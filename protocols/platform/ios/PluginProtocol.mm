@@ -48,7 +48,7 @@ std::string PluginProtocol::getPluginVersion()
             PluginUtilsIOS::outputLog("Can't find function 'getPluginVersion' in class '%s'", pData->className.c_str());
         }
     } else {
-        PluginUtilsIOS::outputLog("Plugin %p not right initilized", this);
+        PluginUtilsIOS::outputLog("Plugin %p is not initialized", this);
     }
     
     return verName;
@@ -70,7 +70,7 @@ std::string PluginProtocol::getSDKVersion()
             PluginUtilsIOS::outputLog("Can't find function 'getSDKVersion' in class '%s'", pData->className.c_str());
         }
     } else {
-        PluginUtilsIOS::outputLog("Plugin %s not right initilized", this->getPluginName());
+        PluginUtilsIOS::outputLog("Plugin %s is not initialized", this->getPluginName());
     }
 
     return verName;
