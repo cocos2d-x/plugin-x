@@ -195,13 +195,17 @@ public class UserFacebook implements InterfaceUser{
     }
 
     @Override
-    public String getSDKVersion() {
-        return "3.14.1";
+    public String getPluginVersion() {
+        return "0.2.0";
     }
 
     @Override
-    public String getPluginVersion() {
-        return "0.2.0";
+    public String getSDKVersion(){
+        return Settings.getSDKVersion();
+    }
+
+    public void setSDKVersion(String version){
+        Settings.setSDKVersion(version);
     }
     
     public String getAccessToken(){
@@ -274,9 +278,7 @@ public class UserFacebook implements InterfaceUser{
     public void activateApp(){
    	    AppEventsLogger.activateApp(mContext);
     	// com.facebook.Settings.publishInstallAsync(mContext, Settings.getApplicationId());
-    }
-    
-    
+    }    
     
     public void logEvent(String eventName){
     	FacebookWrapper.getAppEventsLogger().logEvent(eventName);
