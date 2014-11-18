@@ -142,6 +142,10 @@ public:
      @breif return the version of Facebook SDK for Cocos 
      */
     std::string getSDKVersion();
+    /*
+     @breif set the version of Facebook SDK for Cocos 
+     */
+    void setSDKVersion(std::string version);
 	
 	FBCallback getRequestCallback(int index);
 private:

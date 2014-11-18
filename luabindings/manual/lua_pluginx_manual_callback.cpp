@@ -1173,6 +1173,19 @@ static void extendFacebookAgent(lua_State* tolua_S)
         tolua_function(tolua_S, "canPresentDialogWithParams", lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams);
     }
     lua_pop(tolua_S, 1);
+    std::string sdkVersion = cocos2dVersion();
+    sdkVersion = sdkVersion.replace(sdkVersion.find(" "), 1, "-") + "-lua";
+    FacebookAgent::getInstance()->setSDKVersion(sdkVersion);
+    
+    std::string facebookSDKVersion = FacebookAgent::getInstance()->getSDKVersion();
+    std::string::size_type pos = facebookSDKVersion.find("/");
+    if (pos != std::string::npos)
+    {
+        facebookSDKVersion = facebookSDKVersion.substr(0, pos);
+    }
+    sdkVersion = facebookSDKVersion + "/" + sdkVersion;
+    
+    FacebookAgent::getInstance()->setSDKVersion(sdkVersion);
 }
 
 int register_all_pluginx_manual_callback(lua_State* tolua_S)

@@ -93,6 +93,14 @@ typedef NS_ENUM(NSUInteger, FBRestrictedTreatment) {
 
 /*!
  @method
+ 
+ @abstract Retrieve the current iOS SDK version.
+ 
+ */
++ (void)setsdkVersion:(NSString*)version;
+
+/*!
+ @method
 
  @abstract Retrieve the current Facebook SDK logging behavior.
 

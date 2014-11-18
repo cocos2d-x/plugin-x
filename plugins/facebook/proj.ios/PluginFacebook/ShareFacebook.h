@@ -41,6 +41,7 @@
 - (void) setDebugMode: (BOOL) debug;
 - (void) appRequest:(NSMutableDictionary *)shareInfo;
 - (NSString*) getSDKVersion;
+- (void) setSDKVersion:(NSString *)version;
 - (NSString*) getPluginVersion;
 - (BOOL) canPresentDialogWithParams:(NSMutableDictionary *)shareInfo;
 

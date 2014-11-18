@@ -40,6 +40,7 @@
 - (NSString*) getUserID;
 - (void) setDebugMode: (BOOL) debug;
 - (NSString*) getSDKVersion;
+- (void) setSDKVersion:(NSString *)version;
 - (NSString*) getPluginVersion;
 - (NSString *) getAccessToken;
 - (NSString *) getPermissionList;
