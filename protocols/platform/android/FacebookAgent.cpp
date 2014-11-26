@@ -202,6 +202,13 @@ void FacebookAgent::appRequest(FBInfo& info, FBCallback cb)
 
 std::string FacebookAgent::getSDKVersion()
 {
-	return std::string("Facebook SDK beta2");
+	return agentManager->getUserPlugin()->callStringFuncWithParam("getSDKVersion", NULL);
 }
+
+void FacebookAgent::setSDKVersion(std::string version)
+{
+	PluginParam _version(version.c_str());
+	agentManager->getUserPlugin()->callFuncWithParam("setSDKVersion", &_version, NULL);
+}
+
 }}

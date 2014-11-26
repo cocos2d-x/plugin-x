@@ -56,6 +56,7 @@ import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.FeedDialogBuilder;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.facebook.widget.WebDialog.RequestsDialogBuilder;
+import com.facebook.Settings;
 
 public class ShareFacebook implements InterfaceShare{
 
@@ -116,14 +117,18 @@ public class ShareFacebook implements InterfaceShare{
 	}
 
 	@Override
-	public String getSDKVersion() {
-		return "3.14.1";
-	}
-
-	@Override
 	public String getPluginVersion() {
 		return "0.2.0";
 	}
+
+	@Override
+	public String getSDKVersion() {
+		return Settings.getSDKVersion();
+	}
+
+	public void setSDKVersion(String version){
+        Settings.setSDKVersion(version);
+    }
 
 	private boolean networkReachable() {
 		boolean bRet = false;
