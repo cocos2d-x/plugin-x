@@ -34,4 +34,4 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,.)
-$(call import-module,cocos2d-x/plugin/protocols/proj.android/jni)
+$(call import-module,plugin/protocols/proj.android/jni)
