@@ -21,7 +21,7 @@ LOCAL_EXPORT_CFLAGS := -DCOCOS2D_JAVASCRIPT
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/manual \
                     $(LOCAL_PATH)/auto \
                     $(LOCAL_PATH)/../../cocos \
-                    $(LOCAL_PATH)/../protocals/include
+                    $(LOCAL_PATH)/../protocols/include
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/manual \
                            $(LOCAL_PATH)/auto
