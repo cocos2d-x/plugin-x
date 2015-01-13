@@ -15,8 +15,13 @@ end
 
 function TestFBUserScene:ctor()
     local title = cc.Label:createWithSystemFont("Test Facebook user", "Arial", 32)
-    title:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 64)
+    title:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 50)
     self:addChild(title)
+
+    local sdkVersion = "SDK Version is: " .. plugin.FacebookAgent:getInstance():getSDKVersion()
+    local subTitle = cc.Label:createWithSystemFont(sdkVersion, "Arial", 12)
+    subTitle:setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 74)
+    self:addChild(subTitle)
 
     self:createLayerMenu()
 

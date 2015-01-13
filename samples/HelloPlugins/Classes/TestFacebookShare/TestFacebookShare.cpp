@@ -119,6 +119,11 @@ bool TestFacebookShare::init()
     title->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 64);
     addChild(title);
     
+    std::string sdkVersion = "SDK Version is: " + FacebookAgent::getInstance()->getSDKVersion();
+    auto subTitle = Label::createWithSystemFont(sdkVersion.c_str(), "Arial", 18);
+    subTitle->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height - 88);
+    addChild(subTitle);
+    
 
     /////////////////////////////
     // 3. add a menu item with "X" image, which is clicked to quit the program

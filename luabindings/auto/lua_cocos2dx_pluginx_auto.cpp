@@ -43,12 +43,15 @@ int lua_pluginx_protocols_PluginProtocol_getPluginName(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginProtocol_getPluginName'", nullptr);
             return 0;
+        }
         const char* ret = cobj->getPluginName();
         tolua_pushstring(tolua_S,(const char*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getPluginName",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getPluginName",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -87,12 +90,15 @@ int lua_pluginx_protocols_PluginProtocol_getPluginVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginProtocol_getPluginVersion'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getPluginVersion();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getPluginVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getPluginVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -131,12 +137,15 @@ int lua_pluginx_protocols_PluginProtocol_getSDKVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginProtocol_getSDKVersion'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getSDKVersion();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getSDKVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:getSDKVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -178,11 +187,14 @@ int lua_pluginx_protocols_PluginProtocol_setDebugMode(lua_State* tolua_S)
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "plugin.PluginProtocol:setDebugMode");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginProtocol_setDebugMode'", nullptr);
             return 0;
+        }
         cobj->setDebugMode(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:setDebugMode",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginProtocol:setDebugMode",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -247,11 +259,14 @@ int lua_pluginx_protocols_PluginManager_unloadPlugin(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.PluginManager:unloadPlugin"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginManager_unloadPlugin'", nullptr);
             return 0;
+        }
         cobj->unloadPlugin(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginManager:unloadPlugin",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginManager:unloadPlugin",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -293,12 +308,15 @@ int lua_pluginx_protocols_PluginManager_loadPlugin(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.PluginManager:loadPlugin"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginManager_loadPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::PluginProtocol* ret = cobj->loadPlugin(arg0);
         object_to_luaval<cocos2d::plugin::PluginProtocol>(tolua_S, "plugin.PluginProtocol",(cocos2d::plugin::PluginProtocol*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginManager:loadPlugin",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.PluginManager:loadPlugin",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -326,11 +344,14 @@ int lua_pluginx_protocols_PluginManager_end(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginManager_end'", nullptr);
             return 0;
+        }
         cocos2d::plugin::PluginManager::end();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.PluginManager:end",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.PluginManager:end",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -356,12 +377,15 @@ int lua_pluginx_protocols_PluginManager_getInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_PluginManager_getInstance'", nullptr);
             return 0;
+        }
         cocos2d::plugin::PluginManager* ret = cocos2d::plugin::PluginManager::getInstance();
         object_to_luaval<cocos2d::plugin::PluginManager>(tolua_S, "plugin.PluginManager",(cocos2d::plugin::PluginManager*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.PluginManager:getInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.PluginManager:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -424,11 +448,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_logTimedEventBegin(lua_State* tolua_
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.ProtocolAnalytics:logTimedEventBegin"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_logTimedEventBegin'", nullptr);
             return 0;
+        }
         cobj->logTimedEventBegin(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logTimedEventBegin",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logTimedEventBegin",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -473,11 +500,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_logError(lua_State* tolua_S)
 
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "plugin.ProtocolAnalytics:logError"); arg1 = arg1_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_logError'", nullptr);
             return 0;
+        }
         cobj->logError(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logError",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logError",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -519,11 +549,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_setCaptureUncaughtException(lua_Stat
 
         ok &= luaval_to_boolean(tolua_S, 2,&arg0, "plugin.ProtocolAnalytics:setCaptureUncaughtException");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_setCaptureUncaughtException'", nullptr);
             return 0;
+        }
         cobj->setCaptureUncaughtException(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:setCaptureUncaughtException",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:setCaptureUncaughtException",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -565,11 +598,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis(lua_State* 
 
         ok &= luaval_to_long(tolua_S, 2, &arg0, "plugin.ProtocolAnalytics:setSessionContinueMillis");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis'", nullptr);
             return 0;
+        }
         cobj->setSessionContinueMillis(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:setSessionContinueMillis",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:setSessionContinueMillis",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -611,7 +647,10 @@ int lua_pluginx_protocols_ProtocolAnalytics_logEvent(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.ProtocolAnalytics:logEvent"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_logEvent'", nullptr);
             return 0;
+        }
         cobj->logEvent(arg0);
         return 0;
     }
@@ -624,11 +663,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_logEvent(lua_State* tolua_S)
 
         ok &= luaval_to_object<std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >>(tolua_S, 3, "std::map<std::basic_string<char>, std::basic_string<char>, std::less<std::basic_string<char> >, std::allocator<std::pair<const std::basic_string<char>, std::basic_string<char> > > >*",&arg1);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_logEvent'", nullptr);
             return 0;
+        }
         cobj->logEvent(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logEvent",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logEvent",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -670,11 +712,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_startSession(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.ProtocolAnalytics:startSession"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_startSession'", nullptr);
             return 0;
+        }
         cobj->startSession(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:startSession",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:startSession",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -713,11 +758,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_stopSession(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_stopSession'", nullptr);
             return 0;
+        }
         cobj->stopSession();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:stopSession",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:stopSession",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -759,11 +807,14 @@ int lua_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.ProtocolAnalytics:logTimedEventEnd"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAnalytics_logTimedEventEnd'", nullptr);
             return 0;
+        }
         cobj->logTimedEventEnd(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logTimedEventEnd",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAnalytics:logTimedEventEnd",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -835,11 +886,14 @@ int lua_pluginx_protocols_ProtocolIAP_onPayResult(lua_State* tolua_S)
 
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "plugin.ProtocolIAP:onPayResult"); arg1 = arg1_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolIAP_onPayResult'", nullptr);
             return 0;
+        }
         cobj->onPayResult(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolIAP:onPayResult",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolIAP:onPayResult",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -881,11 +935,14 @@ int lua_pluginx_protocols_ProtocolIAP_configDeveloperInfo(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TIAPDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolIAP_configDeveloperInfo'", nullptr);
             return 0;
+        }
         cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolIAP:configDeveloperInfo",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolIAP:configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -948,7 +1005,10 @@ int lua_pluginx_protocols_ProtocolAds_showAds(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TAdsInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_showAds'", nullptr);
             return 0;
+        }
         cobj->showAds(arg0);
         return 0;
     }
@@ -961,11 +1021,14 @@ int lua_pluginx_protocols_ProtocolAds_showAds(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "plugin.ProtocolAds:showAds");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_showAds'", nullptr);
             return 0;
+        }
         cobj->showAds(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:showAds",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:showAds",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1007,11 +1070,14 @@ int lua_pluginx_protocols_ProtocolAds_hideAds(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TAdsInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_hideAds'", nullptr);
             return 0;
+        }
         cobj->hideAds(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:hideAds",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:hideAds",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1050,11 +1116,14 @@ int lua_pluginx_protocols_ProtocolAds_queryPoints(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_queryPoints'", nullptr);
             return 0;
+        }
         cobj->queryPoints();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:queryPoints",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:queryPoints",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1096,11 +1165,14 @@ int lua_pluginx_protocols_ProtocolAds_spendPoints(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "plugin.ProtocolAds:spendPoints");
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_spendPoints'", nullptr);
             return 0;
+        }
         cobj->spendPoints(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:spendPoints",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:spendPoints",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1142,11 +1214,14 @@ int lua_pluginx_protocols_ProtocolAds_configDeveloperInfo(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TAdsDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolAds_configDeveloperInfo'", nullptr);
             return 0;
+        }
         cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:configDeveloperInfo",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolAds:configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1215,11 +1290,14 @@ int lua_pluginx_protocols_ProtocolShare_onShareResult(lua_State* tolua_S)
 
         std::string arg1_tmp; ok &= luaval_to_std_string(tolua_S, 3, &arg1_tmp, "plugin.ProtocolShare:onShareResult"); arg1 = arg1_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolShare_onShareResult'", nullptr);
             return 0;
+        }
         cobj->onShareResult(arg0, arg1);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolShare:onShareResult",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolShare:onShareResult",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1261,11 +1339,14 @@ int lua_pluginx_protocols_ProtocolShare_configDeveloperInfo(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TShareDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolShare_configDeveloperInfo'", nullptr);
             return 0;
+        }
         cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolShare:configDeveloperInfo",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolShare:configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1328,11 +1409,14 @@ int lua_pluginx_protocols_ProtocolSocial_showLeaderboard(lua_State* tolua_S)
 
         std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "plugin.ProtocolSocial:showLeaderboard"); arg0 = arg0_tmp.c_str();
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolSocial_showLeaderboard'", nullptr);
             return 0;
+        }
         cobj->showLeaderboard(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:showLeaderboard",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:showLeaderboard",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1371,11 +1455,14 @@ int lua_pluginx_protocols_ProtocolSocial_showAchievements(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolSocial_showAchievements'", nullptr);
             return 0;
+        }
         cobj->showAchievements();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:showAchievements",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:showAchievements",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1417,11 +1504,14 @@ int lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TSocialDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolSocial_configDeveloperInfo'", nullptr);
             return 0;
+        }
         cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:configDeveloperInfo",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolSocial:configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1485,11 +1575,14 @@ int lua_pluginx_protocols_ProtocolUser_configDeveloperInfo(lua_State* tolua_S)
 
         ok &= pluginx::luaval_to_TUserDeveloperInfo(tolua_S, 2, &arg0);
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolUser_configDeveloperInfo'", nullptr);
             return 0;
+        }
         cobj->configDeveloperInfo(arg0);
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:configDeveloperInfo",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:configDeveloperInfo",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1528,12 +1621,15 @@ int lua_pluginx_protocols_ProtocolUser_isLoggedIn(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolUser_isLoggedIn'", nullptr);
             return 0;
+        }
         bool ret = cobj->isLoggedIn();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:isLoggedIn",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:isLoggedIn",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1572,12 +1668,15 @@ int lua_pluginx_protocols_ProtocolUser_getSessionID(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolUser_getSessionID'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getSessionID();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:getSessionID",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:getSessionID",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1616,12 +1715,15 @@ int lua_pluginx_protocols_ProtocolUser_getAccessToken(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_ProtocolUser_getAccessToken'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getAccessToken();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:getAccessToken",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.ProtocolUser:getAccessToken",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1683,12 +1785,15 @@ int lua_pluginx_protocols_AgentManager_getSocialPlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getSocialPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolSocial* ret = cobj->getSocialPlugin();
         object_to_luaval<cocos2d::plugin::ProtocolSocial>(tolua_S, "plugin.ProtocolSocial",(cocos2d::plugin::ProtocolSocial*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getSocialPlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getSocialPlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1727,12 +1832,15 @@ int lua_pluginx_protocols_AgentManager_getAdsPlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getAdsPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolAds* ret = cobj->getAdsPlugin();
         object_to_luaval<cocos2d::plugin::ProtocolAds>(tolua_S, "plugin.ProtocolAds",(cocos2d::plugin::ProtocolAds*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getAdsPlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getAdsPlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1771,11 +1879,14 @@ int lua_pluginx_protocols_AgentManager_purge(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_purge'", nullptr);
             return 0;
+        }
         cobj->purge();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:purge",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:purge",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1814,12 +1925,15 @@ int lua_pluginx_protocols_AgentManager_getUserPlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getUserPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolUser* ret = cobj->getUserPlugin();
         object_to_luaval<cocos2d::plugin::ProtocolUser>(tolua_S, "plugin.ProtocolUser",(cocos2d::plugin::ProtocolUser*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getUserPlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getUserPlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1858,12 +1972,15 @@ int lua_pluginx_protocols_AgentManager_getIAPPlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getIAPPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolIAP* ret = cobj->getIAPPlugin();
         object_to_luaval<cocos2d::plugin::ProtocolIAP>(tolua_S, "plugin.ProtocolIAP",(cocos2d::plugin::ProtocolIAP*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getIAPPlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getIAPPlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1902,12 +2019,15 @@ int lua_pluginx_protocols_AgentManager_getSharePlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getSharePlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolShare* ret = cobj->getSharePlugin();
         object_to_luaval<cocos2d::plugin::ProtocolShare>(tolua_S, "plugin.ProtocolShare",(cocos2d::plugin::ProtocolShare*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getSharePlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getSharePlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1946,12 +2066,15 @@ int lua_pluginx_protocols_AgentManager_getAnalyticsPlugin(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getAnalyticsPlugin'", nullptr);
             return 0;
+        }
         cocos2d::plugin::ProtocolAnalytics* ret = cobj->getAnalyticsPlugin();
         object_to_luaval<cocos2d::plugin::ProtocolAnalytics>(tolua_S, "plugin.ProtocolAnalytics",(cocos2d::plugin::ProtocolAnalytics*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getAnalyticsPlugin",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.AgentManager:getAnalyticsPlugin",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1979,11 +2102,14 @@ int lua_pluginx_protocols_AgentManager_destroyInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_destroyInstance'", nullptr);
             return 0;
+        }
         cocos2d::plugin::AgentManager::destroyInstance();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.AgentManager:destroyInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.AgentManager:destroyInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -2009,12 +2135,15 @@ int lua_pluginx_protocols_AgentManager_getInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_AgentManager_getInstance'", nullptr);
             return 0;
+        }
         cocos2d::plugin::AgentManager* ret = cocos2d::plugin::AgentManager::getInstance();
         object_to_luaval<cocos2d::plugin::AgentManager>(tolua_S, "plugin.AgentManager",(cocos2d::plugin::AgentManager*)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.AgentManager:getInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.AgentManager:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -2079,11 +2208,14 @@ int lua_pluginx_protocols_FacebookAgent_activateApp(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_activateApp'", nullptr);
             return 0;
+        }
         cobj->activateApp();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:activateApp",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:activateApp",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2122,12 +2254,15 @@ int lua_pluginx_protocols_FacebookAgent_getPermissionList(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_getPermissionList'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getPermissionList();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getPermissionList",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getPermissionList",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2166,12 +2301,15 @@ int lua_pluginx_protocols_FacebookAgent_getUserID(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_getUserID'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getUserID();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getUserID",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getUserID",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2210,11 +2348,14 @@ int lua_pluginx_protocols_FacebookAgent_logout(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_logout'", nullptr);
             return 0;
+        }
         cobj->logout();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:logout",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:logout",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2253,12 +2394,15 @@ int lua_pluginx_protocols_FacebookAgent_getSDKVersion(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_getSDKVersion'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getSDKVersion();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getSDKVersion",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getSDKVersion",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2297,12 +2441,15 @@ int lua_pluginx_protocols_FacebookAgent_isLoggedIn(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_isLoggedIn'", nullptr);
             return 0;
+        }
         bool ret = cobj->isLoggedIn();
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:isLoggedIn",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:isLoggedIn",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2341,12 +2488,15 @@ int lua_pluginx_protocols_FacebookAgent_getAccessToken(lua_State* tolua_S)
     if (argc == 0) 
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_getAccessToken'", nullptr);
             return 0;
+        }
         std::string ret = cobj->getAccessToken();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getAccessToken",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "plugin.FacebookAgent:getAccessToken",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -2374,46 +2524,18 @@ int lua_pluginx_protocols_FacebookAgent_destroyInstance(lua_State* tolua_S)
     if (argc == 0)
     {
         if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_pluginx_protocols_FacebookAgent_destroyInstance'", nullptr);
             return 0;
+        }
         cocos2d::plugin::FacebookAgent::destroyInstance();
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.FacebookAgent:destroyInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.FacebookAgent:destroyInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_destroyInstance'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_pluginx_protocols_FacebookAgent_getInstance(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-            return 0;
-        cocos2d::plugin::FacebookAgent* ret = cocos2d::plugin::FacebookAgent::getInstance();
-        object_to_luaval<cocos2d::plugin::FacebookAgent>(tolua_S, "plugin.FacebookAgent",(cocos2d::plugin::FacebookAgent*)ret);
-        return 1;
-    }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.FacebookAgent:getInstance",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_getInstance'.",&tolua_err);
 #endif
     return 0;
 }
@@ -2437,7 +2559,6 @@ int lua_register_pluginx_protocols_FacebookAgent(lua_State* tolua_S)
         tolua_function(tolua_S,"isLoggedIn",lua_pluginx_protocols_FacebookAgent_isLoggedIn);
         tolua_function(tolua_S,"getAccessToken",lua_pluginx_protocols_FacebookAgent_getAccessToken);
         tolua_function(tolua_S,"destroyInstance", lua_pluginx_protocols_FacebookAgent_destroyInstance);
-        tolua_function(tolua_S,"getInstance", lua_pluginx_protocols_FacebookAgent_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::plugin::FacebookAgent).name();
     g_luaType[typeName] = "plugin.FacebookAgent";
