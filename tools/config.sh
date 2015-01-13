@@ -8,7 +8,7 @@ IFS=$'\n'
 
 script_path="$BASH_SOURCE"
 script_path="$(dirname "$script_path")"
-ALL_PLUGINS=(`cd "${script_path}/../plugins" && find -L . -type d -and -depth 1`)
+ALL_PLUGINS=(`cd "${script_path}/../plugins" && find -L . -maxdepth 1 -type d`)
 PLUGIN_NUM=${#ALL_PLUGINS[@]}
 for ((i=0; i < ${PLUGIN_NUM}; i++))
 do
