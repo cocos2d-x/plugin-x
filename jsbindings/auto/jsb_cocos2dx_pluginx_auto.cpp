@@ -1916,10 +1916,10 @@ bool js_pluginx_protocols_FacebookAgent_destroyInstance(JSContext *cx, uint32_t 
     return false;
 }
 
-bool js_pluginx_protocols_FacebookAgent_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_pluginx_protocols_FacebookAgent_getInstanceJs(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc == 0) {
-        cocos2d::plugin::FacebookAgent* ret = cocos2d::plugin::FacebookAgent::getInstance();
+        cocos2d::plugin::FacebookAgent* ret = cocos2d::plugin::FacebookAgent::getInstanceJs();
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
@@ -1932,7 +1932,7 @@ bool js_pluginx_protocols_FacebookAgent_getInstance(JSContext *cx, uint32_t argc
         JS_SET_RVAL(cx, vp, jsret);
         return true;
     }
-    JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getInstance : wrong number of arguments");
+    JS_ReportError(cx, "js_pluginx_protocols_FacebookAgent_getInstanceJs : wrong number of arguments");
     return false;
 }
 
@@ -1987,7 +1987,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JSObject *global
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("destroyInstance", js_pluginx_protocols_FacebookAgent_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getInstance", js_pluginx_protocols_FacebookAgent_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInstanceJs", js_pluginx_protocols_FacebookAgent_getInstanceJs, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

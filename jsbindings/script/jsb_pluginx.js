@@ -139,6 +139,8 @@ plugin.FacebookAgent.AppEventParamValue.VALUE_NO = "0";
 
 plugin.FacebookAgent.CODE_SUCCEED = 0;
 
+plugin.FacebookAgent.prototype.getInstance = plugin.FacebookAgent.prototype.getInstanceJs;
+
 plugin.FacebookAgent.prototype.logout = function(callback){
     this._logout();
     callback(0, {"isLoggedIn" : false});
