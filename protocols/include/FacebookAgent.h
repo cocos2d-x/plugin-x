@@ -41,6 +41,8 @@ public:
 
 	/** Get singleton of FacebookAgent */
 	static FacebookAgent* getInstance();
+    static FacebookAgent* getInstanceLua();
+    static FacebookAgent* getInstanceJs();
 	/** Destroy singleton of FacebookAgent */
 	static void destroyInstance();
 

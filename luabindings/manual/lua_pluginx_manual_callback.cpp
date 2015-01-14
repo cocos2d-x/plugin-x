@@ -1156,6 +1156,38 @@ int lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams(lua_State* to
     return 0;
 }
 
+int lua_pluginx_protocols_FacebookAgent_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"plugin.FacebookAgent",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+            return 0;
+        cocos2d::plugin::FacebookAgent* ret = cocos2d::plugin::FacebookAgent::getInstanceLua();
+        object_to_luaval<cocos2d::plugin::FacebookAgent>(tolua_S, "plugin.FacebookAgent",(cocos2d::plugin::FacebookAgent*)ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "plugin.FacebookAgent:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_pluginx_protocols_FacebookAgent_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+
 static void extendFacebookAgent(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "plugin.FacebookAgent");
@@ -1171,21 +1203,9 @@ static void extendFacebookAgent(lua_State* tolua_S)
         tolua_function(tolua_S, "webDialog", lua_pluginx_protocols_FacebookAgent_webDialog);
         tolua_function(tolua_S, "logPurchase", lua_pluginx_protocols_FacebookAgent_logPurchase);
         tolua_function(tolua_S, "canPresentDialogWithParams", lua_pluginx_protocols_FacebookAgent_canPresentDialogWithParams);
+        tolua_function(tolua_S, "getInstance", lua_pluginx_protocols_FacebookAgent_getInstance);
     }
     lua_pop(tolua_S, 1);
-    std::string sdkVersion = cocos2dVersion();
-    sdkVersion = sdkVersion.replace(sdkVersion.find(" "), 1, "-") + "-lua";
-    FacebookAgent::getInstance()->setSDKVersion(sdkVersion);
-    
-    std::string facebookSDKVersion = FacebookAgent::getInstance()->getSDKVersion();
-    std::string::size_type pos = facebookSDKVersion.find("/");
-    if (pos != std::string::npos)
-    {
-        facebookSDKVersion = facebookSDKVersion.substr(0, pos);
-    }
-    sdkVersion = facebookSDKVersion + "/" + sdkVersion;
-    
-    FacebookAgent::getInstance()->setSDKVersion(sdkVersion);
 }
 
 int register_all_pluginx_manual_callback(lua_State* tolua_S)
