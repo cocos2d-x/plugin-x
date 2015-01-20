@@ -131,7 +131,8 @@ bool TestAds::init()
 //    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
-    Menu* pMenu = Menu::create(pBackItem, NULL);
+//    Menu* pMenu = Menu::create(pBackItem, NULL);
+    Menu* pMenu = Menu::create();
     pMenu->setPosition( Point::ZERO );
 /*
 	Label* label1 = Label::create("ShowAds", "Arial", 24);
