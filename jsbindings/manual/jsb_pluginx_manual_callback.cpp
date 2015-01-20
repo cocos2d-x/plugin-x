@@ -853,7 +853,9 @@ bool js_pluginx_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp)
                     largv[0] = int32_to_jsval(cx, larg0);
                     jsval temp = std_string_to_jsval(cx, larg1);
                     JS::RootedValue outVal(cx);
-                    JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+                    size_t utf16Count = 0;
+                    const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
+                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -886,7 +888,9 @@ bool js_pluginx_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp)
                     largv[0] = int32_to_jsval(cx, larg0);
                     jsval temp = std_string_to_jsval(cx, larg1);
                     JS::RootedValue outVal(cx);
-                    JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+                    size_t utf16Count = 0;
+                    const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
+                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -986,7 +990,9 @@ bool js_pluginx_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp
                     largv[0] = int32_to_jsval(cx, larg0);
                     jsval temp = std_string_to_jsval(cx, larg1);
                     JS::RootedValue outVal(cx);
-                    JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+                    size_t utf16Count = 0;
+                    const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
+                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -1034,7 +1040,9 @@ bool js_pluginx_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp)
                     largv[0] = int32_to_jsval(cx, larg0);
                     jsval temp = std_string_to_jsval(cx, larg1);
                     JS::RootedValue outVal(cx);
-                    JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(temp)), static_cast<uint32_t>(larg1.size()), &outVal);
+                    size_t utf16Count = 0;
+                    const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
+                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
