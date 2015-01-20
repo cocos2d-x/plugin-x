@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>HelloPlugins</name>
-	<comment />
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -39,7 +39,7 @@
 		<link>
 			<name>plugin-x</name>
 			<type>2</type>
-			<locationURI>PARENT-3-PROJECT_LOC/publish</locationURI>
+			<locationURI>$%7BPARENT-3-PROJECT_LOC%7D/publish</locationURI>
 		</link>
-	<link><name>plugin-x</name><type>2</type><locationURI>/Users/rolando/Documents/vungle/cocos2d-x/cocos2d-x-3.3beta0/plugin-x/publish</locationURI></link></linkedResources>
+	</linkedResources>
 </projectDescription>

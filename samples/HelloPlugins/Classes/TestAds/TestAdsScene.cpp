@@ -126,14 +126,14 @@ bool TestAds::init()
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-    MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestAds::menuBackCallback, this));
-    Size backSize = pBackItem->getContentSize();
-    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
+//    MenuItemFont *pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(TestAds::menuBackCallback, this));
+//    Size backSize = pBackItem->getContentSize();
+//    pBackItem->setPosition(posBR + Point(- backSize.width / 2, backSize.height / 2));
 
     // create menu, it's an autorelease object
     Menu* pMenu = Menu::create(pBackItem, NULL);
     pMenu->setPosition( Point::ZERO );
-
+/*
 	Label* label1 = Label::create("ShowAds", "Arial", 24);
 	MenuItemLabel* pItemShow = MenuItemLabel::create(label1, CC_CALLBACK_1(TestAds::testShow, this));
 	pItemShow->setAnchorPoint(Point(0.5f, 0));
@@ -184,7 +184,7 @@ bool TestAds::init()
     
     _typeItem->setPosition(posMid + Point(0,120));
     pMenu->addChild(_typeItem);
-
+*/
 	// init options
 	_ads = _admob;
 	_pos = ProtocolAds::kPosCenter;
