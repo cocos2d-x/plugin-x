@@ -855,7 +855,7 @@ bool js_pluginx_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp)
                     JS::RootedValue outVal(cx);
                     size_t utf16Count = 0;
                     const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
-                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+                    JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -890,7 +890,7 @@ bool js_pluginx_FacebookAgent_login(JSContext *cx, uint32_t argc, jsval *vp)
                     JS::RootedValue outVal(cx);
                     size_t utf16Count = 0;
                     const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
-                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+                    JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -992,7 +992,7 @@ bool js_pluginx_FacebookAgent_appRequest(JSContext *cx, uint32_t argc, jsval *vp
                     JS::RootedValue outVal(cx);
                     size_t utf16Count = 0;
                     const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
-                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+                    JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
@@ -1042,7 +1042,7 @@ bool js_pluginx_FacebookAgent_dialog(JSContext *cx, uint32_t argc, jsval *vp)
                     JS::RootedValue outVal(cx);
                     size_t utf16Count = 0;
                     const jschar* utf16Buf = JS_GetStringCharsZAndLength(cx, JSVAL_TO_STRING(temp), &utf16Count);
-                    ok = JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
+                    JS_ParseJSON(cx, utf16Buf, static_cast<uint32_t>(utf16Count), &outVal);
                     largv[1] = outVal.get();
                     
                     jsval rval;
