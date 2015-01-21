@@ -115,7 +115,6 @@ public class AdsVungle implements InterfaceAds, EventListener, PluginListener {
 		AdsWrapper.onAdsResult(this, AdsWrapper.RESULT_CODE_UnknownError, "Ads Unavailable");
 	}
 
-	@Override
 	public void onCachedAdAvailable() {
 		AdsWrapper.onAdsResult(this, AdsWrapper.RESULT_CODE_AdsReceived, "OK");
 	}
@@ -143,6 +142,12 @@ public class AdsVungle implements InterfaceAds, EventListener, PluginListener {
 	@Override
 	public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 		return false;
+	}
+
+	@Override
+	public void onAdPlayableChanged(boolean arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
