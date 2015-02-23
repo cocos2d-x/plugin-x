@@ -11,6 +11,10 @@
 
 extern NSString* VungleSDKVersion;
 extern NSString* VunglePlayAdOptionKeyIncentivized;
+extern NSString* VunglePlayAdOptionKeyIncentivizedAlertTitleText;
+extern NSString* VunglePlayAdOptionKeyIncentivizedAlertBodyText;
+extern NSString* VunglePlayAdOptionKeyIncentivizedAlertCloseButtonText;
+extern NSString* VunglePlayAdOptionKeyIncentivizedAlertContinueButtonText;
 extern NSString* VunglePlayAdOptionKeyShowClose __deprecated_msg("Set this option on the Vungle dashboard instead.");
 extern NSString* VunglePlayAdOptionKeyOrientations;
 extern NSString* VunglePlayAdOptionKeyUser;
@@ -89,7 +93,6 @@ typedef enum {
 @property (strong) NSDictionary* userData;
 @property (strong) id<VungleSDKDelegate> delegate;
 @property (strong) id<VungleAssetLoader> assetLoader;
-@property (strong) NSString* incentivizedAlertText;
 @property (assign) BOOL muted;
 @property (readonly) NSMutableDictionary* globalOptions;
 
