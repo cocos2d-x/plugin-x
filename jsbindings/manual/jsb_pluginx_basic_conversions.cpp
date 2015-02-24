@@ -43,10 +43,7 @@ public:
         // Not suppored in SpiderMonkey v19
         //buffer = JS_EncodeString(cx, string);
         
-        const jschar *chars = JS_GetStringCharsZ(cx, string);
-        size_t l = JS_GetStringLength(string);
-        char* pUTF8Str = cc_utf16_to_utf8((const unsigned short*)chars, l, NULL, NULL);
-        buffer = pUTF8Str;
+        buffer = JS_EncodeString(cx, str);
     }
 
     std::string get() {
@@ -67,28 +64,28 @@ JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval
 , _jsthis(jsthis)
 , _fval(fval)
 {
-    JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
-    JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+    JS::AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+    JS::AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
 }
 
 JSFunctionWrapper::~JSFunctionWrapper()
 {
-    JS_RemoveValueRoot(this->_cx, &this->_fval);
-    JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+    JS::RemoveValueRoot(this->_cx, &this->_fval);
+    JS::RemoveObjectRoot(this->_cx, &this->_jsthis);
 }
 
-bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, jsval &rval)
+bool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval)
 {
     //JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     
-    return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+    return JS_CallFunctionValue(this->_cx, JS::RootedObject(_cx, this->_jsthis), JS::RootedValue(_cx, this->_fval), JS::HandleValueArray::fromMarkedLocation(argc, argv), rval);
 }
 
-bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
+bool jsval_to_int32( JSContext *cx, JS::HandleValue vp, int32_t *outval )
 {
     bool ok = true;
     double dp;
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
+    ok &= JS::ToNumber(cx, vp, &dp);
     if (!ok) {
         LOGD("jsval_to_int32: the argument is not a number");
         return false;
@@ -101,11 +98,11 @@ bool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
     return ok;
 }
 
-bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
+bool jsval_to_uint32( JSContext *cx, JS::HandleValue vp, uint32_t *outval )
 {
     bool ok = true;
     double dp;
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
+    ok &= JS::ToNumber(cx, vp, &dp);
     if (!ok) {
         LOGD("jsval_to_uint32: the argument is not a number");
         return false;
@@ -118,11 +115,11 @@ bool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *outval )
     return ok;
 }
 
-bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
+bool jsval_to_uint16( JSContext *cx, JS::HandleValue vp, uint16_t *outval )
 {
     bool ok = true;
     double dp;
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
+    ok &= JS::ToNumber(cx, vp, &dp);
     if (!ok) {
         LOGD("jsval_to_uint16: the argument is not a number");
         return false;
@@ -135,9 +132,9 @@ bool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     return ok;
 }
 
-bool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r) {
     JS::RootedObject tmp_arg(cx);
-    bool ok = JS_ValueToObject( cx, JS::RootedValue(cx, vp), &tmp_arg );
+    bool ok = JS_ValueToObject( cx, vp, &tmp_arg );
     if (!ok) {
         LOGD("jsval_to_long_long: Error converting value to object");
         return false;
@@ -155,11 +152,11 @@ bool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
     return true;
 }
 
-bool jsval_to_long(JSContext *cx, jsval vp, long* ret)
+bool jsval_to_long(JSContext *cx, JS::HandleValue vp, long* ret)
 {
     bool ok = true;
     double dp;
-    ok &= JS::ToNumber(cx, JS::RootedValue(cx, vp), &dp);
+    ok &= JS::ToNumber(cx, vp, &dp);
     if (!ok) {
         LOGD("jsval_to_long: the argument is not a number");
         return false;
@@ -172,8 +169,8 @@ bool jsval_to_long(JSContext *cx, jsval vp, long* ret)
     return ok;
 }
 
-bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
-    JSString *tmp = JS::ToString(cx, JS::RootedValue(cx, v));
+bool jsval_to_std_string(JSContext *cx, JS::HandleValue v, std::string* ret) {
+    JSString *tmp = JS::ToString(cx, v);
     if (!tmp) {
         LOGD("jsval_to_std_string: the jsval is not a string.");
         return false;
@@ -184,33 +181,33 @@ bool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
     return true;
 }
 
-bool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
+bool jsval_to_TProductInfo(JSContext *cx, JS::HandleValue v, TProductInfo* ret)
 {
-    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
     if (!tmp) {
         LOGD("jsval_to_TProductInfo: the jsval is not an object.");
         return false;
     }
 
-    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
 
     while (true)
     {
         jsid idp;
-        jsval key;
+        JS::RootedValue key(cx);
         if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key))
             return false; // error
-        if (key == JSVAL_VOID)
+        if (key.isNullOrUndefined())
             break; // end of iteration
-        if (! JSVAL_IS_STRING(key))
+        if (! key.isString())
             continue; // ignore integer properties
         JS::RootedValue value(cx);
-        JS_GetPropertyById(cx, tmp, idp, &value);
-        if (! JSVAL_IS_STRING(value))
+        JS_GetPropertyById(cx, tmp, JS::RootedId(cx, idp), &value);
+        if (! value.isString())
             continue; // ignore integer properties
 
-        JSStringWrapper strWrapper(JSVAL_TO_STRING(key), cx);
-        JSStringWrapper strWrapper2(JSVAL_TO_STRING(value), cx);
+        JSStringWrapper strWrapper(key.toString(), cx);
+        JSStringWrapper strWrapper2(value.toString(), cx);
 
         (*ret)[strWrapper.get()] = strWrapper2.get();
         LOGD("iterate object: key = %s, value = %s", strWrapper.get().c_str(), strWrapper2.get().c_str());
@@ -219,40 +216,40 @@ bool jsval_to_TProductInfo(JSContext *cx, jsval v, TProductInfo* ret)
     return true;
 }
 
-bool jsval_to_FBInfo(JSContext *cx, jsval v, StringMap* ret)
+bool jsval_to_FBInfo(JSContext *cx, JS::HandleValue v, StringMap* ret)
 {
-	JSObject* tmp = JSVAL_TO_OBJECT(v);
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
 	if (!tmp) {
 		LOGD("jsval_to_TProductInfo: the jsval is not an object.");
 		return false;
 	}
 
-	JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
 
 	while (true)
 	{
 		jsid idp;
-		jsval key;
+        JS::RootedValue key(cx);
 		if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key))
 			return false; // error
-		if (key == JSVAL_VOID)
+		if (key.isNullOrUndefined())
 			break; // end of iteration
-		if (! JSVAL_IS_STRING(key))
+		if (! key.isString())
 			continue; // ignore integer properties
 		JS::RootedValue value(cx);
-		JS_GetPropertyById(cx, tmp, idp, &value);
+        JS_GetPropertyById(cx, tmp, JS::RootedId(cx, idp), &value);
 
 //		if (! JSVAL_IS_STRING(value))
 //			continue; // ignore integer properties
-		if(JSVAL_IS_STRING(value))
+		if(value.isString())
 		{
 
-			JSStringWrapper strWrapper(JSVAL_TO_STRING(key), cx);
-			JSStringWrapper strWrapper2(JSVAL_TO_STRING(value), cx);
+			JSStringWrapper strWrapper(key.toString(), cx);
+			JSStringWrapper strWrapper2(value.toString(), cx);
 
 			ret->insert(std::map<std::string, std::string>::value_type(strWrapper.get(), strWrapper2.get()));
 		}
-		else if(JSVAL_IS_NUMBER(value))
+		else if(value.isNumber())
 		{
 			double number = 0.0;
 			JS::ToNumber(cx, value, &number);
@@ -260,15 +257,15 @@ bool jsval_to_FBInfo(JSContext *cx, jsval v, StringMap* ret)
 			std::stringstream ss;
 			ss << number;
 
-			JSStringWrapper strWrapper(JSVAL_TO_STRING(key), cx);
+			JSStringWrapper strWrapper(key.toString(), cx);
 			//JSStringWrapper strWrapper2(JSVAL_TO_STRING(value), cx);
 
 			ret->insert(std::map<std::string, std::string>::value_type(strWrapper.get(), ss.str()));
 		}
-		else if(JSVAL_IS_BOOLEAN(value))
+		else if(value.isBoolean())
 		{
 			bool boolVal = JS::ToBoolean(value);
-			JSStringWrapper strWrapper(JSVAL_TO_STRING(key), cx);
+			JSStringWrapper strWrapper(key.toString(), cx);
 			//JSStringWrapper strWrapper2(JSVAL_TO_STRING(value), cx);
 			std::string boolstring = boolVal ? "true" : "false";
 			ret->insert(std::map<std::string, std::string>::value_type(strWrapper.get(), boolstring));
@@ -278,7 +275,7 @@ bool jsval_to_FBInfo(JSContext *cx, jsval v, StringMap* ret)
 	return true;
 }
 
-bool jsval_array_to_string(JSContext *cx, jsval v, std::string* ret)
+bool jsval_array_to_string(JSContext *cx, JS::HandleValue v, std::string* ret)
 {
 	JS::RootedObject jsobj(cx);
 	bool ok = v.isObject() && JS_ValueToObject( cx, JS::RootedValue(cx, v), &jsobj );
@@ -304,52 +301,52 @@ bool jsval_array_to_string(JSContext *cx, jsval v, std::string* ret)
 	return true;
 }
 
-bool jsval_to_TIAPDeveloperInfo(JSContext *cx, jsval v, TIAPDeveloperInfo* ret)
+bool jsval_to_TIAPDeveloperInfo(JSContext *cx, JS::HandleValue v, TIAPDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TAdsDeveloperInfo(JSContext *cx, jsval v, TAdsDeveloperInfo* ret)
+bool jsval_to_TAdsDeveloperInfo(JSContext *cx, JS::HandleValue v, TAdsDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TAdsInfo(JSContext *cx, jsval v, TAdsInfo* ret)
+bool jsval_to_TAdsInfo(JSContext *cx, JS::HandleValue v, TAdsInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TShareDeveloperInfo(JSContext *cx, jsval v, TShareDeveloperInfo* ret)
+bool jsval_to_TShareDeveloperInfo(JSContext *cx, JS::HandleValue v, TShareDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TShareInfo(JSContext *cx, jsval v, TShareInfo* ret)
+bool jsval_to_TShareInfo(JSContext *cx, JS::HandleValue v, TShareInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TPaymentInfo(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
+bool jsval_to_TPaymentInfo(JSContext *cx, JS::HandleValue v, std::map<std::string, std::string>* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TSocialDeveloperInfo(JSContext *cx, jsval v, TSocialDeveloperInfo* ret)
+bool jsval_to_TSocialDeveloperInfo(JSContext *cx, JS::HandleValue v, TSocialDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TAchievementInfo(JSContext *cx, jsval v, TAchievementInfo* ret)
+bool jsval_to_TAchievementInfo(JSContext *cx, JS::HandleValue v, TAchievementInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_TUserDeveloperInfo(JSContext *cx, jsval v, TUserDeveloperInfo* ret)
+bool jsval_to_TUserDeveloperInfo(JSContext *cx, JS::HandleValue v, TUserDeveloperInfo* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
 
-bool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
+bool jsval_to_LogEventParamMap(JSContext *cx, JS::HandleValue v, LogEventParamMap** ret)
 {
     bool jsret = false;
     if (v.isObject())
@@ -364,49 +361,49 @@ bool jsval_to_LogEventParamMap(JSContext *cx, jsval v, LogEventParamMap** ret)
     return jsret;
 }
 
-bool jsval_to_StringMap(JSContext *cx, jsval v, StringMap* ret)
+bool jsval_to_StringMap(JSContext *cx, JS::HandleValue v, StringMap* ret)
 {
     return jsval_to_TProductInfo(cx, v, ret);
 }
     
-bool jsval_to_std_map_string_string(JSContext *cx, jsval v, std::map<std::string, std::string>* ret)
+bool jsval_to_std_map_string_string(JSContext *cx, JS::HandleValue v, std::map<std::string, std::string>* ret)
 {
-    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    if (v.isNullOrUndefined())
     {
         return true;
     }
     
-    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    JS::RootedObject tmp(cx, v.toObjectOrNull());
     if (!tmp) {
         CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
         return false;
     }
     
-    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    JS::RootedObject it(cx, JS_NewPropertyIterator(cx, tmp));
     
     while (true)
     {
         jsid idp;
-        jsval key;
+        JS::RootedValue key(cx);
         if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
             return false; // error
         }
         
-        if (key == JSVAL_VOID) {
+        if (key.isNullOrUndefined()) {
             break; // end of iteration
         }
         
-        if (!JSVAL_IS_STRING(key)) {
+        if (!key.isString()) {
             continue; // ignore integer properties
         }
         
-        JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
+        JSStringWrapper keyWrapper(key.toString(), cx);
         
         JS::RootedValue value(cx);
-        JS_GetPropertyById(cx, tmp, idp, &value);
+        JS_GetPropertyById(cx, tmp, JS::RootedId(cx, idp), &value);
         if (value.isString())
         {
-            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            JSStringWrapper valueWapper(value.toString(), cx);
             ret->insert(std::make_pair(keyWrapper.get(), valueWapper.get()));
         }
         else
@@ -467,25 +464,25 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length /* = -1 */) 
 
 jsval TProductInfo_to_jsval(JSContext *cx, TProductInfo& ret)
 {
-    JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
     if (!tmp) return JSVAL_NULL;
 
     for (TProductInfo::iterator it = ret.begin(); it != ret.end(); ++it)
     {
-        JS_DefineProperty(cx, tmp, it->first.c_str(), std_string_to_jsval(cx, it->second), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+        JS_DefineProperty(cx, tmp, it->first.c_str(), JS::RootedValue(cx, std_string_to_jsval(cx, it->second)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
     }
 
     return OBJECT_TO_JSVAL(tmp);
 }
 
 jsval TProductList_to_jsval(JSContext *cx,TProductList list){
-	JSObject *tmp = JS_NewArrayObject(cx, 0, NULL);
+    JS::RootedObject tmp(cx, JS_NewArrayObject(cx, 0));
 	int i = 0;
 	for(TProductList::iterator it = list.begin();it!=list.end();++it){
 		JS::RootedValue arrElement(cx);
 
 		arrElement = TProductInfo_to_jsval(cx, *it);
-		JS_SetElement(cx, tmp, i, &arrElement);
+		JS_SetElement(cx, tmp, i, arrElement);
 		++i;
 	}
 	return OBJECT_TO_JSVAL(tmp);

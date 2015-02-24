@@ -97,7 +97,7 @@ typedef NS_ENUM(NSUInteger, FBRestrictedTreatment) {
  @abstract Retrieve the current iOS SDK version.
  
  */
-+ (void)setSDKVersion:(NSString*)version;
++ (void)setsdkVersion:(NSString*)version;
 
 /*!
  @method
