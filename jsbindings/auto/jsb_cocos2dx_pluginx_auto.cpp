@@ -438,7 +438,7 @@ bool js_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis(JSContext *
     JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis : Invalid Native Object");
     if (argc == 1) {
         long arg0;
-        ok &= jsval_to_long(cx, args.get(0), &arg0);
+        ok &= pluginx::jsval_to_long(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolAnalytics_setSessionContinueMillis : Error processing arguments");
         cobj->setSessionContinueMillis(arg0);
         args.rval().setUndefined();

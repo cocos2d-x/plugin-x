@@ -9,7 +9,7 @@ extern JSObject *jsb_PluginParam_prototype;
 
 bool js_pluginx_protocols_PluginParam_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_pluginx_protocols_PluginParam_finalize(JSContext *cx, JSObject *obj);
-void js_register_pluginx_protocols_PluginParam(JSContext *cx, JSObject *global);
+void js_register_pluginx_protocols_PluginParam(JSContext *cx, JS::HandleObject global);
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj);
 bool js_pluginx_protocols_PluginParam_PluginParam(JSContext *cx, uint32_t argc, jsval *vp);
 
