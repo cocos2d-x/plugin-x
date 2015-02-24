@@ -131,7 +131,7 @@ void js_register_pluginx_protocols_PluginParam(JSContext *cx, JS::HandleObject g
 	jsb_PluginParam_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
 	static JSPropertySpec properties[] = {
-		{0, 0, 0, JSOP_NULLWRAPPER, JSOP_NULLWRAPPER}
+		JS_PS_END
 	};
 
 	JSFunctionSpec *funcs = NULL;
