@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifestConfig xmlns:android="http://schemas.android.com/apk/res/android">
+    <applicationCfg keyword="com.vungle.publisher.FullScreenAdActivity">
+	    <activity
+	      android:name="com.vungle.publisher.FullScreenAdActivity"
+	      android:configChanges="keyboardHidden|orientation|screenSize"
+	      android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+	    />
+	    <service android:name="com.vungle.publisher.VungleService"
+	      android:exported="false"
+	    />
+	</application>
+
+    <permissionCfg>
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </permissionCfg>
+</manifestConfig> 

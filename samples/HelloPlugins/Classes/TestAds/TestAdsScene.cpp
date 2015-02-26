@@ -38,7 +38,8 @@ const std::string s_aTestAdType[] = {
 const std::string s_aTestCases[] = {
 	"Admob",
     "Flurry",
-    "Facebook"
+	"Vungle",
+	"Facebook"
 };
 
 const std::string s_aTestPoses[] = {
@@ -79,6 +80,7 @@ bool TestAds::init()
     _listener = new MyAdsListener();
     _admob = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsAdmob"));
     _flurryAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFlurry"));
+    _vungle = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsVungle"));
     _facebookAds = dynamic_cast<ProtocolAds*>(PluginManager::getInstance()->loadPlugin("AdsFacebook"));
     
     TAdsDeveloperInfo devInfo;
@@ -87,10 +89,13 @@ bool TestAds::init()
     devInfo["AdmobID"]      = ADMOB_ID_IOS;
     devInfo["FlurryAppKey"] = FLURRY_KEY_IOS;
     devInfo["FacebookAdID"]   = FACEBOOK_KEY_IOS;
+	devInfo["VungleID"] = "vungleTest";
+    devInfo["FacebookAdID"]   = FACEBOOK_KEY_IOS;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     devInfo["AdmobID"]      = ADMOB_ID_ANDROID;
     devInfo["FlurryAppKey"] = FLURRY_KEY_ANDROID;
     devInfo["FacebookAdID"]   = FACEBOOK_KEY_ANDROID;
+	devInfo["VungleID"] = "vungleTest";
 #endif
     
     _admob->configDeveloperInfo(devInfo);
@@ -100,6 +105,10 @@ bool TestAds::init()
     _flurryAds->configDeveloperInfo(devInfo);
     _flurryAds->setAdsListener(_listener);
     _flurryAds->setDebugMode(true);
+	
+	_vungle->configDeveloperInfo(devInfo);
+	_vungle->setAdsListener(_listener);
+	_vungle->setDebugMode(true);
     
     _facebookAds->configDeveloperInfo(devInfo);
     _facebookAds->setAdsListener(_listener);
@@ -185,6 +194,8 @@ bool TestAds::init()
     adInfo["AdmobSizeEnum"] = "1";
     adInfo["FlurryAdsID"] = "BANNER_MAIN_VC";
     adInfo["FlurryAdsSize"] = "2";
+	adInfo["VungleIncentivized"] = "0";
+	adInfo["VunglePlacement"] = "testScene";
     adInfo["FBAdType"] = "1";
     adInfo["FBAdSizeEnum"] = "1";
 
@@ -197,7 +208,7 @@ void TestAds::testShow(Ref* pSender)
 {
     if (_ads)
 	{
-        _ads->showAds(adInfo, _pos);
+		_ads->showAds(adInfo, _pos);
 	}
 }
 
@@ -237,22 +248,26 @@ void TestAds::caseChanged(Ref* pSender)
 	std::string strLog = "";
 	switch (_caseItem->getSelectedIndex())
 	{
-        case 0:
-            _ads = _admob;
-            strLog = "Admob";
-            break;
-        case 1:
-            _ads = _flurryAds;
-            strLog = "Flurry Ads";
-            break;
-        case 2:
-            _ads = _facebookAds;
-            strLog = "Facebook Ads";
-            break;
-        default:
-            break;
-	}
-	log("case selected change to : %s", strLog.c_str());
+    case 0:
+        _ads = _admob;
+        strLog = "Admob";
+        break;
+    case 1:
+        _ads = _flurryAds;
+        strLog = "Flurry Ads";
+        break;
+    case 2:
+        _ads = _vungle;
+        strLog = "Vungle";
+        break;
+    case 3:
+        _ads = _facebookAds;
+        strLog = "Facebook Ads";
+        break;
+    default:
+        break;
+    }
+    log("case selected change to : %s", strLog.c_str());
 }
 
 void TestAds::posChanged(Ref* pSender)

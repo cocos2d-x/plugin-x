@@ -53,9 +53,9 @@ typedef enum {
     
 }
 
-+ (void) onAdsResult:(id) obj withRet:(AdsResult) ret withMsg:(NSString*) msg;
-+ (void) onPlayerGetPoints:(id) obj withPoints: (int) points;
-+ (void) addAdView:(UIView*) view atPos:(AdsPosEnum) pos;
++ (void)onAdsResult:(id)obj withRet:(AdsResult)ret withMsg:(NSString*)msg;
++ (void)onPlayerGetPoints:(id)obj withPoints:(int)points;
++ (void)addAdView:(UIView*)view atPos:(AdsPosEnum)pos;
 + (UIViewController *) getCurrentRootViewController;
 
 @end

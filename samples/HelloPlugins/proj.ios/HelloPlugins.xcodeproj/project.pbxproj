@@ -28,6 +28,8 @@
 		59EB3BEA1964A7DD0020118E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BE91964A7DD0020118E /* Security.framework */; };
 		59EB3BEC1964A86D0020118E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BEB1964A86D0020118E /* CoreTelephony.framework */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		A964B97E19A101BD00D96640 /* libPluginVungle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A964B97D19A101BD00D96640 /* libPluginVungle.a */; };
+		A964B98A19A1023500D96640 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A964B98919A1023500D96640 /* libsqlite3.dylib */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -124,6 +126,8 @@
 		59EB3BE91964A7DD0020118E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		59EB3BEB1964A86D0020118E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		A964B97D19A101BD00D96640 /* libPluginVungle.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPluginVungle.a; path = "../../../../../../../../Library/Developer/Xcode/DerivedData/plugin-x_ios-auapopawgvrdrhbqzmlmubfgisjo/Build/Products/Debug-iphoneos/libPluginVungle.a"; sourceTree = "<group>"; };
+		A964B98919A1023500D96640 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -209,12 +213,14 @@
 				59EB3BEA1964A7DD0020118E /* Security.framework in Frameworks */,
 				FAD55503177C16FA00968F54 /* StoreKit.framework in Frameworks */,
 				FAD55501177C16F100968F54 /* SystemConfiguration.framework in Frameworks */,
+				A964B97E19A101BD00D96640 /* libPluginVungle.a in Frameworks */,
 				FAD554F3177C16A100968F54 /* libPluginAdmob.a in Frameworks */,
 				FAD554F4177C16A100968F54 /* libPluginFlurry.a in Frameworks */,
 				FAD554F5177C16A100968F54 /* libPluginProtocol.a in Frameworks */,
 				FAD554F6177C16A100968F54 /* libPluginTwitter.a in Frameworks */,
 				FAD554F7177C16A100968F54 /* libPluginUmeng.a in Frameworks */,
 				FAD554F8177C16A100968F54 /* libPluginWeibo.a in Frameworks */,
+				A964B98A19A1023500D96640 /* libsqlite3.dylib in Frameworks */,
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 			);
@@ -304,6 +310,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A964B98919A1023500D96640 /* libsqlite3.dylib */,
+				A964B97D19A101BD00D96640 /* libPluginVungle.a */,
 				15CF33C919C029BF00D5614B /* FacebookSDK.framework */,
 				593E0BDC19BE206C00836D29 /* FBAudienceNetwork.framework */,
 				592A55781964AD7D008E4BC7 /* GameController.framework */,

@@ -21,7 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+		<activity
+		      android:name="com.vungle.publisher.FullScreenAdActivity"
+			        android:configChanges="keyboardHidden|orientation|screenSize"
+					      android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
+
+	    <service android:name="com.vungle.publisher.VungleService"
+				       android:exported="false"/>
+<!-- 
+		<meta-data android:name="com.google.android.gms.version"
+					         android:value="@integer/google_play_services_version" />
+ -->
         <meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
 
         <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSControlCenterActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
