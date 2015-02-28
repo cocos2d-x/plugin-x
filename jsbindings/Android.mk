@@ -32,6 +32,5 @@ LOCAL_WHOLE_STATIC_LIBRARIES += PluginProtocolStatic
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,.)
 $(call import-module,plugin/protocols/proj.android/jni)
