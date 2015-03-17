@@ -1,4 +1,5 @@
 #include "jsb_pluginx_extension_registration.h"
+#include "jsb_pluginx_spidermonkey_specifics.h"
 #include "jsb_pluginx_manual_callback.h"
 #include "jsb_pluginx_manual_protocols.h"
 
@@ -21,17 +22,8 @@ extern JSObject *jsb_cocos2d_plugin_FacebookAgent_prototype;
 
 void register_pluginx_js_extensions(JSContext* cx, JS::HandleObject global)
 {
-    // first, try to get the ns
-    JS::RootedValue nsval(cx);
     JS::RootedObject ns(cx);
-    JS_GetProperty(cx, global, "plugin", &nsval);
-    if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr());
-        nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "plugin", nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
-    }
+    pluginx::create_js_root_obj(cx, global, "plugin", &ns);
 
     JS::RootedObject iap(cx, jsb_cocos2d_plugin_ProtocolIAP_prototype);
     JS_DefineFunction(cx, iap, "setListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -72,6 +64,5 @@ void register_pluginx_js_extensions(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, facebook, "appRequest", js_pluginx_FacebookAgent_appRequest, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, facebook, "dialog", js_pluginx_FacebookAgent_dialog, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
-//    global = ns;
     js_register_pluginx_protocols_PluginParam(cx, ns);
 }

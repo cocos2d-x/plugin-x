@@ -152,6 +152,7 @@ js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj);
 js_proxy_t* jsb_get_native_proxy(void* nativeObj);
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
 void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy);
+void create_js_root_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
     
     /**
      * You don't need to manage the returned pointer. They live for the whole life of
