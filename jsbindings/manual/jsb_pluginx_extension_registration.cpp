@@ -23,7 +23,7 @@ extern JSObject *jsb_cocos2d_plugin_FacebookAgent_prototype;
 void register_pluginx_js_extensions(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ns(cx);
-    pluginx::create_js_root_obj(cx, global, "plugin", &ns);
+    pluginx::get_or_create_js_obj(cx, global, "plugin", &ns);
 
     JS::RootedObject iap(cx, jsb_cocos2d_plugin_ProtocolIAP_prototype);
     JS_DefineFunction(cx, iap, "setListener", js_pluginx_ProtocolIAP_setResultListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);

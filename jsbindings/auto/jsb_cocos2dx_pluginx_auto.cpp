@@ -2060,7 +2060,7 @@ void js_register_pluginx_protocols_FacebookAgent(JSContext *cx, JS::HandleObject
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
-    create_js_root_obj(cx, obj, "plugin", &ns);
+    get_or_create_js_obj(cx, obj, "plugin", &ns);
 
     js_register_pluginx_protocols_FacebookAgent(cx, ns);
     js_register_pluginx_protocols_PluginProtocol(cx, ns);
