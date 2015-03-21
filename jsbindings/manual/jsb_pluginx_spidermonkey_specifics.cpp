@@ -46,5 +46,18 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
+void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj)
+{
+    JS::RootedValue nsval(cx);
+    JS_GetProperty(cx, obj, name.c_str(), &nsval);
+    if (nsval == JSVAL_VOID) {
+        jsObj.set(JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
+        nsval = OBJECT_TO_JSVAL(jsObj);
+        JS_SetProperty(cx, obj, name.c_str(), nsval);
+    } else {
+        jsObj.set(nsval.toObjectOrNull());
+    }
+}
+
 } // namespace pluginx {
 

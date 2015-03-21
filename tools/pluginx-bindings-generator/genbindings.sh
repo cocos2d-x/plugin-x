@@ -38,7 +38,7 @@ fi
 
 if [ -z "${CLANG_ROOT+aaa}" ]; then
 # ... if CLANG_ROOT is not set, use "$NDK_ROOT/toolchains/llvm-3.3/prebuilt/darwin-x86_64"
-    CLANG_ROOT="$NDK_ROOT/toolchains/llvm-3.3/prebuilt/darwin-x86_64"
+    CLANG_ROOT="$NDK_ROOT/toolchains/llvm-3.4/prebuilt/darwin-x86_64"
 fi
 
 if [ -z "${PYTHON_BIN+aaa}" ]; then
