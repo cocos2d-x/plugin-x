@@ -46,7 +46,6 @@
 		5091733A17ECE17A00D62437 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733417ECE17A00D62437 /* Icon-80.png */; };
 		5091733B17ECE17A00D62437 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091733517ECE17A00D62437 /* Icon-100.png */; };
 		9759DC7B19B86FFE009987A8 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759DC7819B86FEA009987A8 /* libPluginFacebook.a */; };
-		9759DC7D19B870CD009987A8 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9759DC7C19B870CD009987A8 /* FacebookSDK.framework */; };
 		9759DC8019B88119009987A8 /* lua_pluginx_manual_protocols.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9759DC7E19B88119009987A8 /* lua_pluginx_manual_protocols.cpp */; };
 		979E416819B572A0004D18C9 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E413719B57219004D18C9 /* libcocos2d iOS.a */; };
 		979E417919B57D21004D18C9 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E417219B57CF7004D18C9 /* libPluginProtocol.a */; };
@@ -55,6 +54,7 @@
 		979E419C19B57E4E004D18C9 /* lua_pluginx_basic_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 979E418F19B57E4E004D18C9 /* lua_pluginx_basic_conversions.cpp */; };
 		979E41A619B583EE004D18C9 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 979E41A519B583EE004D18C9 /* GameController.framework */; };
 		979E41A919B58552004D18C9 /* lua_pluginx_manual_callback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 979E41A719B58552004D18C9 /* lua_pluginx_manual_callback.cpp */; };
+		BA0613C91AC23E22003118D6 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0613C81AC23E22003118D6 /* FacebookSDK.framework */; };
 		C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
 		C00FD4961938512100C6382D /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48C1938512100C6382D /* PlayEnable_png.cpp */; };
@@ -276,7 +276,6 @@
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9759DC6B19B86FEA009987A8 /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = ../../../../../plugins/facebook/proj.ios/PluginFacebook.xcodeproj; sourceTree = "<group>"; };
-		9759DC7C19B870CD009987A8 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 		9759DC7E19B88119009987A8 /* lua_pluginx_manual_protocols.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_pluginx_manual_protocols.cpp; sourceTree = "<group>"; };
 		9759DC7F19B88119009987A8 /* lua_pluginx_manual_protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_pluginx_manual_protocols.h; sourceTree = "<group>"; };
 		979E411D19B57219004D18C9 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
@@ -290,6 +289,7 @@
 		979E41A519B583EE004D18C9 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		979E41A719B58552004D18C9 /* lua_pluginx_manual_callback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_pluginx_manual_callback.cpp; sourceTree = "<group>"; };
 		979E41A819B58552004D18C9 /* lua_pluginx_manual_callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_pluginx_manual_callback.h; sourceTree = "<group>"; };
+		BA0613C81AC23E22003118D6 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../plugins/facebook/proj.ios/FacebookSDK.framework; sourceTree = "<group>"; };
 		C00FD48A1938512100C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
 		C00FD48B1938512100C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
 		C00FD48C1938512100C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
@@ -335,11 +335,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				15CF33F119C1707B00D5614B /* libluacocos2d iOS.a in Frameworks */,
-				9759DC7D19B870CD009987A8 /* FacebookSDK.framework in Frameworks */,
 				9759DC7B19B86FFE009987A8 /* libPluginFacebook.a in Frameworks */,
 				C60BEC9D19B7722F002DC2E9 /* libPluginTwitter.a in Frameworks */,
 				C60BEC9419B75A74002DC2E9 /* SystemConfiguration.framework in Frameworks */,
 				C60BEC9219B75A67002DC2E9 /* MessageUI.framework in Frameworks */,
+				BA0613C91AC23E22003118D6 /* FacebookSDK.framework in Frameworks */,
 				C60BEC9019B75A57002DC2E9 /* CoreTelephony.framework in Frameworks */,
 				C60BEC8E19B75A49002DC2E9 /* AdSupport.framework in Frameworks */,
 				C60BEC8C19B75A17002DC2E9 /* libPluginAdmob.a in Frameworks */,
@@ -642,7 +642,7 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9759DC7C19B870CD009987A8 /* FacebookSDK.framework */,
+				BA0613C81AC23E22003118D6 /* FacebookSDK.framework */,
 				C60BEC9319B75A74002DC2E9 /* SystemConfiguration.framework */,
 				C60BEC9119B75A67002DC2E9 /* MessageUI.framework */,
 				C60BEC8F19B75A57002DC2E9 /* CoreTelephony.framework */,
@@ -1045,7 +1045,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1073,7 +1073,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;

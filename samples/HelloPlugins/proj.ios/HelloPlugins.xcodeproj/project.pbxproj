@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15CF33CA19C029BF00D5614B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CF33C919C029BF00D5614B /* FacebookSDK.framework */; };
 		15CF33D919C0319E00D5614B /* TestFacebookShare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CF33D419C0319E00D5614B /* TestFacebookShare.cpp */; };
 		15CF33DA19C0319E00D5614B /* TestFacebookUserScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CF33D719C0319E00D5614B /* TestFacebookUserScene.cpp */; };
 		1AC3624916D4A1E8000847F2 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC3624316D4A1E8000847F2 /* AppController.mm */; };
@@ -28,6 +27,7 @@
 		59EB3BEA1964A7DD0020118E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BE91964A7DD0020118E /* Security.framework */; };
 		59EB3BEC1964A86D0020118E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EB3BEB1964A86D0020118E /* CoreTelephony.framework */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		BA0613BE1AC23DCE003118D6 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0613BD1AC23DCE003118D6 /* FacebookSDK.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -96,7 +96,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15CF33C919C029BF00D5614B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
 		15CF33D419C0319E00D5614B /* TestFacebookShare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookShare.cpp; sourceTree = "<group>"; };
 		15CF33D519C0319E00D5614B /* TestFacebookShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFacebookShare.h; sourceTree = "<group>"; };
 		15CF33D719C0319E00D5614B /* TestFacebookUserScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFacebookUserScene.cpp; sourceTree = "<group>"; };
@@ -124,6 +123,7 @@
 		59EB3BE91964A7DD0020118E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		59EB3BEB1964A86D0020118E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		BA0613BD1AC23DCE003118D6 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../plugins/facebook/proj.ios/FacebookSDK.framework; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -191,7 +191,6 @@
 				591A8D2519DF4DB700F71BFD /* libPluginFacebookAds.a in Frameworks */,
 				59EB3BE719649CFC0020118E /* libcocos2d iOS.a in Frameworks */,
 				FAD55505177C170300968F54 /* AdSupport.framework in Frameworks */,
-				15CF33CA19C029BF00D5614B /* FacebookSDK.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -199,6 +198,7 @@
 				FA848862182B3DEB00858BDD /* CoreMotion.framework in Frameworks */,
 				59EB3BEC1964A86D0020118E /* CoreTelephony.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				BA0613BE1AC23DCE003118D6 /* FacebookSDK.framework in Frameworks */,
 				592A55791964AD7D008E4BC7 /* GameController.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
@@ -304,7 +304,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				15CF33C919C029BF00D5614B /* FacebookSDK.framework */,
+				BA0613BD1AC23DCE003118D6 /* FacebookSDK.framework */,
 				593E0BDC19BE206C00836D29 /* FBAudienceNetwork.framework */,
 				592A55781964AD7D008E4BC7 /* GameController.framework */,
 				59EB3BEB1964A86D0020118E /* CoreTelephony.framework */,
@@ -595,7 +595,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
-					"$(SRCROOT)/../../../plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../../../plugins/facebook/proj.ios",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -635,7 +635,7 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
-					"$(SRCROOT)/../../../plugins/facebook/proj.ios/sdk",
+					"$(SRCROOT)/../../../plugins/facebook/proj.ios",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
