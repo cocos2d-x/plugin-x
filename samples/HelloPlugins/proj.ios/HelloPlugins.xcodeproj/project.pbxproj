@@ -595,8 +595,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
-					"$(SRCROOT)/../../../plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+					"$(SRCROOT)/../../../plugins/facebook/proj.ios",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -636,8 +635,7 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../plugins/facebookads/proj.ios\"",
-					"$(SRCROOT)/../../../plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+					"$(SRCROOT)/../../../plugins/facebook/proj.ios",
 				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

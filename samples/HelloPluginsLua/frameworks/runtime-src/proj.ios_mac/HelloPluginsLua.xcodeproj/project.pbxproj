@@ -1045,8 +1045,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1074,8 +1073,7 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios/sdk",
-					"/Users/panda/StudyWork/Cocos/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+					"$(SRCROOT)/../../../../../../plugin/plugins/facebook/proj.ios",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
