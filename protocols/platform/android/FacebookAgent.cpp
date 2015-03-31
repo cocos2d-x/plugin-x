@@ -38,9 +38,9 @@ JNIEXPORT void JNICALL Java_org_cocos2dx_plugin_UserFacebook_nativeRequestCallba
 }
 
 static FacebookAgent* s_sharedFacebookAgent = nullptr;
-static const char*  s_cocos2dxVersion = "3.18.0/cocos2d-x-3.4";
-static const char*  s_cocos2dxLuaVersion = "3.18.0/cocos2d-x-lua-3.4";
-static const char*  s_cocos2dxJsVersion  = "3.18.0/cocos2d-js-3.3";
+static const char*  s_cocos2dxVersion = "3.18.0/cocos2d-x-3.5";
+static const char*  s_cocos2dxLuaVersion = "3.18.0/cocos2d-x-lua-3.5";
+static const char*  s_cocos2dxJsVersion  = "3.18.0/cocos2d-js-3.5";
 
 FacebookAgent* FacebookAgent::getInstance()
 {
