@@ -52,7 +52,6 @@ bool js_pluginx_protocols_ProtocolIAP_constructor(JSContext *cx, uint32_t argc, 
 void js_pluginx_protocols_ProtocolIAP_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JS::HandleObject global);
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj);
-bool js_pluginx_protocols_ProtocolIAP_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolIAP_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
@@ -68,7 +67,6 @@ bool js_pluginx_protocols_ProtocolAds_showAds(JSContext *cx, uint32_t argc, jsva
 bool js_pluginx_protocols_ProtocolAds_hideAds(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_queryPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolAds_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolAds_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -79,7 +77,6 @@ bool js_pluginx_protocols_ProtocolShare_constructor(JSContext *cx, uint32_t argc
 void js_pluginx_protocols_ProtocolShare_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JS::HandleObject global);
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj);
-bool js_pluginx_protocols_ProtocolShare_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolShare_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
@@ -93,7 +90,6 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JS::HandleObjec
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj);
 bool js_pluginx_protocols_ProtocolSocial_showLeaderboard(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_showAchievements(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_pluginx_protocols_ProtocolSocial_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolSocial_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -104,7 +100,6 @@ bool js_pluginx_protocols_ProtocolUser_constructor(JSContext *cx, uint32_t argc,
 void js_pluginx_protocols_ProtocolUser_finalize(JSContext *cx, JSObject *obj);
 void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JS::HandleObject global);
 void register_all_pluginx_protocols(JSContext* cx, JS::HandleObject obj);
-bool js_pluginx_protocols_ProtocolUser_setCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_getCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_configDeveloperInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_pluginx_protocols_ProtocolUser_isLoggedIn(JSContext *cx, uint32_t argc, jsval *vp);
