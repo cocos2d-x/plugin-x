@@ -616,6 +616,55 @@ void js_register_pluginx_protocols_ProtocolAnalytics(JSContext *cx, JS::HandleOb
 JSClass  *jsb_cocos2d_plugin_ProtocolIAP_class;
 JSObject *jsb_cocos2d_plugin_ProtocolIAP_prototype;
 
+bool js_pluginx_protocols_ProtocolIAP_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolIAP* cobj = (cocos2d::plugin::ProtocolIAP *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolIAP_setCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (int, std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
+		            if (larg1) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[1] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(2, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolIAP_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolIAP_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_pluginx_protocols_ProtocolIAP_onPayResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -714,6 +763,7 @@ void js_register_pluginx_protocols_ProtocolIAP(JSContext *cx, JS::HandleObject g
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setCallback", js_pluginx_protocols_ProtocolIAP_setCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onPayResult", js_pluginx_protocols_ProtocolIAP_onPayResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCallback", js_pluginx_protocols_ProtocolIAP_getCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolIAP_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -837,6 +887,55 @@ bool js_pluginx_protocols_ProtocolAds_getCallback(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_pluginx_protocols_ProtocolAds_getCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_pluginx_protocols_ProtocolAds_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolAds* cobj = (cocos2d::plugin::ProtocolAds *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolAds_setCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (int, std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
+		            if (larg1) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[1] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(2, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolAds_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolAds_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_pluginx_protocols_ProtocolAds_spendPoints(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -919,6 +1018,7 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JS::HandleObject g
         JS_FN("hideAds", js_pluginx_protocols_ProtocolAds_hideAds, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("queryPoints", js_pluginx_protocols_ProtocolAds_queryPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCallback", js_pluginx_protocols_ProtocolAds_getCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCallback", js_pluginx_protocols_ProtocolAds_setCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("spendPoints", js_pluginx_protocols_ProtocolAds_spendPoints, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolAds_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -957,6 +1057,55 @@ void js_register_pluginx_protocols_ProtocolAds(JSContext *cx, JS::HandleObject g
 JSClass  *jsb_cocos2d_plugin_ProtocolShare_class;
 JSObject *jsb_cocos2d_plugin_ProtocolShare_prototype;
 
+bool js_pluginx_protocols_ProtocolShare_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolShare* cobj = (cocos2d::plugin::ProtocolShare *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolShare_setCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (int, std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
+		            if (larg1) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[1] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(2, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolShare_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolShare_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_pluginx_protocols_ProtocolShare_onShareResult(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1055,6 +1204,7 @@ void js_register_pluginx_protocols_ProtocolShare(JSContext *cx, JS::HandleObject
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setCallback", js_pluginx_protocols_ProtocolShare_setCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onShareResult", js_pluginx_protocols_ProtocolShare_onShareResult, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCallback", js_pluginx_protocols_ProtocolShare_getCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolShare_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1128,6 +1278,55 @@ bool js_pluginx_protocols_ProtocolSocial_showAchievements(JSContext *cx, uint32_
     }
 
     JS_ReportError(cx, "js_pluginx_protocols_ProtocolSocial_showAchievements : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_pluginx_protocols_ProtocolSocial_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolSocial* cobj = (cocos2d::plugin::ProtocolSocial *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolSocial_setCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (int, std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
+		            if (larg1) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[1] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(2, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolSocial_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolSocial_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_pluginx_protocols_ProtocolSocial_getCallback(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1208,6 +1407,7 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JS::HandleObjec
     static JSFunctionSpec funcs[] = {
         JS_FN("showLeaderboard", js_pluginx_protocols_ProtocolSocial_showLeaderboard, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showAchievements", js_pluginx_protocols_ProtocolSocial_showAchievements, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCallback", js_pluginx_protocols_ProtocolSocial_setCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCallback", js_pluginx_protocols_ProtocolSocial_getCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolSocial_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
@@ -1246,6 +1446,55 @@ void js_register_pluginx_protocols_ProtocolSocial(JSContext *cx, JS::HandleObjec
 JSClass  *jsb_cocos2d_plugin_ProtocolUser_class;
 JSObject *jsb_cocos2d_plugin_ProtocolUser_prototype;
 
+bool js_pluginx_protocols_ProtocolUser_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::plugin::ProtocolUser* cobj = (cocos2d::plugin::ProtocolUser *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_pluginx_protocols_ProtocolUser_setCallback : Invalid Native Object");
+    if (argc == 1) {
+        std::function<void (int, std::basic_string<char> &)> arg0;
+        do {
+		    if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+		    {
+		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, args.thisv().toObjectOrNull(), args.get(0)));
+		        auto lambda = [=](int larg0, std::basic_string<char> & larg1) -> void {
+		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+		            jsval largv[2];
+		            largv[0] = int32_to_jsval(cx, larg0);
+		            do {
+		            if (larg1) {
+		                js_proxy_t *jsProxy = js_get_or_create_proxy<std::basic_string<char> &>(cx, (std::basic_string<char> &)larg1);
+		                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
+		            } else {
+		                largv[1] = JSVAL_NULL;
+		            }
+		        } while (0);
+		            JS::RootedValue rval(cx);
+		            bool ok = func->invoke(2, &largv[0], &rval);
+		            if (!ok && JS_IsExceptionPending(cx)) {
+		                JS_ReportPendingException(cx);
+		            }
+		        };
+		        arg0 = lambda;
+		    }
+		    else
+		    {
+		        arg0 = nullptr;
+		    }
+		} while(0)
+		;
+        JSB_PRECONDITION2(ok, cx, false, "js_pluginx_protocols_ProtocolUser_setCallback : Error processing arguments");
+        cobj->setCallback(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_pluginx_protocols_ProtocolUser_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_pluginx_protocols_ProtocolUser_getCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1376,6 +1625,7 @@ void js_register_pluginx_protocols_ProtocolUser(JSContext *cx, JS::HandleObject 
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setCallback", js_pluginx_protocols_ProtocolUser_setCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCallback", js_pluginx_protocols_ProtocolUser_getCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("configDeveloperInfo", js_pluginx_protocols_ProtocolUser_configDeveloperInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isLoggedIn", js_pluginx_protocols_ProtocolUser_isLoggedIn, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

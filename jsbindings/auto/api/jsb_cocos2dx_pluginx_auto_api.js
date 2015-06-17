@@ -192,6 +192,16 @@ char
 plugin.ProtocolIAP = {
 
 /**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method onPayResult
  * @param {cc.plugin::PayResultCode} arg0
  * @param {char} arg1
@@ -271,6 +281,16 @@ getCallback : function (
 },
 
 /**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method spendPoints
  * @param {int} arg0
  */
@@ -296,6 +316,16 @@ map
  * @class ProtocolShare
  */
 plugin.ProtocolShare = {
+
+/**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
 
 /**
  * @method onShareResult
@@ -355,6 +385,16 @@ showAchievements : function (
 },
 
 /**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
+
+/**
  * @method getCallback
  * @return {function}
  */
@@ -380,6 +420,16 @@ map
  * @class ProtocolUser
  */
 plugin.ProtocolUser = {
+
+/**
+ * @method setCallback
+ * @param {function} arg0
+ */
+setCallback : function (
+func 
+)
+{
+},
 
 /**
  * @method getCallback
