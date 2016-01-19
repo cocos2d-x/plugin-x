@@ -93,7 +93,8 @@ public class PluginWrapper {
     	boolean result = true;
     	
         for (PluginListener listener : sListeners) {
-            result = result && listener.onActivityResult(requestCode, resultCode, data);
+            boolean activityResult = listener.onActivityResult(requestCode, resultCode, data);
+            result = result && activityResult;
         }
         
         return result;
