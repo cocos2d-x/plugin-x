@@ -84,32 +84,32 @@ bool AgentManager::init(std::map<std::string, std::string>& conf)
 	if(conf.empty())
 		return false;
 
-	for(std::map<std::string, std::string>::iterator iter = conf.begin(); iter != conf.end(); ++iter)
+	for(auto& plugin : conf)
 	{
-		std::string pluginName = iter->first;
+		std::string pluginName = plugin.first;
 		if("PluginUser" == pluginName)
 		{
-			pUser = dynamic_cast<ProtocolUser *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pUser = dynamic_cast<ProtocolUser *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 		else if("PluginShare" == pluginName)
 		{
-			pShare = dynamic_cast<ProtocolShare *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pShare = dynamic_cast<ProtocolShare *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 		else if("PluginSocial" == pluginName)
 		{
-			pSocial = dynamic_cast<ProtocolSocial *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pSocial = dynamic_cast<ProtocolSocial *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 		else if("PluginAds" == pluginName)
 		{
-			pAds = dynamic_cast<ProtocolAds *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pAds = dynamic_cast<ProtocolAds *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 		else if("PluginAnalytics" == pluginName)
 		{
-			pAnalytics = dynamic_cast<ProtocolAnalytics *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pAnalytics = dynamic_cast<ProtocolAnalytics *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 		else if("PluginIAP" == pluginName)
 		{
-			pIAP = dynamic_cast<ProtocolIAP *>(PluginManager::getInstance()->loadPlugin(iter->second.c_str()));
+			pIAP = dynamic_cast<ProtocolIAP *>(PluginManager::getInstance()->loadPlugin(plugin.second.c_str()));
 		}
 	}
 
@@ -135,13 +135,13 @@ std::map<std::string, std::string> AgentManager::getPluginConfigure()
 			jstring jValue;
 			std::string stdValue;
 
-			for(std::vector<std::string>::iterator iter = s_plugins.begin(); iter != s_plugins.end(); ++iter)
+			for(auto& plugin : s_plugins)
 			{
-				jKey = env->NewStringUTF((*iter).c_str());
+				jKey = env->NewStringUTF(plugin.c_str());
 				jValue = (jstring) (env->CallObjectMethod(jhashtable,tGetMethod.methodID,jKey));
 				stdValue = PluginJniHelper::jstring2string(jValue);
 				if(!stdValue.empty())
-					configure.insert(std::make_pair(*iter, stdValue));
+					configure.insert(std::make_pair(plugin, stdValue));
 			}
 
 			tGetMethod.env->DeleteLocalRef(jKey);

@@ -56,10 +56,10 @@ jobject PluginUtils::createJavaMapObject(std::map<std::string, std::string>* par
 	if (paramMap != NULL)
 	{
 		jmethodID add_method= env->GetMethodID( class_Hashtable,"put","(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
-		for (std::map<std::string, std::string>::const_iterator it = paramMap->begin(); it != paramMap->end(); ++it)
+		for (const auto& parameter : *paramMap)
 		{
-            jstring first = env->NewStringUTF(it->first.c_str());
-            jstring second = env->NewStringUTF(it->second.c_str());
+            jstring first = env->NewStringUTF(parameter.first.c_str());
+            jstring second = env->NewStringUTF(parameter.second.c_str());
 			env->CallObjectMethod(obj_Map, add_method, first, second);
             env->DeleteLocalRef(first);
             env->DeleteLocalRef(second);
@@ -219,15 +219,14 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
             jmethodID mid = env->GetMethodID(cls,"<init>","()V");
             obj = env->NewObject(cls,mid);
             env->DeleteLocalRef(cls);
-            std::map<std::string, std::string>::iterator it;
             std::map<std::string, std::string> mapParam = param->getStrMapValue();
-            for (it = mapParam.begin(); it != mapParam.end(); it++)
+            for (auto& parameter : mapParam)
             {
                 PluginJniMethodInfo tInfo;
                 if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
                 {
-                    jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
-                    jstring strValue = tInfo.env->NewStringUTF(it->second.c_str());
+                    jstring strKey = tInfo.env->NewStringUTF(parameter.first.c_str());
+                    jstring strValue = tInfo.env->NewStringUTF(parameter.second.c_str());
 
                     tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, strValue);
                     tInfo.env->DeleteLocalRef(tInfo.classID);
@@ -244,15 +243,14 @@ jobject PluginUtils::getJObjFromParam(PluginParam* param)
 			jmethodID mid = env->GetMethodID(cls,"<init>","()V");
 			obj = env->NewObject(cls,mid);
             env->DeleteLocalRef(cls);
-			std::map<std::string, PluginParam*>::iterator it;
 			std::map<std::string, PluginParam*> mapParam = param->getMapValue();
-			for (it = mapParam.begin(); it != mapParam.end(); it++)
+			for (auto& parameter : mapParam)
 			{
 				PluginJniMethodInfo tInfo;
 				if (PluginJniHelper::getMethodInfo(tInfo, "org/json/JSONObject", "put", "(Ljava/lang/String;Ljava/lang/Object;)Lorg/json/JSONObject;"))
 				{
-					jstring strKey = tInfo.env->NewStringUTF(it->first.c_str());
-					jobject objValue = PluginUtils::getJObjFromParam(it->second);
+					jstring strKey = tInfo.env->NewStringUTF(parameter.first.c_str());
+					jobject objValue = PluginUtils::getJObjFromParam(parameter.second);
 
 					tInfo.env->CallObjectMethod(obj, tInfo.methodID, strKey, objValue);
 					tInfo.env->DeleteLocalRef(tInfo.classID);
